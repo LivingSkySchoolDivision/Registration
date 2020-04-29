@@ -43,5 +43,10 @@ namespace LSSD.Registration.Model.Forms
         public string CustodyConcerns { get; set; }
         public string OtherConcerns { get; set; }
 
+
+        public PreKApplicationForm()
+        {
+            this.Applicant = new Student();
+        }
     }
 }

@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.Data", "LSSD.Registration.Data\LSSD.Registration.Data.csproj", "{B97A2575-B313-4631-AFA0-84B14AFFEFAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.Model", "LSSD.Registration.Model\LSSD.Registration.Model.csproj", "{CA419A6D-8F39-4347-B3ED-3C8DBBABBA88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.Model", "LSSD.Registration.Model\LSSD.Registration.Model.csproj", "{CA419A6D-8F39-4347-B3ED-3C8DBBABBA88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.CustomerFrontEnd", "LSSD.Registration.CustomerFrontEnd\LSSD.Registration.CustomerFrontEnd.csproj", "{A2FF083C-0CBE-4A00-8E0D-EAEAE1E6F723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.CustomerFrontEnd", "LSSD.Registration.CustomerFrontEnd\LSSD.Registration.CustomerFrontEnd.csproj", "{A2FF083C-0CBE-4A00-8E0D-EAEAE1E6F723}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.API", "LSSD.Registration.API\LSSD.Registration.API.csproj", "{F60B1AEE-C119-4900-9FC6-369F47B7BF51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.Data", "LSSD.Registration.Data\LSSD.Registration.Data.csproj", "{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B97A2575-B313-4631-AFA0-84B14AFFEFAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B97A2575-B313-4631-AFA0-84B14AFFEFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B97A2575-B313-4631-AFA0-84B14AFFEFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B97A2575-B313-4631-AFA0-84B14AFFEFAD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA419A6D-8F39-4347-B3ED-3C8DBBABBA88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA419A6D-8F39-4347-B3ED-3C8DBBABBA88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA419A6D-8F39-4347-B3ED-3C8DBBABBA88}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +25,14 @@ Global
 		{A2FF083C-0CBE-4A00-8E0D-EAEAE1E6F723}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2FF083C-0CBE-4A00-8E0D-EAEAE1E6F723}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2FF083C-0CBE-4A00-8E0D-EAEAE1E6F723}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F60B1AEE-C119-4900-9FC6-369F47B7BF51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F60B1AEE-C119-4900-9FC6-369F47B7BF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F60B1AEE-C119-4900-9FC6-369F47B7BF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F60B1AEE-C119-4900-9FC6-369F47B7BF51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
