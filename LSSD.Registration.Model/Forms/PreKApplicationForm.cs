@@ -15,7 +15,7 @@ namespace LSSD.Registration.Model.Forms
         public bool HasFineMotorsIssues { get; set; }
         public string OtherDifficulties { get; set; }
         public bool OnlyOneParent { get; set; }
-        public bool LackOfFamilySupportSystem { get; set; }
+        public bool HasNoFamilySupportSystem { get; set; }
         public string TraumaticExperience { get; set; }
         public string HealthcareIssues { get; set; }
         public bool LowIncomeFamily { get; set; }

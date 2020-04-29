@@ -4,5 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LSSD.Registration.Data\LSSD.Registration.Data.csproj" />
+    <ProjectReference Include="..\LSSD.Registration.Model\LSSD.Registration.Model.csproj" />
+  </ItemGroup>
+
 
 </Project>
