@@ -1,14 +1,44 @@
 ﻿@page "/PreK"
 @using LSSD.Registration.Model
 @using LSSD.Registration.Model.Forms
-
-<h3>Pre Kindergarten Application</h3>
-
-@*<EditForm Model=@preKForm>
-    <InputText type="text" @bind-Value="preKForm.Applicant.FirstName" class="form-control" />
-    <input type="submit" value="submit" class="btn btn-primary" />
-</EditForm>
+@using LSSD.Registration.CustomerFrontEnd.Components
 
 @code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
-}*@
+    string FormName = "PREK";
+
+    protected override void OnInitialized()
+    {
+        StepTracker.StepHasChanged += RefreshComponents;
+    }
+
+    private void RefreshComponents()
+    {
+        Console.WriteLine("Handling request to refresh in parent!");
+        StateHasChanged();
+    }
+}
+    <div class="container" style="border: 1px solid #C0C0C0; border-radius: 3px;">
+        <h3>Pre-Kindergarten Application</h3>
+        <hr />
+        <br />
+        @switch (StepTracker.Step(FormName))
+        {
+            case 0:
+                <PreKWarning FormName="@FormName"/>
+                break;
+            case 1:
+                <RequestorSection FormName="@FormName"/>
+                break;
+            case 2:
+                <BussingInfoSection />
+                break;
+            case 3:
+                <PreKWarning  FormName="@FormName"/>
+                break;
+        }
+
+        <br/><br/>
+    </div>

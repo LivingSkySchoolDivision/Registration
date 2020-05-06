@@ -1,0 +1,21 @@
+﻿@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    private void ClickOK()
+    {
+        Console.WriteLine("OK CLICKED!!");
+        StepTracker.NextStep(FormName);
+    }
+}
+<div class="container" style="text-align: center;">
+    <div class="alert alert-info " role="alert" style="text-align: initial">
+        <h4 class="alert-heading">Before you apply</h4>
+        <p>Note that this is an <b>application</b> form, not a registration form. Your application will be reviewed, and you will be notified if your child is accepted into our Pre-Kindergarten program.</p>
+    </div>
+    <button @onclick="ClickOK" class="btn btn-primary">OK</button>
+</div>
+

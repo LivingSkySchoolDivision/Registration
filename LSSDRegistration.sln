@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.Model", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.CustomerFrontEnd", "LSSD.Registration.CustomerFrontEnd\LSSD.Registration.CustomerFrontEnd.csproj", "{A2FF083C-0CBE-4A00-8E0D-EAEAE1E6F723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.API", "LSSD.Registration.API\LSSD.Registration.API.csproj", "{F60B1AEE-C119-4900-9FC6-369F47B7BF51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.API", "LSSD.Registration.API\LSSD.Registration.API.csproj", "{F60B1AEE-C119-4900-9FC6-369F47B7BF51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.Data", "LSSD.Registration.Data\LSSD.Registration.Data.csproj", "{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.Data", "LSSD.Registration.Data\LSSD.Registration.Data.csproj", "{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

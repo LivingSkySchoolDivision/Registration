@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using LSSD.Registration.CustomerFrontEnd.Data;
+using LSSD.Registration.CustomerFrontEnd.Services;
 
 namespace LSSD.Registration.CustomerFrontEnd
 {
@@ -28,6 +28,11 @@ namespace LSSD.Registration.CustomerFrontEnd
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddScoped<FormStepTrackerService>();
+
+            // Local Storage
+            services.AddProtectedBrowserStorage();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
