@@ -1,0 +1,152 @@
+﻿@using LSSD.Registration.Model
+
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public Microsoft.AspNetCore.ProtectedBrowserStorage.ProtectedLocalStorage Storage { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    private const string SectionStorageKey = "REG-SECTION-STUDENT";
+    Student Section = new Student();
+
+    protected async Task HandleValidSubmit()
+    {
+        await Storage.SetAsync(SectionStorageKey, Section);
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async Task OnClick_PreviousStepButton()
+    {
+        await Storage.SetAsync(SectionStorageKey, Section);
+        StepTracker.PreviousStep(FormName);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Attempt to load a saved section from browser storage.
+        // If one doesn't exist, make a new one.
+        Student LoadedSection = await Storage.GetAsync<Student>(SectionStorageKey);
+        if (LoadedSection != null)
+        {
+            Section = LoadedSection;
+        }
+        else
+        {
+            await Storage.SetAsync(SectionStorageKey, Section);
+        }
+    }
+}
+<div class="container">
+    <h2>Student Information</h2>
+
+    <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <label>Legal name: </label>
+                <p><small>The exact name on the birth certificate. Required by the Saskatchewan Ministry of Education.</small></p>
+            </div>
+            <div class="row col-sm-8 p-0">
+                <div class="col-sm-4 m-0">
+                    <InputText id="studentLegalFirstName" class="form-control" @bind-Value="@Section.LegalFirstName" placeholder="First"></InputText>
+                    <ValidationMessage For="@(() => Section.LegalFirstName)" />
+                </div>
+                <div class="col-sm-3 m-0">
+                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LegalMiddleName" placeholder="Middle"></InputText>
+                    <ValidationMessage For="@(() => Section.LegalMiddleName)" />
+                </div>
+                <div class="col-sm-4 m-0">
+                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LegalLastName" placeholder="Last"></InputText>
+                    <ValidationMessage For="@(() => Section.LegalLastName)" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3">Preferred name: </label>
+            <div class="row col-sm-8 p-0">
+                <div class="col-sm-4 m-0">
+                    <InputText id="studentLegalFirstName" class="form-control" @bind-Value="@Section.FirstName" placeholder="First"></InputText>
+                    <ValidationMessage For="@(() => Section.FirstName)" />
+                </div>
+                <div class="col-sm-3 m-0">
+                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.MiddleName" placeholder="Middle"></InputText>
+                    <ValidationMessage For="@(() => Section.MiddleName)" />
+                </div>
+                <div class="col-sm-4 m-0">
+                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LastName" placeholder="Last"></InputText>
+                    <ValidationMessage For="@(() => Section.LastName)" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label for="birthdate" class="col-sm-3">Date of Birth: </label>
+            <InputDate id="birthdate" class="form-control col-sm-8" @bind-Value="@Section.DateOfBirth" placeholder="Enter birthdate"></InputDate>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.DateOfBirth)" />
+        </div>
+
+        <div class="form-group row">
+            <label for="studentGender" class="col-sm-3">Gender: </label>
+            <InputSelect id="studentGender" class="form-control col-sm-8" @bind-Value="@Section.Gender">
+                @foreach (var val in Enum.GetValues(typeof(Gender)))
+                {
+                    <option value="@val">@val</option>
+                }
+            </InputSelect>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.Gender)" />
+        </div>
+
+        <div class="form-group row">
+            <label for="studentGender" class="col-sm-3">Saskatchewan Health Number: </label>
+            <InputText id="studentLegalLastName" class="form-control col-sm-8" @bind-Value="@Section.SaskHealthNumber"></InputText>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.SaskHealthNumber)" />
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <label for="studentMedical">Medical Notes: </label>
+                <p><small>Are there any medical conditions that we should be aware of, such as allergies, regular medication, etc.?</small></p>
+            </div>
+            <InputTextArea id="studentMedical" class="form-control col-sm-8" @bind-Value="@Section.MedicalNotes"></InputTextArea>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MedicalNotes)" />
+        </div>
+
+        <div class="form-group row">
+            <label for="studentHomeLanguage" class="col-sm-3">Language spoken at home: </label>
+            <InputText id="studentHomeLanguage" class="form-control col-sm-8" @bind-Value="@Section.LanguageSpokenAtHome"></InputText>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.LanguageSpokenAtHome)" />
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <label for="studentMedical">Previous Saskatchewan Schools: </label>
+                <p><small>Has this child ever attended a different school <b>within the province of Saskatcheawn</b>? Please enter the name of the school, and the city it is located in.</small></p>
+            </div>
+            <InputTextArea id="studentMedical" class="form-control col-sm-8" @bind-Value="@Section.MedicalNotes"></InputTextArea>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MedicalNotes)" />
+        </div>
+
+
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col">
+                    <button @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+        
+
+</div>
+

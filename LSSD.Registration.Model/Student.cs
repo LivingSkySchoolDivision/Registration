@@ -11,12 +11,13 @@ namespace LSSD.Registration.Model
         [Required]
         public string FirstName { get; set; }
         [Required]
-        public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public string MiddleName { get; set; }
         [Required]
         public string LegalFirstName { get; set; }
         [Required]
         public string LegalLastName { get; set; }
+        public string LegalMiddleName { get; set; }
         public Gender Gender { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
@@ -29,6 +30,11 @@ namespace LSSD.Registration.Model
         public string MedicalNotes { get; set; }
         public string Notes { get; set; }
 
+
+        public Student()
+        {
+            this.LanguageSpokenAtHome = "English";
+        }
 
     }
 }

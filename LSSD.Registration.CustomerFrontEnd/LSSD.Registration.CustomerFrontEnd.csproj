@@ -13,8 +13,4 @@
     <ProjectReference Include="..\LSSD.Registration.Model\LSSD.Registration.Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>

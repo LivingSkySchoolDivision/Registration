@@ -16,29 +16,31 @@
 
     private void RefreshComponents()
     {
-        Console.WriteLine("Handling request to refresh in parent!");
         StateHasChanged();
     }
 }
     <div class="container" style="border: 1px solid #C0C0C0; border-radius: 3px;">
-        <h3>Pre-Kindergarten Application</h3>
+        <h1>Pre-Kindergarten Application</h1>
+        Step: @StepTracker.Step(FormName)
         <hr />
         <br />
         @switch (StepTracker.Step(FormName))
         {
             case 0:
-                <PreKWarning FormName="@FormName"/>
+                <PreKWarningSection FormName="@FormName" />
                 break;
             case 1:
-                <RequestorSection FormName="@FormName"/>
+                <DataPrivacySection FormName="@FormName" />
                 break;
             case 2:
-                <BussingInfoSection />
+                <RequestorSection FormName="@FormName" />
                 break;
             case 3:
-                <PreKWarning  FormName="@FormName"/>
+                <StudentDemographicsSection FormName="@FormName" />
+                break;
+            case 4:
                 break;
         }
 
-        <br/><br/>
+        <br /><br />
     </div>

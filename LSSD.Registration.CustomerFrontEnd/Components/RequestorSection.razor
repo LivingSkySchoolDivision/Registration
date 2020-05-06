@@ -10,39 +10,39 @@
     [Parameter]
     public string FormName { get; set; }
 
+    private const string SectionStorageKey = "REG-SECTION-REQUESTOR";
     FormSubmitter Section = new FormSubmitter();
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("Checking...");
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        FormSubmitter LoadedSection = await Storage.GetAsync<FormSubmitter>("REG-SECTION-REQUESTOR");
+        FormSubmitter LoadedSection = await Storage.GetAsync<FormSubmitter>(SectionStorageKey);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await Storage.SetAsync("REG-SECTION-REQUESTOR", Section);
+            await Storage.SetAsync(SectionStorageKey, Section);
         }
     }
 
     protected async Task HandleValidSubmit()
     {
-        await Storage.SetAsync("REG-SECTION-REQUESTOR", Section);
+        await Storage.SetAsync(SectionStorageKey, Section);
         StepTracker.NextStep(FormName);
     }
 
     protected async Task OnClick_PreviousStepButton()
     {
-        await Storage.SetAsync("REG-SECTION-REQUESTOR", Section);
+        await Storage.SetAsync(SectionStorageKey, Section);
         StepTracker.PreviousStep(FormName);
     }
 }
     <div class="container">
 
-        <h3>Tell us about yourself</h3>
+        <h2>Tell us about yourself</h2>
         <p>
             Tell us about you (the person submitting this form). If we need to reach out to you regarding this registration, this is the information we will use.
             This information is not carried over to the registration (we'll ask for that later), we'll only use it to contact you if we have questions regarding this registration.
@@ -52,32 +52,40 @@
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div class="form-group">
-                <label for="lastName">Your name: </label>
+                <label for="requestorFirstName">Your name: </label>
                 <div class="form-row">
                     <div class="col">
-                        <InputText id="lastName" class="form-control" @bind-Value="@Section.FirstName" placeholder="Jane"></InputText>
+                        <InputText id="requestorFirstName" class="form-control" @bind-Value="@Section.FirstName" placeholder="Jane"></InputText>
                         <ValidationMessage For="@(() => Section.FirstName)" />
                     </div>
                     <div class="col">
-                        <InputText id="lastName" class="form-control" @bind-Value="@Section.LastName" placeholder="Smith"></InputText>
+                        <InputText id="requestorLastName" class="form-control" @bind-Value="@Section.LastName" placeholder="Smith"></InputText>
                         <ValidationMessage For="@(() => Section.LastName)" />
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="lastName">Email address: </label>
-                <InputText id="lastName" class="form-control" @bind-Value="@Section.EmailAddress" placeholder="jane.smith@email.com"></InputText>
+                <label for="requestorEmail">Email address: </label>
+                <InputText id="requestorEmail" class="form-control" @bind-Value="@Section.EmailAddress" placeholder="jane.smith@email.com"></InputText>
                 <ValidationMessage For="@(() => Section.EmailAddress)" />
             </div>
 
             <div class="form-group">
-                <label for="lastName">Phone number: </label>
-                <InputText id="lastName" class="form-control" @bind-Value="@Section.PhoneNumber" placeholder="123 456 7890"></InputText>
+                <label for="requestorPhone">Phone number: </label>
+                <InputText id="requestorPhone" class="form-control" @bind-Value="@Section.PhoneNumber" placeholder="123 456 7890"></InputText>
                 <ValidationMessage For="@(() => Section.PhoneNumber)" />
             </div>
 
-            <button @onclick="OnClick_PreviousStepButton" class="btn btn-primary edit-btn">Previous Step</button>
-            <button type="submit" class="btn btn-primary edit-btn">Next Step</button>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <button @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+                    </div>
+                </div>
+            </div>
         </EditForm>
     </div>

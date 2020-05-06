@@ -6,8 +6,8 @@ namespace LSSD.Registration.Model
 {
     public enum Gender
     {
+        Unspecified,
         Male,
-        Female,
-        Unspecified
+        Female
     }
 }
