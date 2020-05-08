@@ -13,7 +13,7 @@ namespace LSSD.Registration.Model
         /// </summary>
         public DateTime FirstCanadianSchoolDate { get; set; }
         public bool  IsFirstCanadianSchool { get; set; }
-        ResidencyType ResidencyType { get; set; }
+        public ResidencyType ResidencyType { get; set; }
 
         public string BirthCountry { get; set; }
 
