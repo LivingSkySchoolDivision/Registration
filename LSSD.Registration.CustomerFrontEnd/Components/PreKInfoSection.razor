@@ -1,5 +1,258 @@
-﻿<h3>PreKInfo</h3>
+﻿@using LSSD.Registration.Model
 
 @code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
+    [Inject]
+    public Microsoft.AspNetCore.ProtectedBrowserStorage.ProtectedLocalStorage Storage { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    private const string SectionStorageKey = "REG-SECTION-PREK";
+    private const string SectionStorageKey_StudentDemo = "REG-SECTION-STUDENT";
+    PreKInfo Section = new PreKInfo() 
+    { 
+        LanguageSpokenAtHome = "English"
+    };
+
+    Student ThisStudent = new Student()
+    {
+        FirstName = "the child"
+    };
+
+    protected async Task HandleValidSubmit()
+    {
+        await saveForm();
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async Task HandleInValidSubmit()
+    {
+        await saveForm();
+    }
+
+    protected async Task OnClick_PreviousStepButton()
+    {
+        await saveForm();
+        StepTracker.PreviousStep(FormName);
+    }
+
+    private async Task saveForm()
+    {
+        await Storage.SetAsync(SectionStorageKey, Section);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Attempt to load a saved section from browser storage.
+        // If one doesn't exist, make a new one.
+        PreKInfo LoadedSection = await Storage.GetAsync<PreKInfo>(SectionStorageKey);
+        if (LoadedSection != null)
+        {
+            Section = LoadedSection;
+        }
+        else
+        {
+            await Storage.SetAsync(SectionStorageKey, Section);
+        }
+
+        Student previouslyEnteredStudent = await Storage.GetAsync<Student>(SectionStorageKey_StudentDemo);
+        if (previouslyEnteredStudent != null)
+        {
+            ThisStudent = previouslyEnteredStudent;
+        }
+    }
 }
+<h2>Additional Pre-Kindergarten Information</h2>
+<div class="alert alert-info">
+    Students will be admitted based on the following criteria. Enrolment is determined by program space availability and student need. Not all students will meed the criteria for admission.
+</div>
+<div class="alert alert-info">
+    Family/Student information is collected by Living Sky School Division to inform program and enrolment decisions. Information is considered confidential and does not remain in a student's file beyond their pre-kindergarten year.
+</div>
+<EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group row">
+        <label for="studentLanguage" class="col-sm-4  font-weight-normal">Language spoken at home: </label>
+        <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@Section.LanguageSpokenAtHome"></InputText>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.LanguageSpokenAtHome)" />
+    </div>
+
+    <div class="form-group row">
+        <label for="" class="col-sm-4  font-weight-normal">Does @ThisStudent.FirstName experience social, emotional, or behavior issues? Please explain. </label>
+        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@Section.SocialEmotionalOrBehaviorIssues"></InputTextArea>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.SocialEmotionalOrBehaviorIssues)" />
+    </div>
+
+    <div class="form-group row">
+        <label for="" class="col-sm-4  font-weight-normal">Has @ThisStudent.FirstName experienced a traumatic event impacting him/her or the family? Please explain.</label>
+        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@Section.TraumaticExperiences"></InputTextArea>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.TraumaticExperiences)" />
+    </div>
+
+    <div class="form-group row">
+        <label for="" class="col-sm-4  font-weight-normal">Health care crisis impacting child or family. Please explain.</label>
+        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@Section.TraumaticExperiences"></InputTextArea>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.TraumaticExperiences)" />
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            <label class="font-weight-normal col-sm-4">Difficulties</label>
+            <div class="col-sm-8">
+                <InputCheckbox @bind-Value="@Section.SpeechDifficulties"></InputCheckbox>
+                <label for="" class="font-weight-normal">@ThisStudent.FirstName experiences speech difficulties</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.SpeechDifficulties)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.LanguageDifficulties"></InputCheckbox>
+                <label for="" class="font-weight-normal">@ThisStudent.FirstName experiences language difficulties</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.LanguageDifficulties)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.GrossMotorDifficulties"></InputCheckbox>
+                <label for="" class="font-weight-normal">@ThisStudent.FirstName experiences gross motor difficulties</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.GrossMotorDifficulties)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.FineMotorDifficulties"></InputCheckbox>
+                <label for="" class="font-weight-normal">@ThisStudent.FirstName experiences fine motor difficulties</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.FineMotorDifficulties)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label for="studentLanguage" class="col-sm-4  font-weight-normal">Other difficulties @ThisStudent.FirstName experiences: </label>
+            <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@Section.OtherDifficulties" placeholder=""></InputText>
+            <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.OtherDifficulties)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.OnlyOneParentInHome"></InputCheckbox>
+                <label for="" class="font-weight-normal">Single Parent</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.OnlyOneParentInHome)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.FrequentParentAbsence"></InputCheckbox>
+                <label for="" class="font-weight-normal">Frequent parent absence</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.FrequentParentAbsence)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.NoFamilySupportSystem"></InputCheckbox>
+                <label for="" class="font-weight-normal">Lack of family support system</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.NoFamilySupportSystem)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.LowIncomeFamily"></InputCheckbox>
+                <label for="" class="font-weight-normal">Low income family, experiencing financial need</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.LowIncomeFamily)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.PrimaryCaregiverLessThanHighSchoolEducation"></InputCheckbox>
+                <label for="" class="font-weight-normal">Primary caregiver has less than high school education</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.PrimaryCaregiverLessThanHighSchoolEducation)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.TeenParent"></InputCheckbox>
+                <label for="" class="font-weight-normal">Child lives with teen parent</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.TeenParent)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.InFosterCare"></InputCheckbox>
+                <label for="" class="font-weight-normal">Child is in foster care</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.InFosterCare)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.LittleOpportunityToInteractWithSameAge"></InputCheckbox>
+                <label for="" class="font-weight-normal">Child has little opportunity to interact with others the same age</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.LittleOpportunityToInteractWithSameAge)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="" class="col-sm-4 font-weight-normal">Has @ThisStudent.FirstName been referred by an agency: </label>
+        <InputText id="" class="form-control col-sm-8" @bind-Value="@Section.ReferredByOtherAgency"></InputText>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.ReferredByOtherAgency)" />
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            <div class="offset-sm-4 col-sm-8">
+                <InputCheckbox @bind-Value="@Section.CanUseBathroomAlone"></InputCheckbox>
+                <label for="" class="font-weight-normal">Can @ThisStudent.FirstName use the bathroom on their own?</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.CanUseBathroomAlone)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="offset-sm-5 col-sm-7">
+                <InputCheckbox @bind-Value="@Section.PottyTrainingInProgress"></InputCheckbox>
+                <label for="" class="font-weight-normal">Training in progress</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.PottyTrainingInProgress)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="" class="col-sm-4 font-weight-normal">Do you have any specific concerns or information regarding @ThisStudent.FirstName/family that we need to be aware of (ie: <b>custody</b>, medical, behavior, intensive needs, etc.)?: </label>
+        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@Section.Concerns"></InputTextArea>
+        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.Concerns)" />
+    </div>
+
+   
+    <div class="form-group">
+        <div class="form-row">
+            @if (StepNumber > 0)
+            {
+                <div class="col">
+                    <button @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                </div>
+            }
+            <div class="col">
+                <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+            </div>
+        </div>
+    </div>
+
+</EditForm>

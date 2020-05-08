@@ -10,6 +10,7 @@ namespace LSSD.Registration.Model
 
         public string LanguageSpokenAtHome { get; set; }
         public string SocialEmotionalOrBehaviorIssues { get; set; }
+        public string ReferredByOtherAgency { get; set; }
         public bool SpeechDifficulties { get; set; }
         public bool LanguageDifficulties { get; set; }
         public bool GrossMotorDifficulties { get; set; }
@@ -24,6 +25,7 @@ namespace LSSD.Registration.Model
         public bool PrimaryCaregiverLessThanHighSchoolEducation { get; set; }
         public bool TeenParent { get; set; }
         public bool InFosterCare { get; set; }
+        public bool LittleOpportunityToInteractWithSameAge { get; set; }
         public bool CanUseBathroomAlone { get; set; }
         public bool PottyTrainingInProgress { get; set; }
         public List<StudentAssistanceProvider> AssistanceProviders { get; set; }
