@@ -18,7 +18,6 @@ namespace LSSD.Registration.Model
         [Phone]
         public string PhoneNumber { get; set; }
 
-        [EmailAddress]
         public string EmailAddress { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

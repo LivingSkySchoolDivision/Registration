@@ -10,19 +10,34 @@
     [Parameter]
     public string FormName { get; set; }
 
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    private bool mailingAddressSameAsPhysical = true;
+    private bool usesLandDescription = false;
     private const string SectionStorageKey = "REG-SECTION-STUDENT";
     Student Section = new Student();
 
     protected async Task HandleValidSubmit()
     {
-        await Storage.SetAsync(SectionStorageKey, Section);
+        await saveForm();
         StepTracker.NextStep(FormName);
+    }
+
+    protected async Task HandleInValidSubmit()
+    {
+        await saveForm();
     }
 
     protected async Task OnClick_PreviousStepButton()
     {
-        await Storage.SetAsync(SectionStorageKey, Section);
+        await saveForm();
         StepTracker.PreviousStep(FormName);
+    }
+
+    private async Task saveForm()
+    {
+        await Storage.SetAsync(SectionStorageKey, Section);
     }
 
     protected override async Task OnInitializedAsync()
@@ -43,14 +58,14 @@
 <div class="container">
     <h2>Student Information</h2>
 
-    <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit">
+    <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
         <div class="form-group row">
             <div class="col-sm-3">
                 <label>Legal name: </label>
-                <p><small>The exact name on the birth certificate. Required by the Saskatchewan Ministry of Education.</small></p>
+                <p><small class="form-text text-muted">The exact name on the birth certificate. Required by the Saskatchewan Ministry of Education.</small></p>
             </div>
             <div class="row col-sm-8 p-0">
                 <div class="col-sm-4 m-0">
@@ -88,7 +103,13 @@
 
 
         <div class="form-group row">
-            <label for="birthdate" class="col-sm-3">Date of Birth: </label>
+            <div class="col-sm-3">
+                <label for="birthdate">Date of Birth: </label>
+                <small class="form-text text-muted">
+                    <b>PreK</b> students must be at least 3 years old.
+                    <b>Kindergarten</b> students must be 5 years old as of Dec 31.
+                </small>
+            </div>
             <InputDate id="birthdate" class="form-control col-sm-8" @bind-Value="@Section.DateOfBirth" placeholder="Enter birthdate"></InputDate>
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.DateOfBirth)" />
         </div>
@@ -106,14 +127,14 @@
 
         <div class="form-group row">
             <label for="studentGender" class="col-sm-3">Saskatchewan Health Number: </label>
-            <InputText id="studentLegalLastName" class="form-control col-sm-8" @bind-Value="@Section.SaskHealthNumber"></InputText>
+            <InputText id="studentLegalLastName" class="form-control col-sm-8" @bind-Value="@Section.SaskHealthNumber" placeholder="123 456 789" pattern="\d\d\d \d\d\d \d\d\d"></InputText>
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.SaskHealthNumber)" />
         </div>
 
         <div class="form-group row">
             <div class="col-sm-3">
                 <label for="studentMedical">Medical Notes: </label>
-                <p><small>Are there any medical conditions that we should be aware of, such as allergies, regular medication, etc.?</small></p>
+                <p><small class="form-text text-muted">Are there any medical conditions that we should be aware of, such as allergies, regular medication, etc.?</small></p>
             </div>
             <InputTextArea id="studentMedical" class="form-control col-sm-8" @bind-Value="@Section.MedicalNotes"></InputTextArea>
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MedicalNotes)" />
@@ -128,13 +149,193 @@
         <div class="form-group row">
             <div class="col-sm-3">
                 <label for="studentMedical">Previous Saskatchewan Schools: </label>
-                <p><small>Has this child ever attended a different school <b>within the province of Saskatcheawn</b>? Please enter the name of the school, and the city it is located in.</small></p>
+                <p><small class="form-text text-muted">Has this child ever attended a different school <b>within the province of Saskatcheawn</b>? Please enter the name and city for each school. This information helps prevent duplicate registrations for the same student.</small></p>
             </div>
             <InputTextArea id="studentMedical" class="form-control col-sm-8" @bind-Value="@Section.MedicalNotes"></InputTextArea>
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MedicalNotes)" />
         </div>
 
+        <div class="form-group">
+            <h3>Primary Physical Address</h3>
+            <div class="offset-sm-3">
+                <InputCheckbox id="usesLandDescription" @bind-Value="@usesLandDescription" />
+                <label class="form-check-label" for="usesLandDescription" style="font-weight: normal;">
+                    No civic address, use land description
+                </label>
+            </div>
+        </div>
 
+        @if (usesLandDescription)
+        {
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label for="studentLandDescription">Land Description</label>
+                </div>
+                <InputText id="studentLandDescription" class="form-control col-sm-8" @bind-Value="@Section.LandDescription" placeholder="SE-12-20-33-W1"></InputText>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.LandDescription)" />
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Name of closest city/town:</label>
+                        <small class="form-text text-muted">
+                            Required by the Sask. Ministry of Education.
+                        </small>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.City" placeholder="Cake Town"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.City)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Province:</label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Province" placeholder="SK"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.UnitNumber)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Country:</label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Country" placeholder="Canada"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.Country)" />
+                </div>
+            </div>
+        }
+        else
+        {
+
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Unit Number </label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.UnitNumber" placeholder="A"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.UnitNumber)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>House Number </label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.HouseNumber" placeholder="123"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.HouseNumber)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Street </label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Street" placeholder="Fake St."></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.Street)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>City/Town:</label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.City" placeholder="Cake Town"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.City)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Province:</label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Province" placeholder="SK"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.UnitNumber)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Country:</label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Country" placeholder="Canada"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.Country)" />
+                </div>
+            </div>
+        }
+
+        <br />
+        <div class="form-group">
+            <h3>Mailing Address</h3>
+            <div class="offset-sm-3">
+                @if (!usesLandDescription)
+                {
+                    <InputCheckbox id="mailingSameAsPhysical" @bind-Value="@mailingAddressSameAsPhysical" />
+                    <label class="form-check-label" for="mailingSameAsPhysical" style="font-weight: normal;">
+                        Same as physical
+                    </label>
+                }
+            </div>
+        </div>
+        @if ((!mailingAddressSameAsPhysical) || (usesLandDescription))
+        {
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Unit Number </label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.UnitNumber" placeholder="A"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.UnitNumber)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>House Number </label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.HouseNumber" placeholder="123"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.HouseNumber)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Street </label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Street" placeholder="Fake St."></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.Street)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>City</label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.City" placeholder="Cake Town"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.City)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Province:</label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Province" placeholder="SK"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.UnitNumber)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Country:</label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Country" placeholder="Canada"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.Country)" />
+                </div>
+            </div>
+        }
+
+        <ValidationSummary />
         <div class="form-group">
             <div class="form-row">
                 <div class="col">

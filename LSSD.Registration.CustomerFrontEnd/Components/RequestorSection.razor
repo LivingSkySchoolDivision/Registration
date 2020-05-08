@@ -10,6 +10,9 @@
     [Parameter]
     public string FormName { get; set; }
 
+    [Parameter]
+    public int StepNumber { get; set; }
+
     private const string SectionStorageKey = "REG-SECTION-REQUESTOR";
     FormSubmitter Section = new FormSubmitter();
 
@@ -45,7 +48,7 @@
         <h2>Tell us about yourself</h2>
         <p>
             Tell us about you (the person submitting this form). If we need to reach out to you regarding this registration, this is the information we will use.
-            This information is not carried over to the registration (we'll ask for that later), we'll only use it to contact you if we have questions regarding this registration.
+            This information is <b>not</b> carried over to the registration (we'll ask for that later), we'll only use it to contact you if we have questions regarding this registration.
         </p>
 
         <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit">
@@ -79,9 +82,12 @@
 
             <div class="form-group">
                 <div class="form-row">
+                    @if (StepNumber > 0)
+                    {
                     <div class="col">
                         <button @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
                     </div>
+                    }
                     <div class="col">
                         <button type="submit" class="btn btn-primary btn-block">Next Step</button>
                     </div>

@@ -16,5 +16,54 @@ namespace LSSD.Registration.Model
         public string PostalCode { get; set; }
         public string Country { get; set; }
 
+
+        public string Line1 { 
+            get {
+                StringBuilder returnMe = new StringBuilder();
+
+                if (!string.IsNullOrEmpty(UnitNumber))
+                {
+                    returnMe.Append(UnitNumber + " ");
+                }
+
+                if (!string.IsNullOrEmpty(HouseNumber))
+                {
+                    returnMe.Append(HouseNumber + " ");
+                }
+
+                if (!string.IsNullOrEmpty(Street))
+                {
+                    returnMe.Append(Street);
+                }
+
+                return returnMe.ToString().Trim();
+            } 
+        }
+
+        public string Line2
+        {
+            get
+            {
+                StringBuilder returnMe = new StringBuilder();
+
+                if (!string.IsNullOrEmpty(City))
+                {
+                    returnMe.Append(City + " ");
+                }
+
+                if (!string.IsNullOrEmpty(Province))
+                {
+                    returnMe.Append(Province + " ");
+                }
+
+                if (!string.IsNullOrEmpty(PostalCode))
+                {
+                    returnMe.Append(PostalCode);
+                }
+
+                return returnMe.ToString().Trim();
+            }
+        }
+
     }
 }

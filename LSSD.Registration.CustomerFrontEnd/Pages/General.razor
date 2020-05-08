@@ -1,13 +1,11 @@
-﻿@page "/PreK"
-@using LSSD.Registration.Model
-@using LSSD.Registration.Model.Forms
+﻿@page "/General"
 @using LSSD.Registration.CustomerFrontEnd.Components
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
-    string FormName = "PREK";
+    string FormName = "GENREG";
 
     protected override void OnInitialized()
     {
@@ -19,26 +17,24 @@
         StateHasChanged();
     }
 }
+
     <div class="container" style="border: 1px solid #C0C0C0; border-radius: 3px;">
-        <h1>Pre-Kindergarten Application</h1>
+        <h1>K-12 Registration</h1>
         Step: @StepTracker.Step(FormName)
         <hr />
         <br />
         @switch (StepTracker.Step(FormName))
         {
             case 0:
-                <PreKWarningSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 1:
                 <DataPrivacySection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 2:
+            case 1:
                 <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 3:
+            case 2:
                 <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 4:
+            case 3:
                 <StudentDemographicsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
         }

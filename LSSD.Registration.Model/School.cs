@@ -8,12 +8,15 @@ namespace LSSD.Registration.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string PrincipalName { get; set; }
-        public PhoneNumber PhoneNumber { get; set; }
-        public Address Address { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Community { get; set; }
+        public string WebsiteURL { get; set; }
+        public  string EmailAddress { get; set; }
+        public Address MailingAddress { get; set; }
+        public Address PhysicalAddress { get; set; }
         public string DAN { get; set; }
+        public string GradesOffered { get; set; }
         public bool OffersPreK { get; set; }
-        public bool OffersKindergarten { get; set; }
         public bool OffersKTo9 { get; set; }
         public bool OffersHighSchool { get; set; }
     }

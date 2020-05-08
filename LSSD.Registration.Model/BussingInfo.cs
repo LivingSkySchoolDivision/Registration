@@ -13,7 +13,7 @@ namespace LSSD.Registration.Model
         [Required]
         public bool WeighsMoreThan18kg { get; set; }
 
-        public LandDescription LandDescription { get; set; }
+        public string LandDescription { get; set; }
         public Address BussingAddress { get; set; }
 
     }

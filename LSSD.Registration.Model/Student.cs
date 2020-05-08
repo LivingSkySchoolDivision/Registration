@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LSSD.Registration.Model.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -20,19 +21,21 @@ namespace LSSD.Registration.Model
         public string LegalMiddleName { get; set; }
         public Gender Gender { get; set; }
         [Required]
+        [BirthdayValidator(MinimumAge = 3, MaximumAge = 21)]
         public DateTime DateOfBirth { get; set; }
-        public Address PhysicalAddress { get; set; }
+        public Address PrimaryAddress { get; set; }
         public Address MailingAddress { get; set; }
-        public LandDescription LandLocation { get; set; }
+        public string LandDescription { get; set; }
         public string PreviousSchools { get; set; }
         public string LanguageSpokenAtHome { get; set; }
         public string SaskHealthNumber { get; set; }
         public string MedicalNotes { get; set; }
-        public string Notes { get; set; }
 
 
         public Student()
         {
+            this.PrimaryAddress = new Address() { AddressType = "Primary" };
+            this.MailingAddress = new Address() { AddressType = "Mailing" };
             this.LanguageSpokenAtHome = "English";
         }
 

@@ -27,6 +27,17 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
             return 0;
         }
 
+        public void SetStep(string FormName, int Num)
+        {
+            if (!currentStepByFormName.ContainsKey(FormName))
+            {
+                currentStepByFormName.Add(FormName, Num);
+            } else
+            {
+                currentStepByFormName[FormName] = Num;
+            }
+        }
+
         public void NextStep(string FormName)
         {
             if (!currentStepByFormName.ContainsKey(FormName))
