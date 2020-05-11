@@ -28,10 +28,21 @@ namespace LSSD.Registration.Model
         public bool LittleOpportunityToInteractWithSameAge { get; set; }
         public bool CanUseBathroomAlone { get; set; }
         public bool PottyTrainingInProgress { get; set; }
-        public List<StudentAssistanceProvider> AssistanceProviders { get; set; }
-        public bool ConsentToShareInfoBetweenAssistanceProvidersAndSchool { get; set; }
+        public bool ConsentToShareFromAgencies { get; set; }
         public DateTime ConsentGrantedDate { get; set; }
         public string Concerns { get; set; }
+
+        public bool AssistanceFromKidsFirst { get; set; }
+        public bool AssistanceFromEarlyChildhoodIntervention { get; set; }
+        public bool AssistanceFromOccupationOrPhysicalTherapist { get; set; }
+        public bool AssistanceFromChildhoodPsychologist { get; set; }
+        public bool AssistanceFromPreSchoolOrDaycare { get; set; }
+        public bool AssistanceFromLicensedChildCare { get; set; }
+        public bool AssistanceFromAutismConsultant { get; set; }
+        public bool AssistanceFromSpeechLangagePathologist { get; set; }
+        public bool AssistanceFromSocialServices { get; set; }
+        public bool AssistanceFromKinsmenChildDevCenter { get; set; }
+        public bool AssistanceFromAboriginalHeadstart { get; set; }
 
     }
 }
