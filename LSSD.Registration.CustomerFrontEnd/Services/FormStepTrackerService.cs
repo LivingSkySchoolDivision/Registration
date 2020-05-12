@@ -11,7 +11,6 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
 
         Dictionary<string, int> currentStepByFormName = new Dictionary<string, int>();
 
-
         private void flagChanged()
         {
             StepHasChanged?.Invoke();
@@ -53,11 +52,12 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
         {
             if (currentStepByFormName.ContainsKey(FormName))
             {
-                if (currentStepByFormName[FormName] > 0)
+                currentStepByFormName[FormName]--;
+                if (currentStepByFormName[FormName] < 0)
                 {
-                    currentStepByFormName[FormName]--;
-                    flagChanged();
+                    currentStepByFormName[FormName] = 0;
                 }
+                flagChanged();
             }
         }
     }

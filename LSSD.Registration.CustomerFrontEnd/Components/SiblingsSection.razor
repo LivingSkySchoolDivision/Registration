@@ -1,0 +1,105 @@
+﻿@using LSSD.Registration.Model
+@using System.Linq;
+@using System.Collections.Generic;
+
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public Microsoft.AspNetCore.ProtectedBrowserStorage.ProtectedLocalStorage Storage { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    private const string SectionStorageKey = "REG-SECTION-SIBLINGS";
+
+    SiblingInfo Section = new SiblingInfo();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Attempt to load a saved section from browser storage.
+        // If one doesn't exist, make a new one.
+        SiblingInfo LoadedSection = await Storage.GetAsync<SiblingInfo>(SectionStorageKey);
+        if (LoadedSection != null)
+        {
+            Section = LoadedSection;
+        }
+        else
+        {
+            await Storage.SetAsync(SectionStorageKey, Section);
+        }
+    }
+
+    protected async Task OnClick_PreviousStepButton()
+    {
+        await saveForm();
+        StepTracker.PreviousStep(FormName);
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        Console.WriteLine("Handling submit");
+        await saveForm();
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async Task HandleInValidSubmit()
+    {
+        await saveForm();
+    }
+
+    private async Task saveForm()
+    {
+        await Storage.SetAsync(SectionStorageKey, Section);
+    }
+
+    private void AddSibling()
+    {
+        Section.Siblings.Add(new Sibling());
+    }
+
+    private async void RemoveSibling(Sibling sibling)
+    {
+        if (Section.Siblings.Contains(sibling))
+        {
+            Section.Siblings.Remove(sibling);
+        }
+    }
+}
+
+<div class="container">
+    <h2>Sibling Information</h2>
+    <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <h3>Siblings</h3>
+        <p>Siblings are other school-aged children currently enrolled at a school in Saskatchewan (including schools in other school divisions).</p>
+        <button type="button" class="btn-sm btn-primary" @onclick="AddSibling">Add Sibling</button>
+        @foreach (Sibling Sibling in Section.Siblings)
+        {
+            <hr />
+            <div class="form-group">
+                Sibling
+            </div>
+            <div class="form-row">
+                <button type="button" class="btn-sm btn-link col-sm-1" @onclick="@(() => RemoveSibling(Sibling))">Remove</button>
+            </div>
+        }
+
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col">
+                    <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>

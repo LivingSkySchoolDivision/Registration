@@ -27,14 +27,15 @@
         @switch (StepTracker.Step(FormName))
         {
             case 0:
-                <PreKInfoSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                //<PreKWarningSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                <PreKWarningSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 1:
+                <ContactsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 //<DataPrivacySection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 2:
-                <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                <SiblingsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                //<SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 3:
                 <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />

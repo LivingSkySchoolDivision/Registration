@@ -9,8 +9,7 @@ namespace LSSD.Registration.Model.Forms
         public int Id { get; set; }
         public string Grade { get; set; }
         public Student Student { get; set; }
-        public List<Contact> Contacts { get; set; }
-        public List<Sibling> Siblings { get; set; }
+        public ContactsInfo Contacts { get; set; }
         public BussingInfo BussingInfo { get; set; }
         public FirstNationsInfo FirstNationsInfo { get; set; }
         public EALInfo EALInfo { get; set; }
