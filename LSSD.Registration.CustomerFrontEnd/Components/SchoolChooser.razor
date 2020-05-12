@@ -110,7 +110,7 @@ else
                             <b>Email:</b> @school.EmailAddress <br />
                             <b>Grades:</b> @school.GradesOffered
                         </div>
-                        <button @onclick="@(() => selectSchool(school))" class="btn btn-primary col-sm-2">Register</button>
+                        <button type="submit" @onclick="@(() => selectSchool(school))" class="btn btn-primary col-sm-2">Register</button>
                     </div>
                 </div>
                 <br/><br/>
@@ -123,7 +123,7 @@ else
     <div class="form-group">
         <div class="form-row">
             <div class="col">
-                <button @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
             </div>
         </div>
     </div>

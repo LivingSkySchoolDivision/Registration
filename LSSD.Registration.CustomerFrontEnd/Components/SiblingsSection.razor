@@ -42,7 +42,6 @@
 
     protected async Task HandleValidSubmit()
     {
-        Console.WriteLine("Handling submit");
         await saveForm();
         StepTracker.NextStep(FormName);
     }
