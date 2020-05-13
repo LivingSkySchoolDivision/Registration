@@ -58,6 +58,24 @@
             await Storage.SetAsync(SectionStorageKey, Section);
         }
     }
+
+    private void updatePreferredName()
+    {
+        if (string.IsNullOrEmpty(Section.FirstName) && !string.IsNullOrEmpty(Section.LegalFirstName))
+        {
+            Section.FirstName = Section.LegalFirstName;
+        }
+
+        if (string.IsNullOrEmpty(Section.MiddleName) && !string.IsNullOrEmpty(Section.LegalMiddleName))
+        {
+            Section.MiddleName = Section.LegalMiddleName;
+        }
+
+        if (string.IsNullOrEmpty(Section.LastName) && !string.IsNullOrEmpty(Section.LegalLastName))
+        {
+            Section.LastName = Section.LegalLastName;
+        }
+    }
 }
 <div class="container">
     <h2>Student Information</h2>
@@ -73,15 +91,15 @@
             </div>
             <div class="row col-sm-8 p-0">
                 <div class="col-sm-4 m-0">
-                    <InputText id="studentLegalFirstName" class="form-control" @bind-Value="@Section.LegalFirstName" placeholder="First"></InputText>
+                    <InputText id="studentLegalFirstName" class="form-control" @bind-Value="@Section.LegalFirstName" @onblur="updatePreferredName" placeholder="First"></InputText>
                     <ValidationMessage For="@(() => Section.LegalFirstName)" />
                 </div>
                 <div class="col-sm-3 m-0">
-                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LegalMiddleName" placeholder="Middle"></InputText>
+                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LegalMiddleName" @onblur="updatePreferredName" placeholder="Middle"></InputText>
                     <ValidationMessage For="@(() => Section.LegalMiddleName)" />
                 </div>
                 <div class="col-sm-4 m-0">
-                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LegalLastName" placeholder="Last"></InputText>
+                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LegalLastName" @onblur="updatePreferredName" placeholder="Last"></InputText>
                     <ValidationMessage For="@(() => Section.LegalLastName)" />
                 </div>
             </div>
