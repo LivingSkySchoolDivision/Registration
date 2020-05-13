@@ -86,11 +86,12 @@
         <DataAnnotationsValidator />
         <ValidationSummary />
         <button type="button" class="btn-sm btn-primary" @onclick="AddContact">Add Contact</button>
+        <br />
+        <br />
         @if (Section.Contacts.Count > 0)
         {
             @foreach (Contact Contact in Section.Contacts)
             {
-                <hr />
                 <div class="form-group container p-2" style="border: 1px solid #dbdbdb;border-radius:2px">
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">First Name: </label>
@@ -260,20 +261,20 @@
                         </div>
                     </div>
 
-
                     <div class="form-row">
                         <button type="button" class="btn-sm btn-link col-sm-1" @onclick="@(() => RemoveContact(Contact))">Remove</button>
                     </div>
                 </div>
             }
-            <button type="button" class="btn-sm btn-primary" @onclick="AddContact">Add another contact</button><br /><br />
+
+            <button type="button" class="btn-sm btn-primary" @onclick="AddContact">Add another contact</button>
         }
         else
         {
             <p><i>No contacts.</i></p>
         }
 
-
+        <br /><br />
         <div class="form-group">
             <div class="form-row">
                 <div class="col">

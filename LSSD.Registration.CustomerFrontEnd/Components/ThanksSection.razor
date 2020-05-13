@@ -1,0 +1,45 @@
+﻿@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    private void OnClick_NextStepButton()
+    {
+        //StepTracker.NextStep(FormName);
+        StepTracker.SetStep(FormName, 0);
+    }
+
+    protected void OnClick_PreviousStepButton()
+    {
+        StepTracker.PreviousStep(FormName);
+    }
+
+}
+<div class="container" style="text-align: center;">
+    <div class="alert alert-success " role="alert" style="text-align: initial">
+        <h1 class="alert-heading">Thanks!</h1>
+        <p>This is where we would thank you for your registration. We might even email you when your registration is marked as complete, if we decided to build that into this platform.</p>
+        <p>At this time, no data is actually submitted anywhere, so this is the end of the road.</p>
+        <p>Use the buttons below to go back.</p>
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            @if (StepNumber > 0)
+            {
+                <div class="col">
+                    <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                </div>
+            }
+            <div class="col">
+                <button type="button" @onclick="OnClick_NextStepButton" class="btn btn-danger btn-block">Go back to beginning</button>
+            </div>
+        </div>
+    </div>
+</div>
+

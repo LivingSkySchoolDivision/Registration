@@ -1,5 +1,41 @@
-﻿<h3>GradeChooser</h3>
+﻿@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
-@code {
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    private void OnClick_NextStepButton()
+    {
+        StepTracker.NextStep(FormName);
+    }
+
+    protected void OnClick_PreviousStepButton()
+    {
+        StepTracker.PreviousStep(FormName);
+    }
 
 }
+
+    <div class="container">
+        <h2>Grade Chooser</h2>
+        <p>After choosing a school, this page would simply ask the grade the user is registering their child for.</p>
+        <p>This page is not complete yet.</p>
+        <br /><br />
+              <div class="form-group">
+                  <div class="form-row">
+                      @if (StepNumber > 0)
+                      {
+                          <div class="col">
+                              <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                          </div>
+                      }
+                      <div class="col">
+                          <button type="button" @onclick="OnClick_NextStepButton" class="btn btn-secondary btn-block">Next Step</button>
+                      </div>
+                  </div>
+              </div>
+    </div>

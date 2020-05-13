@@ -61,7 +61,7 @@
         Section.Siblings.Add(new Sibling());
     }
 
-    private async void RemoveSibling(Sibling sibling)
+    private void RemoveSibling(Sibling sibling)
     {
         if (Section.Siblings.Contains(sibling))
         {
@@ -71,25 +71,59 @@
 }
 
 <div class="container">
-    <h2>Sibling Information</h2>
+    <h2>Siblings</h2>
     <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
-
-        <h3>Siblings</h3>
-        <p>Siblings are other school-aged children currently enrolled at a school in Saskatchewan (including schools in other school divisions).</p>
+        <p>Siblings are other school-aged children that live with the student, and are enrolled at a school in Saskatchewan (including schools in other school divisions).</p>
+        <p>Do not include graduated students or university students.</p>
         <button type="button" class="btn-sm btn-primary" @onclick="AddSibling">Add Sibling</button>
-        @foreach (Sibling Sibling in Section.Siblings)
+        <br />
+        <br />
+
+        @if (Section.Siblings.Count > 0)
         {
-            <hr />
-            <div class="form-group">
-                Sibling
-            </div>
-            <div class="form-row">
-                <button type="button" class="btn-sm btn-link col-sm-1" @onclick="@(() => RemoveSibling(Sibling))">Remove</button>
-            </div>
+            @foreach (Sibling Sibling in Section.Siblings)
+            {
+                <div class="form-group container p-2" style="border: 1px solid #dbdbdb; border-radius: 2px;">
+                    <div class="form-row">
+                        <label class="col-sm-3 font-weight-normal">First Name: </label>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Sibling.FirstName" placeholder="First"></InputText>
+                        <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Sibling.FirstName)" />
+                    </div>
+                    <div class="form-row">
+                        <label class="col-sm-3 font-weight-normal">Last Name: </label>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Sibling.LastName" placeholder="Last"></InputText>
+                        <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Sibling.LastName)" />
+                    </div>
+                    <div class="form-row">
+                        <label class="col-sm-3 font-weight-normal">Date of Birth: </label>
+                        <InputDate id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Sibling.DateOfBirth"></InputDate>
+                        <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Sibling.DateOfBirth)" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label class="col-sm-3 font-weight-normal">School attending: </label>
+                            <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Sibling.SchoolAttending" placeholder="School Name"></InputText>
+                            <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Sibling.SchoolAttending)" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <button type="button" class="btn-sm btn-link col-sm-1" @onclick="@(() => RemoveSibling(Sibling))">Remove</button>
+                    </div>
+                </div>
+            }
+
+            <button type="button" class="btn-sm btn-primary" @onclick="AddSibling">Add another sibling</button>
+        }
+        else
+        {
+            <p><i>No siblings.</i></p>
         }
 
+        <br /><br />
         <div class="form-group">
             <div class="form-row">
                 <div class="col">

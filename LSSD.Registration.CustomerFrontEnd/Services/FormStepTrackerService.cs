@@ -35,6 +35,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
             {
                 currentStepByFormName[FormName] = Num;
             }
+            flagChanged();
         }
 
         public void NextStep(string FormName)
