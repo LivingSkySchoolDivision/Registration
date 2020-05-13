@@ -198,6 +198,13 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-sm-3">
+                                        <label class="font-weight-normal">Postal Code</label>
+                                    </div>
+                                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8 form-control-sm" @bind-Value="@Contact.PrimaryAddress.PostalCode" placeholder="H0H 0H0"></InputText>
+                                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Contact.PrimaryAddress.PostalCode)" />
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-sm-3">
                                         <label class="font-weight-normal">Province:</label>
                                     </div>
                                     <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8 form-control-sm" @bind-Value="@Contact.PrimaryAddress.Province" placeholder="SK"></InputText>
@@ -242,6 +249,13 @@
                                     </div>
                                     <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8 form-control-sm" @bind-Value="@Contact.MailingAddress.City" placeholder="Cake Town"></InputText>
                                     <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Contact.MailingAddress.City)" />
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-sm-3">
+                                        <label class="font-weight-normal">Postal Code</label>
+                                    </div>
+                                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8 form-control-sm" @bind-Value="@Contact.MailingAddress.PostalCode" placeholder="H0H 0H0"></InputText>
+                                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Contact.MailingAddress.PostalCode)" />
                                 </div>
                                 <div class="form-row">
                                     <div class="col-sm-3">
