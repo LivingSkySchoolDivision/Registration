@@ -70,5 +70,22 @@ namespace LSSD.Registration.Model
             }
         }
 
+        public bool IsValidMailing { 
+            get
+            {
+                if (
+                    !string.IsNullOrEmpty(this.Country) &&
+                    !string.IsNullOrEmpty(this.Province) &&
+                    !string.IsNullOrEmpty(this.City) &&
+                    !string.IsNullOrEmpty(this.Street) &&
+                    !string.IsNullOrEmpty(this.PostalCode)
+                    ) {
+                    return true;
+                }
+                
+                return false;
+            } 
+        }
+
     }
 }

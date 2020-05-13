@@ -79,6 +79,28 @@ namespace LSSD.Registration.Model
                     "Please provide a primary address.", new[] { nameof(PrimaryAddress) }));
             }
 
+            if (!string.IsNullOrEmpty(this.LandDescription))
+            {
+                if (this.MailingAddress != null)
+                {
+                    if (
+                        (string.IsNullOrEmpty(this.MailingAddress.Country))
+                        && (string.IsNullOrEmpty(this.MailingAddress.Province))
+                        && (string.IsNullOrEmpty(this.MailingAddress.City))
+                        && (string.IsNullOrEmpty(this.MailingAddress.Street))
+                        && (string.IsNullOrEmpty(this.MailingAddress.PostalCode))
+                        )
+                    {
+                        errors.Add(new ValidationResult(
+                        "Mailing address is required when providing land description.", new[] { nameof(MailingAddress) }));
+                    }
+                } else
+                {
+                    errors.Add(new ValidationResult(
+                        "Mailing address is required when providing land description.", new[] { nameof(MailingAddress) }));
+                }
+            }
+
 
             return errors;
         }
