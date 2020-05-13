@@ -15,5 +15,10 @@ namespace LSSD.Registration.Model
         [Required]
         [BirthdayValidator(MinimumAge = 3, MaximumAge = 21)]
         public DateTime DateOfBirth { get; set; }
+
+        public Sibling()
+        {
+            this.DateOfBirth = DateTime.Today;
+        }
     }
 }

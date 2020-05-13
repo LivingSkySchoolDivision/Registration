@@ -37,6 +37,7 @@ namespace LSSD.Registration.Model
             this.PrimaryAddress = new Address() { AddressType = "Primary" };
             this.MailingAddress = new Address() { AddressType = "Mailing" };
             this.LanguageSpokenAtHome = "English";
+            this.DateOfBirth = DateTime.Today;
         }
 
     }
