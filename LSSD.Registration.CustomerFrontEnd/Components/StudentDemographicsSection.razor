@@ -151,8 +151,8 @@
                 <label for="studentMedical">Previous Saskatchewan Schools: </label>
                 <p><small class="form-text text-muted">Has this child ever attended a different school <b>within the province of Saskatcheawn</b>? Please enter the name and city for each school. This information helps prevent duplicate registrations for the same student.</small></p>
             </div>
-            <InputTextArea id="studentMedical" class="form-control col-sm-8" @bind-Value="@Section.MedicalNotes"></InputTextArea>
-            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MedicalNotes)" />
+            <InputTextArea id="studentMedical" class="form-control col-sm-8" @bind-Value="@Section.PreviousSchools"></InputTextArea>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PreviousSchools)" />
         </div>
 
         <div class="form-group">
