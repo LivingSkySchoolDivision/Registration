@@ -14,6 +14,7 @@ namespace LSSD.Registration.Model
         public DateTime FirstCanadianSchoolDate { get; set; }
         public bool  IsFirstCanadianSchool { get; set; }
         public ResidencyType ResidencyType { get; set; }
+        public string LanguageSpokenAtHome { get; set; }
 
         public string BirthCountry { get; set; }
 
@@ -24,5 +25,10 @@ namespace LSSD.Registration.Model
 
         public string PreviousProvince { get; set; }
         public string PreviousCountry { get; set; }
+
+        public EALInfo()
+        {
+            this.LanguageSpokenAtHome = FormDefaults.Language;
+        }
     }
 }

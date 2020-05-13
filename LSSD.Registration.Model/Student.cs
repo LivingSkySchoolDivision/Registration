@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LSSD.Registration.Model
 {
-    public class Student
+    public class Student : IValidatableObject
     {
         public int Id { get; set; }
         [Required]
@@ -31,7 +31,6 @@ namespace LSSD.Registration.Model
         public string SaskHealthNumber { get; set; }
         public string MedicalNotes { get; set; }
 
-
         public Student()
         {
             this.PrimaryAddress = new Address() { AddressType = "Primary" };
@@ -40,5 +39,48 @@ namespace LSSD.Registration.Model
             this.DateOfBirth = DateTime.Today;
         }
 
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> errors = new List<ValidationResult>();
+
+            if (this.PrimaryAddress != null)
+            {
+                if (string.IsNullOrEmpty(this.PrimaryAddress.Province))
+                {
+                    errors.Add(new ValidationResult(
+                        "Please provide a province for the primary address.", new[] { nameof(PrimaryAddress) }));
+                }
+
+                if (string.IsNullOrEmpty(this.PrimaryAddress.Country))
+                {
+                    errors.Add(new ValidationResult(
+                        "Please provide a country for the primary address.", new[] { nameof(PrimaryAddress) }));
+                }
+
+                if (string.IsNullOrEmpty(this.PrimaryAddress.City))
+                {
+                    errors.Add(new ValidationResult(
+                        "Please provide a city for the primary address.", new[] { nameof(PrimaryAddress) }));
+                }
+
+                // Require a house & street _or_ a land location
+                if (
+                    (string.IsNullOrEmpty(this.PrimaryAddress.Street)) 
+                    && (string.IsNullOrEmpty(this.PrimaryAddress.HouseNumber))
+                    && (string.IsNullOrEmpty(this.LandDescription))
+                    )
+                {
+                    errors.Add(new ValidationResult(
+                        "Please provide either a primary address or a land description of primary residence.", new[] { nameof(PrimaryAddress) }));
+                }
+            } else
+            {
+                errors.Add(new ValidationResult(
+                    "Please provide a primary address.", new[] { nameof(PrimaryAddress) }));
+            }
+
+
+            return errors;
+        }
     }
 }

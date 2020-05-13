@@ -16,6 +16,11 @@ namespace LSSD.Registration.Model
         public string PostalCode { get; set; }
         public string Country { get; set; }
 
+        public Address()
+        {
+            this.Province = FormDefaults.Province;
+            this.Country = FormDefaults.Country;
+        }
 
         public string Line1 { 
             get {

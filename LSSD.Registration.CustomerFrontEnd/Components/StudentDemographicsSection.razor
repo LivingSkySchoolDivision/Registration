@@ -167,6 +167,9 @@
 
         @if (usesLandDescription)
         {
+            <div class="form-group">
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress)" />
+            </div>
             <div class="form-group row">
                 <div class="col-sm-3">
                     <label for="studentLandDescription">Land Description</label>
@@ -207,7 +210,9 @@
         }
         else
         {
-
+            <div class="form-group">
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress)" />
+            </div>
             <div class="form-group">
                 <div class="form-group row">
                     <div class="col-sm-3">
@@ -267,6 +272,9 @@
         <br />
         <div class="form-group">
             <h3>Mailing Address</h3>
+            <div class="form-group">
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MailingAddress)" />
+            </div>
             <div class="offset-sm-3">
                 @if (!usesLandDescription)
                 {
