@@ -305,8 +305,8 @@
                     <div class="col-sm-3">
                         <label>Unit Number </label>
                     </div>
-                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.UnitNumber" placeholder="A"></InputText>
-                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.UnitNumber)" />
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.MailingAddress.UnitNumber" placeholder="A"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MailingAddress.UnitNumber)" />
                 </div>
             </div>
             <div class="form-group">
@@ -314,8 +314,8 @@
                     <div class="col-sm-3">
                         <label>House Number </label>
                     </div>
-                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.HouseNumber" placeholder="123"></InputText>
-                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.HouseNumber)" />
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.MailingAddress.HouseNumber" placeholder="123"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MailingAddress.HouseNumber)" />
                 </div>
             </div>
             <div class="form-group">
@@ -323,8 +323,8 @@
                     <div class="col-sm-3">
                         <label>Street </label>
                     </div>
-                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Street" placeholder="Fake St."></InputText>
-                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.Street)" />
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.MailingAddress.Street" placeholder="Fake St."></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MailingAddress.Street)" />
                 </div>
             </div>
             <div class="form-group">
@@ -332,8 +332,17 @@
                     <div class="col-sm-3">
                         <label>City</label>
                     </div>
-                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.City" placeholder="Cake Town"></InputText>
-                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.City)" />
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.MailingAddress.City" placeholder="Cake Town"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MailingAddress.City)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label>Postal Code:</label>
+                    </div>
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.MailingAddress.PostalCode" placeholder="H0H 0H0"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MailingAddress.PostalCode)" />
                 </div>
             </div>
             <div class="form-group">
@@ -341,8 +350,8 @@
                     <div class="col-sm-3">
                         <label>Province:</label>
                     </div>
-                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Province" placeholder="SK"></InputText>
-                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.UnitNumber)" />
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.MailingAddress.Province" placeholder="SK"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MailingAddress.UnitNumber)" />
                 </div>
             </div>
             <div class="form-group">
@@ -350,8 +359,8 @@
                     <div class="col-sm-3">
                         <label>Country:</label>
                     </div>
-                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.PrimaryAddress.Country" placeholder="Canada"></InputText>
-                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.PrimaryAddress.Country)" />
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@Section.MailingAddress.Country" placeholder="Canada"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Section.MailingAddress.Country)" />
                 </div>
             </div>
         }
