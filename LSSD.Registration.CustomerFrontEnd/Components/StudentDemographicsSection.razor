@@ -37,6 +37,10 @@
 
     private async Task saveForm()
     {
+        if (mailingAddressSameAsPhysical && !usesLandDescription)
+        {
+            Section.MailingAddress = Section.PrimaryAddress;
+        }
         await Storage.SetAsync(SectionStorageKey, Section);
     }
 
