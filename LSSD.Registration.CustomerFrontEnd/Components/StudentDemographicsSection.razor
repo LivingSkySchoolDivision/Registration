@@ -15,6 +15,7 @@
 
     private bool mailingAddressSameAsPhysical = true;
     private bool usesLandDescription = false;
+    private bool usePreferredName = false;
     private const string SectionStorageKey = "REG-SECTION-STUDENT";
     Student Section = new Student();
 
@@ -84,45 +85,58 @@
         <DataAnnotationsValidator />
         <ValidationSummary />
 
-        <div class="form-group row">
-            <div class="col-sm-3">
-                <label>Legal name: </label>
-                <p><small class="form-text text-muted">The exact name on the birth certificate. Required by the Saskatchewan Ministry of Education.</small></p>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col-sm-3">
+                    <label>Legal name: </label>
+                    <p><small class="form-text text-muted">The exact name on the birth certificate. Required by the Saskatchewan Ministry of Education.</small></p>
+                </div>
+                <div class="row col-sm-8 p-0">
+                    <div class="col-sm-4 m-0">
+                        <InputText id="studentLegalFirstName" class="form-control" @bind-Value="@Section.LegalFirstName" @onblur="updatePreferredName" placeholder="First"></InputText>
+                        <ValidationMessage For="@(() => Section.LegalFirstName)" />
+                    </div>
+                    <div class="col-sm-3 m-0">
+                        <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LegalMiddleName" @onblur="updatePreferredName" placeholder="Middle"></InputText>
+                        <ValidationMessage For="@(() => Section.LegalMiddleName)" />
+                    </div>
+                    <div class="col-sm-4 m-0">
+                        <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LegalLastName" @onblur="updatePreferredName" placeholder="Last"></InputText>
+                        <ValidationMessage For="@(() => Section.LegalLastName)" />
+                    </div>
+                </div>
             </div>
-            <div class="row col-sm-8 p-0">
-                <div class="col-sm-4 m-0">
-                    <InputText id="studentLegalFirstName" class="form-control" @bind-Value="@Section.LegalFirstName" @onblur="updatePreferredName" placeholder="First"></InputText>
-                    <ValidationMessage For="@(() => Section.LegalFirstName)" />
-                </div>
-                <div class="col-sm-3 m-0">
-                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LegalMiddleName" @onblur="updatePreferredName" placeholder="Middle"></InputText>
-                    <ValidationMessage For="@(() => Section.LegalMiddleName)" />
-                </div>
-                <div class="col-sm-4 m-0">
-                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LegalLastName" @onblur="updatePreferredName" placeholder="Last"></InputText>
-                    <ValidationMessage For="@(() => Section.LegalLastName)" />
-                </div>
-            </div>
-        </div>
 
-        <div class="form-group row">
-            <label class="col-sm-3">Preferred name: </label>
-            <div class="row col-sm-8 p-0">
-                <div class="col-sm-4 m-0">
-                    <InputText id="studentLegalFirstName" class="form-control" @bind-Value="@Section.FirstName" placeholder="First"></InputText>
-                    <ValidationMessage For="@(() => Section.FirstName)" />
-                </div>
-                <div class="col-sm-3 m-0">
-                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.MiddleName" placeholder="Middle"></InputText>
-                    <ValidationMessage For="@(() => Section.MiddleName)" />
-                </div>
-                <div class="col-sm-4 m-0">
-                    <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LastName" placeholder="Last"></InputText>
-                    <ValidationMessage For="@(() => Section.LastName)" />
+            <div class="form-row">
+                <div class="offset-sm-3">
+                    <InputCheckbox id="usesLandDescription" @bind-Value="@usePreferredName" />
+                    <label class="form-check-label" for="usesLandDescription" style="font-weight: normal;">
+                        Student goes by a different name
+                    </label>
                 </div>
             </div>
-        </div>
 
+            @if (usePreferredName)
+            {
+                <div class="form-row">
+                    <label class="col-sm-3">Preferred name: </label>
+                    <div class="row col-sm-8 p-0">
+                        <div class="col-sm-4 m-0">
+                            <InputText id="studentLegalFirstName" class="form-control" @bind-Value="@Section.FirstName" placeholder="First"></InputText>
+                            <ValidationMessage For="@(() => Section.FirstName)" />
+                        </div>
+                        <div class="col-sm-3 m-0">
+                            <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.MiddleName" placeholder="Middle"></InputText>
+                            <ValidationMessage For="@(() => Section.MiddleName)" />
+                        </div>
+                        <div class="col-sm-4 m-0">
+                            <InputText id="studentLegalLastName" class="form-control" @bind-Value="@Section.LastName" placeholder="Last"></InputText>
+                            <ValidationMessage For="@(() => Section.LastName)" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
 
         <div class="form-group row">
             <div class="col-sm-3">
