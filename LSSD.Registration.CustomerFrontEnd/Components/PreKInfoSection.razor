@@ -1,12 +1,13 @@
 ﻿@using LSSD.Registration.Model
-@using System.Linq; 
+@using System.Linq;
+@using Blazored.LocalStorage;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public Microsoft.AspNetCore.ProtectedBrowserStorage.ProtectedLocalStorage Storage { get; set; }
+    public ILocalStorageService Storage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -14,8 +15,6 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    private const string SectionStorageKey = "REG-SECTION-PREK";
-    private const string SectionStorageKey_StudentDemo = "REG-SECTION-STUDENT";
     PreKInfo Section = new PreKInfo()
     {
         LanguageSpokenAtHome = "English"
@@ -45,24 +44,24 @@
 
     private async Task saveForm()
     {
-        await Storage.SetAsync(SectionStorageKey, Section);
+        await Storage.SetItemAsync(StorageKeys.PreKInfo, Section);
     }
 
     protected override async Task OnInitializedAsync()
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        PreKInfo LoadedSection = await Storage.GetAsync<PreKInfo>(SectionStorageKey);
+        PreKInfo LoadedSection = await Storage.GetItemAsync<PreKInfo>(StorageKeys.PreKInfo);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await Storage.SetAsync(SectionStorageKey, Section);
+            await Storage.SetItemAsync(StorageKeys.PreKInfo, Section);
         }
 
-        Student previouslyEnteredStudent = await Storage.GetAsync<Student>(SectionStorageKey_StudentDemo);
+        Student previouslyEnteredStudent = await Storage.GetItemAsync<Student>(StorageKeys.StudentDemographics);
         if (previouslyEnteredStudent != null)
         {
             ThisStudent = previouslyEnteredStudent;
@@ -228,7 +227,7 @@
         </div>
     </div>
 
-    
+
     <div class="form-group">
         <div class="form-row">
             <label class="font-weight-normal col-sm-4">Does @ThisStudent.FirstName receive support or assistance from any of the following:</label>
@@ -327,7 +326,7 @@
         <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.Concerns)" />
     </div>
 
-   
+
     <div class="form-group">
         <div class="form-row">
             @if (StepNumber > 0)
