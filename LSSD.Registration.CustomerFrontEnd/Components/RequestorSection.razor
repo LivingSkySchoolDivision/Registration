@@ -1,5 +1,7 @@
-﻿@using LSSD.Registration.Model
+﻿@using LSSD.Registration.Model;
 @using Blazored.LocalStorage;
+@using LSSD.Registration.CustomerFrontEnd.Helpers; 
+
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
@@ -7,40 +9,40 @@
     [Inject]
     public ILocalStorageService Storage { get; set; }
 
-[Parameter]
-public string FormName { get; set; }
+    [Parameter]
+    public string FormName { get; set; }
 
-[Parameter]
-public int StepNumber { get; set; }
+    [Parameter]
+    public int StepNumber { get; set; }
 
-FormSubmitter Section = new FormSubmitter();
+    FormSubmitter Section = new FormSubmitter();
 
-protected override async Task OnInitializedAsync()
-{
-    // Attempt to load a saved section from browser storage.
-    // If one doesn't exist, make a new one.
-    FormSubmitter LoadedSection = await Storage.GetItemAsync<FormSubmitter>(StorageKeys.Requestor);
-    if (LoadedSection != null)
+    protected override async Task OnInitializedAsync()
     {
-        Section = LoadedSection;
+        // Attempt to load a saved section from browser storage.
+        // If one doesn't exist, make a new one.
+        FormSubmitter LoadedSection = await BrowserStorageHelper.GetItem<FormSubmitter>(Storage, StorageKeys.Requestor);
+        if (LoadedSection != null)
+        {
+            Section = LoadedSection;
+        }
+        else
+        {
+            await BrowserStorageHelper.SetItem(Storage, StorageKeys.Requestor, Section);
+        }
     }
-    else
+
+    protected async Task HandleValidSubmit()
     {
-        await Storage.SetItemAsync(StorageKeys.Requestor, Section);
+        await BrowserStorageHelper.SetItem(Storage, StorageKeys.Requestor, Section);
+        StepTracker.NextStep(FormName);
     }
-}
 
-protected async Task HandleValidSubmit()
-{
-    await Storage.SetItemAsync(StorageKeys.Requestor, Section);
-    StepTracker.NextStep(FormName);
-}
-
-protected async Task OnClick_PreviousStepButton()
-{
-    await Storage.SetItemAsync(StorageKeys.Requestor, Section);
-    StepTracker.PreviousStep(FormName);
-}
+    protected async Task OnClick_PreviousStepButton()
+    {
+        await BrowserStorageHelper.SetItem(Storage, StorageKeys.Requestor, Section);
+        StepTracker.PreviousStep(FormName);
+    }
 }
 <div class="container">
 
