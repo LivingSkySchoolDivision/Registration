@@ -9,7 +9,7 @@
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     string FormName = "PREK";
-    private const int totalSteps = 9;
+    private const int totalSteps = 12;
 
     protected override void OnInitialized()
     {
@@ -21,57 +21,70 @@
         StateHasChanged();
     }
 }
-    <div class="container" style="border: 1px solid #C0C0C0; border-radius: 3px;">
-        <h1>Pre-Kindergarten Application</h1>
-        <div class="progress">
-            @{
-                int step = StepTracker.Step(FormName);
-                int percentComplete = (int)Math.Round((decimal)(((decimal)step / (decimal)totalSteps)) * 100, 0);
-            }
-            @if (percentComplete < 100)
-            {
-                <div class="progress-bar" role="progressbar" style="width: @(percentComplete)%" aria-valuenow="@(percentComplete)" aria-valuemin="0" aria-valuemax="100"></div>
-            }
-            else
-            {
-                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            }
-        </div>
-        <hr />
-        <br />
-        @switch (StepTracker.Step(FormName))
-        {
-            case 0:
-                <DemoWarning FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 1:
-                <PreKWarningSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 2:
-                <DataPrivacySection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 3:
-                <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 4:
-                <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 5:
-                <StudentDemographicsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 6:
-                <ContactsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 7:
-                <SiblingsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 8:
-                <PreKInfoSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 9:
-                <ThanksSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
+<div class="container" style="border: 1px solid #C0C0C0; border-radius: 3px;">
+    <h1>Pre-Kindergarten Application</h1>
+    <div class="progress">
+        @{
+            int step = StepTracker.Step(FormName);
+            int percentComplete = (int)Math.Round((decimal)(((decimal)step / (decimal)totalSteps)) * 100, 0);
         }
-
-        <br /><br />
+        @if (percentComplete < 100)
+        {
+            <div class="progress-bar" role="progressbar" style="width: @(percentComplete)%" aria-valuenow="@(percentComplete)" aria-valuemin="0" aria-valuemax="100"></div>
+        }
+        else
+        {
+            <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+        }
     </div>
+    <hr />
+    <br />
+    @switch (StepTracker.Step(FormName))
+    {
+        case 0:
+            <DemoWarning FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 1:
+            <PreKWarningSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 2:
+            <DataPrivacySection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 3:
+            <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 4:
+            <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 5:
+            <StudentDemographicsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 6:
+            <ContactsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 7:
+            <SiblingsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 8:
+            <PreKInfoSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 9:
+            <BussingInfoSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 10:
+            <EALSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 11:
+            <FirstNationsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+        case 12:
+            <ThanksPreK FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+            break;
+    }
+
+    <br /><br />
+</div>
+<br />
+<br />
+<br />
+<a href="/">Main landing page</a>

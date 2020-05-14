@@ -10,9 +10,10 @@ namespace LSSD.Registration.Model.Forms
         public string Grade { get; set; }
         public Student Student { get; set; }
         public ContactsInfo Contacts { get; set; }
+        public SiblingInfo Siblings { get; set; }
         public BussingInfo BussingInfo { get; set; }
         public FirstNationsInfo FirstNationsInfo { get; set; }
         public EALInfo EALInfo { get; set; }
-        public EnrollmentInfo EnrollmentInfo { get; set; }
+        public EnrollmentDetails EnrollmentDetails { get; set; }
     }
 }

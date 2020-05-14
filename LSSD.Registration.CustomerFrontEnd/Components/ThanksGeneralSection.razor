@@ -1,0 +1,84 @@
+﻿@using LSSD.Registration.Model.Forms;
+@using LSSD.Registration.Model;
+
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public Microsoft.AspNetCore.ProtectedBrowserStorage.ProtectedLocalStorage Storage { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    private void OnClick_NextStepButton()
+    {
+        //StepTracker.NextStep(FormName);
+        StepTracker.SetStep(FormName, 0);
+    }
+
+    protected void OnClick_PreviousStepButton()
+    {
+        StepTracker.PreviousStep(FormName);
+    }
+
+    protected async Task<GeneralRegistrationFormSubmission> AssembleGeneralRegistrationFormFromStorage()
+    {
+        GeneralRegistrationFormSubmission form = new GeneralRegistrationFormSubmission();
+
+        form.Id = 0;
+        form.Grade = "NYI";
+        form.Student = await Storage.GetAsync<Student>("REG-SECTION-STUDENT") ?? new Student();
+        form.SubmittedBy = await Storage.GetAsync<FormSubmitter>("REG-SECTION-REQUESTOR") ?? new FormSubmitter();
+        form.DateSubmitted = DateTime.Now;
+        form.School = await Storage.GetAsync<School>("REG-SECTION-SCHOOL") ?? new School(); ;
+        form.Contacts = await Storage.GetAsync<ContactsInfo>("REG-SECTION-CONTACTS") ?? new ContactsInfo();
+        form.Siblings = await Storage.GetAsync<SiblingInfo>("REG-SECTION-SIBLINGS") ?? new SiblingInfo();
+        form.BussingInfo = new BussingInfo();
+        form.FirstNationsInfo = new FirstNationsInfo();
+        form.EALInfo = new EALInfo();
+        form.EnrollmentDetails = new EnrollmentDetails();
+
+        return form;
+    }
+
+    string jsonObjectString = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        GeneralRegistrationFormSubmission form = await AssembleGeneralRegistrationFormFromStorage();
+        jsonObjectString = Newtonsoft.Json.JsonConvert.SerializeObject(form, Newtonsoft.Json.Formatting.Indented);
+
+    }
+
+}
+<div class="container" style="text-align: center;">
+    <div class="alert alert-success " role="alert" style="text-align: initial">
+        <h1 class="alert-heading">Thanks! (GENERAL)</h1>
+        <p>This is where we would thank you for your registration. We might even email you when your registration is marked as complete, if we decided to build that into this platform.</p>
+        <p>At this time, no data is actually submitted anywhere, so this is the end of the road.</p>
+        <p>Use the buttons below to go back.</p>
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            @if (StepNumber > 0)
+            {
+                <div class="col">
+                    <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                </div>
+            }
+            <div class="col">
+                <button type="button" @onclick="OnClick_NextStepButton" class="btn btn-danger btn-block">Go back to beginning</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Some debug information</h2>
+<div class="form-group" style="border: 1px solid red; padding: 15px; text-align: left; font-size: 75%;">
+    <pre>@jsonObjectString</pre>
+</div>
+
