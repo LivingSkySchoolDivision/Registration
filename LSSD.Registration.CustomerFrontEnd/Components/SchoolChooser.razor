@@ -1,12 +1,13 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
+@using Blazored.LocalStorage;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public Microsoft.AspNetCore.ProtectedBrowserStorage.ProtectedLocalStorage Storage { get; set; }
+    public ILocalStorageService Storage { get; set; }
 
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.SchoolDataService SchoolRepository { get; set; }
@@ -20,7 +21,6 @@
     public List<string> communities = new List<string>();
     public Dictionary<string, List<School>> availableSchoolsByCommunity = new Dictionary<string, List<School>>();
 
-    private const string SectionStorageKey = "REG-SECTION-SCHOOL";
     School Section = new School();
 
     string selectedCommunity;
@@ -35,14 +35,14 @@
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        School LoadedSection = await Storage.GetAsync<School>(SectionStorageKey);
+        School LoadedSection = await Storage.GetItemAsync<School>(StorageKeys.School);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await Storage.SetAsync(SectionStorageKey, Section);
+            await Storage.SetItemAsync(StorageKeys.School, Section);
         }
 
         communities = (await SchoolRepository.GetAllCommunities()).ToList();
@@ -67,7 +67,7 @@
 
     private async void selectSchool(School school)
     {
-        await Storage.SetAsync(SectionStorageKey, school);
+        await Storage.SetItemAsync(StorageKeys.School, school);
         StepTracker.NextStep(FormName);
     }
 }
@@ -79,55 +79,56 @@
 }
 else
 {
-<EditForm Model="@Section">
-    <label for="selectedCommunity">Please select a community</label>
-    <InputSelect @bind-Value="@selectedCommunity" id="selectedCommunity" class="form-control col-sm-8">
-        <option></option>
-        @foreach (string community in communities)
-            {
-            <option value="@community">@community</option>
-            }
-    </InputSelect>
+    <EditForm Model="@Section">
+        <label for="selectedCommunity">Please select a community</label>
+        <InputSelect @bind-Value="@selectedCommunity" id="selectedCommunity" class="form-control col-sm-8">
+            <option></option>
+            @foreach (string community in communities)
+                {
+                <option value="@community">@community</option>
+                }
+            /**/
+        </InputSelect>
 
-    <br />
-    @if (!string.IsNullOrEmpty(selectedCommunity))
-    {
-        @if (availableSchoolsByCommunity.ContainsKey(selectedCommunity))
+        <br />
+        @if (!string.IsNullOrEmpty(selectedCommunity))
         {
-            @foreach (School school in availableSchoolsByCommunity[selectedCommunity].OrderBy(s => s.Name))
+            @if (availableSchoolsByCommunity.ContainsKey(selectedCommunity))
             {
-                <div class="form-group">
-                    <h4>@school.Name</h4>
-                    <hr />
-                    <div class="form-row">
-                        <div class="col-sm-4">
-                            @school.PhysicalAddress.Line1 <br />
-                            @school.PhysicalAddress.Line2
+                @foreach (School school in availableSchoolsByCommunity[selectedCommunity].OrderBy(s => s.Name))
+                {
+                    <div class="form-group">
+                        <h4>@school.Name</h4>
+                        <hr />
+                        <div class="form-row">
+                            <div class="col-sm-4">
+                                @school.PhysicalAddress.Line1 <br />
+                                @school.PhysicalAddress.Line2
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="@school.WebsiteURL" target="_blank">@school.WebsiteURL</a><br />
+                                <b>Ph:</b> @school.PhoneNumber <br />
+                                <b>Email:</b> @school.EmailAddress <br />
+                                <b>Grades:</b> @school.GradesOffered
+                            </div>
+                            <button type="submit" @onclick="@(() => selectSchool(school))" class="btn btn-primary col-sm-2">Register</button>
                         </div>
-                        <div class="col-sm-6">
-                            <a href="@school.WebsiteURL" target="_blank">@school.WebsiteURL</a><br />
-                            <b>Ph:</b> @school.PhoneNumber <br />
-                            <b>Email:</b> @school.EmailAddress <br />
-                            <b>Grades:</b> @school.GradesOffered
-                        </div>
-                        <button type="submit" @onclick="@(() => selectSchool(school))" class="btn btn-primary col-sm-2">Register</button>
                     </div>
-                </div>
-                <br/><br/>
+                    <br /><br />
+                }
             }
         }
-    }
 
-    @if (StepNumber > 0)
-    {
-    <div class="form-group">
-        <div class="form-row">
-            <div class="col">
-                <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+        @if (StepNumber > 0)
+        {
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    }
+        }
 
-</EditForm>
+    </EditForm>
 }

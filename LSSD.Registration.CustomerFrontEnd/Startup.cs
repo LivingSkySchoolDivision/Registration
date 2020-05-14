@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LSSD.Registration.CustomerFrontEnd.Services;
+using Blazored.LocalStorage;
 
 namespace LSSD.Registration.CustomerFrontEnd
 {
@@ -33,7 +34,7 @@ namespace LSSD.Registration.CustomerFrontEnd
             services.AddScoped<SchoolDataService>();
 
             // Local Storage
-            services.AddProtectedBrowserStorage();
+            services.AddBlazoredLocalStorage();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

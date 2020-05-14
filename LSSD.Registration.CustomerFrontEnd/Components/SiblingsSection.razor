@@ -1,13 +1,14 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
 @using System.Collections.Generic;
+@using Blazored.LocalStorage;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public Microsoft.AspNetCore.ProtectedBrowserStorage.ProtectedLocalStorage Storage { get; set; }
+    public ILocalStorageService Storage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -15,22 +16,20 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    private const string SectionStorageKey = "REG-SECTION-SIBLINGS";
-
     SiblingInfo Section = new SiblingInfo();
 
     protected override async Task OnInitializedAsync()
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        SiblingInfo LoadedSection = await Storage.GetAsync<SiblingInfo>(SectionStorageKey);
+        SiblingInfo LoadedSection = await Storage.GetItemAsync<SiblingInfo>(StorageKeys.Siblings);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await Storage.SetAsync(SectionStorageKey, Section);
+            await Storage.SetItemAsync(StorageKeys.Siblings, Section);
         }
     }
 
@@ -53,7 +52,7 @@
 
     private async Task saveForm()
     {
-        await Storage.SetAsync(SectionStorageKey, Section);
+        await Storage.SetItemAsync(StorageKeys.Siblings, Section);
     }
 
     private void AddSibling()

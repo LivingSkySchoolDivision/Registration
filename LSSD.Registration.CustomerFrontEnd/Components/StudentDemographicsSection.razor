@@ -1,11 +1,12 @@
 ﻿@using LSSD.Registration.Model
+@using Blazored.LocalStorage;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public Microsoft.AspNetCore.ProtectedBrowserStorage.ProtectedLocalStorage Storage { get; set; }
+    public ILocalStorageService Storage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -16,7 +17,6 @@
     private bool mailingAddressSameAsPhysical = true;
     private bool usesLandDescription = false;
     private bool usePreferredName = false;
-    private const string SectionStorageKey = "REG-SECTION-STUDENT";
     Student Section = new Student();
 
     protected async Task HandleValidSubmit()
@@ -42,21 +42,21 @@
         {
             Section.MailingAddress = Section.PrimaryAddress;
         }
-        await Storage.SetAsync(SectionStorageKey, Section);
+        await Storage.SetItemAsync(StorageKeys.StudentDemographics, Section);
     }
 
     protected override async Task OnInitializedAsync()
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        Student LoadedSection = await Storage.GetAsync<Student>(SectionStorageKey);
+        Student LoadedSection = await Storage.GetItemAsync<Student>(StorageKeys.StudentDemographics);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await Storage.SetAsync(SectionStorageKey, Section);
+            await Storage.SetItemAsync(StorageKeys.StudentDemographics, Section);
         }
     }
 
@@ -409,7 +409,7 @@
             </div>
         </div>
     </EditForm>
-        
+
 
 </div>
 

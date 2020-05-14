@@ -1,97 +1,96 @@
 ﻿@using LSSD.Registration.Model
-
+@using Blazored.LocalStorage;
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public Microsoft.AspNetCore.ProtectedBrowserStorage.ProtectedLocalStorage Storage { get; set; }
+    public ILocalStorageService Storage { get; set; }
 
-    [Parameter]
-    public string FormName { get; set; }
+[Parameter]
+public string FormName { get; set; }
 
-    [Parameter]
-    public int StepNumber { get; set; }
+[Parameter]
+public int StepNumber { get; set; }
 
-    private const string SectionStorageKey = "REG-SECTION-REQUESTOR";
-    FormSubmitter Section = new FormSubmitter();
+FormSubmitter Section = new FormSubmitter();
 
-    protected override async Task OnInitializedAsync()
+protected override async Task OnInitializedAsync()
+{
+    // Attempt to load a saved section from browser storage.
+    // If one doesn't exist, make a new one.
+    FormSubmitter LoadedSection = await Storage.GetItemAsync<FormSubmitter>(StorageKeys.Requestor);
+    if (LoadedSection != null)
     {
-        // Attempt to load a saved section from browser storage.
-        // If one doesn't exist, make a new one.
-        FormSubmitter LoadedSection = await Storage.GetAsync<FormSubmitter>(SectionStorageKey);
-        if (LoadedSection != null)
-        {
-            Section = LoadedSection;
-        }
-        else
-        {
-            await Storage.SetAsync(SectionStorageKey, Section);
-        }
+        Section = LoadedSection;
     }
-
-    protected async Task HandleValidSubmit()
+    else
     {
-        await Storage.SetAsync(SectionStorageKey, Section);
-        StepTracker.NextStep(FormName);
-    }
-
-    protected async Task OnClick_PreviousStepButton()
-    {
-        await Storage.SetAsync(SectionStorageKey, Section);
-        StepTracker.PreviousStep(FormName);
+        await Storage.SetItemAsync(StorageKeys.Requestor, Section);
     }
 }
-    <div class="container">
 
-        <h2>Tell us about yourself</h2>
-        <p>
-            Tell us about you (the person submitting this form). If we need to reach out to you regarding this registration, this is the information we will use.
-            This information is <b>not</b> carried over to the registration (we'll ask for that later), we'll only use it to contact you if we have questions regarding this registration.
-        </p>
+protected async Task HandleValidSubmit()
+{
+    await Storage.SetItemAsync(StorageKeys.Requestor, Section);
+    StepTracker.NextStep(FormName);
+}
 
-        <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="form-group">
-                <label for="requestorFirstName">Your name: </label>
-                <div class="form-row">
-                    <div class="col">
-                        <InputText id="requestorFirstName" class="form-control" @bind-Value="@Section.FirstName" placeholder="Jane"></InputText>
-                        <ValidationMessage For="@(() => Section.FirstName)" />
-                    </div>
-                    <div class="col">
-                        <InputText id="requestorLastName" class="form-control" @bind-Value="@Section.LastName" placeholder="Smith"></InputText>
-                        <ValidationMessage For="@(() => Section.LastName)" />
-                    </div>
+protected async Task OnClick_PreviousStepButton()
+{
+    await Storage.SetItemAsync(StorageKeys.Requestor, Section);
+    StepTracker.PreviousStep(FormName);
+}
+}
+<div class="container">
+
+    <h2>Tell us about yourself</h2>
+    <p>
+        Tell us about you (the person submitting this form). If we need to reach out to you regarding this registration, this is the information we will use.
+        This information is <b>not</b> carried over to the registration (we'll ask for that later), we'll only use it to contact you if we have questions regarding this registration.
+    </p>
+
+    <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="requestorFirstName">Your name: </label>
+            <div class="form-row">
+                <div class="col">
+                    <InputText id="requestorFirstName" class="form-control" @bind-Value="@Section.FirstName" placeholder="Jane"></InputText>
+                    <ValidationMessage For="@(() => Section.FirstName)" />
+                </div>
+                <div class="col">
+                    <InputText id="requestorLastName" class="form-control" @bind-Value="@Section.LastName" placeholder="Smith"></InputText>
+                    <ValidationMessage For="@(() => Section.LastName)" />
                 </div>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="requestorEmail">Email address: </label>
-                <InputText id="requestorEmail" class="form-control" @bind-Value="@Section.EmailAddress" placeholder="jane.smith@email.com"></InputText>
-                <ValidationMessage For="@(() => Section.EmailAddress)" />
-            </div>
+        <div class="form-group">
+            <label for="requestorEmail">Email address: </label>
+            <InputText id="requestorEmail" class="form-control" @bind-Value="@Section.EmailAddress" placeholder="jane.smith@email.com"></InputText>
+            <ValidationMessage For="@(() => Section.EmailAddress)" />
+        </div>
 
-            <div class="form-group">
-                <label for="requestorPhone">Phone number: </label>
-                <InputText id="requestorPhone" class="form-control" @bind-Value="@Section.PhoneNumber" placeholder="123 456 7890"></InputText>
-                <ValidationMessage For="@(() => Section.PhoneNumber)" />
-            </div>
+        <div class="form-group">
+            <label for="requestorPhone">Phone number: </label>
+            <InputText id="requestorPhone" class="form-control" @bind-Value="@Section.PhoneNumber" placeholder="123 456 7890"></InputText>
+            <ValidationMessage For="@(() => Section.PhoneNumber)" />
+        </div>
 
-            <div class="form-group">
-                <div class="form-row">
-                    @if (StepNumber > 0)
-                    {
+        <div class="form-group">
+            <div class="form-row">
+                @if (StepNumber > 0)
+                {
                     <div class="col">
                         <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
                     </div>
-                    }
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary btn-block">Next Step</button>
-                    </div>
+                }
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Next Step</button>
                 </div>
             </div>
-        </EditForm>
-    </div>
+        </div>
+    </EditForm>
+</div>
