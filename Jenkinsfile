@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        REPO = "registration-customerfrontend"
+        REPO = "registration/registration-customerfrontend"
         PRIVATE_REPO = "${PRIVATE_DOCKER_REGISTRY}/${REPO}"
         TAG = "${BUILD_TIMESTAMP}"
     }
