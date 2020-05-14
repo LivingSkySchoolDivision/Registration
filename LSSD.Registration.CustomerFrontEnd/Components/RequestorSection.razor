@@ -7,10 +7,7 @@
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService _storageService { get; set; }
-
-    [Inject]
-    public BrowserStorageHelper BrowserStorageHelper { get; set; }
+    public BrowserStorageService BrowserStorageHelper { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -24,26 +21,26 @@
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        FormSubmitter LoadedSection = await BrowserStorageHelper.GetItem<FormSubmitter>(_storageService, StorageKeys.Requestor);
+        FormSubmitter LoadedSection = await BrowserStorageHelper.GetItem<FormSubmitter>(StorageKeys.Requestor);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await BrowserStorageHelper.SetItem(_storageService, StorageKeys.Requestor, Section);
+            await BrowserStorageHelper.SetItem(StorageKeys.Requestor, Section);
         }
     }
 
     protected async Task HandleValidSubmit()
     {
-        await BrowserStorageHelper.SetItem(_storageService, StorageKeys.Requestor, Section);
+        await BrowserStorageHelper.SetItem(StorageKeys.Requestor, Section);
         StepTracker.NextStep(FormName);
     }
 
     protected async Task OnClick_PreviousStepButton()
     {
-        await BrowserStorageHelper.SetItem(_storageService, StorageKeys.Requestor, Section);
+        await BrowserStorageHelper.SetItem(StorageKeys.Requestor, Section);
         StepTracker.PreviousStep(FormName);
     }
 }
