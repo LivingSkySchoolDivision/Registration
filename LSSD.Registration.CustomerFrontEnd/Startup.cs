@@ -32,6 +32,7 @@ namespace LSSD.Registration.CustomerFrontEnd
 
             services.AddScoped<FormStepTrackerService>();
             services.AddScoped<SchoolDataService>();
+            services.AddScoped<BrowserStorageHelper>();
 
             // Local Storage
             services.AddBlazoredLocalStorage();

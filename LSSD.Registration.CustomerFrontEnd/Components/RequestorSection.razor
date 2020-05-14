@@ -1,13 +1,16 @@
 ﻿@using LSSD.Registration.Model;
 @using Blazored.LocalStorage;
-@using LSSD.Registration.CustomerFrontEnd.Helpers; 
+@using LSSD.Registration.CustomerFrontEnd.Services; 
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService Storage { get; set; }
+    public ILocalStorageService _storageService { get; set; }
+
+    [Inject]
+    public BrowserStorageHelper BrowserStorageHelper { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -21,26 +24,26 @@
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        FormSubmitter LoadedSection = await BrowserStorageHelper.GetItem<FormSubmitter>(Storage, StorageKeys.Requestor);
+        FormSubmitter LoadedSection = await BrowserStorageHelper.GetItem<FormSubmitter>(_storageService, StorageKeys.Requestor);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await BrowserStorageHelper.SetItem(Storage, StorageKeys.Requestor, Section);
+            await BrowserStorageHelper.SetItem(_storageService, StorageKeys.Requestor, Section);
         }
     }
 
     protected async Task HandleValidSubmit()
     {
-        await BrowserStorageHelper.SetItem(Storage, StorageKeys.Requestor, Section);
+        await BrowserStorageHelper.SetItem(_storageService, StorageKeys.Requestor, Section);
         StepTracker.NextStep(FormName);
     }
 
     protected async Task OnClick_PreviousStepButton()
     {
-        await BrowserStorageHelper.SetItem(Storage, StorageKeys.Requestor, Section);
+        await BrowserStorageHelper.SetItem(_storageService, StorageKeys.Requestor, Section);
         StepTracker.PreviousStep(FormName);
     }
 }
