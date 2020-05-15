@@ -1,13 +1,13 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
-@using Blazored.LocalStorage;
+@using LSSD.Registration.CustomerFrontEnd.Services;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService Storage { get; set; }
+    public BrowserStorageService BrowserStorage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -44,24 +44,24 @@
 
     private async Task saveForm()
     {
-        await Storage.SetItemAsync(StorageKeys.PreKInfo, Section);
+        await BrowserStorage.SetItem(StorageKeys.PreKInfo, Section);
     }
 
     protected override async Task OnInitializedAsync()
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        PreKInfo LoadedSection = await Storage.GetItemAsync<PreKInfo>(StorageKeys.PreKInfo);
+        PreKInfo LoadedSection = await BrowserStorage.GetItem<PreKInfo>(StorageKeys.PreKInfo);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await Storage.SetItemAsync(StorageKeys.PreKInfo, Section);
+            await BrowserStorage.SetItem(StorageKeys.PreKInfo, Section);
         }
 
-        Student previouslyEnteredStudent = await Storage.GetItemAsync<Student>(StorageKeys.StudentDemographics);
+        Student previouslyEnteredStudent = await BrowserStorage.GetItem<Student>(StorageKeys.StudentDemographics);
         if (previouslyEnteredStudent != null)
         {
             ThisStudent = previouslyEnteredStudent;

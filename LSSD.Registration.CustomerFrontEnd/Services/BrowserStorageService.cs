@@ -16,7 +16,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
         }
 
         public async Task<T> GetItem<T>(string Key) where  T : new()
-        {
+        { 
             try
             {
                 return await _localStorageService.GetItemAsync<T>(Key);

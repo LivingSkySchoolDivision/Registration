@@ -1,14 +1,14 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
 @using System.Collections.Generic;
-@using Blazored.LocalStorage;
+@using LSSD.Registration.CustomerFrontEnd.Services;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService Storage { get; set; }
+    public BrowserStorageService BrowserStorage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -23,17 +23,17 @@
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        ContactsInfo LoadedSection = await Storage.GetItemAsync<ContactsInfo>(StorageKeys.Contacts);
+        ContactsInfo LoadedSection = await BrowserStorage.GetItem<ContactsInfo>(StorageKeys.Contacts);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await Storage.SetItemAsync(StorageKeys.Contacts, Section);
+            await BrowserStorage.SetItem(StorageKeys.Contacts, Section);
         }
 
-        Student loadedStudent = await Storage.GetItemAsync<Student>(StorageKeys.StudentDemographics);
+        Student loadedStudent = await BrowserStorage.GetItem<Student>(StorageKeys.StudentDemographics);
         if (loadedStudent != null)
         {
             LoadedStudentDemographics = loadedStudent;
@@ -77,7 +77,7 @@
                 }
             }
         }
-        await Storage.SetItemAsync(StorageKeys.Contacts, Section);
+        await BrowserStorage.SetItem(StorageKeys.Contacts, Section);
     }
 
     private void AddContact()

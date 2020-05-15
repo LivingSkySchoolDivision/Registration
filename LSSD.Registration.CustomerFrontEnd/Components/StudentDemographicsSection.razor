@@ -1,12 +1,12 @@
 ﻿@using LSSD.Registration.Model
-@using Blazored.LocalStorage;
+@using LSSD.Registration.CustomerFrontEnd.Services;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService Storage { get; set; }
+    public BrowserStorageService BrowserStorage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -42,21 +42,21 @@
         {
             Section.MailingAddress = Section.PrimaryAddress;
         }
-        await Storage.SetItemAsync(StorageKeys.StudentDemographics, Section);
+        await BrowserStorage.SetItem(StorageKeys.StudentDemographics, Section);
     }
 
     protected override async Task OnInitializedAsync()
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        Student LoadedSection = await Storage.GetItemAsync<Student>(StorageKeys.StudentDemographics);
+        Student LoadedSection = await BrowserStorage.GetItem<Student>(StorageKeys.StudentDemographics);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await Storage.SetItemAsync(StorageKeys.StudentDemographics, Section);
+            await BrowserStorage.SetItem(StorageKeys.StudentDemographics, Section);
         }
     }
 

@@ -1,13 +1,13 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
-@using Blazored.LocalStorage;
+@using LSSD.Registration.CustomerFrontEnd.Services;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService Storage { get; set; }
+    public BrowserStorageService BrowserStorage { get; set; }
 
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.SchoolDataService SchoolRepository { get; set; }
@@ -35,14 +35,14 @@
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        School LoadedSection = await Storage.GetItemAsync<School>(StorageKeys.School);
+        School LoadedSection = await BrowserStorage.GetItem<School>(StorageKeys.School);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await Storage.SetItemAsync(StorageKeys.School, Section);
+            await BrowserStorage.SetItem(StorageKeys.School, Section);
         }
 
         communities = (await SchoolRepository.GetAllCommunities()).ToList();
@@ -67,7 +67,7 @@
 
     private async void selectSchool(School school)
     {
-        await Storage.SetItemAsync(StorageKeys.School, school);
+        await BrowserStorage.SetItem(StorageKeys.School, school);
         StepTracker.NextStep(FormName);
     }
 }
@@ -87,6 +87,7 @@ else
                 {
                 <option value="@community">@community</option>
                 }
+            /**/
             /**/
         </InputSelect>
 

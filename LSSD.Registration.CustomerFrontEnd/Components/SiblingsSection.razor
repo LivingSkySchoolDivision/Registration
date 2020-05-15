@@ -1,14 +1,14 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
 @using System.Collections.Generic;
-@using Blazored.LocalStorage;
+@using LSSD.Registration.CustomerFrontEnd.Services;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService Storage { get; set; }
+    public BrowserStorageService BrowserStorage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -22,14 +22,14 @@
     {
         // Attempt to load a saved section from browser storage.
         // If one doesn't exist, make a new one.
-        SiblingInfo LoadedSection = await Storage.GetItemAsync<SiblingInfo>(StorageKeys.Siblings);
+        SiblingInfo LoadedSection = await BrowserStorage.GetItem<SiblingInfo>(StorageKeys.Siblings);
         if (LoadedSection != null)
         {
             Section = LoadedSection;
         }
         else
         {
-            await Storage.SetItemAsync(StorageKeys.Siblings, Section);
+            await BrowserStorage.SetItem(StorageKeys.Siblings, Section);
         }
     }
 
@@ -52,7 +52,7 @@
 
     private async Task saveForm()
     {
-        await Storage.SetItemAsync(StorageKeys.Siblings, Section);
+        await BrowserStorage.SetItem(StorageKeys.Siblings, Section);
     }
 
     private void AddSibling()

@@ -1,13 +1,13 @@
 ﻿@using LSSD.Registration.Model.Forms;
 @using LSSD.Registration.Model;
-@using Blazored.LocalStorage;
+@using LSSD.Registration.CustomerFrontEnd.Services;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService Storage { get; set; }
+    public BrowserStorageService BrowserStorage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -31,16 +31,16 @@
         PreKRegistrationFormSubmission form = new PreKRegistrationFormSubmission();
 
         form.Id = 0;
-        form.Student = await Storage.GetItemAsync<Student>(StorageKeys.StudentDemographics) ?? new Student();
-        form.SubmittedBy = await Storage.GetItemAsync<FormSubmitter>(StorageKeys.Requestor) ?? new FormSubmitter();
+        form.Student = await BrowserStorage.GetItem<Student>(StorageKeys.StudentDemographics) ?? new Student();
+        form.SubmittedBy = await BrowserStorage.GetItem<FormSubmitter>(StorageKeys.Requestor) ?? new FormSubmitter();
         form.DateSubmitted = DateTime.Now;
-        form.School = await Storage.GetItemAsync<School>(StorageKeys.School) ?? new School();
-        form.Contacts = await Storage.GetItemAsync<ContactsInfo>(StorageKeys.Contacts) ?? new ContactsInfo();
-        form.Siblings = await Storage.GetItemAsync<SiblingInfo>(StorageKeys.Siblings) ?? new SiblingInfo();
+        form.School = await BrowserStorage.GetItem<School>(StorageKeys.School) ?? new School();
+        form.Contacts = await BrowserStorage.GetItem<ContactsInfo>(StorageKeys.Contacts) ?? new ContactsInfo();
+        form.Siblings = await BrowserStorage.GetItem<SiblingInfo>(StorageKeys.Siblings) ?? new SiblingInfo();
         form.BussingInfo = new BussingInfo();
         form.FirstNationsInfo = new FirstNationsInfo();
         form.EALInfo = new EALInfo();
-        form.PreKInfo = await Storage.GetItemAsync<PreKInfo>(StorageKeys.PreKInfo) ?? new PreKInfo();
+        form.PreKInfo = await BrowserStorage.GetItem<PreKInfo>(StorageKeys.PreKInfo) ?? new PreKInfo();
 
         return form;
     }
