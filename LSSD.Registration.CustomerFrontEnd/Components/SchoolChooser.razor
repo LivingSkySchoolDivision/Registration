@@ -21,7 +21,7 @@
     public List<string> communities = new List<string>();
     public Dictionary<string, List<School>> availableSchoolsByCommunity = new Dictionary<string, List<School>>();
 
-    School Section = new School();
+    School ChosenSchool = new School();
 
     string selectedCommunity;
 
@@ -29,7 +29,7 @@
     {
         communities = (await SchoolRepository.GetAllCommunities()).ToList();
         availableSchoolsByCommunity = toDictionaryByCommunity((await SchoolRepository.GetAll()).ToList());
-        Section = await BrowserStorage.GetOrNew<School>(StorageKeys.School);
+        ChosenSchool = await BrowserStorage.GetOrNew<School>(StorageKeys.School);
     }
 
     private Dictionary<string, List<School>> toDictionaryByCommunity(List<School> Schools)
@@ -56,7 +56,7 @@
 
     private async Task saveData()
     {
-        await BrowserStorage.Set(StorageKeys.School, Section);
+        await BrowserStorage.Set(StorageKeys.School, ChosenSchool);
     }
 
     protected void OnClick_PreviousStepButton()
@@ -72,16 +72,14 @@
 }
 else
 {
-    <EditForm Model="@Section">
+    <EditForm Model="@ChosenSchool">
         <label for="selectedCommunity">Please select a community</label>
         <InputSelect @bind-Value="@selectedCommunity" id="selectedCommunity" class="form-control col-sm-8">
             <option></option>
             @foreach (string community in communities)
-                {
-                <option value="@community">@community</option>
-                }
-            /**/
-            /**/
+            {
+            <option value="@community">@community</option>
+            }
         </InputSelect>
 
         <br />

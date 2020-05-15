@@ -16,12 +16,12 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    ContactsInfo Section = new ContactsInfo();
-    Student LoadedStudentDemographics;
+    ContactsInfo ContactsInfoData = new ContactsInfo();
+    Student LoadedStudentDemographics = new Student();
 
     protected override async Task OnInitializedAsync()
     {
-        Section = await BrowserStorage.GetOrNew<ContactsInfo>(StorageKeys.Contacts);
+        ContactsInfoData = await BrowserStorage.GetOrNew<ContactsInfo>(StorageKeys.Contacts);
         LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
     }
 
@@ -46,7 +46,7 @@
     {
         if (LoadedStudentDemographics != null)
         {
-            foreach (Contact contact in Section.Contacts)
+            foreach (Contact contact in ContactsInfoData.Contacts)
             {
                 if (contact.LivesWithStudent)
                 {
@@ -62,26 +62,26 @@
                 }
             }
         }
-        await BrowserStorage.Set(StorageKeys.Contacts, Section);
+        await BrowserStorage.Set(StorageKeys.Contacts, ContactsInfoData);
     }
 
     private void AddContact()
     {
-        Section.Contacts.Add(new Contact());
+        ContactsInfoData.Contacts.Add(new Contact());
     }
 
     private void RemoveContact(Contact contact)
     {
-        if (Section.Contacts.Contains(contact))
+        if (ContactsInfoData.Contacts.Contains(contact))
         {
-            Section.Contacts.Remove(contact);
+            ContactsInfoData.Contacts.Remove(contact);
         }
     }
 }
 
 <div class="container">
     <h2>Contacts</h2>
-    <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+    <EditForm Model="@ContactsInfoData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
         <p>A contact might be:</p>
         <ul>
             <li>A parent or legal guardian of the child.</li>
@@ -97,9 +97,9 @@
         <button type="button" class="btn-sm btn-primary" @onclick="AddContact">Add Contact</button>
         <br />
         <br />
-        @if (Section.Contacts.Count > 0)
+        @if (ContactsInfoData.Contacts.Count > 0)
         {
-            @foreach (Contact Contact in Section.Contacts)
+            @foreach (Contact Contact in ContactsInfoData.Contacts)
             {
                 <div class="form-group container p-2" style="border: 1px solid #dbdbdb;border-radius:2px">
                     <div class="form-row">

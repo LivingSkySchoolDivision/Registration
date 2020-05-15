@@ -16,11 +16,11 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    SiblingInfo Section = new SiblingInfo();
+    SiblingInfo SiblingInfoData = new SiblingInfo();
 
     protected override async Task OnInitializedAsync()
     {
-        Section = await BrowserStorage.GetOrNew<SiblingInfo>(StorageKeys.Siblings);
+        SiblingInfoData = await BrowserStorage.GetOrNew<SiblingInfo>(StorageKeys.Siblings);
     }
 
     protected async Task OnClick_PreviousStepButton()
@@ -42,26 +42,26 @@
 
     private async Task saveData()
     {
-        await BrowserStorage.Set(StorageKeys.Siblings, Section);
+        await BrowserStorage.Set(StorageKeys.Siblings, SiblingInfoData);
     }
 
     private void addSibling()
     {
-        Section.Siblings.Add(new Sibling());
+        SiblingInfoData.Siblings.Add(new Sibling());
     }
 
     private void removeSibling(Sibling sibling)
     {
-        if (Section.Siblings.Contains(sibling))
+        if (SiblingInfoData.Siblings.Contains(sibling))
         {
-            Section.Siblings.Remove(sibling);
+            SiblingInfoData.Siblings.Remove(sibling);
         }
     }
 }
 
 <div class="container">
     <h2>Siblings</h2>
-    <EditForm Model="@Section" OnValidSubmit="@handleValidSubmit" OnInvalidSubmit="@handleInvalidSubmit">
+    <EditForm Model="@SiblingInfoData" OnValidSubmit="@handleValidSubmit" OnInvalidSubmit="@handleInvalidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <p>Siblings are other school-aged children that live with the student, and are enrolled at a school in Saskatchewan (including schools in other school divisions).</p>
@@ -70,9 +70,9 @@
         <br />
         <br />
 
-        @if (Section.Siblings.Count > 0)
+        @if (SiblingInfoData.Siblings.Count > 0)
         {
-            @foreach (Sibling Sibling in Section.Siblings)
+            @foreach (Sibling Sibling in SiblingInfoData.Siblings)
             {
                 <div class="form-group container p-2" style="border: 1px solid #dbdbdb; border-radius: 2px;">
                     <div class="form-row">

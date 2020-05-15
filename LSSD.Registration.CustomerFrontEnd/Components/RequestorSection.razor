@@ -14,16 +14,16 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    FormSubmitter Section = new FormSubmitter();
+    FormSubmitter FormSubmitterData = new FormSubmitter();
 
     protected override async Task OnInitializedAsync()
     {
-        Section = await BrowserStorage.GetOrNew<FormSubmitter>(StorageKeys.Requestor);
+        FormSubmitterData = await BrowserStorage.GetOrNew<FormSubmitter>(StorageKeys.Requestor);
     }
 
     private async Task saveData()
     {
-        await BrowserStorage.Set(StorageKeys.Requestor, Section);
+        await BrowserStorage.Set(StorageKeys.Requestor, FormSubmitterData);
     }
 
     protected async Task HandleValidSubmit()
@@ -46,33 +46,33 @@
         This information is <b>not</b> carried over to the registration (we'll ask for that later), we'll only use it to contact you if we have questions regarding this registration.
     </p>
 
-    <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit">
+    <EditForm Model="@FormSubmitterData" OnValidSubmit="@HandleValidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="form-group">
             <label for="requestorFirstName">Your name: </label>
             <div class="form-row">
                 <div class="col">
-                    <InputText id="requestorFirstName" class="form-control" @bind-Value="@Section.FirstName" placeholder="Jane"></InputText>
-                    <ValidationMessage For="@(() => Section.FirstName)" />
+                    <InputText id="requestorFirstName" class="form-control" @bind-Value="@FormSubmitterData.FirstName" placeholder="Jane"></InputText>
+                    <ValidationMessage For="@(() => FormSubmitterData.FirstName)" />
                 </div>
                 <div class="col">
-                    <InputText id="requestorLastName" class="form-control" @bind-Value="@Section.LastName" placeholder="Smith"></InputText>
-                    <ValidationMessage For="@(() => Section.LastName)" />
+                    <InputText id="requestorLastName" class="form-control" @bind-Value="@FormSubmitterData.LastName" placeholder="Smith"></InputText>
+                    <ValidationMessage For="@(() => FormSubmitterData.LastName)" />
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label for="requestorEmail">Email address: </label>
-            <InputText id="requestorEmail" class="form-control" @bind-Value="@Section.EmailAddress" placeholder="jane.smith@email.com"></InputText>
-            <ValidationMessage For="@(() => Section.EmailAddress)" />
+            <InputText id="requestorEmail" class="form-control" @bind-Value="@FormSubmitterData.EmailAddress" placeholder="jane.smith@email.com"></InputText>
+            <ValidationMessage For="@(() => FormSubmitterData.EmailAddress)" />
         </div>
 
         <div class="form-group">
             <label for="requestorPhone">Phone number: </label>
-            <InputText id="requestorPhone" class="form-control" @bind-Value="@Section.PhoneNumber" placeholder="123 456 7890"></InputText>
-            <ValidationMessage For="@(() => Section.PhoneNumber)" />
+            <InputText id="requestorPhone" class="form-control" @bind-Value="@FormSubmitterData.PhoneNumber" placeholder="123 456 7890"></InputText>
+            <ValidationMessage For="@(() => FormSubmitterData.PhoneNumber)" />
         </div>
 
         <div class="form-group">

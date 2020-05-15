@@ -15,7 +15,7 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    PreKInfo Section = new PreKInfo();
+    PreKInfo PreKInfoData = new PreKInfo();
     Student savedStudent = new Student();
 
     protected async Task HandleValidSubmit()
@@ -37,12 +37,12 @@
 
     private async Task saveForm()
     {
-        await BrowserStorage.Set(StorageKeys.PreKInfo, Section);
+        await BrowserStorage.Set(StorageKeys.PreKInfo, PreKInfoData);
     }
 
     protected override async Task OnInitializedAsync()
     {
-        Section = await BrowserStorage.GetOrNew<PreKInfo>(StorageKeys.PreKInfo);
+        PreKInfoData = await BrowserStorage.GetOrNew<PreKInfo>(StorageKeys.PreKInfo);
         savedStudent = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
     }
 
@@ -54,153 +54,153 @@
 <div class="alert alert-info">
     Family/Student information is collected by Living Sky School Division to inform program and enrolment decisions. Information is considered confidential and does not remain in a student's file beyond their pre-kindergarten year.
 </div>
-<EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+<EditForm Model="@PreKInfoData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="form-group row">
         <label for="studentLanguage" class="col-sm-4  font-weight-normal">Language spoken at home: </label>
-        <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@Section.LanguageSpokenAtHome"></InputText>
-        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.LanguageSpokenAtHome)" />
+        <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@PreKInfoData.LanguageSpokenAtHome"></InputText>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.LanguageSpokenAtHome)" />
     </div>
 
     <div class="form-group row">
         <label for="" class="col-sm-4  font-weight-normal">Does @savedStudent.FirstName experience social, emotional, or behavior issues? Please explain. </label>
-        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@Section.SocialEmotionalOrBehaviorIssues"></InputTextArea>
-        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.SocialEmotionalOrBehaviorIssues)" />
+        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@PreKInfoData.SocialEmotionalOrBehaviorIssues"></InputTextArea>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.SocialEmotionalOrBehaviorIssues)" />
     </div>
 
     <div class="form-group row">
         <label for="" class="col-sm-4  font-weight-normal">  Traumatic experience within or impacting the family/child. Explain:</label>
-        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@Section.TraumaticExperiences"></InputTextArea>
-        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.TraumaticExperiences)" />
+        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@PreKInfoData.TraumaticExperiences"></InputTextArea>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.TraumaticExperiences)" />
     </div>
 
     <div class="form-group row">
         <label for="" class="col-sm-4  font-weight-normal">Health care crisis impacting child or family. Please explain.</label>
-        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@Section.HealthcareCrisis"></InputTextArea>
-        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.HealthcareCrisis)" />
+        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@PreKInfoData.HealthcareCrisis"></InputTextArea>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.HealthcareCrisis)" />
     </div>
 
     <div class="form-group">
         <div class="form-row">
             <label class="font-weight-normal col-sm-4">Difficulties</label>
             <div class="col-sm-8">
-                <InputCheckbox @bind-Value="@Section.SpeechDifficulties"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.SpeechDifficulties"></InputCheckbox>
                 <label for="" class="font-weight-normal">Child experiences speech difficulties</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.SpeechDifficulties)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.SpeechDifficulties)" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.LanguageDifficulties"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.LanguageDifficulties"></InputCheckbox>
                 <label for="" class="font-weight-normal">Child experiences language difficulties</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.LanguageDifficulties)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.LanguageDifficulties)" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.GrossMotorDifficulties"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.GrossMotorDifficulties"></InputCheckbox>
                 <label for="" class="font-weight-normal">Child experiences gross motor difficulties</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.GrossMotorDifficulties)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.GrossMotorDifficulties)" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.FineMotorDifficulties"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.FineMotorDifficulties"></InputCheckbox>
                 <label for="" class="font-weight-normal">Child experiences fine motor difficulties</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.FineMotorDifficulties)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.FineMotorDifficulties)" />
             </div>
         </div>
 
         <div class="form-row">
             <label for="studentLanguage" class="col-sm-4  font-weight-normal">Other difficulties @savedStudent.FirstName experiences: </label>
-            <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@Section.OtherDifficulties" placeholder=""></InputText>
-            <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.OtherDifficulties)" />
+            <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@PreKInfoData.OtherDifficulties" placeholder=""></InputText>
+            <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.OtherDifficulties)" />
         </div>
     </div>
 
     <div class="form-group">
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.OnlyOneParentInHome"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.OnlyOneParentInHome"></InputCheckbox>
                 <label for="" class="font-weight-normal">Only one parent in the home or frequent parent absence</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.OnlyOneParentInHome)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.OnlyOneParentInHome)" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.NoFamilySupportSystem"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.NoFamilySupportSystem"></InputCheckbox>
                 <label for="" class="font-weight-normal">Lack of family support system</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.NoFamilySupportSystem)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.NoFamilySupportSystem)" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.LowIncomeFamily"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.LowIncomeFamily"></InputCheckbox>
                 <label for="" class="font-weight-normal">Low income family, experiencing financial need</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.LowIncomeFamily)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.LowIncomeFamily)" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.PrimaryCaregiverLessThanHighSchoolEducation"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.PrimaryCaregiverLessThanHighSchoolEducation"></InputCheckbox>
                 <label for="" class="font-weight-normal">Primary caregiver has less than high school education</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.PrimaryCaregiverLessThanHighSchoolEducation)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.PrimaryCaregiverLessThanHighSchoolEducation)" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.TeenParent"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.TeenParent"></InputCheckbox>
                 <label for="" class="font-weight-normal">Child lives with teen parent</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.TeenParent)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.TeenParent)" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.InFosterCare"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.InFosterCare"></InputCheckbox>
                 <label for="" class="font-weight-normal">Child is in foster care</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.InFosterCare)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.InFosterCare)" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.LittleOpportunityToInteractWithSameAge"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.LittleOpportunityToInteractWithSameAge"></InputCheckbox>
                 <label for="" class="font-weight-normal">Child has little opportunity to interact with others the same age</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.LittleOpportunityToInteractWithSameAge)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.LittleOpportunityToInteractWithSameAge)" />
             </div>
         </div>
     </div>
 
     <div class="form-group row">
         <label for="" class="col-sm-4 font-weight-normal">Referred by an agency: </label>
-        <InputText id="" class="form-control col-sm-8" @bind-Value="@Section.ReferredByOtherAgency"></InputText>
-        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.ReferredByOtherAgency)" />
+        <InputText id="" class="form-control col-sm-8" @bind-Value="@PreKInfoData.ReferredByOtherAgency"></InputText>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.ReferredByOtherAgency)" />
     </div>
 
     <div class="form-group">
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.CanUseBathroomAlone"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.CanUseBathroomAlone"></InputCheckbox>
                 <label for="" class="font-weight-normal">Child can use the bathroom on their own</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.CanUseBathroomAlone)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.CanUseBathroomAlone)" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="offset-sm-5 col-sm-7">
-                <InputCheckbox @bind-Value="@Section.PottyTrainingInProgress"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.PottyTrainingInProgress"></InputCheckbox>
                 <label for="" class="font-weight-normal">Training in progress</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.PottyTrainingInProgress)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.PottyTrainingInProgress)" />
             </div>
         </div>
     </div>
@@ -211,87 +211,87 @@
             <label class="font-weight-normal col-sm-4">Does @savedStudent.FirstName receive support or assistance from any of the following:</label>
 
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromAboriginalHeadstart"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromAboriginalHeadstart"></InputCheckbox>
                 <label class="font-weight-normal">Aboriginal Headstart</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromAboriginalHeadstart)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromAboriginalHeadstart)" />
             </div>
         </div>
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromAutismConsultant"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromAutismConsultant"></InputCheckbox>
                 <label class="font-weight-normal">Autism Consultant or Resource Center</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromAutismConsultant)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromAutismConsultant)" />
             </div>
         </div>
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromEarlyChildhoodIntervention"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromEarlyChildhoodIntervention"></InputCheckbox>
                 <label class="font-weight-normal">Early childhood Intervention Program</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromEarlyChildhoodIntervention)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromEarlyChildhoodIntervention)" />
             </div>
         </div>
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromChildhoodPsychologist"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromChildhoodPsychologist"></InputCheckbox>
                 <label class="font-weight-normal">Early Childhood Psychologist</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromChildhoodPsychologist)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromChildhoodPsychologist)" />
             </div>
         </div>
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromKidsFirst"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromKidsFirst"></InputCheckbox>
                 <label class="font-weight-normal">KidsFirst</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromKidsFirst)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromKidsFirst)" />
             </div>
         </div>
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromKinsmenChildDevCenter"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromKinsmenChildDevCenter"></InputCheckbox>
                 <label class="font-weight-normal">Kinsmen Child Development Center</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromKinsmenChildDevCenter)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromKinsmenChildDevCenter)" />
             </div>
         </div>
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromLicensedChildCare"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromLicensedChildCare"></InputCheckbox>
                 <label class="font-weight-normal">Licensed Child Care</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromLicensedChildCare)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromLicensedChildCare)" />
             </div>
         </div>
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromOccupationOrPhysicalTherapist"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromOccupationOrPhysicalTherapist"></InputCheckbox>
                 <label class="font-weight-normal">Occupational/Physical Therapist</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromOccupationOrPhysicalTherapist)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromOccupationOrPhysicalTherapist)" />
             </div>
         </div>
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromPreSchoolOrDaycare"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromPreSchoolOrDaycare"></InputCheckbox>
                 <label class="font-weight-normal">Pre-school/Daycare/Family Day Home</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromPreSchoolOrDaycare)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromPreSchoolOrDaycare)" />
             </div>
         </div>
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromSocialServices"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromSocialServices"></InputCheckbox>
                 <label class="font-weight-normal">Social Services</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromSocialServices)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromSocialServices)" />
             </div>
         </div>
         <div class="form-row">
             <div class="offset-sm-4 col-sm-8">
-                <InputCheckbox @bind-Value="@Section.AssistanceFromSpeechLangagePathologist"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromSpeechLangagePathologist"></InputCheckbox>
                 <label class="font-weight-normal">Speech/Language Pathologist</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromSpeechLangagePathologist)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromSpeechLangagePathologist)" />
             </div>
         </div>
         <div class="form-row">
             <label class="font-weight-bold col-sm-4">Do you consent to the sharing of information between the above agencies and the school?</label>
             <div class="col-sm-8">
-                <InputCheckbox @bind-Value="@Section.ConsentToShareFromAgencies"></InputCheckbox>
+                <InputCheckbox @bind-Value="@PreKInfoData.ConsentToShareFromAgencies"></InputCheckbox>
                 <label class="font-weight-bold">Yes</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.AssistanceFromSpeechLangagePathologist)" />
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.AssistanceFromSpeechLangagePathologist)" />
             </div>
         </div>
     </div>
@@ -300,8 +300,8 @@
 
     <div class="form-group row">
         <label for="" class="col-sm-4 font-weight-normal">Do you have any specific concerns or information regarding @savedStudent.FirstName/family that we need to be aware of (ie: <b>custody</b>, medical, behavior, intensive needs, etc.)?: </label>
-        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@Section.Concerns"></InputTextArea>
-        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.Concerns)" />
+        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@PreKInfoData.Concerns"></InputTextArea>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.Concerns)" />
     </div>
 
 
