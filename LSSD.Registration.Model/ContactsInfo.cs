@@ -26,6 +26,15 @@ namespace LSSD.Registration.Model
                     "Please provide at least " + _minContacts + " contact(s).", new[] { nameof(Contacts) }));
             }
 
+            foreach(Contact contact in this.Contacts)
+            {
+                if (string.IsNullOrEmpty(contact.RelationshipToStudent))
+                {
+                    errors.Add(new ValidationResult(
+                        "Please specify a relationship for all contacts.", new[] { nameof(Contacts) }));
+                }
+            }
+
             return errors;
         }
 
