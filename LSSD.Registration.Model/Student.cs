@@ -27,7 +27,7 @@ namespace LSSD.Registration.Model
         public Address MailingAddress { get; set; }
         public string LandDescription { get; set; }
         public string PreviousSchools { get; set; }
-        public string SaskHealthNumber { get; set; }
+        public string HealthServicesNumber { get; set; }
         public string MedicalNotes { get; set; }
 
         public Student()
