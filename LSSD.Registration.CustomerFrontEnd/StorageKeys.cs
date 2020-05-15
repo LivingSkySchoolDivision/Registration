@@ -13,6 +13,7 @@ namespace LSSD.Registration.CustomerFrontEnd
         public const string School = "REG-SECTION-SCHOOL";
         public const string PreKInfo = "REG-SECTION-PREK";
         public const string Contacts = "REG-SECTION-CONTACTS";
+        public const string Bussing = "REG-SECTION-BUSSING";
 
     }
 }

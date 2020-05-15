@@ -7,7 +7,6 @@ namespace LSSD.Registration.Model
     public class Address
     {
         public int Id { get; set; }
-        public string AddressType { get; set; }
         public string UnitNumber { get; set; }
         public string HouseNumber { get; set; }
         public string Street { get; set; }
@@ -70,21 +69,54 @@ namespace LSSD.Registration.Model
             }
         }
 
-        public bool IsValidMailing { 
+        public bool IsValidMailing
+        {
             get
             {
                 if (
                     !string.IsNullOrEmpty(this.Country) &&
                     !string.IsNullOrEmpty(this.Province) &&
                     !string.IsNullOrEmpty(this.City) &&
-                    !string.IsNullOrEmpty(this.Street) &&
+                    (!string.IsNullOrEmpty(this.HouseNumber) || !string.IsNullOrEmpty(this.Street)) &&
                     !string.IsNullOrEmpty(this.PostalCode)
-                    ) {
+                    )
+                {
                     return true;
                 }
-                
+
                 return false;
-            } 
+            }
+        }
+
+        public bool IsValidCivic
+        {
+            get
+            {
+                if (
+                    !string.IsNullOrEmpty(this.Country) &&
+                    !string.IsNullOrEmpty(this.Province) &&
+                    !string.IsNullOrEmpty(this.City) &&
+                    (!string.IsNullOrEmpty(this.HouseNumber) || !string.IsNullOrEmpty(this.Street))
+                    )
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public bool IsEmpty
+        {
+            get
+            {
+                return (
+                    string.IsNullOrEmpty(this.HouseNumber) &&
+                    string.IsNullOrEmpty(this.City) &&
+                    string.IsNullOrEmpty(this.PostalCode) &&
+                    string.IsNullOrEmpty(this.UnitNumber)
+                    );
+            }
         }
 
     }

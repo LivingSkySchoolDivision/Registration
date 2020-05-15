@@ -9,7 +9,7 @@
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     string FormName = "TEST";
-    private const int totalSteps = 1;
+    private const int totalSteps = 3;
 
     protected override void OnInitialized()
     {
@@ -42,10 +42,16 @@
         @switch (StepTracker.Step(FormName))
         {
             case 0:
-                <PreKInfoSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 1:
                 <StudentDemographicsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                break;
+            case 2:
+                <PreKBussingSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                break;
+            case 3:
+                <DataPrivacySection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
         }
 
