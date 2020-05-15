@@ -1,14 +1,14 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
 @using System.Collections.Generic;
-@using Blazored.LocalStorage;
+@using LSSD.Registration.CustomerFrontEnd.Services;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService Storage { get; set; }
+    public BrowserStorageService BrowserStorage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -16,73 +16,63 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    SiblingInfo Section = new SiblingInfo();
+    SiblingInfo SiblingInfoData = new SiblingInfo();
 
     protected override async Task OnInitializedAsync()
     {
-        // Attempt to load a saved section from browser storage.
-        // If one doesn't exist, make a new one.
-        SiblingInfo LoadedSection = await Storage.GetItemAsync<SiblingInfo>(StorageKeys.Siblings);
-        if (LoadedSection != null)
-        {
-            Section = LoadedSection;
-        }
-        else
-        {
-            await Storage.SetItemAsync(StorageKeys.Siblings, Section);
-        }
+        SiblingInfoData = await BrowserStorage.GetOrNew<SiblingInfo>(StorageKeys.Siblings);
     }
 
     protected async Task OnClick_PreviousStepButton()
     {
-        await saveForm();
+        await saveData();
         StepTracker.PreviousStep(FormName);
     }
 
-    protected async Task HandleValidSubmit()
+    protected async Task handleValidSubmit()
     {
-        await saveForm();
+        await saveData();
         StepTracker.NextStep(FormName);
     }
 
-    protected async Task HandleInValidSubmit()
+    protected async Task handleInvalidSubmit()
     {
-        await saveForm();
+        await saveData();
     }
 
-    private async Task saveForm()
+    private async Task saveData()
     {
-        await Storage.SetItemAsync(StorageKeys.Siblings, Section);
+        await BrowserStorage.Set(StorageKeys.Siblings, SiblingInfoData);
     }
 
-    private void AddSibling()
+    private void addSibling()
     {
-        Section.Siblings.Add(new Sibling());
+        SiblingInfoData.Siblings.Add(new Sibling());
     }
 
-    private void RemoveSibling(Sibling sibling)
+    private void removeSibling(Sibling sibling)
     {
-        if (Section.Siblings.Contains(sibling))
+        if (SiblingInfoData.Siblings.Contains(sibling))
         {
-            Section.Siblings.Remove(sibling);
+            SiblingInfoData.Siblings.Remove(sibling);
         }
     }
 }
 
 <div class="container">
     <h2>Siblings</h2>
-    <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+    <EditForm Model="@SiblingInfoData" OnValidSubmit="@handleValidSubmit" OnInvalidSubmit="@handleInvalidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <p>Siblings are other school-aged children that live with the student, and are enrolled at a school in Saskatchewan (including schools in other school divisions).</p>
         <p>Do not include graduated students or university students.</p>
-        <button type="button" class="btn-sm btn-primary" @onclick="AddSibling">Add Sibling</button>
+        <button type="button" class="btn-sm btn-primary" @onclick="addSibling">Add Sibling</button>
         <br />
         <br />
 
-        @if (Section.Siblings.Count > 0)
+        @if (SiblingInfoData.Siblings.Count > 0)
         {
-            @foreach (Sibling Sibling in Section.Siblings)
+            @foreach (Sibling Sibling in SiblingInfoData.Siblings)
             {
                 <div class="form-group container p-2" style="border: 1px solid #dbdbdb; border-radius: 2px;">
                     <div class="form-row">
@@ -110,12 +100,12 @@
                     </div>
 
                     <div class="form-row">
-                        <button type="button" class="btn-sm btn-link col-sm-1" @onclick="@(() => RemoveSibling(Sibling))">Remove</button>
+                        <button type="button" class="btn-sm btn-link col-sm-1" @onclick="@(() => removeSibling(Sibling))">Remove</button>
                     </div>
                 </div>
             }
 
-            <button type="button" class="btn-sm btn-primary" @onclick="AddSibling">Add another sibling</button>
+            <button type="button" class="btn-sm btn-primary" @onclick="addSibling">Add another sibling</button>
         }
         else
         {

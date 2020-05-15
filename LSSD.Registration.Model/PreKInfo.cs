@@ -44,5 +44,10 @@ namespace LSSD.Registration.Model
         public bool AssistanceFromKinsmenChildDevCenter { get; set; }
         public bool AssistanceFromAboriginalHeadstart { get; set; }
 
+        public PreKInfo()
+        {
+            this.LanguageSpokenAtHome = FormDefaults.Language;
+        }
+
     }
 }

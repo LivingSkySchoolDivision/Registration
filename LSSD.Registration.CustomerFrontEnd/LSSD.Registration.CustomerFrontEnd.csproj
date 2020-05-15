@@ -16,4 +16,8 @@
     <ProjectReference Include="..\LSSD.Registration.Model\LSSD.Registration.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>

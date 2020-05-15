@@ -1,14 +1,14 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
 @using System.Collections.Generic;
-@using Blazored.LocalStorage;
+@using LSSD.Registration.CustomerFrontEnd.Services;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService Storage { get; set; }
+    public BrowserStorageService BrowserStorage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -16,28 +16,13 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    ContactsInfo Section = new ContactsInfo();
-    Student LoadedStudentDemographics;
+    ContactsInfo ContactsInfoData = new ContactsInfo();
+    Student LoadedStudentDemographics = new Student();
 
     protected override async Task OnInitializedAsync()
     {
-        // Attempt to load a saved section from browser storage.
-        // If one doesn't exist, make a new one.
-        ContactsInfo LoadedSection = await Storage.GetItemAsync<ContactsInfo>(StorageKeys.Contacts);
-        if (LoadedSection != null)
-        {
-            Section = LoadedSection;
-        }
-        else
-        {
-            await Storage.SetItemAsync(StorageKeys.Contacts, Section);
-        }
-
-        Student loadedStudent = await Storage.GetItemAsync<Student>(StorageKeys.StudentDemographics);
-        if (loadedStudent != null)
-        {
-            LoadedStudentDemographics = loadedStudent;
-        }
+        ContactsInfoData = await BrowserStorage.GetOrNew<ContactsInfo>(StorageKeys.Contacts);
+        LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
     }
 
     protected async Task OnClick_PreviousStepButton()
@@ -61,7 +46,7 @@
     {
         if (LoadedStudentDemographics != null)
         {
-            foreach (Contact contact in Section.Contacts)
+            foreach (Contact contact in ContactsInfoData.Contacts)
             {
                 if (contact.LivesWithStudent)
                 {
@@ -77,26 +62,26 @@
                 }
             }
         }
-        await Storage.SetItemAsync(StorageKeys.Contacts, Section);
+        await BrowserStorage.Set(StorageKeys.Contacts, ContactsInfoData);
     }
 
     private void AddContact()
     {
-        Section.Contacts.Add(new Contact());
+        ContactsInfoData.Contacts.Add(new Contact());
     }
 
     private void RemoveContact(Contact contact)
     {
-        if (Section.Contacts.Contains(contact))
+        if (ContactsInfoData.Contacts.Contains(contact))
         {
-            Section.Contacts.Remove(contact);
+            ContactsInfoData.Contacts.Remove(contact);
         }
     }
 }
 
 <div class="container">
     <h2>Contacts</h2>
-    <EditForm Model="@Section" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+    <EditForm Model="@ContactsInfoData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
         <p>A contact might be:</p>
         <ul>
             <li>A parent or legal guardian of the child.</li>
@@ -112,9 +97,9 @@
         <button type="button" class="btn-sm btn-primary" @onclick="AddContact">Add Contact</button>
         <br />
         <br />
-        @if (Section.Contacts.Count > 0)
+        @if (ContactsInfoData.Contacts.Count > 0)
         {
-            @foreach (Contact Contact in Section.Contacts)
+            @foreach (Contact Contact in ContactsInfoData.Contacts)
             {
                 <div class="form-group container p-2" style="border: 1px solid #dbdbdb;border-radius:2px">
                     <div class="form-row">

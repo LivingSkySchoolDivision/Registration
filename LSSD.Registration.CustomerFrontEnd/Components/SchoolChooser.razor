@@ -1,13 +1,13 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
-@using Blazored.LocalStorage;
+@using LSSD.Registration.CustomerFrontEnd.Services;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Inject]
-    public ILocalStorageService Storage { get; set; }
+    public BrowserStorageService BrowserStorage { get; set; }
 
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.SchoolDataService SchoolRepository { get; set; }
@@ -21,32 +21,15 @@
     public List<string> communities = new List<string>();
     public Dictionary<string, List<School>> availableSchoolsByCommunity = new Dictionary<string, List<School>>();
 
-    School Section = new School();
+    School ChosenSchool = new School();
 
     string selectedCommunity;
 
-    protected async Task OnClick_PreviousStepButton()
-    {
-        StepTracker.PreviousStep(FormName);
-    }
-
-
     protected override async Task OnInitializedAsync()
     {
-        // Attempt to load a saved section from browser storage.
-        // If one doesn't exist, make a new one.
-        School LoadedSection = await Storage.GetItemAsync<School>(StorageKeys.School);
-        if (LoadedSection != null)
-        {
-            Section = LoadedSection;
-        }
-        else
-        {
-            await Storage.SetItemAsync(StorageKeys.School, Section);
-        }
-
         communities = (await SchoolRepository.GetAllCommunities()).ToList();
         availableSchoolsByCommunity = toDictionaryByCommunity((await SchoolRepository.GetAll()).ToList());
+        ChosenSchool = await BrowserStorage.GetOrNew<School>(StorageKeys.School);
     }
 
     private Dictionary<string, List<School>> toDictionaryByCommunity(List<School> Schools)
@@ -67,8 +50,18 @@
 
     private async void selectSchool(School school)
     {
-        await Storage.SetItemAsync(StorageKeys.School, school);
+        await saveData();
         StepTracker.NextStep(FormName);
+    }
+
+    private async Task saveData()
+    {
+        await BrowserStorage.Set(StorageKeys.School, ChosenSchool);
+    }
+
+    protected void OnClick_PreviousStepButton()
+    {
+        StepTracker.PreviousStep(FormName);
     }
 }
 <h2>School Selection</h2>
@@ -79,15 +72,14 @@
 }
 else
 {
-    <EditForm Model="@Section">
+    <EditForm Model="@ChosenSchool">
         <label for="selectedCommunity">Please select a community</label>
         <InputSelect @bind-Value="@selectedCommunity" id="selectedCommunity" class="form-control col-sm-8">
             <option></option>
             @foreach (string community in communities)
-                {
-                <option value="@community">@community</option>
-                }
-            /**/
+            {
+            <option value="@community">@community</option>
+            }
         </InputSelect>
 
         <br />
