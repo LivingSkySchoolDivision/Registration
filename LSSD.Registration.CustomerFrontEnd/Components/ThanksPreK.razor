@@ -31,16 +31,16 @@
         PreKRegistrationFormSubmission form = new PreKRegistrationFormSubmission();
 
         form.Id = 0;
-        form.Student = await BrowserStorage.GetItem<Student>(StorageKeys.StudentDemographics) ?? new Student();
-        form.SubmittedBy = await BrowserStorage.GetItem<FormSubmitter>(StorageKeys.Requestor) ?? new FormSubmitter();
+        form.Student = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics) ?? new Student();
+        form.SubmittedBy = await BrowserStorage.GetOrNew<FormSubmitter>(StorageKeys.Requestor) ?? new FormSubmitter();
         form.DateSubmitted = DateTime.Now;
-        form.School = await BrowserStorage.GetItem<School>(StorageKeys.School) ?? new School();
-        form.Contacts = await BrowserStorage.GetItem<ContactsInfo>(StorageKeys.Contacts) ?? new ContactsInfo();
-        form.Siblings = await BrowserStorage.GetItem<SiblingInfo>(StorageKeys.Siblings) ?? new SiblingInfo();
+        form.School = await BrowserStorage.GetOrNew<School>(StorageKeys.School) ?? new School();
+        form.Contacts = await BrowserStorage.GetOrNew<ContactsInfo>(StorageKeys.Contacts) ?? new ContactsInfo();
+        form.Siblings = await BrowserStorage.GetOrNew<SiblingInfo>(StorageKeys.Siblings) ?? new SiblingInfo();
         form.BussingInfo = new BussingInfo();
         form.FirstNationsInfo = new FirstNationsInfo();
         form.EALInfo = new EALInfo();
-        form.PreKInfo = await BrowserStorage.GetItem<PreKInfo>(StorageKeys.PreKInfo) ?? new PreKInfo();
+        form.PreKInfo = await BrowserStorage.GetOrNew<PreKInfo>(StorageKeys.PreKInfo) ?? new PreKInfo();
 
         return form;
     }

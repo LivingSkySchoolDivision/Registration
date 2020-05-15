@@ -18,28 +18,23 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Attempt to load a saved section from browser storage.
-        // If one doesn't exist, make a new one.
-        FormSubmitter LoadedSection = await BrowserStorage.GetItem<FormSubmitter>(StorageKeys.Requestor);
-        if (LoadedSection != null)
-        {
-            Section = LoadedSection;
-        }
-        else
-        {
-            await BrowserStorage.SetItem(StorageKeys.Requestor, Section);
-        }
+        Section = await BrowserStorage.GetOrNew<FormSubmitter>(StorageKeys.Requestor);
+    }
+
+    private async Task saveData()
+    {
+        await BrowserStorage.Set(StorageKeys.Requestor, Section);
     }
 
     protected async Task HandleValidSubmit()
     {
-        await BrowserStorage.SetItem(StorageKeys.Requestor, Section);
+        await saveData();
         StepTracker.NextStep(FormName);
     }
 
     protected async Task OnClick_PreviousStepButton()
     {
-        await BrowserStorage.SetItem(StorageKeys.Requestor, Section);
+        await saveData();
         StepTracker.PreviousStep(FormName);
     }
 }

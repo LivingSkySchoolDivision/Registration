@@ -15,15 +15,8 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    PreKInfo Section = new PreKInfo()
-    {
-        LanguageSpokenAtHome = "English"
-    };
-
-    Student ThisStudent = new Student()
-    {
-        FirstName = "the child"
-    };
+    PreKInfo Section = new PreKInfo();
+    Student savedStudent = new Student();
 
     protected async Task HandleValidSubmit()
     {
@@ -44,28 +37,13 @@
 
     private async Task saveForm()
     {
-        await BrowserStorage.SetItem(StorageKeys.PreKInfo, Section);
+        await BrowserStorage.Set(StorageKeys.PreKInfo, Section);
     }
 
     protected override async Task OnInitializedAsync()
     {
-        // Attempt to load a saved section from browser storage.
-        // If one doesn't exist, make a new one.
-        PreKInfo LoadedSection = await BrowserStorage.GetItem<PreKInfo>(StorageKeys.PreKInfo);
-        if (LoadedSection != null)
-        {
-            Section = LoadedSection;
-        }
-        else
-        {
-            await BrowserStorage.SetItem(StorageKeys.PreKInfo, Section);
-        }
-
-        Student previouslyEnteredStudent = await BrowserStorage.GetItem<Student>(StorageKeys.StudentDemographics);
-        if (previouslyEnteredStudent != null)
-        {
-            ThisStudent = previouslyEnteredStudent;
-        }
+        Section = await BrowserStorage.GetOrNew<PreKInfo>(StorageKeys.PreKInfo);
+        savedStudent = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
     }
 
 }
@@ -87,7 +65,7 @@
     </div>
 
     <div class="form-group row">
-        <label for="" class="col-sm-4  font-weight-normal">Does @ThisStudent.FirstName experience social, emotional, or behavior issues? Please explain. </label>
+        <label for="" class="col-sm-4  font-weight-normal">Does @savedStudent.FirstName experience social, emotional, or behavior issues? Please explain. </label>
         <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@Section.SocialEmotionalOrBehaviorIssues"></InputTextArea>
         <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.SocialEmotionalOrBehaviorIssues)" />
     </div>
@@ -139,7 +117,7 @@
         </div>
 
         <div class="form-row">
-            <label for="studentLanguage" class="col-sm-4  font-weight-normal">Other difficulties @ThisStudent.FirstName experiences: </label>
+            <label for="studentLanguage" class="col-sm-4  font-weight-normal">Other difficulties @savedStudent.FirstName experiences: </label>
             <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@Section.OtherDifficulties" placeholder=""></InputText>
             <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.OtherDifficulties)" />
         </div>
@@ -230,7 +208,7 @@
 
     <div class="form-group">
         <div class="form-row">
-            <label class="font-weight-normal col-sm-4">Does @ThisStudent.FirstName receive support or assistance from any of the following:</label>
+            <label class="font-weight-normal col-sm-4">Does @savedStudent.FirstName receive support or assistance from any of the following:</label>
 
             <div class="offset-sm-4 col-sm-8">
                 <InputCheckbox @bind-Value="@Section.AssistanceFromAboriginalHeadstart"></InputCheckbox>
@@ -321,7 +299,7 @@
 
 
     <div class="form-group row">
-        <label for="" class="col-sm-4 font-weight-normal">Do you have any specific concerns or information regarding @ThisStudent.FirstName/family that we need to be aware of (ie: <b>custody</b>, medical, behavior, intensive needs, etc.)?: </label>
+        <label for="" class="col-sm-4 font-weight-normal">Do you have any specific concerns or information regarding @savedStudent.FirstName/family that we need to be aware of (ie: <b>custody</b>, medical, behavior, intensive needs, etc.)?: </label>
         <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@Section.Concerns"></InputTextArea>
         <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => Section.Concerns)" />
     </div>

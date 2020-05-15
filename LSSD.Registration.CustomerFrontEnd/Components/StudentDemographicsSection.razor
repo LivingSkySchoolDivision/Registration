@@ -21,43 +21,34 @@
 
     protected async Task HandleValidSubmit()
     {
-        await saveForm();
+        await saveData();
         StepTracker.NextStep(FormName);
     }
 
     protected async Task HandleInValidSubmit()
     {
-        await saveForm();
+        await saveData();
     }
 
     protected async Task OnClick_PreviousStepButton()
     {
-        await saveForm();
+        await saveData();
         StepTracker.PreviousStep(FormName);
     }
 
-    private async Task saveForm()
+    private async Task saveData()
     {
         if (mailingAddressSameAsPhysical && !usesLandDescription)
         {
             Section.MailingAddress = Section.PrimaryAddress;
         }
-        await BrowserStorage.SetItem(StorageKeys.StudentDemographics, Section);
+
+        await BrowserStorage.Set(StorageKeys.StudentDemographics, Section);
     }
 
     protected override async Task OnInitializedAsync()
     {
-        // Attempt to load a saved section from browser storage.
-        // If one doesn't exist, make a new one.
-        Student LoadedSection = await BrowserStorage.GetItem<Student>(StorageKeys.StudentDemographics);
-        if (LoadedSection != null)
-        {
-            Section = LoadedSection;
-        }
-        else
-        {
-            await BrowserStorage.SetItem(StorageKeys.StudentDemographics, Section);
-        }
+        Section = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
     }
 
     private void updatePreferredName()

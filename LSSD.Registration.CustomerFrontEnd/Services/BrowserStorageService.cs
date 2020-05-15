@@ -15,8 +15,14 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
             this._localStorageService = LocalStorageService;
         }
 
-        public async Task<T> GetItem<T>(string Key) where  T : new()
-        { 
+        /// <summary>
+        /// Returns the specified object from local storage, or a new instance of that kind of object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Key"></param>
+        /// <returns></returns>
+        public async Task<T> GetOrNew<T>(string Key) where T : new()
+        {
             try
             {
                 return await _localStorageService.GetItemAsync<T>(Key);
@@ -26,7 +32,25 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
             return new T();
         }
 
-        public async Task SetItem<T>(string Key, T Object)
+        /// <summary>
+        /// Returns the specified object from local storage, or the default value for that type (null, in most cases).
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Key"></param>
+        /// <returns></returns>
+        public async Task<T> Get<T>(string Key)
+        {
+            try
+            {
+                return await _localStorageService.GetItemAsync<T>(Key);
+            }
+            catch { }
+
+            return default(T);
+        }
+
+
+        public async Task Set<T>(string Key, T Object)
         {
             await _localStorageService.SetItemAsync(Key, Object);
         }

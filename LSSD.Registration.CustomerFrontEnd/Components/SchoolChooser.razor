@@ -25,28 +25,11 @@
 
     string selectedCommunity;
 
-    protected async Task OnClick_PreviousStepButton()
-    {
-        StepTracker.PreviousStep(FormName);
-    }
-
-
     protected override async Task OnInitializedAsync()
     {
-        // Attempt to load a saved section from browser storage.
-        // If one doesn't exist, make a new one.
-        School LoadedSection = await BrowserStorage.GetItem<School>(StorageKeys.School);
-        if (LoadedSection != null)
-        {
-            Section = LoadedSection;
-        }
-        else
-        {
-            await BrowserStorage.SetItem(StorageKeys.School, Section);
-        }
-
         communities = (await SchoolRepository.GetAllCommunities()).ToList();
         availableSchoolsByCommunity = toDictionaryByCommunity((await SchoolRepository.GetAll()).ToList());
+        Section = await BrowserStorage.GetOrNew<School>(StorageKeys.School);
     }
 
     private Dictionary<string, List<School>> toDictionaryByCommunity(List<School> Schools)
@@ -67,8 +50,18 @@
 
     private async void selectSchool(School school)
     {
-        await BrowserStorage.SetItem(StorageKeys.School, school);
+        await saveData();
         StepTracker.NextStep(FormName);
+    }
+
+    private async Task saveData()
+    {
+        await BrowserStorage.Set(StorageKeys.School, Section);
+    }
+
+    protected void OnClick_PreviousStepButton()
+    {
+        StepTracker.PreviousStep(FormName);
     }
 }
 <h2>School Selection</h2>

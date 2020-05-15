@@ -21,23 +21,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Attempt to load a saved section from browser storage.
-        // If one doesn't exist, make a new one.
-        ContactsInfo LoadedSection = await BrowserStorage.GetItem<ContactsInfo>(StorageKeys.Contacts);
-        if (LoadedSection != null)
-        {
-            Section = LoadedSection;
-        }
-        else
-        {
-            await BrowserStorage.SetItem(StorageKeys.Contacts, Section);
-        }
-
-        Student loadedStudent = await BrowserStorage.GetItem<Student>(StorageKeys.StudentDemographics);
-        if (loadedStudent != null)
-        {
-            LoadedStudentDemographics = loadedStudent;
-        }
+        Section = await BrowserStorage.GetOrNew<ContactsInfo>(StorageKeys.Contacts);
+        LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
     }
 
     protected async Task OnClick_PreviousStepButton()
@@ -77,7 +62,7 @@
                 }
             }
         }
-        await BrowserStorage.SetItem(StorageKeys.Contacts, Section);
+        await BrowserStorage.Set(StorageKeys.Contacts, Section);
     }
 
     private void AddContact()
