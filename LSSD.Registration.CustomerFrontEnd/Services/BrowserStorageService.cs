@@ -23,13 +23,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
         /// <returns></returns>
         public async Task<T> GetOrNew<T>(string Key) where T : new()
         {
-            try
-            {
-                return await _localStorageService.GetItemAsync<T>(Key);
-            }
-            catch { }
-
-            return new T();
+            return await _localStorageService.GetItemAsync<T>(Key) ?? new T();
         }
 
         /// <summary>
@@ -40,13 +34,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
         /// <returns></returns>
         public async Task<T> Get<T>(string Key)
         {
-            try
-            {
-                return await _localStorageService.GetItemAsync<T>(Key);
-            }
-            catch { }
-
-            return default(T);
+            return await _localStorageService.GetItemAsync<T>(Key) ?? default(T);
         }
 
 
