@@ -26,10 +26,6 @@ app {
     align-items: center;
 }
 
-label {
-    font-weight: bold;
-}
-
 .main {
     flex: 1;
 }

@@ -27,7 +27,6 @@ namespace LSSD.Registration.Model
         public Address MailingAddress { get; set; }
         public string LandDescription { get; set; }
         public string PreviousSchools { get; set; }
-        public string LanguageSpokenAtHome { get; set; }
         public string SaskHealthNumber { get; set; }
         public string MedicalNotes { get; set; }
 
@@ -35,7 +34,6 @@ namespace LSSD.Registration.Model
         {
             this.PrimaryAddress = new Address() { AddressType = "Primary" };
             this.MailingAddress = new Address() { AddressType = "Mailing" };
-            this.LanguageSpokenAtHome = "English";
             this.DateOfBirth = DateTime.Today;
         }
 
