@@ -32,8 +32,8 @@ namespace LSSD.Registration.Model
 
         public Student()
         {
-            this.PrimaryAddress = new Address() { AddressType = "Primary" };
-            this.MailingAddress = new Address() { AddressType = "Mailing" };
+            this.PrimaryAddress = new Address();
+            this.MailingAddress = new Address();
             this.DateOfBirth = DateTime.Today;
         }
 

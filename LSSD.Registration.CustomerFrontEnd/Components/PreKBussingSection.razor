@@ -1,0 +1,239 @@
+﻿@using LSSD.Registration.CustomerFrontEnd.Services;
+@using  LSSD.Registration.Model;
+
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    BussingInfo BussingData = new BussingInfo();
+    Student LoadedStudentDemographics = new Student();
+    string studentFirstName = "the child";
+
+    private async Task saveForm()
+    {
+        await BrowserStorage.Set(StorageKeys.Bussing, BussingData);
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        await saveForm();
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async Task HandleInValidSubmit()
+    {
+        await saveForm();
+    }
+
+    protected async void OnClick_PreviousStepButton()
+    {
+        await saveForm();
+        StepTracker.PreviousStep(FormName);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        BussingData = await BrowserStorage.GetOrNew<BussingInfo>(StorageKeys.Bussing);
+        LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
+
+        if (!string.IsNullOrEmpty(LoadedStudentDemographics.FirstName))
+        {
+            studentFirstName = LoadedStudentDemographics.FirstName;
+        }
+
+        if (string.IsNullOrEmpty(BussingData.LandDescription))
+        {
+            if (!string.IsNullOrEmpty(LoadedStudentDemographics.LandDescription))
+            {
+                BussingData.LandDescription = LoadedStudentDemographics.LandDescription;
+            }
+        }
+
+        if (BussingData.BussingAddress.IsEmpty) {
+            if (LoadedStudentDemographics?.PrimaryAddress?.IsValidCivic == true)
+            {
+                BussingData.BussingAddress = LoadedStudentDemographics.PrimaryAddress;
+            }
+        }
+
+    }
+
+}
+
+<div class="container">
+    <h2>Bussing (Pre-Kindergarten)</h2>
+    <br/>
+    <EditForm Model="@BussingData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+        <div class="form-group">
+            <div class="form-row">
+                <label class="col-sm-4">Does @studentFirstName require bussing to or from school?</label>
+                <div class="col-sm-8">
+                    <InputCheckbox @bind-Value="@BussingData.RequiresBussing"></InputCheckbox>
+                    <label for="" class="">Yes</label>
+                    <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => BussingData.RequiresBussing)" />
+                </div>
+            </div>
+        </div>
+
+        <DataAnnotationsValidator />
+
+        @if (BussingData.RequiresBussing)
+        {
+            <div class="alert alert-info">
+                <h3>Bussing rules and regulations for pre-kindergarten students</h3>
+                <ul>
+                    <li>The Living Sky School Division No. 202 Transporation Department must approve all Pre-K bus applications <i>before</i> students may ride the bus.</li>
+                    <li>Bus drivers <b>cannot</b> accompany the student between the bus and the student's home. An adult <b>must</b> be present at home to safely guide the child to and from the school bus.</li>
+                    <li>You will be informed of the status of your bussing application when a decision is made.</li>
+                    <li>Students weighing less than 18kg or 40lb <b>must</b> use a booster seat. It is the responsibility of the parent/guardian to provide a booster seat for the bus.</li>
+                </ul>
+            </div>
+
+            <ValidationSummary />
+
+            <div class="form-group">
+                <div class="offset-sm-2 col-sm-8">
+                    <InputCheckbox @bind-Value="@BussingData.AM"></InputCheckbox>
+                    <label for="" class="">@studentFirstName needs <b>AM bus service</b>, from home to school</label>
+                    <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => BussingData.AM)" />
+                </div>
+
+                <div class="offset-sm-2 col-sm-8">
+                    <InputCheckbox @bind-Value="@BussingData.PM"></InputCheckbox>
+                    <label for="" class="">@studentFirstName needs <b>PM bus service</b>, from school to home</label>
+                    <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => BussingData.PM)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="offset-sm-2 col-sm-8">
+                    <InputCheckbox @bind-Value="@BussingData.WeighsMoreThan18kg"></InputCheckbox>
+                    <label for="" class="">@studentFirstName weighs at least 18kg/40lb</label>
+                    <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => BussingData.WeighsMoreThan18kg)" />
+                    @if (!BussingData.WeighsMoreThan18kg)
+                    {
+                        <div class="alert-danger alert">
+                            If the child is under this weight limit, it is the responsibility of the parent/guardian to provide a booster seat for the bus.<br />
+                            <b>Students under this limit cannot ride the bus without proper safety seating.</b>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h3>Bussing Address</h3>
+                <div class="offset-sm-3">
+                    <InputCheckbox id="usesLandDescription" @bind-Value="@BussingData.UseLandDescription" />
+                    <label class="form-check-label" for="usesLandDescription" style="font-weight: normal;">
+                        No civic address, use land description
+                    </label>
+                </div>
+            </div>
+
+            @if (BussingData.UseLandDescription)
+            {
+                <div class="form-group">
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => BussingData.BussingAddress)" />
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label for="studentLandDescription">Land Description</label>
+                    </div>
+                    <InputText id="studentLandDescription" class="form-control form-control-sm col-sm-8" @bind-Value="@BussingData.LandDescription" placeholder="SE-12-20-33-W1"></InputText>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <ValidationMessage class="offset-sm-3 form-control-sm col-sm-8" For="@(() => BussingData.BussingAddress)" />
+                </div>
+                <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>Unit Number </label>
+                        </div>
+                        <InputText id="studentPrimaryUnitNo" class="form-control form-control-sm col-sm-8" @bind-Value="@BussingData.BussingAddress.UnitNumber"></InputText>
+                        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => BussingData.BussingAddress.UnitNumber)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>House Number </label>
+                        </div>
+                        <InputText id="studentPrimaryUnitNo" class="form-control form-control-sm col-sm-8" @bind-Value="@BussingData.BussingAddress.HouseNumber"></InputText>
+                        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => BussingData.BussingAddress.HouseNumber)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>Street </label>
+                        </div>
+                        <InputText id="studentPrimaryUnitNo" class="form-control form-control-sm col-sm-8" @bind-Value="@BussingData.BussingAddress.Street"></InputText>
+                        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => BussingData.BussingAddress.Street)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>City/Town:</label>
+                        </div>
+                        <InputText id="studentPrimaryUnitNo" class="form-control form-control-sm col-sm-8" @bind-Value="@BussingData.BussingAddress.City"></InputText>
+                        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => BussingData.BussingAddress.City)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>Province:</label>
+                        </div>
+                        <InputText id="studentPrimaryUnitNo" class="form-control form-control-sm col-sm-8" @bind-Value="@BussingData.BussingAddress.Province"></InputText>
+                        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => BussingData.BussingAddress.UnitNumber)" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label>Country:</label>
+                        </div>
+                        <InputText id="studentPrimaryUnitNo" class="form-control form-control-sm col-sm-8" @bind-Value="@BussingData.BussingAddress.Country"></InputText>
+                        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => BussingData.BussingAddress.Country)" />
+                    </div>
+                </div>
+            }
+
+
+            <br /><br />
+            <div class="form-group">
+                <InputCheckbox @bind-Value="@BussingData.ReadAndUnderstandsRules"></InputCheckbox>
+                <label for="" class="">I have read and understand the rules and regulations for transporting pre-kindergarten students</label>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => BussingData.ReadAndUnderstandsRules)" />
+            </div>
+
+        }
+
+        <div class="form-group">
+            <div class="form-row">
+                @if (StepNumber > 0)
+                {
+                    <div class="col">
+                        <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    </div>
+                }
+                <div class="col">
+                    <button type="submit" class="btn btn-secondary btn-block">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>

@@ -21,7 +21,6 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 EmailAddress = "cando@lskysd.ca",
                 MailingAddress = new Address()
                 {
-                    AddressType = "Mailing",
                     UnitNumber = "",
                     HouseNumber = "",
                     Street = "Box 250",
@@ -32,7 +31,6 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 },
                 PhysicalAddress = new Address()
                 {
-                    AddressType = "Physical",
                     UnitNumber = "",
                     HouseNumber = "201",
                     Street = "7th Street",
@@ -56,7 +54,6 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 EmailAddress = "hclark@lskysd.ca",
                 MailingAddress = new Address()
                 {
-                    AddressType = "Mailing",
                     UnitNumber = "",
                     HouseNumber = "",
                     Street = "",
@@ -67,7 +64,6 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 },
                 PhysicalAddress = new Address()
                 {
-                    AddressType = "Physical",
                     UnitNumber = "",
                     HouseNumber = "221 ",
                     Street = "2nd Street West",
@@ -91,7 +87,6 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 EmailAddress = "shs@lskysd.ca",
                 MailingAddress = new Address()
                 {
-                    AddressType = "Mailing",
                     UnitNumber = "",
                     HouseNumber = "",
                     Street = "",
@@ -102,7 +97,6 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 },
                 PhysicalAddress = new Address()
                 {
-                    AddressType = "Physical",
                     UnitNumber = "",
                     HouseNumber = "216",
                     Street = "4th Street West",
