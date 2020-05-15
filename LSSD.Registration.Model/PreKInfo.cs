@@ -30,7 +30,10 @@ namespace LSSD.Registration.Model
         public bool PottyTrainingInProgress { get; set; }
         public bool ConsentToShareFromAgencies { get; set; }
         public DateTime ConsentGrantedDate { get; set; }
-        public string Concerns { get; set; }
+        public string OtherConcerns { get; set; }
+        public string CustodyConcerns { get; set; }
+        public string MedicalConcerns { get; set; }
+        public string BehaviorConcerns { get; set; }
 
         public bool AssistanceFromKidsFirst { get; set; }
         public bool AssistanceFromEarlyChildhoodIntervention { get; set; }
