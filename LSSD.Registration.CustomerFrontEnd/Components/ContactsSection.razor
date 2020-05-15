@@ -18,11 +18,13 @@
 
     ContactsInfo ContactsInfoData = new ContactsInfo();
     Student LoadedStudentDemographics = new Student();
+    FormSubmitter SavedFormSubmitter;
 
     protected override async Task OnInitializedAsync()
     {
         ContactsInfoData = await BrowserStorage.GetOrNew<ContactsInfo>(StorageKeys.Contacts);
         LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
+        SavedFormSubmitter = await BrowserStorage.Get<FormSubmitter>(StorageKeys.Requestor);
     }
 
     protected async Task OnClick_PreviousStepButton()
@@ -77,6 +79,19 @@
             ContactsInfoData.Contacts.Remove(contact);
         }
     }
+
+    private void AddMe()
+    {
+        if (SavedFormSubmitter != null)
+        {
+            ContactsInfoData.Contacts.Add(new Contact() {
+                FirstName = SavedFormSubmitter.FirstName,
+                LastName = SavedFormSubmitter.LastName,
+                EmailAddress = SavedFormSubmitter.EmailAddress,
+                HomePhone = SavedFormSubmitter.PhoneNumber
+            });
+        }
+    }
 }
 
 <div class="container">
@@ -95,6 +110,10 @@
         <DataAnnotationsValidator />
         <ValidationSummary />
         <button type="button" class="btn-sm btn-primary" @onclick="AddContact">Add Contact</button>
+        @if (SavedFormSubmitter != null)
+        {
+            <button type="button" class="btn-sm btn-info" @onclick="AddMe">Add Me</button>
+        }
         <br />
         <br />
         @if (ContactsInfoData.Contacts.Count > 0)
@@ -321,6 +340,7 @@
             <p><i>No contacts.</i></p>
         }
 
+        <ValidationSummary />
         <br /><br />
         <div class="form-group">
             <div class="form-row">
