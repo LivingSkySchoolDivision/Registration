@@ -40,7 +40,8 @@
         form.Siblings = await BrowserStorage.GetOrNew<SiblingInfo>(StorageKeys.Siblings) ?? new SiblingInfo();
         form.BussingInfo = await BrowserStorage.GetOrNew<BussingInfo>(StorageKeys.Bussing) ?? new BussingInfo();
         form.FirstNationsInfo = new FirstNationsInfo();
-        form.EALInfo = new EALInfo();
+        form.EALInfo = await BrowserStorage.GetOrNew<EALInfo>(StorageKeys.EAL) ?? new EALInfo();
+        form.Citizenship = await BrowserStorage.GetOrNew<CitizenshipInfo>(StorageKeys.Citizenship) ?? new CitizenshipInfo();
         form.EnrollmentDetails = new EnrollmentDetails();
 
         return form;

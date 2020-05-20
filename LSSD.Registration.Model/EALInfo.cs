@@ -7,28 +7,9 @@ namespace LSSD.Registration.Model
     public class EALInfo
     {
         public int Id { get; set; }
-        public DateTime EntryDateToCanada { get; set; }
-        /// <summary>
-        /// Entry datae to Canadian School
-        /// </summary>
-        public DateTime FirstCanadianSchoolDate { get; set; }
-        public bool  IsFirstCanadianSchool { get; set; }
-        public ResidencyType ResidencyType { get; set; }
-        public string LanguageSpokenAtHome { get; set; }
-
-        public string BirthCountry { get; set; }
-
-        /// <summary>
-        /// Country of Origin
-        /// </summary>
-        public string LastCountryResidedIn { get; set; }
-
-        public string PreviousProvince { get; set; }
-        public string PreviousCountry { get; set; }
-
-        public EALInfo()
-        {
-            this.LanguageSpokenAtHome = FormDefaults.Language;
-        }
+        public bool IsEAL { get; set; }
+        public bool IsFirstCanadianSchool { get; set; }
+        public DateTime? EntryDateToCanada { get; set; }
+        public DateTime? EntryDateToCanadianSchool { get; set; }
     }
 }

@@ -65,12 +65,6 @@
     <ValidationSummary />
 
     <div class="form-group row">
-        <label for="studentLanguage" class="col-sm-4  ">Language spoken at home: </label>
-        <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@PreKInfoData.LanguageSpokenAtHome"></InputText>
-        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.LanguageSpokenAtHome)" />
-    </div>
-
-    <div class="form-group row">
         <label for="" class="col-sm-4  ">Does @studentFirstName experience social, emotional, or behavior issues? Please explain. </label>
         <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@PreKInfoData.SocialEmotionalOrBehaviorIssues"></InputTextArea>
         <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.SocialEmotionalOrBehaviorIssues)" />

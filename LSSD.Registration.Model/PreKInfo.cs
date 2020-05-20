@@ -7,8 +7,6 @@ namespace LSSD.Registration.Model
     public class PreKInfo
     {
         public int Id { get; set; }
-
-        public string LanguageSpokenAtHome { get; set; }
         public string SocialEmotionalOrBehaviorIssues { get; set; }
         public string ReferredByOtherAgency { get; set; }
         public bool SpeechDifficulties { get; set; }
@@ -46,11 +44,5 @@ namespace LSSD.Registration.Model
         public bool AssistanceFromSocialServices { get; set; }
         public bool AssistanceFromKinsmenChildDevCenter { get; set; }
         public bool AssistanceFromAboriginalHeadstart { get; set; }
-
-        public PreKInfo()
-        {
-            this.LanguageSpokenAtHome = FormDefaults.Language;
-        }
-
     }
 }

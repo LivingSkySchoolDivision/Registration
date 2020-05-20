@@ -1,6 +1,12 @@
-﻿@code {
+﻿@using LSSD.Registration.CustomerFrontEnd.Services;
+@using  LSSD.Registration.Model;
+
+@code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
@@ -8,34 +14,114 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    private void OnClick_NextStepButton()
+    EALInfo EALData = new EALInfo();
+    Student LoadedStudentDemographics = new Student();
+    string studentFirstName = "the child";
+
+    protected override async Task OnInitializedAsync()
     {
+        EALData = await BrowserStorage.GetOrNew<EALInfo>(StorageKeys.EAL);
+        LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
+
+        if (!string.IsNullOrEmpty(LoadedStudentDemographics.FirstName))
+        {
+            studentFirstName = LoadedStudentDemographics.FirstName;
+        }
+    }
+
+    private async Task saveForm()
+    {
+        await BrowserStorage.Set(StorageKeys.EAL, EALData);
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        await saveForm();
         StepTracker.NextStep(FormName);
+    }
+
+    protected async Task HandleInValidSubmit()
+    {
+        await saveForm();
     }
 
     protected void OnClick_PreviousStepButton()
     {
         StepTracker.PreviousStep(FormName);
     }
-
 }
 
 <div class="container">
-    <h2>Language</h2>
-    <p>This page would ask for EAL information.</p>
-    <p>This page is not complete yet.</p>
+    <h2>English as an Additional Langage (EAL)</h2>
+    <p>English as an additional language learners are those whos first or primary language(s) is other than English and who require specific programming and/or additional services to develop language proficiency to achieve successful educational and social outcomes.</p>
+    <p>EAL students may include:
+    <ul>
+        <li>First Nation and Métis students who primarily speak a First Nations language</li>
+        <li>Francophone students</li>
+        <li>Hutterite students who are educated in schools in Hutterite communities</li>
+        <li>Canadian-born chilren of immigrants</li>
+        <li>Recently arrived immigrants</li>
+        <li>Refugees</li>
+        <li>International visa students</li>
+    </ul>
+    </p>
     <br /><br />
-    <div class="form-group">
-        <div class="form-row">
-            @if (StepNumber > 0)
-            {
-                <div class="col">
-                    <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
-                </div>
-            }
-            <div class="col">
-                <button type="button" @onclick="OnClick_NextStepButton" class="btn btn-secondary btn-block">Next Step</button>
-            </div>
-        </div>
-    </div>
+          <EditForm Model="@EALData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+
+              <div class="form-group">
+                  <div class="form-row">
+                      <div class="offset-sm-4 col-sm-8">
+                          <InputCheckbox @bind-Value="@EALData.IsEAL"></InputCheckbox>
+                          <label for="" class="font-weight-bold">@studentFirstName would be considered an "EAL Student", based on the above criteria.</label>
+                          <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => EALData.IsEAL)" />
+                      </div>
+                  </div>
+
+                  @if (EALData.IsEAL)
+                  {
+                      <div class="form-row">
+                          <div class="offset-sm-4 col-sm-8">
+                              <InputCheckbox @bind-Value="@EALData.IsFirstCanadianSchool"></InputCheckbox>
+                              <label for="" class="">This will be the first Canadian school that @studentFirstName attends.</label>
+                              <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => EALData.IsFirstCanadianSchool)" />
+                          </div>
+                      </div>
+
+                      <div class="form-group form-row">
+                          <div class="col-sm-4">
+                              <label for="studentLanguage">Entry date to Canada: </label>
+                              <p class="text-muted small">Leave blank if not applicable.</p>
+                          </div>
+                          <div class="col-sm-8">
+                              <InputDate id="studentLanguage" class="form-control" @bind-Value="@EALData.EntryDateToCanada"></InputDate>
+                              <ValidationMessage For="@(() => EALData.EntryDateToCanada)" />
+                          </div>
+                      </div>
+
+                      <div class="form-group form-row">
+                          <div class="col-sm-4">
+                              <label for="studentLanguage">Date of first Canadian school attended: </label>
+                          </div>
+                          <div class="col-sm-8">
+                              <InputDate id="studentLanguage" class="form-control" @bind-Value="@EALData.EntryDateToCanadianSchool"></InputDate>
+                              <ValidationMessage For="@(() => EALData.EntryDateToCanadianSchool)" />
+                          </div>
+                      </div>
+                  }
+              </div>
+
+              <div class="form-group">
+                  <div class="form-row">
+                      @if (StepNumber > 0)
+                      {
+                          <div class="col">
+                              <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                          </div>
+                      }
+                      <div class="col">
+                          <button type="submit" class="btn btn-secondary btn-block">Next Step</button>
+                      </div>
+                  </div>
+              </div>
+          </EditForm>
 </div>

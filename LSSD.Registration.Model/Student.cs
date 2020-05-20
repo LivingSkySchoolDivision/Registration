@@ -22,7 +22,7 @@ namespace LSSD.Registration.Model
         public Gender Gender { get; set; }
         [Required]
         [BirthdayValidator(MinimumAge = 3, MaximumAge = 21)]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public Address PrimaryAddress { get; set; }
         public Address MailingAddress { get; set; }
         public string LandDescription { get; set; }
@@ -34,7 +34,6 @@ namespace LSSD.Registration.Model
         {
             this.PrimaryAddress = new Address();
             this.MailingAddress = new Address();
-            this.DateOfBirth = DateTime.Today;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
