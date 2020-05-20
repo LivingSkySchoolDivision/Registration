@@ -38,7 +38,7 @@
         form.School = await BrowserStorage.GetOrNew<School>(StorageKeys.School) ?? new School(); ;
         form.Contacts = await BrowserStorage.GetOrNew<ContactsInfo>(StorageKeys.Contacts) ?? new ContactsInfo();
         form.Siblings = await BrowserStorage.GetOrNew<SiblingInfo>(StorageKeys.Siblings) ?? new SiblingInfo();
-        form.BussingInfo = new BussingInfo();
+        form.BussingInfo = await BrowserStorage.GetOrNew<BussingInfo>(StorageKeys.Bussing) ?? new BussingInfo();
         form.FirstNationsInfo = new FirstNationsInfo();
         form.EALInfo = new EALInfo();
         form.EnrollmentDetails = new EnrollmentDetails();
