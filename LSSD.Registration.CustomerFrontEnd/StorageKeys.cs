@@ -14,6 +14,8 @@ namespace LSSD.Registration.CustomerFrontEnd
         public const string PreKInfo = "REG-SECTION-PREK";
         public const string Contacts = "REG-SECTION-CONTACTS";
         public const string Bussing = "REG-SECTION-BUSSING";
+        public const string EAL = "REG-SECTION-EAL";
+        public const string Citizenship = "REG-SECTION-CITIZENSHIP";
 
     }
 }

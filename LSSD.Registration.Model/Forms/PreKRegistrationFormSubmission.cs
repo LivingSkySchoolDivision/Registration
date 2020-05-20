@@ -14,5 +14,6 @@ namespace LSSD.Registration.Model.Forms
         public BussingInfo BussingInfo { get; set; }
         public FirstNationsInfo FirstNationsInfo { get; set; }
         public EALInfo EALInfo { get; set; }
+        public CitizenshipInfo Citizenship { get; set; }
     }
 }
