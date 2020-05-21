@@ -7,9 +7,8 @@ namespace LSSD.Registration.Model
     public class Address
     {
         public int Id { get; set; }
-        public string UnitNumber { get; set; }
-        public string HouseNumber { get; set; }
-        public string Street { get; set; }
+        public string Line1 { get; set; }
+        public string Line2 { get; set; }
         public string City { get; set; }
         public string Province { get; set; }
         public string PostalCode { get; set; }
@@ -19,55 +18,7 @@ namespace LSSD.Registration.Model
         {
             this.Country = FormDefaults.Country;
         }
-
-        public string Line1 { 
-            get {
-                StringBuilder returnMe = new StringBuilder();
-
-                if (!string.IsNullOrEmpty(UnitNumber))
-                {
-                    returnMe.Append(UnitNumber + " ");
-                }
-
-                if (!string.IsNullOrEmpty(HouseNumber))
-                {
-                    returnMe.Append(HouseNumber + " ");
-                }
-
-                if (!string.IsNullOrEmpty(Street))
-                {
-                    returnMe.Append(Street);
-                }
-
-                return returnMe.ToString().Trim();
-            } 
-        }
-
-        public string Line2
-        {
-            get
-            {
-                StringBuilder returnMe = new StringBuilder();
-
-                if (!string.IsNullOrEmpty(City))
-                {
-                    returnMe.Append(City + " ");
-                }
-
-                if (!string.IsNullOrEmpty(Province))
-                {
-                    returnMe.Append(Province + " ");
-                }
-
-                if (!string.IsNullOrEmpty(PostalCode))
-                {
-                    returnMe.Append(PostalCode);
-                }
-
-                return returnMe.ToString().Trim();
-            }
-        }
-
+                
         public bool IsValidMailing
         {
             get
@@ -76,7 +27,7 @@ namespace LSSD.Registration.Model
                     !string.IsNullOrEmpty(this.Country) &&
                     !string.IsNullOrEmpty(this.Province) &&
                     !string.IsNullOrEmpty(this.City) &&
-                    (!string.IsNullOrEmpty(this.HouseNumber) || !string.IsNullOrEmpty(this.Street)) &&
+                    (!string.IsNullOrEmpty(this.Line1) || !string.IsNullOrEmpty(this.Line2)) &&
                     !string.IsNullOrEmpty(this.PostalCode)
                     )
                 {
@@ -95,7 +46,7 @@ namespace LSSD.Registration.Model
                     !string.IsNullOrEmpty(this.Country) &&
                     !string.IsNullOrEmpty(this.Province) &&
                     !string.IsNullOrEmpty(this.City) &&
-                    (!string.IsNullOrEmpty(this.HouseNumber) || !string.IsNullOrEmpty(this.Street))
+                    (!string.IsNullOrEmpty(this.Line1) || !string.IsNullOrEmpty(this.Line2))
                     )
                 {
                     return true;
@@ -110,10 +61,10 @@ namespace LSSD.Registration.Model
             get
             {
                 return (
-                    string.IsNullOrEmpty(this.HouseNumber) &&
+                    string.IsNullOrEmpty(this.Line1) &&
                     string.IsNullOrEmpty(this.City) &&
                     string.IsNullOrEmpty(this.PostalCode) &&
-                    string.IsNullOrEmpty(this.UnitNumber)
+                    string.IsNullOrEmpty(this.Line2)
                     );
             }
         }

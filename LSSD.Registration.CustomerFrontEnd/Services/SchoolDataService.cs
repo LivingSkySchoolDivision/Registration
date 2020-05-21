@@ -21,9 +21,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 EmailAddress = "cando@lskysd.ca",
                 MailingAddress = new Address()
                 {
-                    UnitNumber = "",
-                    HouseNumber = "",
-                    Street = "Box 250",
+                    Line1 = "Box 250",
                     PostalCode = "S0K 0V0",
                     City = "Cando",
                     Province = "SK",
@@ -31,9 +29,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 },
                 PhysicalAddress = new Address()
                 {
-                    UnitNumber = "",
-                    HouseNumber = "201",
-                    Street = "7th Street",
+                    Line1 = "201 7th Street",
                     PostalCode = "S0K 0V0",
                     City = "Cando",
                     Province = "SK",
@@ -54,9 +50,6 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 EmailAddress = "hclark@lskysd.ca",
                 MailingAddress = new Address()
                 {
-                    UnitNumber = "",
-                    HouseNumber = "",
-                    Street = "",
                     PostalCode = "",
                     City = "Spiritwood",
                     Province = "SK",
@@ -64,9 +57,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 },
                 PhysicalAddress = new Address()
                 {
-                    UnitNumber = "",
-                    HouseNumber = "221 ",
-                    Street = "2nd Street West",
+                    Line1 = "221 2nd Street West",
                     PostalCode = "S0J 2M0",
                     City = "Spiritwood",
                     Province = "SK",
@@ -87,9 +78,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 EmailAddress = "shs@lskysd.ca",
                 MailingAddress = new Address()
                 {
-                    UnitNumber = "",
-                    HouseNumber = "",
-                    Street = "",
+                    Line1 = "",
                     PostalCode = "",
                     City = "",
                     Province = "SK",
@@ -97,9 +86,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 },
                 PhysicalAddress = new Address()
                 {
-                    UnitNumber = "",
-                    HouseNumber = "216",
-                    Street = "4th Street West",
+                    Line1 = "216 4th Street West",
                     PostalCode = "S0J 2M0",
                     City = "Spiritwood",
                     Province = "SK",
@@ -111,40 +98,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 OffersKTo9 = false,
                 OffersHighSchool = true
             },
-            /*
-            new School() {
-                Name = "",
-                PhoneNumber = "",
-                Community = "",
-                WebsiteURL = "",
-                EmailAddress = "",
-                MailingAddress = new Address()
-                {
-                    AddressType = "Mailing",
-                    UnitNumber = "",
-                    HouseNumber = "",
-                    Street = "",
-                    PostalCode = "",
-                    City = "",
-                    Province = "SK",
-                    Country = "Canada"
-                },
-                PhysicalAddress = new Address()
-                {
-                    AddressType = "Physical",
-                    UnitNumber = "",
-                    HouseNumber = "",
-                    Street = "Box 250",
-                    PostalCode = "S0K 0V0",
-                    City = "Cando",
-                    Province = "SK",
-                    Country = "Canada"
-                },
-                DAN = "",
-                OffersPreK = false,
-                OffersKTo9 = false,
-                OffersHighSchool = false
-            },*/
+            
         };
         #endregion
 
