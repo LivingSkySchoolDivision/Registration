@@ -31,6 +31,7 @@ namespace LSSD.Registration.Model
 
         public Contact()
         {
+            this.ContactPriority = 1;
             this.PrimaryAddress = new Address();
             this.MailingAddress = new Address();
         }
