@@ -62,8 +62,7 @@ namespace LSSD.Registration.Model
 
                 // Require a house & street _or_ a land location
                 if (
-                    (string.IsNullOrEmpty(this.PrimaryAddress.Street)) 
-                    && (string.IsNullOrEmpty(this.PrimaryAddress.HouseNumber))
+                    (!this.PrimaryAddress.IsValidCivic)
                     && (string.IsNullOrEmpty(this.LandDescription))
                     )
                 {
@@ -78,24 +77,11 @@ namespace LSSD.Registration.Model
 
             if (!string.IsNullOrEmpty(this.LandDescription))
             {
-                if (this.MailingAddress != null)
-                {
-                    if (
-                        (string.IsNullOrEmpty(this.MailingAddress.Country))
-                        && (string.IsNullOrEmpty(this.MailingAddress.Province))
-                        && (string.IsNullOrEmpty(this.MailingAddress.City))
-                        && (string.IsNullOrEmpty(this.MailingAddress.Street))
-                        && (string.IsNullOrEmpty(this.MailingAddress.PostalCode))
-                        )
-                    {
-                        errors.Add(new ValidationResult(
-                        "Mailing address is required when providing land description.", new[] { nameof(MailingAddress) }));
-                    }
-                } else
+                if ((this.MailingAddress == null) || (this.MailingAddress?.IsValidMailing == false))
                 {
                     errors.Add(new ValidationResult(
                         "Mailing address is required when providing land description.", new[] { nameof(MailingAddress) }));
-                }
+                 }
             }
 
 
