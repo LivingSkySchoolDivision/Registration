@@ -50,13 +50,13 @@
 
     private async void selectSchool(School school)
     {
-        await saveData();
+        await saveData(school);
         StepTracker.NextStep(FormName);
     }
 
-    private async Task saveData()
+    private async Task saveData(School school)
     {
-        await BrowserStorage.Set(StorageKeys.School, ChosenSchool);
+        await BrowserStorage.Set(StorageKeys.School, SelectedSchool.FromSchool(school));
     }
 
     protected void OnClick_PreviousStepButton()
