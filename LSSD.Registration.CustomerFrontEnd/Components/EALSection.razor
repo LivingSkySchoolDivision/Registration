@@ -67,6 +67,8 @@
     </p>
     <br /><br />
           <EditForm Model="@EALData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+              <DataAnnotationsValidator />
+              <ValidationSummary />
 
               <div class="form-group">
                   <div class="form-row">
