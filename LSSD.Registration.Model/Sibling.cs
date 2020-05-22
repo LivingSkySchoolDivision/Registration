@@ -18,7 +18,6 @@ namespace LSSD.Registration.Model
 
         public Sibling()
         {
-            this.DateOfBirth = DateTime.Today;
         }
     }
 }
