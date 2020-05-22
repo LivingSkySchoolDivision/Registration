@@ -35,7 +35,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                     Province = "SK",
                     Country = "Canada"
                 },
-                DAN = "",
+                DAN = "5010213",
                 GradesOffered = "K-12",
                 OffersPreK = false,
                 OffersKTo9 = true,
@@ -63,7 +63,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                     Province = "SK",
                     Country = "Canada"
                 },
-                DAN = "",
+                DAN = "6410721",
                 GradesOffered = "PK-6",
                 OffersPreK = true,
                 OffersKTo9 = true,
@@ -92,7 +92,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                     Province = "SK",
                     Country = "Canada"
                 },
-                DAN = "",
+                DAN = "6410713",
                 GradesOffered = "7-12",
                 OffersPreK = false,
                 OffersKTo9 = false,

@@ -91,7 +91,8 @@
                 HomePhone = SavedFormSubmitter.PhoneNumber,
                 LivesWithStudent = true,
                 SamePrimaryAddressAsStudent = true,
-                SameMailingAddressAsStudent = true
+                SameMailingAddressAsStudent = true,
+                ShouldRecieveMailAboutStudent = true
             });
         }
     }
@@ -126,46 +127,46 @@
                 <div class="form-group container p-2" style="border: 1px solid #dbdbdb;border-radius:2px">
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">First Name: </label>
-                        <InputText id="studentLegalFirstName" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.FirstName" placeholder="First"></InputText>
+                        <InputText id="studentLegalFirstName" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.FirstName"></InputText>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.FirstName)" />
                     </div>
 
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">Last Name: </label>
-                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.LastName" placeholder="Last"></InputText>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.LastName"></InputText>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.LastName)" />
                     </div>
 
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">Relationship to student: </label>
-                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.RelationshipToStudent" placeholder="Relationship"></InputText>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.RelationshipToStudent"></InputText>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.RelationshipToStudent)" />
                     </div>
 
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">Email Address: </label>
-                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.EmailAddress" placeholder="Email"></InputText>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.EmailAddress"></InputText>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.EmailAddress)" />
                     </div>
 
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">Home Phone: </label>
-                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.HomePhone" placeholder="(123) 456-7890"></InputText>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.HomePhone"></InputText>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.HomePhone)" />
                     </div>
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">Cell Phone: </label>
-                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.CellPhone" placeholder="(123) 456-7890"></InputText>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.CellPhone"></InputText>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.CellPhone)" />
                     </div>
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">Work Phone: </label>
-                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.WorkPhone" placeholder="(123) 456-7890"></InputText>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.WorkPhone"></InputText>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.WorkPhone)" />
                     </div>
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">Employer / Workplace: </label>
-                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.Employer" placeholder="Spacely Sprockets, Inc."></InputText>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.Employer"></InputText>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.Employer)" />
                     </div>
                     <div class="form-group">
@@ -209,7 +210,7 @@
                             <p class="text-muted small">Calling order in case of emergency.</p>
                         </div>
                         <div class="col-sm-9">
-                            <InputNumber id="" class="form-control col-sm-1 form-control-sm" @bind-Value="@Contact.ContactPriority" placeholder="1"></InputNumber>
+                            <InputNumber id="" class="form-control col-sm-1 form-control-sm" @bind-Value="@Contact.ContactPriority"></InputNumber>
                             <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.ContactPriority)" />
                         </div>
                     </div>

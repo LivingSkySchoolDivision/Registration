@@ -9,7 +9,7 @@
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     string FormName = "PREK";
-    private const int totalSteps = 13;
+    private const int totalSteps = 12;
 
     protected override void OnInitialized()
     {
@@ -48,39 +48,36 @@
                 <PreKWarningSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 2:
-                <DataPrivacySection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 3:
                 <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 4:
+            case 3:
                 <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 5:
+            case 4:
                 <StudentDemographicsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 6:
+            case 5:
                 <CitizenshipSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 7:
+            case 6:
                 <ContactsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 8:
+            case 7:
                 <SiblingsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 9:
+            case 8:
                 <PreKInfoSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 10:
+            case 9:
                 <PreKBussingSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 11:
+            case 10:
                 <EALSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 12:
+            case 11:
                 <FirstNationsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
-            case 13:
+            case 12:
                 <ThanksPreK FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
         }
