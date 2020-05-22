@@ -22,7 +22,6 @@ namespace LSSD.Registration.Model
         public bool ShouldRecieveMailAboutStudent { get; set; }
         public Address PrimaryAddress { get; set; }
         public Address MailingAddress { get; set; }
-        public bool ResidesWithChild { get; set; }
         public string HomePhone { get; set; }
         public string WorkPhone { get; set; }
         public string CellPhone { get; set; }
