@@ -137,7 +137,7 @@
                     <b>Kindergarten</b> students must be 5 years old as of Dec 31.
                 </small>
             </div>
-            <InputDate id="birthdate" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.DateOfBirth" placeholder="Enter birthdate"></InputDate>
+            <InputDate id="birthdate" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.DateOfBirth"></InputDate>
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.DateOfBirth)" />
         </div>
 
@@ -154,7 +154,7 @@
 
         <div class="form-group row">
             <label for="studentGender" class="col-sm-3">Health Services Number: </label>
-            <InputText id="studentLegalLastName" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.HealthServicesNumber" placeholder="123 456 789"></InputText>
+            <InputText id="studentLegalLastName" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.HealthServicesNumber"></InputText>
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.HealthServicesNumber)" />
         </div>
 
