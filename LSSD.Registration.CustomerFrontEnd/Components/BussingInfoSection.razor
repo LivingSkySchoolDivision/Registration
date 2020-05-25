@@ -58,9 +58,9 @@
             }
         }
 
-        if (BussingData.BussingAddress.IsEmpty)
+        if (BussingData.BussingAddress.IsEmpty())
         {
-            if (LoadedStudentDemographics?.PrimaryAddress?.IsValidCivic == true)
+            if (LoadedStudentDemographics?.PrimaryAddress?.IsValidCivic() == true)
             {
                 BussingData.BussingAddress = LoadedStudentDemographics.PrimaryAddress;
             }
