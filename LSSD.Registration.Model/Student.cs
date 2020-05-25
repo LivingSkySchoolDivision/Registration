@@ -19,6 +19,9 @@ namespace LSSD.Registration.Model
         [Required]
         public string LegalLastName { get; set; }
         public string LegalMiddleName { get; set; }
+        public bool HasPreferredName { get; set; }
+        public bool HasLandLocation { get; set; }
+        public bool MailingAddressSameAsPhysical { get; set; }
         public Gender Gender { get; set; }
         [Required]
         [BirthdayValidator(MinimumAge = 3, MaximumAge = 21)]
@@ -62,7 +65,7 @@ namespace LSSD.Registration.Model
 
                 // Require a house & street _or_ a land location
                 if (
-                    (!this.PrimaryAddress.IsValidCivic)
+                    (!this.PrimaryAddress.IsValidCivic())
                     && (string.IsNullOrEmpty(this.LandDescription))
                     )
                 {
@@ -77,7 +80,7 @@ namespace LSSD.Registration.Model
 
             if (!string.IsNullOrEmpty(this.LandDescription))
             {
-                if ((this.MailingAddress == null) || (this.MailingAddress?.IsValidMailing == false))
+                if ((this.MailingAddress == null) || (this.MailingAddress?.IsValidMailing() == false))
                 {
                     errors.Add(new ValidationResult(
                         "Mailing address is required when providing land description.", new[] { nameof(MailingAddress) }));

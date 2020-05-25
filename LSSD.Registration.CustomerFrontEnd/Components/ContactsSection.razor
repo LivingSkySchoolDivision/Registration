@@ -87,8 +87,6 @@
             ContactsInfoData.Contacts.Add(new Contact() {
                 FirstName = SavedFormSubmitter.FirstName,
                 LastName = SavedFormSubmitter.LastName,
-                EmailAddress = SavedFormSubmitter.EmailAddress,
-                HomePhone = SavedFormSubmitter.PhoneNumber,
                 LivesWithStudent = true,
                 SamePrimaryAddressAsStudent = true,
                 SameMailingAddressAsStudent = true,
@@ -163,6 +161,11 @@
                         <label class="col-sm-3 font-weight-normal">Work Phone: </label>
                         <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.WorkPhone"></InputText>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.WorkPhone)" />
+                    </div>
+                    <div class="form-row">
+                        <label class="col-sm-3 font-weight-normal">Alternate means of contact: </label>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.AlternateContactInfo"></InputText>
+                        <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.AlternateContactInfo)" />
                     </div>
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">Employer / Workplace: </label>
@@ -243,17 +246,17 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-sm-3">
-                                            <label class="font-weight-normal">Postal Code</label>
-                                        </div>
-                                        <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8 form-control-sm" @bind-Value="@Contact.PrimaryAddress.PostalCode"></InputText>
-                                        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Contact.PrimaryAddress.PostalCode)" />
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-sm-3">
                                             <label class="font-weight-normal">Province:</label>
                                         </div>
                                         <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8 form-control-sm" @bind-Value="@Contact.PrimaryAddress.Province"></InputText>
                                         <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Contact.PrimaryAddress.Province)" />
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-sm-3">
+                                            <label class="font-weight-normal">Postal Code</label>
+                                        </div>
+                                        <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8 form-control-sm" @bind-Value="@Contact.PrimaryAddress.PostalCode"></InputText>
+                                        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Contact.PrimaryAddress.PostalCode)" />
                                     </div>
                                     <div class="form-row">
                                         <div class="col-sm-3">
@@ -293,17 +296,17 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-sm-3">
-                                            <label class="font-weight-normal">Postal Code</label>
-                                        </div>
-                                        <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8 form-control-sm" @bind-Value="@Contact.MailingAddress.PostalCode"></InputText>
-                                        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Contact.MailingAddress.PostalCode)" />
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-sm-3">
                                             <label class="font-weight-normal">Province:</label>
                                         </div>
                                         <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8 form-control-sm" @bind-Value="@Contact.MailingAddress.Province"></InputText>
                                         <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Contact.MailingAddress.Province)" />
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-sm-3">
+                                            <label class="font-weight-normal">Postal Code</label>
+                                        </div>
+                                        <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8 form-control-sm" @bind-Value="@Contact.MailingAddress.PostalCode"></InputText>
+                                        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Contact.MailingAddress.PostalCode)" />
                                     </div>
                                     <div class="form-row">
                                         <div class="col-sm-3">

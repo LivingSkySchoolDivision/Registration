@@ -34,7 +34,7 @@ namespace LSSD.Registration.Model
                         "Please indicate that you have read and understand the rules to complete your bussing request.", new[] { nameof(ReadAndUnderstandsRules) }));
                 }
 
-                if ((!BussingAddress.IsValidCivic) && (string.IsNullOrEmpty(LandDescription)))
+                if ((!BussingAddress.IsValidCivic()) && (string.IsNullOrEmpty(LandDescription)))
                 {
                     errors.Add(new ValidationResult(
                         "Please provide a civic address or land location.", new[] { nameof(BussingAddress), nameof(LandDescription) }));

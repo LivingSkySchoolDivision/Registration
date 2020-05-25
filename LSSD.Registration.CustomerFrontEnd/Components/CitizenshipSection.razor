@@ -75,7 +75,10 @@
                       <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => CitizenshipData.Citizenship)" />
                   </div>
                   <div class="form-group row">
-                      <label for="studentLanguage" class="col-sm-4  ">Previous country: </label>
+                      <div class="col-sm-4  ">
+                          <label for="studentLanguage">Previous country: </label>
+                          <p class="text-muted small">Leave blank if not applicable.</p>
+                      </div>
                       <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@CitizenshipData.PreviousCountry"></InputText>
                       <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => CitizenshipData.PreviousCountry)" />
                   </div>

@@ -19,7 +19,9 @@
     }
 }
 
-    <div class="container" style="border: 1px solid #C0C0C0; border-radius: 3px;">
+    <div class="container">
+        <HeaderComponent />
+
         <h1>LSSD K-12 Registration Form</h1>
         <div class="progress">
             @{
@@ -43,13 +45,13 @@
                 <DemoWarning FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 1:
-                <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 2:
-                <GradeChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 3:
-                <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                <GradeChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 4:
                 <StudentDemographicsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />

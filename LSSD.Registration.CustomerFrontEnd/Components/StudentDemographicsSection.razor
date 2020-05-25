@@ -14,9 +14,6 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    private bool mailingAddressSameAsPhysical = true;
-    private bool usesLandDescription = false;
-    private bool usePreferredName = false;
     Student StudentDemographicData = new Student();
 
     protected async Task HandleValidSubmit()
@@ -38,7 +35,7 @@
 
     private async Task saveData()
     {
-        if (mailingAddressSameAsPhysical && !usesLandDescription)
+        if (StudentDemographicData.MailingAddressSameAsPhysical && !StudentDemographicData.HasLandLocation)
         {
             StudentDemographicData.MailingAddress = StudentDemographicData.PrimaryAddress;
         }
@@ -53,19 +50,28 @@
 
     private void updatePreferredName()
     {
-        if (string.IsNullOrEmpty(StudentDemographicData.FirstName) && !string.IsNullOrEmpty(StudentDemographicData.LegalFirstName))
+        // Always update if we haven't indicated a preferred name
+        if (!StudentDemographicData.HasPreferredName)
         {
             StudentDemographicData.FirstName = StudentDemographicData.LegalFirstName;
-        }
-
-        if (string.IsNullOrEmpty(StudentDemographicData.MiddleName) && !string.IsNullOrEmpty(StudentDemographicData.LegalMiddleName))
-        {
             StudentDemographicData.MiddleName = StudentDemographicData.LegalMiddleName;
-        }
-
-        if (string.IsNullOrEmpty(StudentDemographicData.LastName) && !string.IsNullOrEmpty(StudentDemographicData.LegalLastName))
-        {
             StudentDemographicData.LastName = StudentDemographicData.LegalLastName;
+        } else
+        {
+            if (string.IsNullOrEmpty(StudentDemographicData.FirstName) && !string.IsNullOrEmpty(StudentDemographicData.LegalFirstName))
+            {
+                StudentDemographicData.FirstName = StudentDemographicData.LegalFirstName;
+            }
+
+            if (string.IsNullOrEmpty(StudentDemographicData.MiddleName) && !string.IsNullOrEmpty(StudentDemographicData.LegalMiddleName))
+            {
+                StudentDemographicData.MiddleName = StudentDemographicData.LegalMiddleName;
+            }
+
+            if (string.IsNullOrEmpty(StudentDemographicData.LastName) && !string.IsNullOrEmpty(StudentDemographicData.LegalLastName))
+            {
+                StudentDemographicData.LastName = StudentDemographicData.LegalLastName;
+            }
         }
     }
 }
@@ -100,14 +106,14 @@
 
             <div class="form-row">
                 <div class="offset-sm-3">
-                    <InputCheckbox id="usesLandDescription" @bind-Value="@usePreferredName" />
+                    <InputCheckbox id="usesLandDescription" @bind-Value="@StudentDemographicData.HasPreferredName" />
                     <label class="form-check-label" for="usesLandDescription" style="font-weight: normal;">
                         Student goes by a different name
                     </label>
                 </div>
             </div>
 
-            @if (usePreferredName)
+            @if (StudentDemographicData.HasPreferredName)
             {
                 <div class="form-row">
                     <label class="col-sm-3">Preferred name: </label>
@@ -179,14 +185,14 @@
         <div class="form-group">
             <h3>Primary Physical Address</h3>
             <div class="offset-sm-3">
-                <InputCheckbox id="usesLandDescription" @bind-Value="@usesLandDescription" />
+                <InputCheckbox id="usesLandDescription" @bind-Value="@StudentDemographicData.HasLandLocation" />
                 <label class="form-check-label" for="usesLandDescription" style="font-weight: normal;">
                     No civic address, use land description
                 </label>
             </div>
         </div>
 
-        @if (usesLandDescription)
+        @if (StudentDemographicData.HasLandLocation)
         {
             <div class="form-group">
                 <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.PrimaryAddress)" />
@@ -264,19 +270,19 @@
             <div class="form-group">
                 <div class="form-group row">
                     <div class="col-sm-3">
-                        <label>Postal Code:</label>
+                        <label>Province:</label>
                     </div>
-                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.PrimaryAddress.PostalCode"></InputText>
-                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.PrimaryAddress.PostalCode)" />
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.PrimaryAddress.Province"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.PrimaryAddress.Province)" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-group row">
                     <div class="col-sm-3">
-                        <label>Province:</label>
+                        <label>Postal Code:</label>
                     </div>
-                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.PrimaryAddress.Province"></InputText>
-                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.PrimaryAddress.Province)" />
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.PrimaryAddress.PostalCode"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.PrimaryAddress.PostalCode)" />
                 </div>
             </div>
             <div class="form-group">
@@ -297,16 +303,16 @@
                 <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.MailingAddress)" />
             </div>
             <div class="offset-sm-3">
-                @if (!usesLandDescription)
+                @if (!StudentDemographicData.HasLandLocation)
                 {
-                    <InputCheckbox id="mailingSameAsPhysical" @bind-Value="@mailingAddressSameAsPhysical" />
+                    <InputCheckbox id="mailingSameAsPhysical" @bind-Value="@StudentDemographicData.MailingAddressSameAsPhysical" />
                     <label class="form-check-label" for="mailingSameAsPhysical" style="font-weight: normal;">
                         Same as physical
                     </label>
                 }
             </div>
         </div>
-        @if ((!mailingAddressSameAsPhysical) || (usesLandDescription))
+        @if ((!StudentDemographicData.MailingAddressSameAsPhysical) || (StudentDemographicData.HasLandLocation))
         {
             <div class="form-group">
                 <div class="form-group row">
@@ -338,19 +344,19 @@
             <div class="form-group">
                 <div class="form-group row">
                     <div class="col-sm-3">
-                        <label>Postal Code:</label>
+                        <label>Province:</label>
                     </div>
-                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.MailingAddress.PostalCode"></InputText>
-                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.MailingAddress.PostalCode)" />
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.MailingAddress.Province"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.MailingAddress.Province)" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-group row">
                     <div class="col-sm-3">
-                        <label>Province:</label>
+                        <label>Postal Code:</label>
                     </div>
-                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.MailingAddress.Province"></InputText>
-                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.MailingAddress.Province)" />
+                    <InputText id="studentPrimaryUnitNo" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.MailingAddress.PostalCode"></InputText>
+                    <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.MailingAddress.PostalCode)" />
                 </div>
             </div>
             <div class="form-group">

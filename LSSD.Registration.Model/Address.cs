@@ -19,54 +19,45 @@ namespace LSSD.Registration.Model
             this.Country = FormDefaults.Country;
         }
                 
-        public bool IsValidMailing
+        public bool IsValidMailing()
         {
-            get
+            if (
+                !string.IsNullOrEmpty(this.Country) &&
+                !string.IsNullOrEmpty(this.Province) &&
+                !string.IsNullOrEmpty(this.City) &&
+                (!string.IsNullOrEmpty(this.Line1) || !string.IsNullOrEmpty(this.Line2)) &&
+                !string.IsNullOrEmpty(this.PostalCode)
+                )
             {
-                if (
-                    !string.IsNullOrEmpty(this.Country) &&
-                    !string.IsNullOrEmpty(this.Province) &&
-                    !string.IsNullOrEmpty(this.City) &&
-                    (!string.IsNullOrEmpty(this.Line1) || !string.IsNullOrEmpty(this.Line2)) &&
-                    !string.IsNullOrEmpty(this.PostalCode)
-                    )
-                {
-                    return true;
-                }
-
-                return false;
+                return true;
             }
+
+            return false;            
         }
 
-        public bool IsValidCivic
+        public bool IsValidCivic()
         {
-            get
+            if (
+                !string.IsNullOrEmpty(this.Country) &&
+                !string.IsNullOrEmpty(this.Province) &&
+                !string.IsNullOrEmpty(this.City) &&
+                (!string.IsNullOrEmpty(this.Line1) || !string.IsNullOrEmpty(this.Line2))
+                )
             {
-                if (
-                    !string.IsNullOrEmpty(this.Country) &&
-                    !string.IsNullOrEmpty(this.Province) &&
-                    !string.IsNullOrEmpty(this.City) &&
-                    (!string.IsNullOrEmpty(this.Line1) || !string.IsNullOrEmpty(this.Line2))
-                    )
-                {
-                    return true;
-                }
-
-                return false;
+                return true;
             }
+
+            return false;            
         }
 
-        public bool IsEmpty
+        public bool IsEmpty()
         {
-            get
-            {
-                return (
-                    string.IsNullOrEmpty(this.Line1) &&
-                    string.IsNullOrEmpty(this.City) &&
-                    string.IsNullOrEmpty(this.PostalCode) &&
-                    string.IsNullOrEmpty(this.Line2)
-                    );
-            }
+            return (
+                string.IsNullOrEmpty(this.Line1) &&
+                string.IsNullOrEmpty(this.City) &&
+                string.IsNullOrEmpty(this.PostalCode) &&
+                string.IsNullOrEmpty(this.Line2)
+                );            
         }
 
     }

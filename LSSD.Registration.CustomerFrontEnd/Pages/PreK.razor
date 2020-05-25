@@ -21,7 +21,8 @@
         StateHasChanged();
     }
 }
-    <div class="container" style="border: 1px solid #C0C0C0; border-radius: 3px;">
+    <div class="container">
+        <HeaderComponent />
         <h1>Pre-Kindergarten Application</h1>
         <div class="progress">
             @{
@@ -48,10 +49,10 @@
                 <PreKWarningSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 2:
-                <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 3:
-                <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+                <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
                 break;
             case 4:
                 <StudentDemographicsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
