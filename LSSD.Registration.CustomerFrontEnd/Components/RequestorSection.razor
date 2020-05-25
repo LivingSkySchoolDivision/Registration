@@ -49,31 +49,41 @@
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="form-group">
-            <label for="requestorFirstName">Your name: </label>
             <div class="form-row">
-                <div class="col">
-                    <InputText id="requestorFirstName" class="form-control" @bind-Value="@FormSubmitterData.FirstName"></InputText>
+                <div class="col-sm-3">
+                    <label for="requestorFirstName" class="font-weight-bold">Your name: </label>
+                </div>
+                <div class="col-sm-4">
+                    <InputText id="requestorFirstName" class="form-control" @bind-Value="@FormSubmitterData.FirstName" placeholder="First Name"></InputText>
                     <ValidationMessage For="@(() => FormSubmitterData.FirstName)" />
                 </div>
-                <div class="col">
-                    <InputText id="requestorLastName" class="form-control" @bind-Value="@FormSubmitterData.LastName"></InputText>
+                <div class="col-sm-5">
+                    <InputText id="requestorLastName" class="form-control" @bind-Value="@FormSubmitterData.LastName" placeholder="Last Name"></InputText>
                     <ValidationMessage For="@(() => FormSubmitterData.LastName)" />
                 </div>
             </div>
         </div>
 
-        <label for="requestorEmail">How can we contact you?</label>
-        <p class="text-muted">
-            Examples:
-            <ul>
-                <li>Cell: (123) 456-7890</li>
-                <li>Text: (321) 654-0987</li>
-                <li>Email: john@smith.com</li>
-                <li>Facebook: MyFacebookName</li>
-            </ul>
-        </p>
-        <InputText id="requestorEmail" class="form-control" @bind-Value="@FormSubmitterData.ContactDetails"></InputText>
-        <ValidationMessage For="@(() => FormSubmitterData.ContactDetails)" />
+        <div class="form-group form-row">
+            <div class="col-sm-3">
+                <label for="requestorEmail" class="font-weight-bold">Preferred method of contact:</label>
+                <p class="text-muted small">
+                    Examples:
+                    <ul class="text-muted small">
+                        <li>Cell: (123) 456-7890</li>
+                        <li>Text: (321) 654-0987</li>
+                        <li>Email: john@smith.com</li>
+                        <li>Facebook: MyFacebookName</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="col-sm-9">
+                <InputTextArea id="requestorEmail" class="form-control" @bind-Value="@FormSubmitterData.ContactDetails"></InputTextArea>
+                <ValidationMessage For="@(() => FormSubmitterData.ContactDetails)" />
+            </div>
+        </div>
+
+        
 
 
         <div class="form-group">
