@@ -39,16 +39,6 @@ namespace LSSD.Registration.Model
                     errors.Add(new ValidationResult(
                         "Please specify a relationship for all contacts.", new[] { nameof(Contacts) }));
                 }
-
-                if (
-                    string.IsNullOrEmpty(contact.HomePhone) &&
-                    string.IsNullOrEmpty(contact.WorkPhone) &&
-                    string.IsNullOrEmpty(contact.CellPhone)
-                )
-                {                    
-                    errors.Add(new ValidationResult(
-                        "Please provide at least one phone number.", new[] { nameof(contact), nameof(contact.HomePhone), nameof(contact.WorkPhone), nameof(contact.CellPhone) }));                    
-                }
             }
 
             return errors;

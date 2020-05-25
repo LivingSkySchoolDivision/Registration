@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LSSD.Registration.Model
 {
-    public class Contact : IValidatableObject
+    public class Contact
     {
         public int Id { get; set; }
         [Required]
@@ -34,24 +34,6 @@ namespace LSSD.Registration.Model
             this.ContactPriority = 1;
             this.PrimaryAddress = new Address();
             this.MailingAddress = new Address();
-        }
-
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            List<ValidationResult> errors = new List<ValidationResult>();
-
-            if (
-                string.IsNullOrEmpty(this.HomePhone) &&
-                string.IsNullOrEmpty(this.WorkPhone) &&
-                string.IsNullOrEmpty(this.CellPhone)
-                )
-            {
-                errors.Add(new ValidationResult(
-                    "Please provide at least one phone number.", new[] { nameof(HomePhone), nameof(WorkPhone), nameof(CellPhone) }));                
-            }
-
-            return errors;
         }
     }
 }
