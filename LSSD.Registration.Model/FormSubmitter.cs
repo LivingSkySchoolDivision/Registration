@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LSSD.Registration.Model
 {
-    public class FormSubmitter : IValidatableObject
+    public class FormSubmitter
     {
         public int Id { get; set; }
 
@@ -15,19 +15,9 @@ namespace LSSD.Registration.Model
         [Required]
         public string LastName { get; set; }
 
+        [Required]
         public string ContactDetails { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            List<ValidationResult> errors = new List<ValidationResult>();
-
-            if (string.IsNullOrEmpty(this.ContactDetails))
-            {
-                errors.Add(new ValidationResult("Please provide a method of contacting you.", new[] { nameof(ContactDetails) }));
-
-            }
-
-            return errors;
-        }
+        
     }
 }
