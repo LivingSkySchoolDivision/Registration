@@ -19,6 +19,9 @@ namespace LSSD.Registration.Model
         [Required]
         public string LegalLastName { get; set; }
         public string LegalMiddleName { get; set; }
+        public bool HasPreferredName { get; set; }
+        public bool HasLandLocation { get; set; }
+        public bool MailingAddressSameAsPhysical { get; set; }
         public Gender Gender { get; set; }
         [Required]
         [BirthdayValidator(MinimumAge = 3, MaximumAge = 21)]
