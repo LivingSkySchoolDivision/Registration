@@ -163,6 +163,11 @@
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.WorkPhone)" />
                     </div>
                     <div class="form-row">
+                        <label class="col-sm-3 font-weight-normal">Alternate means of contact: </label>
+                        <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.AlternateContactInfo"></InputText>
+                        <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.AlternateContactInfo)" />
+                    </div>
+                    <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">Employer / Workplace: </label>
                         <InputText id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.Employer"></InputText>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.Employer)" />

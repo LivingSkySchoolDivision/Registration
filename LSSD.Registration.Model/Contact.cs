@@ -25,6 +25,7 @@ namespace LSSD.Registration.Model
         public string HomePhone { get; set; }
         public string WorkPhone { get; set; }
         public string CellPhone { get; set; }
+        public string AlternateContactInfo { get; set; }
         public string Employer { get; set; }
         public string EmailAddress { get; set; }
 
