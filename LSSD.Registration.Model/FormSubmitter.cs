@@ -15,19 +15,16 @@ namespace LSSD.Registration.Model
         [Required]
         public string LastName { get; set; }
 
-        [Phone]
-        public string PhoneNumber { get; set; }
-
-        public string EmailAddress { get; set; }
+        public string ContactDetails { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             List<ValidationResult> errors = new List<ValidationResult>();
 
-            if (string.IsNullOrEmpty(PhoneNumber) && string.IsNullOrEmpty(EmailAddress))
+            if (string.IsNullOrEmpty(this.ContactDetails))
             {
-                errors.Add(new ValidationResult(
-                    "Please provide either a phone number or valid email address", new[] { nameof(PhoneNumber), nameof(EmailAddress) }));
+                errors.Add(new ValidationResult("Please provide a method of contacting you.", new[] { nameof(ContactDetails) }));
+
             }
 
             return errors;

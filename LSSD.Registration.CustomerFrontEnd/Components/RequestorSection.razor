@@ -62,17 +62,19 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="requestorEmail">Email address: </label>
-            <InputText id="requestorEmail" class="form-control" @bind-Value="@FormSubmitterData.EmailAddress"></InputText>
-            <ValidationMessage For="@(() => FormSubmitterData.EmailAddress)" />
-        </div>
+        <label for="requestorEmail">How can we contact you?</label>
+        <p class="text-muted">
+            Examples:
+            <ul>
+                <li>Cell: (123) 456-7890</li>
+                <li>Text: (321) 654-0987</li>
+                <li>Email: john@smith.com</li>
+                <li>Facebook: MyFacebookName</li>
+            </ul>
+        </p>
+        <InputText id="requestorEmail" class="form-control" @bind-Value="@FormSubmitterData.ContactDetails"></InputText>
+        <ValidationMessage For="@(() => FormSubmitterData.ContactDetails)" />
 
-        <div class="form-group">
-            <label for="requestorPhone">Phone number: </label>
-            <InputText id="requestorPhone" class="form-control" @bind-Value="@FormSubmitterData.PhoneNumber"></InputText>
-            <ValidationMessage For="@(() => FormSubmitterData.PhoneNumber)" />
-        </div>
 
         <div class="form-group">
             <div class="form-row">
