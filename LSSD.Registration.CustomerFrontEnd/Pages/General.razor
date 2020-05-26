@@ -6,7 +6,20 @@
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     string FormName = "GENREG";
-    private const int totalSteps = 11;
+    private static List<string> workflow = new List<string>()
+    {
+        "DemoWarning",
+        "RequestorSection",
+        "SchoolChooser",
+        "StudentDemographicsSection",
+        "CitizenshipSection",
+        "EALSection",
+        "ContactsSection",
+        "SiblingsSection",
+        "BussingInfoSection",
+        "FirstNationsSection",
+        "ThanksGeneralSection"
+    };
 
     protected override void OnInitialized()
     {
@@ -18,67 +31,15 @@
         StateHasChanged();
     }
 }
-
     <div class="container">
         <HeaderComponent />
-
         <h1>LSSD K-12 Registration Form</h1>
-        <div class="progress">
-            @{
-                int step = StepTracker.Step(FormName);
-                int percentComplete = (int)Math.Round((decimal)(((decimal)step / (decimal)totalSteps)) * 100, 0);
-            }
-            @if (percentComplete < 100)
-            {
-                <div class="progress-bar" role="progressbar" style="width: @(percentComplete)%" aria-valuenow="@(percentComplete)" aria-valuemin="0" aria-valuemax="100"></div>
-            }
-            else
-            {
-                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            }
-        </div>
+        <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@(workflow.Count()-1)" />
         <hr />
-        <br />
-        @switch (StepTracker.Step(FormName))
+        @if (StepTracker.Step(FormName) >= 0 && StepTracker.Step(FormName) < workflow.Count)
         {
-            case 0:
-                <DemoWarning FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 1:
-                <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 2:
-                <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 3:
-                <GradeChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 4:
-                <StudentDemographicsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 5:
-                <CitizenshipSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 6:
-                <EALSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 7:
-                <ContactsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 8:
-                <SiblingsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 9:
-                <BussingInfoSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 10:
-                <FirstNationsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
-            case 11:
-                <ThanksGeneralSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-                break;
+            <ComponentDisplayerComponent ComponentName="@workflow[StepTracker.Step(FormName)]" FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
         }
-
         <br /><br />
     </div>
 <br />
