@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Text;
 
 namespace LSSD.Registration.Model
@@ -21,5 +22,11 @@ namespace LSSD.Registration.Model
         public bool OffersPreK { get; set; }
         public bool OffersKTo9 { get; set; }
         public bool OffersHighSchool { get; set; }
+
+        public School()
+        {
+            this.MailingAddress = new Address();
+            this.PhysicalAddress = new Address();
+        }
     }
 }
