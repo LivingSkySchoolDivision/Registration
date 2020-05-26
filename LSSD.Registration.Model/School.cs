@@ -14,6 +14,8 @@ namespace LSSD.Registration.Model
         public  string EmailAddress { get; set; }
         public Address MailingAddress { get; set; }
         public Address PhysicalAddress { get; set; }
+        public string Facebook { get; set; }
+        public string Twitter { get; set; }
         public string DAN { get; set; }
         public string GradesOffered { get; set; }
         public bool OffersPreK { get; set; }
