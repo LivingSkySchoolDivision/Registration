@@ -81,6 +81,11 @@
     @if (!string.IsNullOrEmpty(ChosenSchool.DAN))
     {
         School school = allSchools.Where(s => s.DAN == ChosenSchool.DAN).FirstOrDefault() ?? new School();
+        if (string.IsNullOrEmpty(school.DAN))
+        {
+            ChosenSchool = new SelectedSchool();
+            StateHasChanged();
+        }
 
         <div class="card">
             <div class="card-body">
