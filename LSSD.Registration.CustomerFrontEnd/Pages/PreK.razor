@@ -37,17 +37,17 @@
         StateHasChanged();
     }
 }
-<div class="container">
-    <HeaderComponent />
-    <h1>Pre-Kindergarten Application</h1>
-    <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@(workflow.Count()-1)" />
-    <hr />
-    @if (StepTracker.Step(FormName) >= 0 && StepTracker.Step(FormName) < workflow.Count)
-    {
-        <ComponentDisplayerComponent ComponentName="@workflow[StepTracker.Step(FormName)]" FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
-    }
-    <br /><br />
-</div>
+    <div class="container">
+        <HeaderComponent />
+        <h1>Pre-Kindergarten Application</h1>
+        <hr />
+        @if (StepTracker.Step(FormName) >= 0 && StepTracker.Step(FormName) < workflow.Count)
+        {
+            <ComponentDisplayerComponent ComponentName="@workflow[StepTracker.Step(FormName)]" FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        }
+        <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@(workflow.Count()-1)" />
+        <br /><br />
+    </div>
 <br />
 <br />
 <br />
