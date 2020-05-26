@@ -1,0 +1,9 @@
+﻿@code {
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+}
+
+<SchoolChooser OnlyPreK="true" FormName="@FormName" StepNumber="@StepNumber" />
