@@ -1,0 +1,70 @@
+﻿@using LSSD.Registration.Model
+@using LSSD.Registration.Model.Forms
+@using LSSD.Registration.CustomerFrontEnd.Components
+@using System.Linq;
+
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    [Parameter]
+    public string ComponentName { get; set; }
+}
+
+@switch (ComponentName)
+{
+    case "BussingInfoSection":
+        <BussingInfoSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "CitizenshipSection":
+        <CitizenshipSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "ContactsSection":
+        <ContactsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "DemoWarning":
+        <DemoWarning FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "EALSection":
+        <EALSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "FirstNationsSection":
+        <FirstNationsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "GradeChooser":
+        <GradeChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "PreKBussingSection":
+        <PreKBussingSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "PreKInfoSection":
+        <PreKInfoSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "PreKWarningSection":
+        <PreKWarningSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "RequestorSection":
+        <RequestorSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "SchoolChooser":
+        <SchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "SiblingsSection":
+        <SiblingsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "StudentDemographicsSection":
+        <StudentDemographicsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "ThanksGeneralSection":
+        <ThanksGeneralSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "ThanksPreK":
+        <ThanksPreK FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+}

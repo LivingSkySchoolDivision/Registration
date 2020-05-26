@@ -1,0 +1,29 @@
+﻿@using LSSD.Registration.Model
+@using LSSD.Registration.Model.Forms
+@using LSSD.Registration.CustomerFrontEnd.Components
+@using System.Linq;
+
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Parameter]
+    public int CurrentStep { get; set; }
+
+    [Parameter]
+    public int TotalSteps { get; set; }
+}
+
+<div class="progress">
+    @{
+        int percentComplete = (int)Math.Round((decimal)(((decimal)CurrentStep / (decimal)TotalSteps)) * 100, 0);
+    }
+    @if (percentComplete < 100)
+    {
+        <div class="progress-bar" role="progressbar" style="width: @(percentComplete)%" aria-valuenow="@(percentComplete)" aria-valuemin="0" aria-valuemax="100"></div>
+    }
+    else
+    {
+        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    }
+</div>
