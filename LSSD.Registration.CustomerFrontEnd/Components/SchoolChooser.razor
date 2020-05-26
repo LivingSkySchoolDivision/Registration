@@ -69,6 +69,11 @@
         StepTracker.PreviousStep(FormName);
     }
 
+    protected void OnClick_NextStepButton()
+    {
+        StepTracker.NextStep(FormName);
+    }
+
     protected void OnClick_SelectDifferentSchoolButton()
     {
         ChosenSchool = new SelectedSchool();
@@ -77,48 +82,15 @@
 <p>Please select a school:</p>
 
 <EditForm Model="@ChosenSchool">
+    <br />
 
     @if (!string.IsNullOrEmpty(ChosenSchool.DAN))
     {
-        School school = allSchools.Where(s => s.DAN == ChosenSchool.DAN).FirstOrDefault() ?? new School();
-        if (string.IsNullOrEmpty(school.DAN))
-        {
-            ChosenSchool = new SelectedSchool();
-            StateHasChanged();
-        }
-
         <div class="card">
             <div class="card-body">
                 <div class="form-row">
                     <div class="col-sm-10">
                         <h4 class="font-weight-bold">@ChosenSchool.Name</h4>
-                        <div class="row">
-                            <div class="col-sm small">
-                                @school.PhysicalAddress.Line1 <br />
-                                @if (!string.IsNullOrEmpty(school.PhysicalAddress.Line2))
-                                {@school.PhysicalAddress.Line2 <br />}
-                                @school.PhysicalAddress.City <br />
-                                @school.PhysicalAddress.Province, @school.PhysicalAddress.Country
-                            </div>
-                            <div class="col-sm small">
-                                <b>Web:</b> <a href="@school.WebsiteURL" target="_blank">@school.WebsiteURL</a><br />
-                                <b>Ph:</b> @school.PhoneNumber <br />
-                                <b>Email:</b> @school.EmailAddress <br />
-                                <b>Grades:</b> @school.GradesOffered
-                            </div>
-                            <div class="col-sm small">
-                                @if (!string.IsNullOrEmpty(school.Facebook))
-                                {
-                                    <b>Facebook:</b> <a href="@school.WebsiteURL" target="_blank">@school.Facebook</a><br />
-                                }
-                                @if (!string.IsNullOrEmpty(school.Twitter))
-                                {
-                                    <b>Twitter:</b> @school.Twitter
-                                }
-
-
-                            </div>
-                        </div>
                     </div>
                     <button type="button" @onclick="@OnClick_SelectDifferentSchoolButton" class="btn btn-outline-danger col-sm-2">Select a different school</button>
                 </div>
@@ -134,14 +106,13 @@
                     </div>
                 }
                 <div class="col">
-                    <button type="submit" @onclick="@(() => selectSchool(school))" class="btn btn-secondary btn-block">Next Step</button>
+                    <button type="button" @onclick="OnClick_NextStepButton" class="btn btn-primary btn-block">Next Step</button>
                 </div>
             </div>
         </div>
     }
     else
     {
-        <br />
         @foreach (string Community in availableSchoolsByCommunity.Keys.OrderBy(c => c))
         {
             <h3>@Community</h3>
