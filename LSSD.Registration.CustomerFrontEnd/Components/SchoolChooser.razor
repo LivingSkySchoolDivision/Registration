@@ -30,7 +30,7 @@
         List<School> allSchools = (await SchoolRepository.GetAll()).ToList();
         if (OnlyPreK == true)
         {
-            allSchools = allSchools.Where(s => s.OffersPreK).ToList();
+            allSchools = allSchools.Where(s => s.HasGradePK).ToList();
         }
         availableSchoolsByCommunity = toDictionaryByCommunity(allSchools);
 
@@ -94,7 +94,7 @@
                                     <b>Web:</b> <a href="@school.WebsiteURL" target="_blank">@school.WebsiteURL</a><br />
                                     <b>Ph:</b> @school.PhoneNumber <br />
                                     <b>Email:</b> @school.EmailAddress <br />
-                                    <b>Grades:</b> @school.GradesOffered
+                                    <b>Grades:</b> @school.GetGradesOfferedShort()
                                 </div>
                                 <div class="col-sm small">
                                     @if (!string.IsNullOrEmpty(school.Facebook))

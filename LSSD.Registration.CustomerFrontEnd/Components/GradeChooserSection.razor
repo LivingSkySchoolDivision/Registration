@@ -1,12 +1,25 @@
-﻿@code {
+﻿@using LSSD.Registration.CustomerFrontEnd.Services;
+@using LSSD.Registration.Model;
+@code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
+
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.SchoolDataService SchoolRepository { get; set; }
 
     [Parameter]
     public string FormName { get; set; }
 
     [Parameter]
     public int StepNumber { get; set; }
+
+    GradeInfo ChosenGrade = new GradeInfo();
+    string studentFirstName = "the child";
+    SelectedSchool ChosenSchool = new SelectedSchool();
+    List<string> AvailableGrades = new List<string>();
 
     private void OnClick_NextStepButton()
     {
@@ -18,24 +31,86 @@
         StepTracker.PreviousStep(FormName);
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        List<School> allSchools = (await SchoolRepository.GetAll()).ToList();
+        ChosenGrade = await BrowserStorage.GetOrNew<GradeInfo>(StorageKeys.Grade);
+        ChosenSchool = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School);
+
+        School chosenSchoolRecord = allSchools.Where(x => x.DAN == ChosenSchool.DAN).FirstOrDefault();
+        if (chosenSchoolRecord != null)
+        {
+            AvailableGrades = chosenSchoolRecord.GetGradesOffered();
+        }
+
+        Student LoadedStudentDemographics = new Student();
+        LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
+
+        if (!string.IsNullOrEmpty(LoadedStudentDemographics.FirstName))
+        {
+            studentFirstName = LoadedStudentDemographics.FirstName;
+        }
+
+        // Do some basic validation, if they've changed schools around
+        if ((chosenSchoolRecord != null) && (ChosenGrade != null))
+        {
+            if (!chosenSchoolRecord.GetGradesOffered().Contains(ChosenGrade.Grade))
+            {
+                ChosenGrade = new GradeInfo();
+            }
+        }
+
+    }
+
+    private async Task saveForm()
+    {
+        await BrowserStorage.Set(StorageKeys.Grade, ChosenGrade);
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        await saveForm();
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async Task HandleInValidSubmit()
+    {
+        await saveForm();
+    }
 }
 
-    <div class="container">
-        <h2>Grade Chooser</h2>
-        <p>After choosing a school, this page would simply ask the grade the user is registering their child for.</p>
-        <p>This page is not complete yet.</p>
-        <br /><br />
-              <div class="form-group">
-                  <div class="form-row">
-                      @if (StepNumber > 0)
-                      {
-                          <div class="col">
-                              <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
-                          </div>
-                      }
-                      <div class="col">
-                          <button type="button" @onclick="OnClick_NextStepButton" class="btn btn-primary btn-block">Next Step</button>
-                      </div>
-                  </div>
-              </div>
-    </div>
+<div class="container">
+    <h2>Grade Chooser</h2>
+    <p>Please select a grade to register @studentFirstName  for</p>
+    <br /><br />
+        <EditForm Model="@ChosenGrade" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group row">
+                <label for="studentGender" class="col-sm-3">Please choose a grade to register @studentFirstName for: </label>
+                <InputSelect id="studentGender" class="form-control col-sm-8" @bind-Value="@ChosenGrade.Grade">
+                    <option value=""></option>
+                    @foreach (string val in AvailableGrades)
+                    {
+                        <option value="@val">@val</option>
+                    }
+                </InputSelect>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    @if (StepNumber > 0)
+                    {
+                        <div class="col">
+                            <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                        </div>
+                    }
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+                    </div>
+                </div>
+            </div>
+
+        </EditForm>
+</div>

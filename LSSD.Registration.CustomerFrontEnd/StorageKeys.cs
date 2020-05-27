@@ -18,6 +18,7 @@ namespace LSSD.Registration.CustomerFrontEnd
         public const string Citizenship = "REG-SECTION-CITIZENSHIP";
         public const string FirstNations = "REG-SECTION-FIRSTNATIONS";
         public const string Enrolment = "REG-SECTION-ENROLMENT";
+        public const string Grade = "REG-SECTION-GRADE";
 
     }
 }
