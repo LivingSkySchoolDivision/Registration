@@ -70,4 +70,7 @@
     case "PreKSchoolChooser":
         <PreKSchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
         break;
+    default:
+        <UnknownComponent FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
 }
