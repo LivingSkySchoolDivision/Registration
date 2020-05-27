@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LSSD.Registration.Model
 {
-    public class EnrollmentDetails
+    public class EnrolmentInfo
     {
         public int Id { get; set; }
         public bool NoPreviousSchooling { get; set; }
