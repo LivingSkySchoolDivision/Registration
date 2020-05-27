@@ -37,8 +37,8 @@
         form.School = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School) ?? new SelectedSchool();
         form.Contacts = await BrowserStorage.GetOrNew<ContactsInfo>(StorageKeys.Contacts) ?? new ContactsInfo();
         form.Siblings = await BrowserStorage.GetOrNew<SiblingInfo>(StorageKeys.Siblings) ?? new SiblingInfo();
-        form.BussingInfo = new BussingInfo();
-        form.FirstNationsInfo = new FirstNationsInfo();
+        form.BussingInfo = await BrowserStorage.GetOrNew<BussingInfo>(StorageKeys.Bussing) ?? new BussingInfo();
+        form.FirstNationsInfo = await BrowserStorage.GetOrNew<FirstNationsInfo>(StorageKeys.FirstNations) ?? new FirstNationsInfo();
         form.EALInfo = await BrowserStorage.GetOrNew<EALInfo>(StorageKeys.EAL) ?? new EALInfo();
         form.Citizenship = await BrowserStorage.GetOrNew<CitizenshipInfo>(StorageKeys.Citizenship) ?? new CitizenshipInfo();
         form.PreKInfo = await BrowserStorage.GetOrNew<PreKInfo>(StorageKeys.PreKInfo) ?? new PreKInfo();
