@@ -22,7 +22,7 @@ namespace LSSD.Registration.Model
         public bool HasPreferredName { get; set; }
         public bool HasLandLocation { get; set; }
         public bool MailingAddressSameAsPhysical { get; set; }
-        public Gender Gender { get; set; }
+        public string Gender { get; set; }
         [Required]
         [BirthdayValidator(MinimumAge = 3, MaximumAge = 21)]
         public DateTime? DateOfBirth { get; set; }

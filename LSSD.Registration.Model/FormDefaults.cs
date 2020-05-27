@@ -21,5 +21,12 @@ namespace LSSD.Registration.Model
             "Métis",
             "Inuit/Inuk"
         };
+
+        public static List<string> AvailableGenders = new List<string>()
+        {
+            "Unspecified",
+            "Male",
+            "Female"
+        };
     }
 }
