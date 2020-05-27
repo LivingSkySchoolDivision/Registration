@@ -85,9 +85,9 @@
                   <div class="form-group row">
                       <label for="studentLanguage" class="col-sm-4  ">@(FormDefaults.Citizenship) Residency Type: </label>
                       <InputSelect id="studentLanguage" class="form-control col-sm-8" @bind-Value="@CitizenshipData.ResidencyType">
-                          @foreach (var val in Enum.GetValues(typeof(ResidencyType)))
+                          @foreach (string val in FormDefaults.AvailableResidencyTypes)
                           {
-                              <option value="@val">@val.ToString()</option>
+                              <option value="@val">@val</option>
                           }
                       </InputSelect>
                       <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => CitizenshipData.ResidencyType)" />
