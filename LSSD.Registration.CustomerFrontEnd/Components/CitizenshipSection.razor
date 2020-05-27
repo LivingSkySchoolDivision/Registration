@@ -85,6 +85,7 @@
                   <div class="form-group row">
                       <label for="studentLanguage" class="col-sm-4  ">@(FormDefaults.Citizenship) Residency Type: </label>
                       <InputSelect id="studentLanguage" class="form-control col-sm-8" @bind-Value="@CitizenshipData.ResidencyType">
+                          <option value=""></option>
                           @foreach (string val in FormDefaults.AvailableResidencyTypes)
                           {
                               <option value="@val">@val</option>

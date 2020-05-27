@@ -150,6 +150,7 @@
         <div class="form-group row">
             <label for="studentGender" class="col-sm-3">Gender: </label>
             <InputSelect id="studentGender" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.Gender">
+                <option value=""></option>
                 @foreach (string val in FormDefaults.AvailableGenders)
                 {
                     <option value="@val">@val</option>

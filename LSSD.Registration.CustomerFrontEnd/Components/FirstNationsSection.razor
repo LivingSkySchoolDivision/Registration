@@ -130,10 +130,11 @@
                     </div>
                     <div class="col-sm-8">
                         <InputSelect id="studentLanguage" class="form-control" @bind-Value="@FNMData.AboriginalStatus">
+                            <option value=""></option>
                             @foreach (string val in FormDefaults.AvailableTreatyStatus)
-                            {
+                                {
                                 <option value="@val">@val</option>
-                            }
+                                }
                         </InputSelect>
                         <ValidationMessage For="@(() => FNMData.AboriginalStatus)" />
                     </div>
