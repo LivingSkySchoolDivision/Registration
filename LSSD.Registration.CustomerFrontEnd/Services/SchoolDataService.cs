@@ -36,10 +36,19 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                     Country = "Canada"
                 },
                 DAN = "5010213",
-                GradesOffered = "K-12",
-                OffersPreK = false,
-                OffersKTo9 = true,
-                OffersHighSchool = true
+                HasGradeK = true,
+                HasGrade1 = true,
+                HasGrade2 = true,
+                HasGrade3 = true,
+                HasGrade4 = true,
+                HasGrade5 = true,
+                HasGrade6 = true,
+                HasGrade7 = true,
+                HasGrade8 = true,
+                HasGrade9 = true,
+                HasGrade10 = true,
+                HasGrade11 = true,
+                HasGrade12 = true
             },
 
             new School() {
@@ -64,10 +73,15 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                     Country = "Canada"
                 },
                 DAN = "6410721",
-                GradesOffered = "PK-6",
-                OffersPreK = true,
-                OffersKTo9 = true,
-                OffersHighSchool = false
+                HasGradePK = true,
+                HasGradeK = true,
+                HasGrade1 = true,
+                HasGrade2 = true,
+                HasGrade3 = true,
+                HasGrade4 = true,
+                HasGrade5 = true,
+                HasGrade6 = true,
+                HasGrade7 = true
             },
 
             new School() {
@@ -93,10 +107,12 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                     Country = "Canada"
                 },
                 DAN = "6410713",
-                GradesOffered = "7-12",
-                OffersPreK = false,
-                OffersKTo9 = false,
-                OffersHighSchool = true
+                HasGrade7 = true,
+                HasGrade8 = true,
+                HasGrade9 = true,
+                HasGrade10 = true,
+                HasGrade11 = true,
+                HasGrade12 = true
             },
             
         };
