@@ -150,7 +150,7 @@
         <div class="form-group row">
             <label for="studentGender" class="col-sm-3">Gender: </label>
             <InputSelect id="studentGender" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.Gender">
-                @foreach (var val in Enum.GetValues(typeof(Gender)))
+                @foreach (string val in FormDefaults.AvailableGenders)
                 {
                     <option value="@val">@val</option>
                 }

@@ -16,10 +16,7 @@ namespace LSSD.Registration.Model
         public string LanguageSpokenAtHome { get; set; }
         public string PreviousCountry { get; set; }
         [Required]
-        public ResidencyType ResidencyType { get; set; }
+        public string ResidencyType { get; set; }
         
-        public CitizenshipInfo()
-        {
-        }
     }
 }
