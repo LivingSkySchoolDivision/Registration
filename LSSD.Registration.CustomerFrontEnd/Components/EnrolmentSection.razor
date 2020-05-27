@@ -1,0 +1,131 @@
+﻿@using LSSD.Registration.CustomerFrontEnd.Services;
+@using  LSSD.Registration.Model;
+
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    EnrolmentInfo EnrollmentData = new EnrolmentInfo();
+    Student LoadedStudentDemographics = new Student();
+    string studentFirstName = "the child";
+
+
+    private void OnClick_NextStepButton()
+    {
+        StepTracker.NextStep(FormName);
+    }
+
+    protected void OnClick_PreviousStepButton()
+    {
+        StepTracker.PreviousStep(FormName);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        EnrollmentData = await BrowserStorage.GetOrNew<EnrolmentInfo>(StorageKeys.Enrolment);
+        LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
+
+        if (!string.IsNullOrEmpty(LoadedStudentDemographics.FirstName))
+        {
+            studentFirstName = LoadedStudentDemographics.FirstName;
+        }
+    }
+
+    private async Task saveForm()
+    {
+        await BrowserStorage.Set(StorageKeys.Enrolment, EnrollmentData);
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        await saveForm();
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async Task HandleInValidSubmit()
+    {
+        await saveForm();
+    }
+
+}
+<div class="container">
+    <h3>Enrolment information</h3>
+    <br />
+    <EditForm Model="@EnrollmentData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-row">
+            <div class="col-sm-4">Do any of the following apply?</div>
+            <div class="col-sm-8">
+                <InputCheckbox @bind-Value="@EnrollmentData.NoPreviousSchooling"></InputCheckbox>
+                <label for="" class="">@studentFirstName has had <b>no</b> previous schooling.</label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8">
+                <InputCheckbox @bind-Value="@EnrollmentData.TransferFromAnotherCountry"></InputCheckbox>
+                <label for="" class="">@studentFirstName is transferring from another <b>country</b></label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8">
+                <InputCheckbox @bind-Value="@EnrollmentData.TransferFromAnotherProvince"></InputCheckbox>
+                <label for="" class="">@studentFirstName is transferring from another <b>province</b></label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8">
+                <InputCheckbox @bind-Value="@EnrollmentData.TransferFromAnotherSaskSchool"></InputCheckbox>
+                <label for="" class="">@studentFirstName is transferring from another <b>saskatchewan school</b></label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8">
+                <InputCheckbox @bind-Value="@EnrollmentData.TransferFromHomeBased"></InputCheckbox>
+                <label for="" class="">@studentFirstName is transferring from <b>home-schooling</b></label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8">
+                <InputCheckbox @bind-Value="@EnrollmentData.ExchangeStudent"></InputCheckbox>
+                <label for="" class="">@studentFirstName is an exchange student</label>
+            </div>
+        </div>
+
+
+        <br /><br />
+        <div class="form-group">
+            <div class="form-row">
+                @if (StepNumber > 0)
+                {
+                    <div class="col">
+                        <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    </div>
+                }
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>

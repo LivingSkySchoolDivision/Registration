@@ -37,8 +37,8 @@
     case "FirstNationsSection":
         <FirstNationsSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
         break;
-    case "GradeChooser":
-        <GradeChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+    case "GradeChooserSection":
+        <GradeChooserSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
         break;
     case "PreKBussingSection":
         <PreKBussingSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
@@ -69,5 +69,11 @@
         break;
     case "PreKSchoolChooser":
         <PreKSchoolChooser FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "EnrolmentSection":
+        <EnrolmentSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    default:
+        <UnknownComponent FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
         break;
 }
