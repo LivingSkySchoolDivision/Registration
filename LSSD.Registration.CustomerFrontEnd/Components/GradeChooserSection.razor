@@ -80,8 +80,7 @@
 }
 
 <div class="container">
-    <h2>Grade Chooser</h2>
-    <p>Please select a grade to register @studentFirstName  for</p>
+    <h2>Grade selection</h2>
     <br /><br />
         <EditForm Model="@ChosenGrade" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
             <DataAnnotationsValidator />
@@ -89,7 +88,7 @@
 
             <div class="form-group row">
                 <label for="studentGender" class="col-sm-3">Please choose a grade to register @studentFirstName for: </label>
-                <InputSelect id="studentGender" class="form-control col-sm-8" @bind-Value="@ChosenGrade.Grade">
+                <InputSelect id="studentGender" class="form-control col-sm-4" @bind-Value="@ChosenGrade.Grade">
                     <option value=""></option>
                     @foreach (string val in AvailableGrades)
                     {
