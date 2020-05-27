@@ -45,7 +45,7 @@
     {
         <ComponentDisplayerComponent ComponentName="@workflow[StepTracker.Step(FormName)]" FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
     }
-    <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@(workflow.Count()-1)" />
+    <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@workflow.Count()" />
     <br /><br />
     <a href="/" class="small">Back to start</a>
 </div>

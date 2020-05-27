@@ -1,22 +1,17 @@
-﻿@page "/General"
+﻿@page "/Test"
+@using LSSD.Registration.Model
+@using LSSD.Registration.Model.Forms
 @using LSSD.Registration.CustomerFrontEnd.Components
+@using System.Linq;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
-    string FormName = "GENREG";
+    string FormName = "PREK";
+
     private static List<string> workflow = new List<string>()
     {
-        "DemoWarning",
-        "RequestorSection",
-        "SchoolChooser",
-        "StudentDemographicsSection",
-        "CitizenshipSection",
-        "EALSection",
-        "ContactsSection",
-        "SiblingsSection",
-        "BussingInfoSection",
         "FirstNationsSection",
         "ThanksGeneralSection"
     };
@@ -33,7 +28,7 @@
 }
 <HeaderComponent />
 <div class="container">
-    <h1>LSSD K-12 Registration Form</h1>
+    <h2>Test Workflow</h2>
     <hr />
     @if (StepTracker.Step(FormName) >= 0 && StepTracker.Step(FormName) < workflow.Count)
     {

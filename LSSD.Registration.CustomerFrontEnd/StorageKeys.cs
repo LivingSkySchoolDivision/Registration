@@ -16,6 +16,7 @@ namespace LSSD.Registration.CustomerFrontEnd
         public const string Bussing = "REG-SECTION-BUSSING";
         public const string EAL = "REG-SECTION-EAL";
         public const string Citizenship = "REG-SECTION-CITIZENSHIP";
+        public const string FirstNations = "REG-SECTION-FIRSTNATIONS";
 
     }
 }

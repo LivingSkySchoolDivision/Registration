@@ -12,5 +12,14 @@ namespace LSSD.Registration.Model
         public const string Country = "Canada";
         public const string Language = "English";
         public const string Citizenship = "Canadian";
+
+
+        public static List<string> AvailableTreatyStatus = new List<string>()
+        {
+            "Registered/Treaty/Status Indian",
+            "Non-status Indian",
+            "Métis",
+            "Inuit/Inuk"
+        };
     }
 }

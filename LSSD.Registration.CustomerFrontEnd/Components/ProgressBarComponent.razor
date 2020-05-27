@@ -8,7 +8,7 @@
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
     [Parameter]
-    public int CurrentStep { get; set; }
+    public int CurrentStep { get; set; } // Starts with zero, so we need to add one
 
     [Parameter]
     public int TotalSteps { get; set; }
@@ -16,7 +16,7 @@
 
 <div class="progress" style="height: 5px;">
     @{
-        int percentComplete = (int)Math.Round((decimal)(((decimal)CurrentStep / (decimal)TotalSteps)) * 100, 0);
+        int percentComplete = (int)Math.Round((decimal)(((decimal)(CurrentStep+1) / (decimal)TotalSteps)) * 100, 0);
     }
     @if (percentComplete < 100)
     {
