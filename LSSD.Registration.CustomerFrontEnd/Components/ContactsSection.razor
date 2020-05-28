@@ -48,6 +48,7 @@
     {
         if (LoadedStudentDemographics != null)
         {
+            ContactsInfoData.Contacts.RemoveAll(x => x.IsEmpty());
             foreach (Contact contact in ContactsInfoData.Contacts)
             {
                 if (contact.LivesWithStudent)

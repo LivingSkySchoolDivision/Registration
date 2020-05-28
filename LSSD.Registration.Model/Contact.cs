@@ -35,5 +35,27 @@ namespace LSSD.Registration.Model
             this.PrimaryAddress = new Address();
             this.MailingAddress = new Address();
         }
+
+        public bool IsEmpty()
+        {
+            if (
+                string.IsNullOrEmpty(this.FirstName) &&
+                string.IsNullOrEmpty(this.LastName) &&
+                string.IsNullOrEmpty(this.RelationshipToStudent) &&
+                string.IsNullOrEmpty(this.HomePhone) &&
+                string.IsNullOrEmpty(this.WorkPhone) &&
+                string.IsNullOrEmpty(this.CellPhone) &&
+                string.IsNullOrEmpty(this.AlternateContactInfo) &&
+                string.IsNullOrEmpty(this.Employer) &&
+                string.IsNullOrEmpty(this.EmailAddress) &&
+                this.PrimaryAddress.IsEmpty() &&
+                this.MailingAddress.IsEmpty()
+                )
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
