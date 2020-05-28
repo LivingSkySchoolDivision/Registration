@@ -17,9 +17,8 @@
     public int StepNumber { get; set; }
 
     GradeInfo ChosenGrade = new GradeInfo();
-    string studentFirstName = "the child";
-    SelectedSchool ChosenSchool = new SelectedSchool();
     List<string> AvailableGrades = new List<string>();
+    School ChosenSchool = null;
 
     private void OnClick_NextStepButton()
     {
@@ -35,31 +34,23 @@
     {
         List<School> allSchools = (await SchoolRepository.GetAll()).ToList();
         ChosenGrade = await BrowserStorage.GetOrNew<GradeInfo>(StorageKeys.Grade);
-        ChosenSchool = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School);
-
-        School chosenSchoolRecord = allSchools.Where(x => x.DAN == ChosenSchool.DAN).FirstOrDefault();
+        SelectedSchool chosenSchool = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School);
+        School chosenSchoolRecord = allSchools.Where(x => x.DAN == chosenSchool.DAN).FirstOrDefault();
         if (chosenSchoolRecord != null)
         {
             AvailableGrades = chosenSchoolRecord.GetGradesOffered();
-        }
-
-        Student LoadedStudentDemographics = new Student();
-        LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
-
-        if (!string.IsNullOrEmpty(LoadedStudentDemographics.FirstName))
-        {
-            studentFirstName = LoadedStudentDemographics.FirstName;
+            ChosenSchool = chosenSchoolRecord;
         }
 
         // Do some basic validation, if they've changed schools around
         if ((chosenSchoolRecord != null) && (ChosenGrade != null))
         {
+            // If the current school doesn't offer the current grade, wipe out the grade
             if (!chosenSchoolRecord.GetGradesOffered().Contains(ChosenGrade.Grade))
             {
                 ChosenGrade = new GradeInfo();
             }
         }
-
     }
 
     private async Task saveForm()
@@ -81,35 +72,71 @@
 
 <div class="container">
     <h2>Grade selection</h2>
-    <br /><br />
-        <EditForm Model="@ChosenGrade" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+    <br />
+          <EditForm Model="@ChosenGrade" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+              <DataAnnotationsValidator />
+              <ValidationSummary />
 
-            <div class="form-group row">
-                <label for="studentGender" class="col-sm-3">Please choose a grade to register @studentFirstName for: </label>
-                <InputSelect id="studentGender" class="form-control col-sm-4" @bind-Value="@ChosenGrade.Grade">
-                    <option value=""></option>
-                    @foreach (string val in AvailableGrades)
-                    {
-                        <option value="@val">@val</option>
-                    }
-                </InputSelect>
-            </div>
+              @if (ChosenSchool != null)
+              {
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="font-weight-bold">@ChosenSchool.Name</h4>
+                  <div class="row">
+                      <div class="col-sm small">
+                          @ChosenSchool.PhysicalAddress.Line1 <br />
+                          @if (!string.IsNullOrEmpty(ChosenSchool.PhysicalAddress.Line2))
+                          {@ChosenSchool.PhysicalAddress.Line2 <br />}
+                          @ChosenSchool.PhysicalAddress.City <br />
+                          @ChosenSchool.PhysicalAddress.Province, @ChosenSchool.PhysicalAddress.Country
+                      </div>
+                      <div class="col-sm small">
+                          <b>Web:</b> <a href="@ChosenSchool.WebsiteURL" target="_blank">@ChosenSchool.WebsiteURL</a><br />
+                          <b>Ph:</b> @ChosenSchool.PhoneNumber <br />
+                          <b>Email:</b> @ChosenSchool.EmailAddress <br />
+                          <b>Grades:</b> @ChosenSchool.GetGradesOfferedShort()
+                      </div>
+                      <div class="col-sm small">
+                          @if (!string.IsNullOrEmpty(ChosenSchool.Facebook))
+                          {
+                              <b>Facebook:</b> <a href="@ChosenSchool.WebsiteURL" target="_blank">@ChosenSchool.Facebook</a><br />
+                          }
+                          @if (!string.IsNullOrEmpty(ChosenSchool.Twitter))
+                          {
+                              <b>Twitter:</b> @ChosenSchool.Twitter
+                          }
+                      </div>
+                  </div>
+              </div>
+          </div>
+                  <br />
 
-            <div class="form-group">
-                <div class="form-row">
-                    @if (StepNumber > 0)
-                    {
-                        <div class="col">
-                            <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
-                        </div>
-                    }
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary btn-block">Next Step</button>
-                    </div>
-                </div>
-            </div>
+              }
 
-        </EditForm>
+              <div class="form-group row">
+                  <label for="chosenGrade" class="col-sm-3 font-weight-bold">Please choose a grade: </label>
+                  <InputSelect id="chosenGrade" class="form-control col-sm-4" @bind-Value="@ChosenGrade.Grade">
+                      <option value=""></option>
+                      @foreach (string val in AvailableGrades)
+                      {
+                          <option value="@val">@val</option>
+                      }
+                  </InputSelect>
+              </div>
+
+              <div class="form-group">
+                  <div class="form-row">
+                      @if (StepNumber > 0)
+                      {
+                          <div class="col">
+                              <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                          </div>
+                      }
+                      <div class="col">
+                          <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+                      </div>
+                  </div>
+              </div>
+
+          </EditForm>
 </div>
