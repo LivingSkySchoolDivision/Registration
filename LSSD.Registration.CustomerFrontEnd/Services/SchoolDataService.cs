@@ -16,7 +16,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
             new School() {
                 Name = "Cando Community School",
                 PhoneNumber = "3069373934",
-                Community = "Cando",
+                Communities = new List<string>() { "Cando" }, 
                 WebsiteURL = "https://cando.lskysd.ca",
                 EmailAddress = "cando@lskysd.ca",
                 MailingAddress = new Address()
@@ -54,7 +54,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
             new School() {
                 Name = "Hartley Clark School",
                 PhoneNumber = "3068832183",
-                Community = "Spiritwood",
+                Communities = new List<string>() { "Spiritwood" },
                 WebsiteURL = "https://hces.lskysd.ca/",
                 EmailAddress = "hclark@lskysd.ca",
                 MailingAddress = new Address()
@@ -87,7 +87,7 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
             new School() {
                 Name = "Spiritwood High School",
                 PhoneNumber = "3068832282",
-                Community = "Spiritwood",
+                Communities = new List<string>() { "Spiritwood" },
                 WebsiteURL = "https://shs.lskysd.ca/",
                 EmailAddress = "shs@lskysd.ca",
                 MailingAddress = new Address()
@@ -125,12 +125,24 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
 
         public async Task<IEnumerable<string>> GetAllCommunities()
         {
-            return _allSchools.Select(s => s.Community).Distinct();
+            List<string> returnMe = new List<string>();
+            foreach(School s in _allSchools)
+            {
+                foreach(string c in s.Communities)
+                {
+                    if (!returnMe.Contains(c))
+                    {
+                        returnMe.Add(c);
+                    }
+                }
+            }
+
+            return returnMe.OrderBy(c => c);
         }
 
         public async Task<IEnumerable<School>> GetForCommunity(string Community)
         {
-            return _allSchools.Where(s => s.Community == Community).ToList();
+            return _allSchools.Where(s => s.Communities.Contains(Community)).ToList();
         }
 
 

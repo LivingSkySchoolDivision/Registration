@@ -43,11 +43,14 @@
 
         foreach (School school in Schools)
         {
-            if (!returnMe.ContainsKey(school.Community))
+            foreach(string Community in school.Communities)
             {
-                returnMe.Add(school.Community, new List<School>());
+                if (!returnMe.ContainsKey(Community))
+                {
+                    returnMe.Add(Community, new List<School>());
+                }
+                returnMe[Community].Add(school);
             }
-            returnMe[school.Community].Add(school);
         }
 
         return returnMe;

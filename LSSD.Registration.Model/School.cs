@@ -9,7 +9,7 @@ namespace LSSD.Registration.Model
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
-        public string Community { get; set; }
+        public List<string> Communities { get; set; }
         public string WebsiteURL { get; set; }
         public  string EmailAddress { get; set; }
         public Address MailingAddress { get; set; }
