@@ -4,9 +4,9 @@ using System.Text;
 
 namespace LSSD.Registration.Model
 {
-    public class School
+    public class School : IGUIDable
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public string Community { get; set; }

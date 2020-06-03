@@ -30,7 +30,6 @@
     {
         PreKRegistrationFormSubmission form = new PreKRegistrationFormSubmission();
 
-        form.Id = 0;
         form.SubmittedBy = await BrowserStorage.GetOrNew<FormSubmitter>(StorageKeys.Requestor) ?? new FormSubmitter();
         form.Student = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics) ?? new Student();
         form.School = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School) ?? new SelectedSchool();

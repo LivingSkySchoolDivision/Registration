@@ -7,10 +7,11 @@ using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Driver.Linq;
 using System.Linq;
+using LSSD.Registration.Model;
 
 namespace LSSD.Registration.Data
 {
-    public class MongoRepository<T> : IRepository<T> where T : EntityBase
+    public class MongoRepository<T> : IRepository<T> where T : IGUIDable
     {
         MongoDbConnection _db;
         IMongoCollection<T> _collection;
@@ -44,7 +45,7 @@ namespace LSSD.Registration.Data
             } 
             catch (FormatException)
             {
-                return null;
+                return default(T);
             }
             catch (Exception ex) 
             {

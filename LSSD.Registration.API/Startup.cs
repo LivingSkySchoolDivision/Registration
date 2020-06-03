@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LSSD.Registration.Data;
+using LSSD.Registration.Model.Forms;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +32,10 @@ namespace LSSD.Registration.API
             {
                 options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());
             });
+
+            services.AddSingleton<MongoDbConnection>();
+            services.AddSingleton<MongoRepository<PreKRegistrationFormSubmission>>();
+
             services.AddControllers();
         }
 
