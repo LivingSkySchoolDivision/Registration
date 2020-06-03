@@ -7,7 +7,7 @@ namespace LSSD.Registration.Data
 {
     interface IRepository<T> where T : EntityBase
     {
-        void Insert(T entity);
+        Guid Insert(T entity);
         void Update(T entity);
         void Delete(T entity);
         IList<T> Find(Expression<Func<T, bool>> predicate);

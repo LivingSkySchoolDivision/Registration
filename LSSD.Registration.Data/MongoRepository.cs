@@ -36,15 +36,33 @@ namespace LSSD.Registration.Data
             return _collection.Find(_ => true).ToList();
         }
 
-        public T GetById(Guid id)
+        public T GetById(string id)
         {
-            return (T)_collection.Find<T>(_ => _.Id == id);
+            try
+            {
+                return GetById(Guid.Parse(id));
+            } 
+            catch (FormatException)
+            {
+                return null;
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
         }
 
-        public void Insert(T entity)
+        public T GetById(Guid id)
         {
-            entity.Id = Guid.NewGuid();
+            return (T)_collection.Find<T>(_ => _.Id == id).FirstOrDefault();
+        }
+
+        public Guid Insert(T entity)
+        {
+            Guid newID = Guid.NewGuid();
+            entity.Id = newID;
             _collection.InsertOne(entity);
+            return newID;
         }
 
         public void Update(T entity)
@@ -54,8 +72,7 @@ namespace LSSD.Registration.Data
                 Insert(entity);
             } else
             {
-                Delete(entity);
-                Insert(entity);
+                _collection.ReplaceOne(_ => _.Id == entity.Id, entity);
             }
         }
     }
