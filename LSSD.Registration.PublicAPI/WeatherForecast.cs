@@ -1,6 +1,6 @@
 using System;
 
-namespace LSSD.Registration.API
+namespace LSSD.Registration.PublicAPI
 {
     public class WeatherForecast
     {

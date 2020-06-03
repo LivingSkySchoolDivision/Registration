@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace LSSD.Registration.API
+namespace LSSD.Registration.PublicAPI
 {
     public class Program
     {

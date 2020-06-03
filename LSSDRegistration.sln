@@ -7,14 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.Model", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.CustomerFrontEnd", "LSSD.Registration.CustomerFrontEnd\LSSD.Registration.CustomerFrontEnd.csproj", "{A2FF083C-0CBE-4A00-8E0D-EAEAE1E6F723}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.API", "LSSD.Registration.API\LSSD.Registration.API.csproj", "{F60B1AEE-C119-4900-9FC6-369F47B7BF51}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.Data", "LSSD.Registration.Data\LSSD.Registration.Data.csproj", "{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{403F247F-48B3-4148-84A6-67DDCFFF5F65}"
 	ProjectSection(SolutionItems) = preProject
 		Dockerfile-FrontEnd = Dockerfile-FrontEnd
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.PublicAPI", "LSSD.Registration.PublicAPI\LSSD.Registration.PublicAPI.csproj", "{A6CCF3CE-35E3-49A9-8531-6385888525F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,14 +30,14 @@ Global
 		{A2FF083C-0CBE-4A00-8E0D-EAEAE1E6F723}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2FF083C-0CBE-4A00-8E0D-EAEAE1E6F723}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2FF083C-0CBE-4A00-8E0D-EAEAE1E6F723}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F60B1AEE-C119-4900-9FC6-369F47B7BF51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F60B1AEE-C119-4900-9FC6-369F47B7BF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F60B1AEE-C119-4900-9FC6-369F47B7BF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F60B1AEE-C119-4900-9FC6-369F47B7BF51}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C31D2AD3-BB26-4B8E-B796-FACBA64B3B4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6CCF3CE-35E3-49A9-8531-6385888525F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6CCF3CE-35E3-49A9-8531-6385888525F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6CCF3CE-35E3-49A9-8531-6385888525F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6CCF3CE-35E3-49A9-8531-6385888525F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

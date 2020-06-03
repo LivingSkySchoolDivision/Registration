@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace LSSD.Registration.API
+namespace LSSD.Registration.PublicAPI
 {
     public class Startup
     {
@@ -27,7 +27,8 @@ namespace LSSD.Registration.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddControllers(); 
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());
@@ -35,8 +36,6 @@ namespace LSSD.Registration.API
 
             services.AddSingleton<MongoDbConnection>();
             services.AddSingleton<MongoRepository<PreKRegistrationFormSubmission>>();
-
-            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,9 +50,9 @@ namespace LSSD.Registration.API
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseCors("Open");
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
