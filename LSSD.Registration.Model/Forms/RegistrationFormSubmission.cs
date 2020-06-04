@@ -10,5 +10,6 @@ namespace LSSD.Registration.Model.Forms
         public FormSubmitter SubmittedBy { get; set; }
         public DateTime DateSubmitted { get; set; }
         public SelectedSchool School { get; set; }
+        public WorkflowTracking OfficeUseOnly { get; set; }
     }
 }
