@@ -4,12 +4,12 @@ using System.Text;
 
 namespace LSSD.Registration.Model
 {
-    public class School
+    public class School : IGUIDable
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
-        public string Community { get; set; }
+        public List<string> Communities { get; set; }
         public string WebsiteURL { get; set; }
         public  string EmailAddress { get; set; }
         public Address MailingAddress { get; set; }
@@ -17,6 +17,8 @@ namespace LSSD.Registration.Model
         public string Facebook { get; set; }
         public string Twitter { get; set; }
         public string DAN { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public bool HasGradePK { get; set; }
         public bool HasGradeK { get; set; }
         public bool HasGrade1 { get; set; }

@@ -6,10 +6,9 @@ namespace LSSD.Registration.Model
 {
     public class SelectedSchool
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string DAN { get; set; }
         public string Name { get; set; }
-
 
         public static SelectedSchool FromSchool(School school)
         {

@@ -7,7 +7,6 @@ namespace LSSD.Registration.Model
 {
     public class Contact
     {
-        public int Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]

@@ -6,7 +6,6 @@ namespace LSSD.Registration.Model
 {
     public class FirstNationsInfo
     {
-        public int Id { get; set; }
         public bool IsDeclaringFirstNationsInfo { get; set; }
         public bool ResidesOnReserve { get; set; }
         public string AboriginalStatus { get; set; }

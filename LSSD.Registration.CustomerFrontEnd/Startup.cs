@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LSSD.Registration.CustomerFrontEnd.Services;
 using Blazored.LocalStorage;
+using System.Net.Http;
 
 namespace LSSD.Registration.CustomerFrontEnd
 {
@@ -18,7 +19,10 @@ namespace LSSD.Registration.CustomerFrontEnd
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = new ConfigurationBuilder()
+                .AddConfiguration(configuration)
+                .AddEnvironmentVariables()
+                .Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -27,8 +31,20 @@ namespace LSSD.Registration.CustomerFrontEnd
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            IConfigurationSection settingsSection = Configuration.GetSection("Settings");
+
+            // Default to what's in Properties/launchSettings.json for the API project.
+            string apiURI = settingsSection["APIURI"] ?? "https://localhost:4001"; 
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            // Add an HttpClient that we can use
+            services.AddScoped<HttpClient>(s =>
+            {
+                var client = new HttpClient { BaseAddress = new System.Uri(apiURI) };
+                return client;
+            });
 
             services.AddScoped<FormStepTrackerService>();
             services.AddScoped<SchoolDataService>();

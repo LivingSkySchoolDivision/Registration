@@ -8,7 +8,6 @@ namespace LSSD.Registration.Model
 {
     public class Sibling
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string SchoolAttending { get; set; }

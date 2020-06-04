@@ -6,7 +6,6 @@ namespace LSSD.Registration.Model.Forms
 {
     public class GeneralRegistrationFormSubmission : RegistrationFormSubmission
     {
-        public int Id { get; set; }
         public GradeInfo Grade { get; set; }
         public Student Student { get; set; }
         public ContactsInfo Contacts { get; set; }
