@@ -6,7 +6,6 @@ namespace LSSD.Registration.Model.Forms
 {
     public class PreKRegistrationFormSubmission : RegistrationFormSubmission
     {
-        public Guid Id { get; set; }
         public Student Student { get; set; }
         public SiblingInfo Siblings { get; set; }
         public PreKInfo PreKInfo { get; set; }
