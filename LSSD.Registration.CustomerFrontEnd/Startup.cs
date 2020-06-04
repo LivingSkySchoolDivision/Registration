@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LSSD.Registration.CustomerFrontEnd.Services;
 using Blazored.LocalStorage;
+using System.Net.Http;
 
 namespace LSSD.Registration.CustomerFrontEnd
 {
@@ -29,6 +30,13 @@ namespace LSSD.Registration.CustomerFrontEnd
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            // Add an HttpClient that we can use
+            services.AddScoped<HttpClient>(s =>
+            {
+                var client = new HttpClient { BaseAddress = new System.Uri("https://localhost:4001/") };
+                return client;
+            });
 
             services.AddScoped<FormStepTrackerService>();
             services.AddScoped<SchoolDataService>();
