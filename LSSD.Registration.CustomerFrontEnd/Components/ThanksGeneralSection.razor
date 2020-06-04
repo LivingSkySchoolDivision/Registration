@@ -30,7 +30,6 @@
     {
         GeneralRegistrationFormSubmission form = new GeneralRegistrationFormSubmission();
 
-        form.Id = 0;
         form.Grade = await BrowserStorage.GetOrNew<GradeInfo>(StorageKeys.Grade) ?? new GradeInfo();
         form.Student = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics) ?? new Student();
         form.SubmittedBy = await BrowserStorage.GetOrNew<FormSubmitter>(StorageKeys.Requestor) ?? new FormSubmitter();
