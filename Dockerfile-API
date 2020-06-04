@@ -1,0 +1,24 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src
+COPY ["LSSD.Registration.PublicAPI/LSSD.Registration.PublicAPI.csproj", "LSSD.Registration.PublicAPI/"]
+COPY ["LSSD.Registration.Model/LSSD.Registration.Model.csproj", "LSSD.Registration.Model/"]
+COPY ["LSSD.Registration.Data/LSSD.Registration.Data.csproj", "LSSD.Registration.Data/"]
+RUN dotnet restore "LSSD.Registration.PublicAPI/LSSD.Registration.PublicAPI.csproj"
+COPY . .
+WORKDIR "/src/LSSD.Registration.PublicAPI"
+RUN dotnet build "LSSD.Registration.PublicAPI.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "LSSD.Registration.PublicAPI.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "LSSD.Registration.PublicAPI.dll"]
