@@ -28,13 +28,18 @@ namespace LSSD.Registration.CustomerFrontEnd
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            IConfigurationSection settingsSection = Configuration.GetSection("Settings");
+
+            // Default to what's in Properties/launchSettings.json for the API project.
+            string apiURI = settingsSection["APIURI"] ?? "https://localhost:4001"; 
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
             // Add an HttpClient that we can use
             services.AddScoped<HttpClient>(s =>
             {
-                var client = new HttpClient { BaseAddress = new System.Uri("https://localhost:4001/") };
+                var client = new HttpClient { BaseAddress = new System.Uri(apiURI) };
                 return client;
             });
 
