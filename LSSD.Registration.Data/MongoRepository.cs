@@ -64,12 +64,24 @@ namespace LSSD.Registration.Data
             return (T)_collection.Find<T>(_ => _.Id == id).FirstOrDefault();
         }
 
+        public IList<Guid> Insert(IList<T> entities)
+        {
+            // Make GUIDs for all objects
+            List<Guid> newEntityGuids = new List<Guid>();
+            foreach(T obj in entities)
+            {
+                obj.Id = Guid.NewGuid();
+                newEntityGuids.Add(obj.Id);
+            }
+            _collection.InsertMany(entities);
+            return newEntityGuids;
+        }
+
         public Guid Insert(T entity)
         {
-            Guid newID = Guid.NewGuid();
-            entity.Id = newID;
+            entity.Id = Guid.NewGuid();
             _collection.InsertOne(entity);
-            return newID;
+            return entity.Id;
         }
 
         public void Update(T entity)
