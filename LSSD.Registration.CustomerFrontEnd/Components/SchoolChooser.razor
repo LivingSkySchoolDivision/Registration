@@ -21,39 +21,68 @@
     [Parameter]
     public bool? OnlyPreK { get; set; }
 
-    public Dictionary<string, List<School>> availableSchoolsByCommunity = new Dictionary<string, List<School>>();
-
+    bool schoolAPIReturned = false;
+    string chosenCommunity = string.Empty;
+    List<School> allSchools = new List<School>();
+    Dictionary<string, List<School>> availableSchoolsByCommunity = new Dictionary<string, List<School>>();
     SelectedSchool ChosenSchool = new SelectedSchool();
+
 
     protected override async Task OnInitializedAsync()
     {
-        List<School> allSchools = (await SchoolRepository.GetAll()).ToList();
+        loadSchools();
+        ChosenSchool = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School);
+    }
+
+    private IEnumerable<School> getSchoolsForCommunity(string Community)
+    {
+        if (availableSchoolsByCommunity.ContainsKey(Community))
+        {
+            return availableSchoolsByCommunity[Community].OrderBy(s => s.Name);
+        }
+        else
+        {
+            return new List<School>();
+        }
+    }
+
+    const string allSchoolsCommunityName = "All Schools";
+    private Dictionary<string, List<School>> toDictionaryByCommunity(List<School> Schools)
+    {
+        Dictionary<string, List<School>> returnMe = new Dictionary<string, List<School>>();
+        returnMe.Add(allSchoolsCommunityName, new List<School>());
+
+        foreach (School school in Schools)
+        {
+            if (school.Communities != null)
+            {
+                foreach (string Community in school.Communities)
+                {
+                    if (!returnMe.ContainsKey(Community))
+                    {
+                        returnMe.Add(Community, new List<School>());
+                    }
+                    returnMe[Community].Add(school);
+                }
+            }
+
+            returnMe[allSchoolsCommunityName].Add(school);
+        }
+
+        return returnMe;
+    }
+
+    private async void loadSchools()
+    {
+        schoolAPIReturned = false;
+        allSchools = (await SchoolRepository.GetAll()).ToList();
         if (OnlyPreK == true)
         {
             allSchools = allSchools.Where(s => s.HasGradePK).ToList();
         }
         availableSchoolsByCommunity = toDictionaryByCommunity(allSchools);
-
-        ChosenSchool = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School);
-    }
-
-    private Dictionary<string, List<School>> toDictionaryByCommunity(List<School> Schools)
-    {
-        Dictionary<string, List<School>> returnMe = new Dictionary<string, List<School>>();
-
-        foreach (School school in Schools)
-        {
-            foreach(string Community in school.Communities)
-            {
-                if (!returnMe.ContainsKey(Community))
-                {
-                    returnMe.Add(Community, new List<School>());
-                }
-                returnMe[Community].Add(school);
-            }
-        }
-
-        return returnMe;
+        schoolAPIReturned = true;
+        StateHasChanged();
     }
 
     private async void selectSchool(School school)
@@ -71,56 +100,93 @@
     {
         StepTracker.PreviousStep(FormName);
     }
+
 }
 <p>Please select a school:</p>
 
 <EditForm Model="@ChosenSchool">
     <br />
-    @foreach (string Community in availableSchoolsByCommunity.Keys.OrderBy(c => c))
+    @if (!schoolAPIReturned)
     {
-        <h3>@Community</h3>
-        @foreach (School school in availableSchoolsByCommunity[Community].OrderBy(s => s.Name))
+        <div class="w-25 row mx-auto">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">...</span>
+            </div>
+            <div class="h2 px-2">Loading...</div>
+        </div>
+    }
+    else
+    {
+        if (availableSchoolsByCommunity.Count > 0)
         {
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-row">
-                        <div class="col-sm-10">
-                            <h4 class="font-weight-bold">@school.Name</h4>
-                            <div class="row">
-                                <div class="col-sm small">
-                                    @school.PhysicalAddress.Line1 <br />
-                                    @if (!string.IsNullOrEmpty(school.PhysicalAddress.Line2)) { @school.PhysicalAddress.Line2 <br/> }
-                                    @school.PhysicalAddress.City <br/>
-                                    @school.PhysicalAddress.Province, @school.PhysicalAddress.Country
-                                </div>
-                                <div class="col-sm small">
-                                    <b>Web:</b> <a href="@school.WebsiteURL" target="_blank">@school.WebsiteURL</a><br />
-                                    <b>Ph:</b> @school.PhoneNumber <br />
-                                    <b>Email:</b> @school.EmailAddress <br />
-                                    <b>Grades:</b> @school.GetGradesOfferedShort()
-                                </div>
-                                <div class="col-sm small">
-                                    @if (!string.IsNullOrEmpty(school.Facebook))
-                                    {
-                                        <b>Facebook:</b> <a href="@school.WebsiteURL" target="_blank">@school.Facebook</a><br />
-                                    }
-                                    @if (!string.IsNullOrEmpty(school.Twitter))
-                                    {
-                                        <b>Twitter:</b> @school.Twitter
-                                    }
+            <div class="form-group row">
+                <label for="chosenCommunity" class="col-sm-3 font-weight-bold">Community: </label>
+                <InputSelect id="chosenCommunity" class="form-control col-sm-4" @bind-Value="@chosenCommunity">
+                    <option value=""></option>
+                    @foreach (string val in availableSchoolsByCommunity.Keys.OrderBy(c => c))
+                    {
+                        <option value="@val">@val</option>
+                    }
+                </InputSelect>
+            </div>
+
+            @foreach (School school in getSchoolsForCommunity(chosenCommunity).OrderBy (s => s.Name))
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-sm-10">
+                                <h4 class="font-weight-bold">@school.Name</h4>
+                                <div class="row">
+                                    <div class="col-sm small">
+                                        @if (school.PhysicalAddress != null)
+                                        {
+                                            <div>
+                                                @school.PhysicalAddress.Line1 <br />
+                                                @if (!string.IsNullOrEmpty(school.PhysicalAddress.Line2))
+                                                {@school.PhysicalAddress.Line2 <br />}
+                                                @school.PhysicalAddress.City <br />
+                                                @school.PhysicalAddress.Province, @school.PhysicalAddress.Country
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="col-sm small">
+                                        <b>Web:</b> <a href="@school.WebsiteURL" target="_blank">@school.WebsiteURL</a><br />
+                                        <b>Ph:</b> @school.PhoneNumber <br />
+                                        <b>Email:</b> @school.EmailAddress <br />
+                                        <b>Grades:</b> @school.GetGradesOfferedShort()
+                                    </div>
+                                    <div class="col-sm small">
+                                        @if (!string.IsNullOrEmpty(school.Facebook))
+                                        {
+                                            <a href="@school.Facebook" target="_blank">Facebook</a><br />
+                                        }
+                                        @if (!string.IsNullOrEmpty(school.Twitter))
+                                        {
+                                            <b>Twitter:</b> @school.Twitter
+                                        }
 
 
+                                    </div>
                                 </div>
                             </div>
+                            <button type="submit" @onclick="@(() => selectSchool(school))" class="btn btn-primary col-sm-2">Select @school.Name</button>
                         </div>
-                        <button type="submit" @onclick="@(() => selectSchool(school))" class="btn btn-primary col-sm-2">Select @school.Name</button>                        
                     </div>
                 </div>
-            </div>
-            <br />
+                <br />
+            }
+        } else
+        {
+            // No schools returned
+            <p>No schools returned!</p>
         }
-        <br /><br />
+
+
     }
+
+
+    <br /><br />
 
     @if (StepNumber > 0)
     {
