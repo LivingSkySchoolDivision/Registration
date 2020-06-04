@@ -7,7 +7,6 @@ namespace LSSD.Registration.Model
 {
     public class CitizenshipInfo
     {
-        public int Id { get; set; }
         [Required]
         public string CountryOfBirth { get; set; }
         [Required]

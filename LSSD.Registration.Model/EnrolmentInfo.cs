@@ -6,7 +6,6 @@ namespace LSSD.Registration.Model
 {
     public class EnrolmentInfo
     {
-        public int Id { get; set; }
         public bool NoPreviousSchooling { get; set; }
         public bool TransferFromAnotherProvince { get; set; }
         public bool ExchangeStudent { get; set; }

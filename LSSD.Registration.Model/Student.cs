@@ -8,7 +8,6 @@ namespace LSSD.Registration.Model
 {
     public class Student : IValidatableObject
     {
-        public int Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
