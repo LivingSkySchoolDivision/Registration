@@ -33,7 +33,7 @@ namespace LSSD.Registration.DebugConsole
                     .Build();
             }
 
-            string dbConnectionString = configuration.GetConnectionString("PublicAPI") ?? string.Empty;
+            string dbConnectionString = configuration.GetConnectionString("InternalDatabase") ?? string.Empty;
 
             if (string.IsNullOrEmpty(dbConnectionString))
             {

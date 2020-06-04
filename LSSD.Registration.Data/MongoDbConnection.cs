@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.Configuration;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,12 +9,29 @@ namespace LSSD.Registration.Data
 {
     public class MongoDbConnection
     {
-        MongoClient _client;
-        public IMongoDatabase DB;
+        readonly MongoClient _client;
+        public readonly IMongoDatabase DB;
+
+        public MongoDbConnection(IConfiguration Configuration)
+        {
+            MongoUrl connectionString = new MongoUrl(Configuration.GetConnectionString("InternalDatabase"));
+            
+            var pack = new ConventionPack();
+            pack.Add(new IgnoreExtraElementsConvention(true));
+            ConventionRegistry.Register("My Solution Conventions", pack, t => true);
+
+            _client = new MongoClient(connectionString);
+            DB = _client.GetDatabase(connectionString.DatabaseName);
+        }
 
         public MongoDbConnection(string ConnectionString)
         {
             MongoUrl connectionString = new MongoUrl(ConnectionString);
+
+            var pack = new ConventionPack();
+            pack.Add(new IgnoreExtraElementsConvention(true));
+            ConventionRegistry.Register("My Solution Conventions", pack, t => true);
+
             _client = new MongoClient(connectionString);
             DB = _client.GetDatabase(connectionString.DatabaseName);
         }
@@ -20,11 +39,12 @@ namespace LSSD.Registration.Data
         public MongoDbConnection(string ConnectionString, string DatabaseName)
         {
             _client = new MongoClient(ConnectionString);
+
+            var pack = new ConventionPack();
+            pack.Add(new IgnoreExtraElementsConvention(true));
+            ConventionRegistry.Register("My Solution Conventions", pack, t => true);
+
             DB = _client.GetDatabase(DatabaseName);
         }
-
-
-
-
     }
 }

@@ -32,21 +32,5 @@ namespace LSSD.Registration.PublicAPI.Controllers
         {
             return _repository.GetById(guid);
         }
-
-
-
-
-
-        [HttpPost]
-        public void Post([FromBody] School value)
-        {
-        }
-
-        // PUT api/<SchoolController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] School value)
-        {
-        }
-
     }
 }

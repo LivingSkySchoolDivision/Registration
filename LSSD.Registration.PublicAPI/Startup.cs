@@ -5,14 +5,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace LSSD.Registration.PublicAPI
 {
     public class Startup
     {
+        private bool HostedInContainer => Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = new ConfigurationBuilder()
+                .AddConfiguration(configuration)
+                .AddEnvironmentVariables()
+                .Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -26,9 +32,8 @@ namespace LSSD.Registration.PublicAPI
             {
                 options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());
             });
-
             services.AddSingleton<MongoDbConnection>();
-            services.AddSingleton<MongoRepository<School>>();
+            services.AddSingleton<IRepository<School>, MongoRepository<School>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +42,11 @@ namespace LSSD.Registration.PublicAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            if (HostedInContainer)
+            {
+                Console.WriteLine("We appear to be running in a container");
             }
 
             app.UseHttpsRedirection();
