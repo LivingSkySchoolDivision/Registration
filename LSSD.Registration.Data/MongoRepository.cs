@@ -11,7 +11,7 @@ using LSSD.Registration.Model;
 
 namespace LSSD.Registration.Data
 {
-    public class MongoRepository<T> : IRepository<T> where T : IGUIDable
+    public class MongoRepository<T> : IRegistrationRepository<T> where T : IGUIDable
     {
         MongoDbConnection _db;
         IMongoCollection<T> _collection;

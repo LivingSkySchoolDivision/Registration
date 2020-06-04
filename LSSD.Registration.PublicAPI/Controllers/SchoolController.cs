@@ -14,9 +14,9 @@ namespace LSSD.Registration.PublicAPI.Controllers
     [Route("[controller]")]
     public class SchoolController : ControllerBase
     {
-        private readonly IRepository<School> _repository;
+        private readonly IRegistrationRepository<School> _repository;
 
-        public SchoolController(IRepository<School> SchoolRepository)
+        public SchoolController(IRegistrationRepository<School> SchoolRepository)
         {
             this._repository = SchoolRepository;
         }
