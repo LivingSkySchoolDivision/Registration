@@ -32,8 +32,8 @@ namespace LSSD.Registration.PublicAPI
             {
                 options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());
             });
-            services.AddSingleton<MongoDbConnection>();
-            services.AddSingleton<IRegistrationRepository<School>, MongoRepository<School>>();
+            services.AddScoped<MongoDbConnection>();
+            services.AddScoped<IRegistrationRepository<School>, MongoRepository<School>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
