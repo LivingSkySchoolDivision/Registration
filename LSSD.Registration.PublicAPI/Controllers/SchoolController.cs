@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using LSSD.Registration.Data;
 using LSSD.Registration.Model;
@@ -27,10 +28,31 @@ namespace LSSD.Registration.PublicAPI.Controllers
             return _repository.GetAll();
         }
 
-        [HttpGet("{id}")]
-        public School Get(string guid)
+        [HttpGet("{guid}")]
+        public IActionResult Get(string guid)
         {
-            return _repository.GetById(guid);
+            if (InputValidators.IsValidGUID(guid))
+            {
+                try
+                {
+                    School school = _repository.GetById(guid);
+                    if (school != null)
+                    {
+                        return Ok(school);
+                    }
+                    else
+                    {
+                        return NotFound(new { HttpStatusCode = 404, ErrorMsg = "Not found" });
+                    }
+                }
+                catch
+                {
+                    return BadRequest(new { HttpStatusCode = 400, ErrorMsg = "Bad Request" });
+                }
+            } else
+            {
+                return BadRequest(new { HttpStatusCode = 400, ErrorMsg = "Bad Request" });
+            }
         }
     }
 }
