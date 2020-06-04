@@ -17,6 +17,8 @@ namespace LSSD.Registration.Model
         public string Facebook { get; set; }
         public string Twitter { get; set; }
         public string DAN { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public bool HasGradePK { get; set; }
         public bool HasGradeK { get; set; }
         public bool HasGrade1 { get; set; }
