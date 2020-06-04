@@ -41,7 +41,13 @@ namespace LSSD.Registration.Data
         {
             try
             {
-                return GetById(Guid.Parse(id));
+                if (isValidGUID(id))
+                {
+                    return GetById(Guid.Parse(id));
+                } else
+                {
+                    return default(T);
+                }
             } 
             catch (FormatException)
             {
@@ -75,6 +81,12 @@ namespace LSSD.Registration.Data
             {
                 _collection.ReplaceOne(_ => _.Id == entity.Id, entity);
             }
+        }
+
+
+        private bool isValidGUID(string input)
+        {
+            return Guid.TryParse(input, out Guid x);
         }
     }
 }
