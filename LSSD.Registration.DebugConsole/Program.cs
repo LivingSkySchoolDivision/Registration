@@ -5,8 +5,11 @@ using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json.Serialization;
 
 namespace LSSD.Registration.DebugConsole
 {
@@ -40,45 +43,29 @@ namespace LSSD.Registration.DebugConsole
                 Console.WriteLine("ConnectionString can't be empty");
             } else
             {
+                Console.WriteLine("Loading schools.json");
 
-                // Attempt to list schools
+                List<School> loadedSchools = new List<School>();
+
+                using (StreamReader file = File.OpenText("schools.json"))
+                {
+                    loadedSchools = Newtonsoft.Json.JsonConvert.DeserializeObject<List<School>>(file.ReadToEnd());
+                }
+                Console.WriteLine($"{loadedSchools.Count} schools");
+                foreach(School school in loadedSchools)
+                {
+                    Console.WriteLine(school.Name);
+                }
+
                 MongoDbConnection dbCon = new MongoDbConnection(dbConnectionString);
                 MongoRepository<School> schoolRepo = new MongoRepository<School>(dbCon);
 
+                schoolRepo.Insert(loadedSchools);
+
+                /*
                 // Insert a school
                 Console.WriteLine("Inserting new school...");
-                School newSchool = new School()
-                {
-                    Name = "Spiritwood High School",
-                    PhoneNumber = "3068832282",
-                    Communities = new List<string>() { "Spiritwood" },
-                    WebsiteURL = "https://shs.lskysd.ca/",
-                    Facebook = "Spiritwood-High-School-225340694468912",
-                    EmailAddress = "shs@lskysd.ca",
-                    MailingAddress = new Address()
-                    {
-                        Line1 = "",
-                        PostalCode = "",
-                        City = "",
-                        Province = "SK",
-                        Country = "Canada"
-                    },
-                    PhysicalAddress = new Address()
-                    {
-                        Line1 = "216 4th Street West",
-                        PostalCode = "S0J 2M0",
-                        City = "Spiritwood",
-                        Province = "SK",
-                        Country = "Canada"
-                    },
-                    DAN = "6410713",
-                    HasGrade7 = true,
-                    HasGrade8 = true,
-                    HasGrade9 = true,
-                    HasGrade10 = true,
-                    HasGrade11 = true,
-                    HasGrade12 = true
-                };
+                
 
                 Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(newSchool));
                 //schoolRepo.Insert(newSchool);
@@ -90,6 +77,7 @@ namespace LSSD.Registration.DebugConsole
                     Console.WriteLine(school.Name);
                 }
                 Console.WriteLine("Done!");
+                //*/
 
             }
         }
