@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        REPO = "registration/registration-customerfrontend"
-        PRIVATE_REPO = "${PRIVATE_DOCKER_REGISTRY}/${REPO}"
+        REPO_FRONTEND = "registration/registration-customerfrontend"
+        REPO_API = "registration/registration-publicapi"
         TAG = "${BUILD_TIMESTAMP}"
     }
     stages {
@@ -12,16 +12,22 @@ pipeline {
                     url: 'https://github.com/LivingSkySchoolDivision/Registration.git'
             }
         }
-        stage('Docker build') {
+        stage('Docker build - FrontEnd') {
             steps {
-                sh "docker build --no-cache -f Dockerfile-FrontEnd -t ${PRIVATE_REPO}:latest -t ${PRIVATE_REPO}:${TAG} ."
-                
+                sh "docker build -f Dockerfile-FrontEnd -t ${PRIVATE_DOCKER_REGISTRY}/${REPO_FRONTEND}:latest -t ${PRIVATE_DOCKER_REGISTRY}/${REPO_FRONTEND}:${TAG} ."                
+            }
+        }
+        stage('Docker build - API') {
+            steps {
+                sh "docker build -f Dockerfile-API -t ${PRIVATE_DOCKER_REGISTRY}/${REPO_API}:latest -t ${PRIVATE_DOCKER_REGISTRY}/${REPO_API}:${TAG} ."                
             }
         }
         stage('Docker push') {
             steps {
-                sh "docker push ${PRIVATE_REPO}:${TAG}"
-                sh "docker push ${PRIVATE_REPO}:latest"           
+                sh "docker push ${PRIVATE_DOCKER_REGISTRY}/${REPO_FRONTEND}:${TAG}"
+                sh "docker push ${PRIVATE_DOCKER_REGISTRY}/${REPO_FRONTEND}:latest" 
+                sh "docker push ${PRIVATE_DOCKER_REGISTRY}/${REPO_API}:${TAG}"
+                sh "docker push ${PRIVATE_DOCKER_REGISTRY}/${REPO_API}:latest"           
             }
         }
     }
