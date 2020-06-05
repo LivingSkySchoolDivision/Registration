@@ -7,8 +7,6 @@ namespace LSSD.Registration.Model
 {
     public class FormSubmitter
     {
-        public int Id { get; set; }
-
         [Required]
         public string FirstName { get; set; }
 
