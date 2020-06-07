@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LSSD.Registration.PublicAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class GeneralController : ControllerBase
     {
@@ -32,7 +32,7 @@ namespace LSSD.Registration.PublicAPI.Controllers
             {
                 return new JsonResult(Examples.General, new System.Text.Json.JsonSerializerOptions()
                 {
-                    IgnoreNullValues = true,
+                    IgnoreNullValues = false,
                     WriteIndented = true
                 });
             }
