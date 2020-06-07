@@ -2,11 +2,13 @@
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
+#nullable enable
     [Parameter]
     public string? FormName { get; set; }
 
     [Parameter]
     public int? StepNumber { get; set; }
+#nullable disable
 
     private void OnClick_NextStepButton()
     {

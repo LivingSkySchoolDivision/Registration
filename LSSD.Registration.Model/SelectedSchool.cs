@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace LSSD.Registration.Model
 {
     public class SelectedSchool
     {
-        public Guid Id { get; set; }
+        [Required]
         public string DAN { get; set; }
         public string Name { get; set; }
 
@@ -16,7 +17,6 @@ namespace LSSD.Registration.Model
             {
                 return new SelectedSchool()
                 {
-                    Id = school.Id,
                     DAN = school.DAN,
                     Name = school.Name
                 };
