@@ -28,11 +28,18 @@ namespace LSSD.Registration.PublicAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get()
         {
-            return new JsonResult(Examples.General, new System.Text.Json.JsonSerializerOptions()
+            try
             {
-                IgnoreNullValues = false,
-                WriteIndented = true
-            });
+                return new JsonResult(Examples.General, new System.Text.Json.JsonSerializerOptions()
+                {
+                    IgnoreNullValues = true,
+                    WriteIndented = true
+                });
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
 
 
