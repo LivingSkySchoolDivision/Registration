@@ -79,36 +79,11 @@
 
               @if (ChosenSchool != null)
               {
-          <div class="card">
-              <div class="card-body">
-                  <h4 class="font-weight-bold">@ChosenSchool.Name</h4>
-                  <div class="row">
-                      <div class="col-sm small">
-                          @ChosenSchool.PhysicalAddress.Line1 <br />
-                          @if (!string.IsNullOrEmpty(ChosenSchool.PhysicalAddress.Line2))
-                          {@ChosenSchool.PhysicalAddress.Line2 <br />}
-                          @ChosenSchool.PhysicalAddress.City <br />
-                          @ChosenSchool.PhysicalAddress.Province, @ChosenSchool.PhysicalAddress.Country
-                      </div>
-                      <div class="col-sm small">
-                          <b>Web:</b> <a href="@ChosenSchool.WebsiteURL" target="_blank">@ChosenSchool.WebsiteURL</a><br />
-                          <b>Ph:</b> @ChosenSchool.PhoneNumber <br />
-                          <b>Email:</b> @ChosenSchool.EmailAddress <br />
-                          <b>Grades:</b> @ChosenSchool.GetGradesOfferedShort()
-                      </div>
-                      <div class="col-sm small">
-                          @if (!string.IsNullOrEmpty(ChosenSchool.Facebook))
-                          {
-                              <b>Facebook:</b> <a href="@ChosenSchool.WebsiteURL" target="_blank">@ChosenSchool.Facebook</a><br />
-                          }
-                          @if (!string.IsNullOrEmpty(ChosenSchool.Twitter))
-                          {
-                              <b>Twitter:</b> @ChosenSchool.Twitter
-                          }
+                  <div class="card">
+                      <div class="card-body">
+                          <SchoolComponent school="@ChosenSchool"></SchoolComponent>
                       </div>
                   </div>
-              </div>
-          </div>
                   <br />
 
               }

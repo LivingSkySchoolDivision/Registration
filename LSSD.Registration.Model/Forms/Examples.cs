@@ -16,9 +16,22 @@ namespace LSSD.Registration.Forms
                 LastName = "Your last name",
                 ContactDetails = "Cell: 1234567890, Twitter: @Twitter"
             },
-            School = new SelectedSchool() {
-                DAN = "Find DAN and ID from /school in this API",
-                Name = "Miskatonic High School"
+            SchoolPreferences = new SchoolPreferenceList() {
+                FirstChoice = new SelectedSchool()
+                {
+                    DAN = "Find DAN and ID from /school in this API",
+                    Name = "Miskatonic High School"
+                },
+                SecondChoice = new SelectedSchool()
+                {
+                    DAN = "123456",
+                    Name = "Springfield Elementary School"
+                },
+                ThirdChoice = new SelectedSchool()
+                {
+                    DAN = "654321",
+                    Name = "Wayside School"
+                }
             },
             Student = new Student() {
                 FirstName = "Preferred first name",

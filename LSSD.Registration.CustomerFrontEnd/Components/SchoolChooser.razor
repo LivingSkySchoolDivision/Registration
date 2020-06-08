@@ -93,7 +93,7 @@
 
     private async Task saveData(School school)
     {
-        await BrowserStorage.Set(StorageKeys.School, SelectedSchool.FromSchool(school));
+        await BrowserStorage.Set(StorageKeys.School, new SelectedSchool(school));
     }
 
     protected void OnClick_PreviousStepButton()
@@ -102,7 +102,7 @@
     }
 
 }
-<p>Please select a school:</p>
+<h2>School Selection</h2>
 
 <EditForm Model="@ChosenSchool">
     <br />
@@ -136,39 +136,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-sm-10">
-                                <h4 class="font-weight-bold">@school.Name</h4>
-                                <div class="row">
-                                    <div class="col-sm small">
-                                        @if (school.PhysicalAddress != null)
-                                        {
-                                            <div>
-                                                @school.PhysicalAddress.Line1 <br />
-                                                @if (!string.IsNullOrEmpty(school.PhysicalAddress.Line2))
-                                                {@school.PhysicalAddress.Line2 <br />}
-                                                @school.PhysicalAddress.City <br />
-                                                @school.PhysicalAddress.Province, @school.PhysicalAddress.Country
-                                            </div>
-                                        }
-                                    </div>
-                                    <div class="col-sm small">
-                                        <b>Web:</b> <a href="@school.WebsiteURL" target="_blank">@school.WebsiteURL</a><br />
-                                        <b>Ph:</b> @school.PhoneNumber <br />
-                                        <b>Email:</b> @school.EmailAddress <br />
-                                        <b>Grades:</b> @school.GetGradesOfferedShort()
-                                    </div>
-                                    <div class="col-sm small">
-                                        @if (!string.IsNullOrEmpty(school.Facebook))
-                                        {
-                                            <a href="@school.Facebook" target="_blank">Facebook</a><br />
-                                        }
-                                        @if (!string.IsNullOrEmpty(school.Twitter))
-                                        {
-                                            <b>Twitter:</b> @school.Twitter
-                                        }
-
-
-                                    </div>
-                                </div>
+                                <SchoolComponent school="@school"></SchoolComponent>
                             </div>
                             <button type="submit" @onclick="@(() => selectSchool(school))" class="btn btn-primary col-sm-2">Select @school.Name</button>
                         </div>

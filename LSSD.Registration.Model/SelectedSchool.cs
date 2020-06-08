@@ -11,19 +11,15 @@ namespace LSSD.Registration.Model
         public string DAN { get; set; }
         public string Name { get; set; }
 
-        public static SelectedSchool FromSchool(School school)
+        public SelectedSchool(School School)
         {
-            if (school != null)
+            if (School != null)
             {
-                return new SelectedSchool()
-                {
-                    DAN = school.DAN,
-                    Name = school.Name
-                };
-            } else
-            {
-                return new SelectedSchool();
+                DAN = School.DAN;
+                Name = School.Name;
             }
         }
+
+        public SelectedSchool() { }
     }
 }

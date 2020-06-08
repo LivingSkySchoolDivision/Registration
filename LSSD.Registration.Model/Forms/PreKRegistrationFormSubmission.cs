@@ -8,7 +8,7 @@ namespace LSSD.Registration.Model.Forms
     public class PreKRegistrationFormSubmission : BaseFormSubmission
     {
         [Required]
-        public SelectedSchool School { get; set; }
+        public SchoolPreferenceList SchoolPreferences { get; set; }
         [Required]
         public Student Student { get; set; }
         [Required]

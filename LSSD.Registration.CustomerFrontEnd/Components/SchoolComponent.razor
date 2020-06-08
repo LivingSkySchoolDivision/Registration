@@ -1,0 +1,46 @@
+﻿@using LSSD.Registration.Model
+@using System.Linq;
+@using LSSD.Registration.CustomerFrontEnd.Services;
+
+@code {
+    [Parameter]
+    public School school { get; set; }
+
+}
+<div>
+    <h4 class="font-weight-bold">@school.Name</h4>
+    <div class="row">
+        <div class="col-sm small">
+            @if (school.PhysicalAddress != null)
+            {
+                <div>
+                    @school.PhysicalAddress.Line1 <br />
+                    @if (!string.IsNullOrEmpty(school.PhysicalAddress.Line2))
+                    {
+                        @school.PhysicalAddress.Line2 <br />
+                    }
+                    @school.PhysicalAddress.City <br />
+                    @school.PhysicalAddress.Province, @school.PhysicalAddress.Country
+                </div>
+            }
+        </div>
+        <div class="col-sm small">
+            <b>Web:</b> <a href="@school.WebsiteURL" target="_blank">@school.WebsiteURL</a><br />
+            <b>Ph:</b> @school.PhoneNumber <br />
+            <b>Email:</b> @school.EmailAddress <br />
+            <b>Grades:</b> @school.GetGradesOfferedShort()
+        </div>
+        <div class="col-sm small">
+            @if (!string.IsNullOrEmpty(school.Facebook))
+            {
+                <a href="@school.Facebook" target="_blank">Facebook</a><br />
+            }
+            @if (!string.IsNullOrEmpty(school.Twitter))
+            {
+                <b>Twitter:</b> @school.Twitter
+            }
+
+
+        </div>
+    </div>
+</div>
