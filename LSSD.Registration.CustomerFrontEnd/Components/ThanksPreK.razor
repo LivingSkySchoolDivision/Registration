@@ -35,6 +35,7 @@
         form.School = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School) ?? new SelectedSchool();
         form.Siblings = await BrowserStorage.GetOrNew<SiblingInfo>(StorageKeys.Siblings) ?? new SiblingInfo();
         form.PreKInfo = await BrowserStorage.GetOrNew<PreKInfo>(StorageKeys.PreKInfo) ?? new PreKInfo();
+        form.BussingInfo = await BrowserStorage.GetOrNew<BussingInfo>(StorageKeys.Bussing) ?? new BussingInfo();
         return form;
     }
 

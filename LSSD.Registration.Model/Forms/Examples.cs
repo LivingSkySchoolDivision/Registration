@@ -74,6 +74,21 @@ namespace LSSD.Registration.Forms
                 CustodyConcerns = string.Empty,
                 MedicalConcerns = string.Empty,
                 BehaviorConcerns = string.Empty
+            },
+            BussingInfo = new BussingInfo()
+            {
+                RequiresBussing = true,
+                LandDescription = "SE-12-20-33-W1",
+                UseLandDescription = true,
+                BussingAddress = new Address()
+                {
+                    Line1 = "PO Box 123",
+                    Line2 = "",
+                    City = "Cake Town",
+                    Province = "SK",
+                    PostalCode = "H0H 0H0",
+                    Country = "Canada"
+                }
             }
         };
 
@@ -256,8 +271,6 @@ namespace LSSD.Registration.Forms
             BussingInfo = new BussingInfo()
             {
                 RequiresBussing = true,
-                WeighsMoreThan18kg = true,
-                ReadAndUnderstandsRules = true,
                 LandDescription = "SE-12-20-33-W1",
                 UseLandDescription = true,
                 BussingAddress = new Address()
@@ -268,10 +281,7 @@ namespace LSSD.Registration.Forms
                     Province = "SK",
                     PostalCode = "H0H 0H0",
                     Country = "Canada"
-                },
-                Comments = string.Empty,
-                AM = true,
-                PM = true
+                }
             },
             FirstNationsInfo = new FirstNationsInfo()
             {
