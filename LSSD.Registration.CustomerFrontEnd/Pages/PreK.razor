@@ -11,8 +11,7 @@
     string FormName = "PREK";
 
     private static List<string> workflow = new List<string>()
-{
-        "DemoWarning",
+    {
         "PreKWarningSection",
         "RequestorSection",
         "PreKSchoolChooser",
@@ -35,13 +34,13 @@
 }
 <HeaderComponent />
 <div class="container">
-    <h2>Pre-Kindergarten Application</h2>
-    <hr />
+    <h1>Pre-Kindergarten Application</h1>
+    <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@workflow.Count()" />
+    <br/>
     @if (StepTracker.Step(FormName) >= 0 && StepTracker.Step(FormName) < workflow.Count)
     {
         <ComponentDisplayerComponent ComponentName="@workflow[StepTracker.Step(FormName)]" FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
     }
-    <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@workflow.Count()" />
-    <br /><br />
+    <hr />
     <a href="/" class="small">Back to start</a>
 </div>
