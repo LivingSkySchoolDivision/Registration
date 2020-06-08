@@ -26,8 +26,6 @@ namespace LSSD.Registration.DebugConsole
 
         static void Main(string[] args)
         {
-
-
             while (menuSelection != "q")
             {
                 Console.Clear();
@@ -37,8 +35,8 @@ namespace LSSD.Registration.DebugConsole
                 Console.WriteLine(" DB Connection string is: " + (string.IsNullOrEmpty(dbConnectionString) ? "(Empty)" : $"LOADED ({dbConnectionString.Length} characters)"));
                 Console.WriteLine("\n");
                 Console.WriteLine("MAIN MENU");
-                Console.WriteLine("  1. Enter database connection string manually (for this console)");
-                Console.WriteLine("  2. Attempt to retrieve connection string from Azure Key Vault");
+                Console.WriteLine("  1. Enter database connection string manually");
+                Console.WriteLine("  2. Attempt to retrieve database connection info from Azure Key Vault");
                 Console.WriteLine("  3. Import school JSON file");
                 Console.WriteLine("  q. Quit");
 
