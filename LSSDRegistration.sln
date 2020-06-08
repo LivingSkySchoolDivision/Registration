@@ -11,6 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.Data", "L
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{403F247F-48B3-4148-84A6-67DDCFFF5F65}"
 	ProjectSection(SolutionItems) = preProject
+		Dockerfile-API = Dockerfile-API
 		Dockerfile-FrontEnd = Dockerfile-FrontEnd
 	EndProjectSection
 EndProject
