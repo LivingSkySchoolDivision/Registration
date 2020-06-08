@@ -8,7 +8,6 @@
     string FormName = "GENREG";
     private static List<string> workflow = new List<string>()
     {
-        "DemoWarning",
         "RequestorSection",
         "SchoolChooser",
         "GradeChooserSection",
@@ -36,12 +35,12 @@
 <HeaderComponent />
 <div class="container">
     <h1>LSSD K-12 Registration Form</h1>
-    <hr />
+    <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@workflow.Count()" />
+    <br />
     @if (StepTracker.Step(FormName) >= 0 && StepTracker.Step(FormName) < workflow.Count)
     {
         <ComponentDisplayerComponent ComponentName="@workflow[StepTracker.Step(FormName)]" FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
     }
-    <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@workflow.Count()" />
-    <br /><br />
+    <hr />
     <a href="/" class="small">Back to start</a>
 </div>
