@@ -22,6 +22,11 @@ namespace LSSD.Registration.Data
             this._collection = _db.DB.GetCollection<T>(typeof(T).Name);
         }
 
+        public void DeleteAll()
+        {
+            _collection.DeleteMany(_ => true);
+        }
+
         public void Delete(T entity)
         {
             _collection.DeleteOne(_ => _.Id == entity.Id);
