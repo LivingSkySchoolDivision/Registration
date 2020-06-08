@@ -12,5 +12,6 @@ namespace LSSD.Registration.Model
         public string BandName { get; set; }
         public string ReserveName { get; set; }
         public string ReserveHouse { get; set; }
+        public string StatusNumber { get; set; }
     }
 }
