@@ -321,6 +321,12 @@
                             </div>
                         }
                     </div>
+                                        
+                    <div class="form-row">
+                        <label class="col-sm-3 font-weight-normal">Notes: </label>
+                        <InputTextArea id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.Note"></InputTextArea>
+                        <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.Note)" />
+                    </div>
 
                     <div class="form-row">
                         <button type="button" class="btn-sm btn-link col-sm-1" @onclick="@(() => RemoveContact(Contact))">Remove</button>

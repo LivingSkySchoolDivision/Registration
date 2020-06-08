@@ -12,7 +12,6 @@ namespace LSSD.Registration.Model
         public string LastName { get; set; }
         public string SchoolAttending { get; set; }
         [Required]
-        [BirthdayValidator(MinimumAge = 3, MaximumAge = 21)]
         public DateTime? DateOfBirth { get; set; }
 
         public Sibling()

@@ -27,6 +27,7 @@ namespace LSSD.Registration.Model
         public string AlternateContactInfo { get; set; }
         public string Employer { get; set; }
         public string EmailAddress { get; set; }
+        public string Note { get; set; }
 
         public Contact()
         {

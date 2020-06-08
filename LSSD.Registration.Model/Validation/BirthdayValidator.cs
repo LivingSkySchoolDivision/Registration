@@ -12,20 +12,23 @@ namespace LSSD.Registration.Model.Validation
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (DateTime.TryParse(value.ToString(), out DateTime birthdate))
+            if (value != null)
             {
-                if (birthdate.ToUniversalTime() > DateTime.Now.ToUniversalTime().AddYears(MinimumAge * -1))
+                if (DateTime.TryParse(value.ToString(), out DateTime birthdate))
                 {
-                    return new ValidationResult("Age must be at least " + MinimumAge, new[] { validationContext.MemberName });
-                }
+                    if (birthdate.ToUniversalTime() > DateTime.Now.ToUniversalTime().AddYears(MinimumAge * -1))
+                    {
+                        return new ValidationResult("Age must be at least " + MinimumAge, new[] { validationContext.MemberName });
+                    }
 
-                if (birthdate.ToUniversalTime() < DateTime.Now.ToUniversalTime().AddYears(MaximumAge * -1))
-                {
-                    return new ValidationResult("Age cannot exceed " + MaximumAge, new[] { validationContext.MemberName });
-                }
+                    if (birthdate.ToUniversalTime() < DateTime.Now.ToUniversalTime().AddYears(MaximumAge * -1))
+                    {
+                        return new ValidationResult("Age cannot exceed " + MaximumAge, new[] { validationContext.MemberName });
+                    }
 
-                return null;
-            }
+                    return null;
+                }
+            }           
 
             return new ValidationResult("Unable to parse date", new[] { validationContext.MemberName });
         }

@@ -1,5 +1,6 @@
 using LSSD.Registration.Data;
 using LSSD.Registration.Model;
+using LSSD.Registration.Model.SubmittedForms;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,8 @@ namespace LSSD.Registration.PublicAPI
             });
             services.AddScoped<MongoDbConnection>();
             services.AddScoped<IRegistrationRepository<School>, MongoRepository<School>>();
+            services.AddScoped<IRegistrationRepository<SubmittedGeneralRegistrationForm>, MongoRepository<SubmittedGeneralRegistrationForm>>();
+            services.AddScoped<IRegistrationRepository<SubmittedPreKApplicationForm>, MongoRepository<SubmittedPreKApplicationForm>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

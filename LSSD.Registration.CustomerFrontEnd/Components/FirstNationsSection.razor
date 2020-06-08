@@ -140,6 +140,19 @@
                     </div>
                 </div>
 
+                <div class="form-group form-row">
+                    <div class="col-sm-4">
+                        <label for="studentLanguage">Status Number: </label><br />
+                        <div class="small text-muted">
+                        Treaty status # / INAC status # / CIS # / SCIS # / Treaty card #
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <InputText id="studentLanguage" class="form-control" @bind-Value="@FNMData.StatusNumber"></InputText>
+                        <ValidationMessage For="@(() => FNMData.StatusNumber)" />
+                    </div>
+                </div>
+
                 <div class="form-row">
                     <div class="col-sm-4">Does @studentFirstName reside on a reserve?</div>
                     <div class="col-sm-8">

@@ -32,10 +32,10 @@
 
         form.SubmittedBy = await BrowserStorage.GetOrNew<FormSubmitter>(StorageKeys.Requestor) ?? new FormSubmitter();
         form.Student = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics) ?? new Student();
-        form.School = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School) ?? new SelectedSchool();
+        form.SchoolPreferences = await BrowserStorage.GetOrNew<SchoolPreferenceList>(StorageKeys.MultiSchool) ?? new SchoolPreferenceList();
         form.Siblings = await BrowserStorage.GetOrNew<SiblingInfo>(StorageKeys.Siblings) ?? new SiblingInfo();
-        form.DateSubmitted = DateTime.Now;
         form.PreKInfo = await BrowserStorage.GetOrNew<PreKInfo>(StorageKeys.PreKInfo) ?? new PreKInfo();
+        form.BussingInfo = await BrowserStorage.GetOrNew<BussingInfo>(StorageKeys.Bussing) ?? new BussingInfo();
         return form;
     }
 

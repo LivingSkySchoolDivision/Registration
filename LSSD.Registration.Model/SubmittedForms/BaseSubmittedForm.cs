@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LSSD.Registration.Model.Forms
+namespace LSSD.Registration.Model.SubmittedForms
 {
-    public class WorkflowTracking
+    public abstract class BaseSubmittedForm
     {
         public bool IsProcessed { get; set; }
         public bool IsRejected { get; set; }
+        public bool IsDeleted { get; set; }
         public string RejectedReason { get; set; }
+        public string ReceivedFromIP { get; set; }
+        public DateTime DateReceivedUTC { get; set; } = DateTime.UtcNow;
         public DateTime DateProcessedUTC { get; set; }
         public string ProcessedBy { get; set; }
-        public string SubmittedFromIP { get; set; }      
-        public DateTime DateCUMERequestedUTC { get; set; }
-        public DateTime DateCUMEReceivedUTC { get; set; }
         public List<string> Notes { get; set; }
+
+        public BaseSubmittedForm(string IPAddress)
+        {
+            this.ReceivedFromIP = IPAddress;
+        }
     }
 }

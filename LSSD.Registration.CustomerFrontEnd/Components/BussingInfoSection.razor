@@ -101,35 +101,6 @@
             <ValidationSummary />
 
             <div class="form-group">
-                <div class="offset-sm-2 col-sm-8">
-                    <InputCheckbox @bind-Value="@BussingData.AM"></InputCheckbox>
-                    <label for="" class="">@studentFirstName needs <b>AM bus service</b>, from home to school</label>
-                    <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => BussingData.AM)" />
-                </div>
-
-                <div class="offset-sm-2 col-sm-8">
-                    <InputCheckbox @bind-Value="@BussingData.PM"></InputCheckbox>
-                    <label for="" class="">@studentFirstName needs <b>PM bus service</b>, from school to home</label>
-                    <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => BussingData.PM)" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="offset-sm-2 col-sm-8">
-                    <InputCheckbox @bind-Value="@BussingData.WeighsMoreThan18kg"></InputCheckbox>
-                    <label for="" class="">@studentFirstName weighs at least 18kg/40lb</label>
-                    <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => BussingData.WeighsMoreThan18kg)" />
-                    @if (!BussingData.WeighsMoreThan18kg)
-                    {
-                        <div class="alert-danger alert">
-                            If the child is under this weight limit, it is the responsibility of the parent/guardian to provide a booster seat for the bus.<br />
-                            <b>Students under this limit cannot ride the bus without proper safety seating.</b>
-                        </div>
-                    }
-                </div>
-            </div>
-
-            <div class="form-group">
                 <h3>Bussing Address</h3>
                 <div class="offset-sm-3">
                     <InputCheckbox id="usesLandDescription" @bind-Value="@BussingData.UseLandDescription" />
@@ -202,14 +173,6 @@
                     </div>
                 </div>
             }
-
-
-            <br /><br />
-            <div class="form-group">
-                <InputCheckbox @bind-Value="@BussingData.ReadAndUnderstandsRules"></InputCheckbox>
-                <label for="" class="">I have read and understand the rules and regulations</label>
-                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => BussingData.ReadAndUnderstandsRules)" />
-            </div>
 
         }
 

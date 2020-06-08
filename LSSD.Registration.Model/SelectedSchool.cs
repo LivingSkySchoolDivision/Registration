@@ -1,29 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace LSSD.Registration.Model
 {
     public class SelectedSchool
     {
-        public Guid Id { get; set; }
+        [Required]
         public string DAN { get; set; }
         public string Name { get; set; }
 
-        public static SelectedSchool FromSchool(School school)
+        public SelectedSchool(School School)
         {
-            if (school != null)
+            if (School != null)
             {
-                return new SelectedSchool()
-                {
-                    Id = school.Id,
-                    DAN = school.DAN,
-                    Name = school.Name
-                };
-            } else
-            {
-                return new SelectedSchool();
+                DAN = School.DAN;
+                Name = School.Name;
             }
         }
+
+        public SelectedSchool() { }
     }
 }
