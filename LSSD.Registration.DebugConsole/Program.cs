@@ -1,5 +1,6 @@
 ﻿using LSSD.Registration.Data;
 using LSSD.Registration.Model;
+using LSSD.Registration.Model.SubmittedForms;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration.AzureKeyVault;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 
@@ -38,6 +40,9 @@ namespace LSSD.Registration.DebugConsole
                 Console.WriteLine("  1. Enter database connection string manually");
                 Console.WriteLine("  2. Attempt to retrieve database connection info from Azure Key Vault");
                 Console.WriteLine("  3. Import school JSON file");
+                Console.WriteLine("  4. List schools");
+                Console.WriteLine("  5. List general registrations");
+                Console.WriteLine("  6. List prek applications");
                 Console.WriteLine("  q. Quit");
 
                 Console.Write("Please make a selection: ");
@@ -53,6 +58,15 @@ namespace LSSD.Registration.DebugConsole
                         break;
                     case "3":
                         schoolReimport();
+                        break;
+                    case "4":
+                        recordExplore<School>();
+                        break;
+                    case "5":
+                        recordExplore<SubmittedGeneralRegistrationForm>();
+                        break;
+                    case "6":
+                        recordExplore<SubmittedPreKApplicationForm>();
                         break;
                 }
             }
@@ -146,7 +160,7 @@ namespace LSSD.Registration.DebugConsole
                         {
                             using (StreamReader importFile = new StreamReader(filename))
                             {
-                            
+
                                 // Attempt to deserialize the file
                                 List<School> importedSchools = new List<School>();
                                 importedSchools = System.Text.Json.JsonSerializer.Deserialize<List<School>>(importFile.ReadToEnd());
@@ -197,6 +211,38 @@ namespace LSSD.Registration.DebugConsole
                     Console.WriteLine("> ERROR: Filename empty");
                     Thread.Sleep(3000);
                 }
+            }
+        }
+
+        private static void recordExplore<T>() where T: IGUIDable
+        {
+            if (string.IsNullOrEmpty(dbConnectionString))
+            {
+                Console.WriteLine("> ERROR: You need to specify a connection string first.");
+                Thread.Sleep(3000);
+            }
+            else
+            {
+                Console.WriteLine("> Connecting to database...");
+                MongoDbConnection dbConnection = new MongoDbConnection(dbConnectionString);
+                MongoRepository<T> repository = new MongoRepository<T>(dbConnection);
+
+                Console.WriteLine($"Exploring {typeof(T).Name} objects");
+                long objCount = repository.Count();
+                Console.WriteLine($"Total count: {objCount}");
+
+                Console.Write("Dump to console [yN]?");
+                if (Console.ReadLine().ToLower() == "y")
+                {
+                    foreach(T obj in repository.GetAll())
+                    {
+                        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize<T>(obj, new JsonSerializerOptions() { WriteIndented = true }));
+                    }
+
+                    Console.WriteLine("\n\nPress any key to go back to main menu...");
+                    Console.ReadKey();
+                } 
+
             }
         }
 
