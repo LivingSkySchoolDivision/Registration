@@ -6,7 +6,7 @@ namespace LSSD.Registration.Model
 {
     public class PreKInfo
     {
-        public string SocialEmotionalOrBehaviorIssues { get; set; }
+        public string SocialEmotionalOrBehaviourIssues { get; set; }
         public string ReferredByOtherAgency { get; set; }
         public bool SpeechDifficulties { get; set; }
         public bool LanguageDifficulties { get; set; }
@@ -30,7 +30,6 @@ namespace LSSD.Registration.Model
         public string OtherConcerns { get; set; }
         public string CustodyConcerns { get; set; }
         public string MedicalConcerns { get; set; }
-        public string BehaviorConcerns { get; set; }
 
         public bool AssistanceFromKidsFirst { get; set; }
         public bool AssistanceFromEarlyChildhoodIntervention { get; set; }

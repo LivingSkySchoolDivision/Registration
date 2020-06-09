@@ -78,15 +78,14 @@ namespace LSSD.Registration.Forms
                 } 
             },
             PreKInfo = new PreKInfo() {
-                SocialEmotionalOrBehaviorIssues = string.Empty,
+                SocialEmotionalOrBehaviourIssues = string.Empty,
                 ReferredByOtherAgency = string.Empty,
                 OtherDifficulties = string.Empty,
                 TraumaticExperiences = string.Empty,
                 HealthcareCrisis = string.Empty,
                 OtherConcerns = string.Empty,
                 CustodyConcerns = string.Empty,
-                MedicalConcerns = string.Empty,
-                BehaviorConcerns = string.Empty
+                MedicalConcerns = string.Empty
             },
             BussingInfo = new BussingInfo()
             {
