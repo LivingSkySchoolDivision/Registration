@@ -59,7 +59,7 @@ namespace LSSD.Registration.PublicAPI.Controllers
                         )
                     );
 
-                return Ok(new APIResponse(true, newObjectId));
+                return Accepted(new APIResponse(true, newObjectId));
             }
             catch
             {
