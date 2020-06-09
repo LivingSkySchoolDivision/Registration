@@ -25,7 +25,7 @@ namespace LSSD.Registration.PublicAPI.Controllers
         [HttpGet]
         public IEnumerable<School> Get()
         {
-            return _repository.GetAll();
+            return _repository.GetAll().Where(s => s.IsAvailableForRegistration == true);
         }
 
         [HttpGet("{guid}")]
