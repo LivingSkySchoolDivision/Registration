@@ -27,6 +27,16 @@ namespace LSSD.Registration.Data
             _collection.DeleteMany(_ => true);
         }
 
+        public long Count()
+        {
+            return _collection.EstimatedDocumentCount();
+        }
+
+        public long Count(Expression<Func<T, bool>> predicate)
+        {
+            return _collection.AsQueryable<T>().Where(predicate.Compile()).Count();
+        }
+
         public void Delete(T entity)
         {
             _collection.DeleteOne(_ => _.Id == entity.Id);
