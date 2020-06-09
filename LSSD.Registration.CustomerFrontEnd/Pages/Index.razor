@@ -3,14 +3,6 @@
 @using LSSD.Registration.CustomerFrontEnd.Components
 
 @code{
-
-    [Inject]
-    public BrowserStorageService BrowserStorage { get; set; }
-
-    private async Task ClearLocalStorage()
-    {
-        await BrowserStorage.Clear();
-    }
 }
     <HeaderComponent FullHeight="true" />
     <div class="container">
