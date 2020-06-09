@@ -1,0 +1,215 @@
+﻿@using LSSD.Registration.CustomerFrontEnd.Services;
+@using LSSD.Registration.Model;
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    FirstNationsInfo FNMData = new FirstNationsInfo();
+    Student LoadedStudentDemographics = new Student();
+    string studentFirstName = "the child";
+
+
+    private async void OnClick_NextStepButton()
+    {
+        await saveData();
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async void OnClick_PreviousStepButton()
+    {
+        await saveData();
+        StepTracker.PreviousStep(FormName);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        FNMData = await BrowserStorage.GetOrNew<FirstNationsInfo>(StorageKeys.FirstNations);
+        LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
+
+        if (!string.IsNullOrEmpty(LoadedStudentDemographics.FirstName))
+        {
+            studentFirstName = LoadedStudentDemographics.FirstName;
+        }
+    }
+
+    private async Task saveData()
+    {
+        // If they fill out the form, then change their mind, clear the data
+        if (FNMData.IsDeclaringFirstNationsInfo == false)
+        {
+            FNMData = new FirstNationsInfo();
+        }
+
+        await BrowserStorage.Set(StorageKeys.FirstNations, FNMData);
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        await saveData();
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async Task HandleInValidSubmit()
+    {
+        await saveData();
+    }
+
+}
+<div class="container">
+    <h2>Students with First Nations, Métis, or Inuit heritage</h2>
+    <br />
+    <div style="font-size: 85%">
+        <div class="row">
+            <div class="col-sm">
+                <h4>Treaty Education</h4>
+                <p>
+                    The Ministry of Education mandated Treaty Education for all Saskatchewan students in 2013. This ensures that we all understand our shared history, our treaty relationship, symbols of treaty and the spirit and intent of the treaties as negotiated in 1876.
+                </p>
+                <p>
+                    We believe students also feel valued and supported when they see cultural teachings represented in the learning. We rely on our elders and knowledge keepers to help us with sharing the teachings of our area.
+                </p>
+            </div>
+            <div class="col-sm">
+                <h4>Pride in Identity</h4>
+                <p>
+                    Being proud of our culture and history impacts student confidence and creates a stronger sense of belonging.
+                </p>
+                <p>
+                    Living Sky recognizes that reconciliation happens in many ways. We support teachers as they create relevant learning in the classroom, respecting all Nations and building strong relationships. Families are welcome in our classrooms and we invite you to join us in the learning.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <h4>Why Declare?</h4>
+                <p>
+                    We need to do better for Indigenous students – and with your help, we can design programs that ensure success for all children. Currently, our data shows we have 26% Indigenous student enrollment in our schools (Feb 2019). A more accurate reflection of enrollment enables us to:
+                    <ul>
+                        <li>Build community</li>
+                        <li>Empower students</li>
+                        <li>Provide greater opportunities for special programs and scholarships</li>
+                        <li>Influence policy and programming</li>
+                        <li>Create a sense of belonging</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="col-sm">
+                <h4>Privacy</h4>
+                <p>
+                    The data will be used by the Ministry of Education and Living Sky School Division to help improve student achievement. It will be securely stored, and a limited number of people have access.
+                </p>
+                <p>
+                    Declaring First Nations, Métis, or Inuit heritage is <b>optional</b>.
+                </p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <EditForm Model="@FNMData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <InputCheckbox id="IsDeclaring" @bind-Value="@FNMData.IsDeclaringFirstNationsInfo"></InputCheckbox>
+            <label for="IsDeclaring" class="font-weight-bold">I would like to provide First Nations/Métis/Inuit information for @studentFirstName</label>
+        </div>
+
+        @if (FNMData.IsDeclaringFirstNationsInfo)
+        {
+            <div class="form-group form-row">
+                <div class="col-sm-4">
+                    <label for="studentLanguage">Aboriginal group: </label>
+                </div>
+                <div class="col-sm-8">
+                    <InputSelect id="studentLanguage" class="form-control" @bind-Value="@FNMData.AboriginalStatus">
+                        <option value=""></option>
+                        @foreach (string val in FormDefaults.AvailableTreatyStatus)
+                            {
+                            <option value="@val">@val</option>
+                            }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => FNMData.AboriginalStatus)" />
+                </div>
+            </div>
+
+            <div class="form-group form-row">
+                <div class="col-sm-4">
+                    <label for="studentLanguage">Status Number: </label><br />
+                    <div class="small text-muted">
+                        Treaty status # / INAC status # / CIS # / SCIS # / Treaty card #
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <InputText id="studentLanguage" class="form-control" @bind-Value="@FNMData.StatusNumber"></InputText>
+                    <ValidationMessage For="@(() => FNMData.StatusNumber)" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-sm-4">Does @studentFirstName reside on a reserve?</div>
+                <div class="col-sm-8">
+                    <InputCheckbox @bind-Value="@FNMData.ResidesOnReserve"></InputCheckbox>
+                    <label for="" class="">Yes, @studentFirstName resides on a reserve</label>
+                    <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => FNMData.ResidesOnReserve)" />
+                </div>
+            </div>
+
+            @if (FNMData.ResidesOnReserve)
+            {
+                <div class="form-group form-row">
+                    <div class="col-sm-4">
+                        <label for="studentLanguage">Reserve of residence: </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <InputText id="studentLanguage" class="form-control" @bind-Value="@FNMData.ReserveName"></InputText>
+                        <ValidationMessage For="@(() => FNMData.ReserveName)" />
+                    </div>
+                </div>
+
+                <div class="form-group form-row">
+                    <div class="col-sm-4">
+                        <label for="studentLanguage">Reserve house number: </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <InputText id="studentLanguage" class="form-control" @bind-Value="@FNMData.ReserveHouse"></InputText>
+                        <ValidationMessage For="@(() => FNMData.ReserveHouse)" />
+                    </div>
+                </div>
+            }
+            <div class="form-group form-row">
+                <div class="col-sm-4">
+                    <label for="studentLanguage">Band affiliation: </label>
+                </div>
+                <div class="col-sm-8">
+                    <InputText id="studentLanguage" class="form-control" @bind-Value="@FNMData.BandName"></InputText>
+                    <ValidationMessage For="@(() => FNMData.BandName)" />
+                </div>
+            </div>
+        }
+
+        <br /><br />
+        <div class="form-group">
+            <div class="form-row">
+                @if (StepNumber > 0)
+                {
+                    <div class="col">
+                        <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    </div>
+                }
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>

@@ -1,8 +1,8 @@
 ﻿@using LSSD.Registration.Model.Forms;
 @using LSSD.Registration.Model;
 @using LSSD.Registration.CustomerFrontEnd.Services;
-@using System.ComponentModel.DataAnnotations; 
-
+@using System.ComponentModel.DataAnnotations;
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
@@ -24,10 +24,8 @@
     APIResponse apiResponse;
 
 
-
     protected void OnClick_PreviousStepButton()
     {
-        await saveData();
         StepTracker.PreviousStep(FormName);
     }
 

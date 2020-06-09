@@ -1,7 +1,7 @@
 ﻿@using LSSD.Registration.Model
 @using LSSD.Registration.Model.Forms
-@using LSSD.Registration.CustomerFrontEnd.Components
 @using System.Linq;
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents
 
 @code {
     [Inject]
@@ -16,7 +16,7 @@
 
 <div class="progress" style="height: 5px;">
     @{
-        int percentComplete = (int)Math.Round((decimal)(((decimal)(CurrentStep+1) / (decimal)TotalSteps)) * 100, 0);
+        int percentComplete = (int)Math.Round((decimal)(((decimal)(CurrentStep + 1) / (decimal)TotalSteps)) * 100, 0);
     }
     @if (percentComplete < 100)
     {

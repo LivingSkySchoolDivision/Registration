@@ -1,6 +1,6 @@
 ﻿@using LSSD.Registration.Model
 @using LSSD.Registration.CustomerFrontEnd.Services;
-
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
@@ -19,22 +19,22 @@
 
     protected async Task HandleValidSubmit()
     {
-        await saveForm();
+        await saveData();
         StepTracker.NextStep(FormName);
     }
 
     protected async Task HandleInValidSubmit()
     {
-        await saveForm();
+        await saveData();
     }
 
     protected async Task OnClick_PreviousStepButton()
     {
-        await saveForm();
+        await saveData();
         StepTracker.PreviousStep(FormName);
     }
 
-    private async Task saveForm()
+    private async Task saveData()
     {
         await BrowserStorage.Set(StorageKeys.PreKInfo, PreKInfoData);
     }

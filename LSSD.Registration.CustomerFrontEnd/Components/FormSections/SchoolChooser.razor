@@ -1,7 +1,8 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
 @using LSSD.Registration.CustomerFrontEnd.Services;
-
+@using LSSD.Registration.CustomerFrontEnd.BlazorComponents; 
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
@@ -98,7 +99,6 @@
 
     protected void OnClick_PreviousStepButton()
     {
-        await saveData();
         StepTracker.PreviousStep(FormName);
     }
 
@@ -125,13 +125,13 @@
                 <InputSelect id="chosenCommunity" class="form-control col-sm-4" @bind-Value="@chosenCommunity">
                     <option value=""></option>
                     @foreach (string val in availableSchoolsByCommunity.Keys.OrderBy(c => c))
-                    {
+                            {
                         <option value="@val">@val</option>
-                    }
+                            }
                 </InputSelect>
             </div>
 
-            @foreach (School school in getSchoolsForCommunity(chosenCommunity).OrderBy (s => s.Name))
+            @foreach (School school in getSchoolsForCommunity(chosenCommunity).OrderBy(s => s.Name))
             {
                 <div class="card">
                     <div class="card-body">
@@ -145,7 +145,8 @@
                 </div>
                 <br />
             }
-        } else
+        }
+        else
         {
             // No schools returned
             <p>No schools returned!</p>

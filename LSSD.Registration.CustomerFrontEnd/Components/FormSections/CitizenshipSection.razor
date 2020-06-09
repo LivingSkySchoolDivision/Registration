@@ -1,0 +1,135 @@
+﻿@using LSSD.Registration.CustomerFrontEnd.Services;
+@using  LSSD.Registration.Model;
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    CitizenshipInfo CitizenshipData = new CitizenshipInfo();
+    Student LoadedStudentDemographics = new Student();
+    string studentFirstName = "the child";
+
+    protected override async Task OnInitializedAsync()
+    {
+        CitizenshipData = await BrowserStorage.GetOrNew<CitizenshipInfo>(StorageKeys.Citizenship);
+        LoadedStudentDemographics = await BrowserStorage.GetOrNew<Student>(StorageKeys.StudentDemographics);
+
+        if (!string.IsNullOrEmpty(LoadedStudentDemographics.FirstName))
+        {
+            studentFirstName = LoadedStudentDemographics.FirstName;
+        }
+    }
+
+    private async Task saveData()
+    {
+        await BrowserStorage.Set(StorageKeys.Citizenship, CitizenshipData);
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        await saveData();
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async Task HandleInValidSubmit()
+    {
+        await saveData();
+    }
+
+    protected async void OnClick_PreviousStepButton()
+    {
+        await saveData();
+        StepTracker.PreviousStep(FormName);
+    }
+
+    protected void OnBlur_BirthCountry()
+    {
+        // If birth country is Canada, and citizenship is empty, auto-fill
+        // This should save _most_ of our users a bit of time
+        if (!string.IsNullOrEmpty(CitizenshipData.CountryOfBirth))
+        {
+            if (string.IsNullOrEmpty(CitizenshipData.Citizenship))
+            {
+                if (CitizenshipData.CountryOfBirth.ToLower().Trim() == "canada")
+                {
+                    CitizenshipData.Citizenship = "Canadian";
+                }
+
+                if (CitizenshipData.CountryOfBirth.ToLower().Trim() == "ca")
+                {
+                    CitizenshipData.CountryOfBirth = "Canada";
+                    CitizenshipData.Citizenship = "Canadian";
+                }
+            }
+        }
+    }
+}
+
+<div class="container">
+    <h2>Language and Citizenship</h2>
+    <br /><br />
+    <EditForm Model="@CitizenshipData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+        <DataAnnotationsValidator />
+
+        <div class="form-group">
+            <div class="form-group row">
+                <label for="studentLanguage" class="col-sm-4  ">Primary language at home: </label>
+                <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@CitizenshipData.LanguageSpokenAtHome"></InputText>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => CitizenshipData.LanguageSpokenAtHome)" />
+            </div>
+            <div class="form-group row">
+                <label for="studentLanguage" class="col-sm-4  ">Country of birth </label>
+                <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@CitizenshipData.CountryOfBirth" @onblur="OnBlur_BirthCountry"></InputText>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => CitizenshipData.CountryOfBirth)" />
+            </div>
+            <div class="form-group row">
+                <label for="studentLanguage" class="col-sm-4  ">Citizenship: </label>
+                <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@CitizenshipData.Citizenship"></InputText>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => CitizenshipData.Citizenship)" />
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4  ">
+                    <label for="studentLanguage">Previous country: </label>
+                    <p class="text-muted small">Leave blank if not applicable.</p>
+                </div>
+                <InputText id="studentLanguage" class="form-control col-sm-8" @bind-Value="@CitizenshipData.PreviousCountry"></InputText>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => CitizenshipData.PreviousCountry)" />
+            </div>
+            <div class="form-group row">
+                <label for="studentLanguage" class="col-sm-4  ">@(FormDefaults.Citizenship) Residency Type: </label>
+                <InputSelect id="studentLanguage" class="form-control col-sm-8" @bind-Value="@CitizenshipData.ResidencyType">
+                    <option value=""></option>
+                    @foreach (string val in FormDefaults.AvailableResidencyTypes)
+                    {
+                        <option value="@val">@val</option>
+                    }
+                </InputSelect>
+                <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => CitizenshipData.ResidencyType)" />
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="form-row">
+                @if (StepNumber > 0)
+                {
+                    <div class="col">
+                        <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    </div>
+                }
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>

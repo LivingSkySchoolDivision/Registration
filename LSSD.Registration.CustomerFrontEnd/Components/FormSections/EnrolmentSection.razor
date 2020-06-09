@@ -1,6 +1,6 @@
 ﻿@using LSSD.Registration.CustomerFrontEnd.Services;
 @using  LSSD.Registration.Model;
-
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
@@ -18,13 +18,13 @@
     Student LoadedStudentDemographics = new Student();
     string studentFirstName = "the child";
 
-    private void OnClick_NextStepButton()
+    private async void OnClick_NextStepButton()
     {
         await saveData();
         StepTracker.NextStep(FormName);
     }
 
-    protected void OnClick_PreviousStepButton()
+    protected async void OnClick_PreviousStepButton()
     {
         await saveData();
         StepTracker.PreviousStep(FormName);
@@ -41,20 +41,20 @@
         }
     }
 
-    private async Task saveForm()
+    private async Task saveData()
     {
         await BrowserStorage.Set(StorageKeys.Enrolment, EnrollmentData);
     }
 
     protected async Task HandleValidSubmit()
     {
-        await saveForm();
+        await saveData();
         StepTracker.NextStep(FormName);
     }
 
     protected async Task HandleInValidSubmit()
     {
-        await saveForm();
+        await saveData();
     }
 
 }

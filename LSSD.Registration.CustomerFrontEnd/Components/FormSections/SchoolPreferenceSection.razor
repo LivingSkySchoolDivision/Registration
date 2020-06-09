@@ -1,7 +1,8 @@
 ﻿@using LSSD.Registration.Model
 @using System.Linq;
 @using LSSD.Registration.CustomerFrontEnd.Services;
-
+@using LSSD.Registration.CustomerFrontEnd.BlazorComponents;
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
@@ -113,7 +114,7 @@
         await BrowserStorage.Set(StorageKeys.MultiSchool, ChosenSchools);
     }
 
-    protected void OnClick_PreviousStepButton()
+    protected async void OnClick_PreviousStepButton()
     {
         await saveData();
         StepTracker.PreviousStep(FormName);

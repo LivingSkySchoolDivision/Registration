@@ -1,6 +1,6 @@
 ﻿@using LSSD.Registration.Model
 @using LSSD.Registration.CustomerFrontEnd.Services;
-
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
@@ -161,12 +161,27 @@
         </div>
 
         <div class="form-group row">
+            <label for="studentGender" class="col-sm-3">Health Services Number: </label>
+            <InputText id="studentLegalLastName" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.HealthServicesNumber"></InputText>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.HealthServicesNumber)" />
+        </div>
+
+        <div class="form-group row">
             <div class="col-sm-3">
                 <label for="studentMedical">Medical Notes: </label>
                 <p><small class="form-text text-muted">Are there any medical conditions that we should be aware of, such as allergies, regular medication, etc.?</small></p>
             </div>
             <InputTextArea id="studentMedical" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.MedicalNotes"></InputTextArea>
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.MedicalNotes)" />
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <label for="studentMedical">Previous Saskatchewan Schools: </label>
+                <p><small class="form-text text-muted">Has this child ever attended a different school <b>within the province of Saskatchewan</b>? Please enter the name and city for each school. This information helps prevent duplicate enrolments for the same student.</small></p>
+            </div>
+            <InputTextArea id="studentMedical" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.PreviousSchools"></InputTextArea>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.PreviousSchools)" />
         </div>
 
         <div class="form-group">
