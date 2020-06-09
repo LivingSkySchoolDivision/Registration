@@ -65,13 +65,13 @@
     <ValidationSummary />
 
     <div class="form-group row">
-        <label for="" class="col-sm-4  ">Does @studentFirstName experience social, emotional, or behavior issues? Please explain. </label>
-        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@PreKInfoData.SocialEmotionalOrBehaviorIssues"></InputTextArea>
-        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.SocialEmotionalOrBehaviorIssues)" />
+        <label for="" class="col-sm-4  ">Does @studentFirstName experience social, emotional, or behaviour issues? Please explain. </label>
+        <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@PreKInfoData.SocialEmotionalOrBehaviourIssues"></InputTextArea>
+        <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.SocialEmotionalOrBehaviourIssues)" />
     </div>
 
     <div class="form-group row">
-        <label for="" class="col-sm-4  ">Have there been traumatic experiences that have effected @studentFirstName or family? Please explain.</label>
+        <label for="" class="col-sm-4  ">Have there been traumatic experiences that have affected @studentFirstName or family? Please explain.</label>
         <InputTextArea id="" class="form-control col-sm-8" @bind-Value="@PreKInfoData.TraumaticExperiences"></InputTextArea>
         <ValidationMessage class="offset-sm-4 col-sm-8" For="@(() => PreKInfoData.TraumaticExperiences)" />
     </div>
@@ -229,7 +229,7 @@
             <div class="form-row">
                 <div>
                     <InputCheckbox @bind-Value="@PreKInfoData.AssistanceFromEarlyChildhoodIntervention"></InputCheckbox>
-                    <label class="">Early childhood Intervention Program</label>
+                    <label class="">Early Childhood Intervention Program</label>
                     <ValidationMessage For="@(() => PreKInfoData.AssistanceFromEarlyChildhoodIntervention)" />
                 </div>
             </div>
@@ -312,14 +312,6 @@
         <div class="form-row">
             <InputTextArea id="" class="form-control" @bind-Value="@PreKInfoData.MedicalConcerns"></InputTextArea>
             <ValidationMessage For="@(() => PreKInfoData.MedicalConcerns)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="">Are there <b>behavioral</b> concerns that we should be aware of? </label>
-        <div class="form-row">
-            <InputTextArea id="" class="form-control" @bind-Value="@PreKInfoData.BehaviorConcerns"></InputTextArea>
-            <ValidationMessage For="@(() => PreKInfoData.BehaviorConcerns)" />
         </div>
     </div>
 

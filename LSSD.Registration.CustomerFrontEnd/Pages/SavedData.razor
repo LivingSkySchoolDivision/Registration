@@ -9,9 +9,9 @@
 
     bool buttonPushed = false;
 
-    protected void OnClick_ClearSavedData()
+    protected async void OnClick_ClearSavedData()
     {
-        BrowserStorage.Clear();
+        await BrowserStorage.Clear();
         buttonPushed = true;
     }
 }
