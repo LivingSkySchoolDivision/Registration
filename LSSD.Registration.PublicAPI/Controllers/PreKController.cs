@@ -45,8 +45,10 @@ namespace LSSD.Registration.PublicAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] PreKRegistrationFormSubmission value)
         {
-            if (value == null)
+            if (value == null) {
+                Console.WriteLine("Body was null!");
                 return BadRequest();
+            }
 
             try
             {

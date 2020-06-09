@@ -8,9 +8,29 @@ namespace LSSD.Registration.Model
     {
         public bool Success { get; set; }
         public Guid Guid { get; set; }
-        public List<string> Messages { get; set; } = new List<string>();
+        public IEnumerable<string> Messages { get; set; } = new List<string>();
 
-        public APIResponse(bool Success, Guid Guid, List<string> Messages)
+        public APIResponse()
+        {
+            this.Messages = new List<string>();
+        }
+
+        public APIResponse(bool Success, IEnumerable<string> Messages)
+        {
+            this.Success = Success;
+            this.Guid = new Guid();
+            this.Messages = Messages;
+
+        }
+
+        public APIResponse(bool Success, string Message)
+        {
+            this.Success = Success;
+            this.Guid = new Guid();
+            this.Messages = new List<string>() { Message };
+        }
+
+        public APIResponse(bool Success, Guid Guid, IEnumerable<string> Messages)
         {
             this.Success = Success;
             this.Guid = Guid;
