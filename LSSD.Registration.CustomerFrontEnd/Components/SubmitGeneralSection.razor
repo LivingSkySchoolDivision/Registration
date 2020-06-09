@@ -1,0 +1,126 @@
+﻿@using LSSD.Registration.Model.Forms;
+@using LSSD.Registration.Model;
+@using LSSD.Registration.CustomerFrontEnd.Services;
+
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
+
+    [Inject]
+    public FormSubmitterService FormSubmitterService { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    GeneralRegistrationFormSubmission form = new GeneralRegistrationFormSubmission();
+    APIResponse apiResponse;
+
+    protected void OnClick_PreviousStepButton()
+    {
+        StepTracker.PreviousStep(FormName);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        form.Grade = await BrowserStorage.Get<GradeInfo>(StorageKeys.Grade);
+        form.Student = await BrowserStorage.Get<Student>(StorageKeys.StudentDemographics);
+        form.SubmittedBy = await BrowserStorage.Get<FormSubmitter>(StorageKeys.Requestor);
+        form.School = await BrowserStorage.Get<SelectedSchool>(StorageKeys.School);
+        form.Contacts = await BrowserStorage.Get<ContactsInfo>(StorageKeys.Contacts);
+        form.Siblings = await BrowserStorage.Get<SiblingInfo>(StorageKeys.Siblings);
+        form.BussingInfo = await BrowserStorage.Get<BussingInfo>(StorageKeys.Bussing);
+        form.FirstNationsInfo = await BrowserStorage.Get<FirstNationsInfo>(StorageKeys.FirstNations);
+        form.EALInfo = await BrowserStorage.Get<EALInfo>(StorageKeys.EAL);
+        form.Citizenship = await BrowserStorage.Get<CitizenshipInfo>(StorageKeys.Citizenship);
+        form.EnrollmentDetails = await BrowserStorage.Get<EnrolmentInfo>(StorageKeys.Enrolment);
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        apiResponse = await FormSubmitterService.SubmitForm(form);
+
+        // Clear the saved stuff in browser storage
+        // IF ITS SUCCESSFUL
+        if (apiResponse.Success)
+        {
+            await BrowserStorage.Clear();
+        }
+    }
+
+    protected void HandleInValidSubmit()
+    {
+        // Do nothing, the validation errors should show up on the page already
+    }
+
+}
+
+<div class="container">
+    <h2>Submit K-12 Registration</h2>
+
+    <EditForm Model="@form" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        @if (apiResponse != null)
+        {
+            if (apiResponse.Success)
+            {
+                <div class="alert alert-success " role="alert" style="text-align: initial">
+                    <h1 class="alert-heading">SUCCESS</h1>
+                    <p>Your registration form was accepted.</p>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger " role="alert" style="text-align: initial">
+                    <h1 class="alert-heading">We found some problems with the form</h1>
+                    <p>Our system found the following problems with your form:</p>
+                    <ul>
+                        @foreach (string message in apiResponse.Messages)
+                        {
+                            <li style="color: darkred;">@message</li>
+                        }
+                    </ul>
+                    <p>Please use the "Previous Step" button below to go back and correct these issues.</p>
+                    <p>If you believe this is an error, or if you require help, please contact our office at (306) 937-7702.</p>
+                </div>
+
+                @if (StepNumber > 0)
+                {
+                    <br /><br />
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col">
+                                <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            }
+        }
+        else
+        {
+            <p>Press the button below to submit your form to our office.</p>
+            <button type="submit" class="btn btn-lg btn-success">Submit Application</button>
+
+            @if (StepNumber > 0)
+            {
+                <br /><br />
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </EditForm>
+</div>

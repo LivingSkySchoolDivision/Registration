@@ -8,12 +8,12 @@
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
-    string FormName = "PREK";
+    string FormName = "TEST";
 
     private static List<string> workflow = new List<string>()
     {
-        "CitizenshipSection",
-        "ThanksGeneralSection"
+        "DoesntExist",
+        "PreKFinishSection"
     };
 
     protected override void OnInitialized()
@@ -28,7 +28,7 @@
 }
 <HeaderComponent />
 <div class="container">
-    <h2>Test Workflow</h2>
+    <h1>Test Workflow</h1>
     <hr />
     @if (StepTracker.Step(FormName) >= 0 && StepTracker.Step(FormName) < workflow.Count)
     {

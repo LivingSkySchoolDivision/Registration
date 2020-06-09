@@ -34,7 +34,9 @@ namespace LSSD.Registration.CustomerFrontEnd
             IConfigurationSection settingsSection = Configuration.GetSection("Settings");
 
             // Default to what's in Properties/launchSettings.json for the API project.
-            string apiURI = settingsSection["APIURI"] ?? "https://localhost:4001"; 
+            string apiURI = settingsSection["APIURI"] ?? "https://localhost:4001";
+
+            Console.WriteLine("API URL is: " + apiURI);
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
@@ -49,6 +51,7 @@ namespace LSSD.Registration.CustomerFrontEnd
             services.AddScoped<FormStepTrackerService>();
             services.AddScoped<SchoolDataService>();
             services.AddScoped<BrowserStorageService>();
+            services.AddScoped<FormSubmitterService>();
 
             // Local Storage
             services.AddBlazoredLocalStorage();

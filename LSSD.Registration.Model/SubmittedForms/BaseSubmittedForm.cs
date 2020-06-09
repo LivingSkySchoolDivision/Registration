@@ -9,6 +9,7 @@ namespace LSSD.Registration.Model.SubmittedForms
         public bool IsProcessed { get; set; }
         public bool IsRejected { get; set; }
         public bool IsDeleted { get; set; }
+        public bool NotificationSent { get; set; }
         public string RejectedReason { get; set; }
         public string ReceivedFromIP { get; set; }
         public DateTime DateReceivedUTC { get; set; } = DateTime.UtcNow;
