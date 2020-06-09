@@ -22,6 +22,7 @@ namespace LSSD.Registration.Model
 
         public Address()
         {
+            this.Province = FormDefaults.Province;
             this.Country = FormDefaults.Country;
         }
                 
