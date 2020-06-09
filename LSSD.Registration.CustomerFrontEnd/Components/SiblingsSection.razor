@@ -42,6 +42,7 @@
 
     private async Task saveData()
     {
+        SiblingInfoData.Siblings.RemoveAll(x => x.IsEmpty());
         await BrowserStorage.Set(StorageKeys.Siblings, SiblingInfoData);
     }
 

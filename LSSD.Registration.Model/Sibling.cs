@@ -16,5 +16,19 @@ namespace LSSD.Registration.Model
         public Sibling()
         {
         }
+
+        public bool IsEmpty()
+        {
+            if (
+                string.IsNullOrEmpty(this.FirstName) &&
+                string.IsNullOrEmpty(this.LastName) &&
+                string.IsNullOrEmpty(SchoolAttending) &&
+                this.DateOfBirth == null
+                )
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
