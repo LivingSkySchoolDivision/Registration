@@ -7,7 +7,7 @@
 
     string FormName = "GENREG";
     private static List<string> workflow = new List<string>()
-    {
+{
         "RequestorSection",
         "SchoolChooser",
         "GradeChooserSection",
@@ -41,6 +41,5 @@
     {
         <ComponentDisplayerComponent ComponentName="@workflow[StepTracker.Step(FormName)]" FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
     }
-    <hr />
-    <a href="/" class="small">Back to start</a>
 </div>
+<FooterComponent />

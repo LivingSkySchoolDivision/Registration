@@ -1,0 +1,37 @@
+﻿@page "/SavedData"
+@using LSSD.Registration.CustomerFrontEnd.Services;
+@using LSSD.Registration.CustomerFrontEnd.Components
+
+
+@code {
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
+
+    bool buttonPushed = false;
+
+    protected void OnClick_ClearSavedData()
+    {
+        BrowserStorage.Clear();
+        buttonPushed = true;
+    }
+}
+
+<HeaderComponent />
+<div class="container">
+    <h1>Saved Data</h1>
+    <hr />
+    <p>This website stores the data that you've entered, but haven't yet submitted, so that you can pick up where you left off. This data is stored <b>on your computer</b>, not on our servers. We have no way of accessing this data until you submit the full form, on the last page of the form workflow.</p>
+    <p>If you wish, you can clear all saved data using the button below.</p>
+    
+    <div style="text-align: center; color: red;">
+        @if (buttonPushed)
+        {
+            <b>All saved form data has been cleared from your browser.</b>
+        }
+        else
+        {
+            <button type="button" @onclick="OnClick_ClearSavedData" class="btn btn-lg btn-danger">Clear all saved data</button>
+        }
+    </div>
+</div>
+<FooterComponent />
