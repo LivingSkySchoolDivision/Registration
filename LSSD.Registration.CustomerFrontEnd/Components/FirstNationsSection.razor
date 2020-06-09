@@ -21,11 +21,13 @@
 
     private void OnClick_NextStepButton()
     {
+        await saveData();
         StepTracker.NextStep(FormName);
     }
 
     protected void OnClick_PreviousStepButton()
     {
+        await saveData();
         StepTracker.PreviousStep(FormName);
     }
 

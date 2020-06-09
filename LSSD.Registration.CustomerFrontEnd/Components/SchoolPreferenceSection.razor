@@ -115,6 +115,7 @@
 
     protected void OnClick_PreviousStepButton()
     {
+        await saveData();
         StepTracker.PreviousStep(FormName);
     }
 
