@@ -1,7 +1,6 @@
 ﻿@using LSSD.Registration.Model.Forms;
 @using LSSD.Registration.Model;
 @using LSSD.Registration.CustomerFrontEnd.Services;
-@using System.ComponentModel.DataAnnotations; 
 
 @code {
     [Inject]
@@ -19,11 +18,8 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    string studentFirstName = "the child";
-    PreKRegistrationFormSubmission form = new PreKRegistrationFormSubmission();
+    GeneralRegistrationFormSubmission form = new GeneralRegistrationFormSubmission();
     APIResponse apiResponse;
-
-
 
     protected void OnClick_PreviousStepButton()
     {
@@ -32,17 +28,17 @@
 
     protected override async Task OnInitializedAsync()
     {
-        form.SubmittedBy = await BrowserStorage.Get<FormSubmitter>(StorageKeys.Requestor);
+        form.Grade = await BrowserStorage.Get<GradeInfo>(StorageKeys.Grade);
         form.Student = await BrowserStorage.Get<Student>(StorageKeys.StudentDemographics);
-        form.SchoolPreferences = await BrowserStorage.Get<SchoolPreferenceList>(StorageKeys.MultiSchool);
+        form.SubmittedBy = await BrowserStorage.Get<FormSubmitter>(StorageKeys.Requestor);
+        form.School = await BrowserStorage.Get<SelectedSchool>(StorageKeys.School);
+        form.Contacts = await BrowserStorage.Get<ContactsInfo>(StorageKeys.Contacts);
         form.Siblings = await BrowserStorage.Get<SiblingInfo>(StorageKeys.Siblings);
-        form.PreKInfo = await BrowserStorage.Get<PreKInfo>(StorageKeys.PreKInfo);
         form.BussingInfo = await BrowserStorage.Get<BussingInfo>(StorageKeys.Bussing);
-
-        if (form.Student != null)
-        {
-            studentFirstName = form.Student.FirstName;
-        }
+        form.FirstNationsInfo = await BrowserStorage.Get<FirstNationsInfo>(StorageKeys.FirstNations);
+        form.EALInfo = await BrowserStorage.Get<EALInfo>(StorageKeys.EAL);
+        form.Citizenship = await BrowserStorage.Get<CitizenshipInfo>(StorageKeys.Citizenship);
+        form.EnrollmentDetails = await BrowserStorage.Get<EnrolmentInfo>(StorageKeys.Enrolment);
     }
 
     protected async Task HandleValidSubmit()
@@ -61,10 +57,11 @@
     {
         // Do nothing, the validation errors should show up on the page already
     }
+
 }
 
 <div class="container">
-    <h2>Submit Pre-Kindergarten Application</h2>
+    <h2>Submit K-12 Registration</h2>
 
     <EditForm Model="@form" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
         <DataAnnotationsValidator />
@@ -76,8 +73,7 @@
             {
                 <div class="alert alert-success " role="alert" style="text-align: initial">
                     <h1 class="alert-heading">SUCCESS</h1>
-                    <p>Your form was accepted.</p>
-                    <p><b>We will contact you</b> if @studentFirstName is accepted into our Pre-Kindergarten program.</p>
+                    <p>Your registration form was accepted.</p>
                 </div>
             }
             else
