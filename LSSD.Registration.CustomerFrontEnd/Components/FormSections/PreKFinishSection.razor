@@ -1,8 +1,8 @@
 ﻿@using LSSD.Registration.Model.Forms;
 @using LSSD.Registration.Model;
 @using LSSD.Registration.CustomerFrontEnd.Services;
-@using System.ComponentModel.DataAnnotations; 
-
+@using System.ComponentModel.DataAnnotations;
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
@@ -24,7 +24,6 @@
     APIResponse apiResponse;
 
 
-
     protected void OnClick_PreviousStepButton()
     {
         StepTracker.PreviousStep(FormName);
@@ -37,7 +36,6 @@
         form.SchoolPreferences = await BrowserStorage.Get<SchoolPreferenceList>(StorageKeys.MultiSchool);
         form.Siblings = await BrowserStorage.Get<SiblingInfo>(StorageKeys.Siblings);
         form.PreKInfo = await BrowserStorage.Get<PreKInfo>(StorageKeys.PreKInfo);
-        form.BussingInfo = await BrowserStorage.Get<BussingInfo>(StorageKeys.Bussing);
 
         if (form.Student != null)
         {

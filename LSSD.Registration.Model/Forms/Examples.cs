@@ -86,21 +86,6 @@ namespace LSSD.Registration.Forms
                 OtherConcerns = string.Empty,
                 CustodyConcerns = string.Empty,
                 MedicalConcerns = string.Empty
-            },
-            BussingInfo = new BussingInfo()
-            {
-                RequiresBussing = true,
-                LandDescription = "SE-12-20-33-W1",
-                UseLandDescription = true,
-                BussingAddress = new Address()
-                {
-                    Line1 = "PO Box 123",
-                    Line2 = "",
-                    City = "Cake Town",
-                    Province = "SK",
-                    PostalCode = "H0H 0H0",
-                    Country = "Canada"
-                }
             }
         };
 

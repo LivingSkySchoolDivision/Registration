@@ -8,10 +8,13 @@ namespace LSSD.Registration.Model
     public class Contact
     {
         [Required]
+        [MaxLength(100, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string FirstName { get; set; }
         [Required]
+        [MaxLength(100, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string LastName { get; set; }
         [Required]
+        [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string RelationshipToStudent { get; set; }
         [Range(1,int.MaxValue, ErrorMessage = "Priority must be at least 1.")]
         public int ContactPriority { get; set; }
@@ -21,12 +24,19 @@ namespace LSSD.Registration.Model
         public bool ShouldRecieveMailAboutStudent { get; set; }
         public Address PrimaryAddress { get; set; }
         public Address MailingAddress { get; set; }
+        [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string HomePhone { get; set; }
+        [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string WorkPhone { get; set; }
+        [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string CellPhone { get; set; }
+        [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string AlternateContactInfo { get; set; }
+        [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string Employer { get; set; }
+        [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string EmailAddress { get; set; }
+        [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string Note { get; set; }
 
         public Contact()

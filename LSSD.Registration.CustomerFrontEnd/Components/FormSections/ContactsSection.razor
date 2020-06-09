@@ -2,7 +2,7 @@
 @using System.Linq;
 @using System.Collections.Generic;
 @using LSSD.Registration.CustomerFrontEnd.Services;
-
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
@@ -29,22 +29,22 @@
 
     protected async Task OnClick_PreviousStepButton()
     {
-        await saveForm();
+        await saveData();
         StepTracker.PreviousStep(FormName);
     }
 
     protected async Task HandleValidSubmit()
     {
-        await saveForm();
+        await saveData();
         StepTracker.NextStep(FormName);
     }
 
     protected async Task HandleInValidSubmit()
     {
-        await saveForm();
+        await saveData();
     }
 
-    private async Task saveForm()
+    private async Task saveData()
     {
         if (LoadedStudentDemographics != null)
         {
@@ -85,14 +85,15 @@
     {
         if (SavedFormSubmitter != null)
         {
-            ContactsInfoData.Contacts.Add(new Contact() {
+            ContactsInfoData.Contacts.Add(new Contact()
+            {
                 FirstName = SavedFormSubmitter.FirstName,
                 LastName = SavedFormSubmitter.LastName,
                 LivesWithStudent = true,
                 SamePrimaryAddressAsStudent = true,
                 SameMailingAddressAsStudent = true,
                 ShouldRecieveMailAboutStudent = true,
-                RelationshipToStudent = "Parent"                
+                RelationshipToStudent = "Parent"
             });
         }
     }
@@ -321,7 +322,7 @@
                             </div>
                         }
                     </div>
-                                        
+
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">Notes: </label>
                         <InputTextArea id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.Note"></InputTextArea>

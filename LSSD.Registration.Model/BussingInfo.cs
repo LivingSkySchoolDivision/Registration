@@ -9,6 +9,8 @@ namespace LSSD.Registration.Model
     public class BussingInfo : IValidatableObject
     {
         public bool RequiresBussing { get; set; }
+        [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
+
         public string LandDescription { get; set; }
         public bool UseLandDescription { get; set; }
         public Address BussingAddress { get; set; }

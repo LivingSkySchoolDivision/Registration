@@ -1,6 +1,6 @@
 ﻿@using LSSD.Registration.CustomerFrontEnd.Services;
 @using  LSSD.Registration.Model;
-
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
@@ -18,25 +18,25 @@
     Student LoadedStudentDemographics = new Student();
     string studentFirstName = "the child";
 
-    private async Task saveForm()
+    private async Task saveData()
     {
         await BrowserStorage.Set(StorageKeys.Bussing, BussingData);
     }
 
     protected async Task HandleValidSubmit()
     {
-        await saveForm();
+        await saveData();
         StepTracker.NextStep(FormName);
     }
 
     protected async Task HandleInValidSubmit()
     {
-        await saveForm();
+        await saveData();
     }
 
     protected async void OnClick_PreviousStepButton()
     {
-        await saveForm();
+        await saveData();
         StepTracker.PreviousStep(FormName);
     }
 
@@ -55,10 +55,12 @@
             if (!string.IsNullOrEmpty(LoadedStudentDemographics.LandDescription))
             {
                 BussingData.LandDescription = LoadedStudentDemographics.LandDescription;
+                BussingData.UseLandDescription = true;
             }
         }
 
-        if (BussingData.BussingAddress.IsEmpty()) {
+        if (BussingData.BussingAddress.IsEmpty())
+        {
             if (LoadedStudentDemographics?.PrimaryAddress?.IsValidCivic() == true)
             {
                 BussingData.BussingAddress = LoadedStudentDemographics.PrimaryAddress;
@@ -70,12 +72,12 @@
 }
 
 <div class="container">
-    <h2>Bussing Service (Pre-Kindergarten)</h2>
-    <br/>
+    <h2>Bussing Service</h2>
+    <br />
     <EditForm Model="@BussingData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
         <div class="form-group">
             <div class="form-row">
-                <label class="col-sm-4">Would @studentFirstName require bussing to or from school?</label>
+                <label class="col-sm-4">Does @studentFirstName require bussing to or from school?</label>
                 <div class="col-sm-8">
                     <InputCheckbox @bind-Value="@BussingData.RequiresBussing"></InputCheckbox>
                     <label for="" class="">Yes</label>
@@ -89,10 +91,9 @@
         @if (BussingData.RequiresBussing)
         {
             <div class="alert alert-info">
-                <h3>Bussing rules and regulations for pre-kindergarten students</h3>
+                <h3>Bussing rules and regulations</h3>
                 <ul>
-                    <li>The Living Sky School Division No. 202 Transporation Department must approve all Pre-K bus applications <i>before</i> students may ride the bus.</li>
-                    <li>Bus drivers <b>cannot</b> accompany the student between the bus and the student's home. An adult <b>must</b> be present at home to safely guide the child to and from the school bus.</li>
+                    <li>Bus drivers <b>cannot</b> accompany the student between the bus and the student's home.</li>
                     <li>You will be informed of the status of your bussing application when a decision is made.</li>
                     <li>Students weighing less than 18kg or 40lb <b>must</b> use a booster seat. It is the responsibility of the parent/guardian to provide a booster seat for the bus.</li>
                 </ul>
@@ -173,6 +174,7 @@
                     </div>
                 </div>
             }
+
         }
 
         <div class="form-group">

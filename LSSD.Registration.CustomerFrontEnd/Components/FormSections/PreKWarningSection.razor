@@ -1,14 +1,14 @@
-﻿@code {
+﻿@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
+@code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
-#nullable enable
     [Parameter]
-    public string? FormName { get; set; }
+    public string FormName { get; set; }
+
 
     [Parameter]
-    public int? StepNumber { get; set; }
-#nullable disable
+    public int StepNumber { get; set; }
 
     private void OnClick_NextStepButton()
     {
@@ -19,11 +19,12 @@
     {
         StepTracker.PreviousStep(FormName);
     }
+
 }
 <div class="container" style="text-align: center;">
     <div class="alert alert-danger " role="alert" style="text-align: initial">
-        <h1 class="alert-heading">Unknown form component</h1>
-        <p>We were supposed to show you a form section here, but something went wrong.</p>
+        <h2 class="alert-heading">Before you apply</h2>
+        <p>Note that this is an <b>application</b> form, not a registration form. Your application will be reviewed, and you will be notified if your child is accepted into our Pre-Kindergarten program.</p>
     </div>
 
     <div class="form-group">

@@ -1,6 +1,6 @@
 ﻿@page "/SavedData"
 @using LSSD.Registration.CustomerFrontEnd.Services;
-@using LSSD.Registration.CustomerFrontEnd.Components
+@using LSSD.Registration.CustomerFrontEnd.BlazorComponents;
 
 
 @code {
@@ -22,7 +22,7 @@
     <hr />
     <p>This website stores the data that you've entered, but haven't yet submitted, so that you can pick up where you left off. This data is stored <b>on your computer</b>, not on our servers. We have no way of accessing this data until you submit the full form, on the last page of the form workflow.</p>
     <p>If you wish, you can clear all saved data using the button below.</p>
-    
+
     <div style="text-align: center; color: red;">
         @if (buttonPushed)
         {
