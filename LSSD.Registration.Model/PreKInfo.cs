@@ -1,22 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace LSSD.Registration.Model
 {
     public class PreKInfo
     {
+        [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string SocialEmotionalOrBehaviourIssues { get; set; }
+        [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string ReferredByOtherAgency { get; set; }
         public bool SpeechDifficulties { get; set; }
         public bool LanguageDifficulties { get; set; }
         public bool GrossMotorDifficulties { get; set; }
         public bool FineMotorDifficulties { get; set; }
+        [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string OtherDifficulties { get; set; }
         public bool OnlyOneParentInHome { get; set; }
         public bool FrequentParentAbsence { get; set; }
         public bool NoFamilySupportSystem { get; set; }
+        [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string TraumaticExperiences { get; set; }
+        [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string HealthcareCrisis { get; set; }
         public bool LowIncomeFamily { get; set; }
         public bool PrimaryCaregiverLessThanHighSchoolEducation { get; set; }
@@ -27,8 +33,11 @@ namespace LSSD.Registration.Model
         public bool PottyTrainingInProgress { get; set; }
         public bool ConsentToShareFromAgencies { get; set; }
         public DateTime ConsentGrantedDate { get; set; }
+        [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string OtherConcerns { get; set; }
+        [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string CustodyConcerns { get; set; }
+        [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string MedicalConcerns { get; set; }
 
         public bool AssistanceFromKidsFirst { get; set; }
