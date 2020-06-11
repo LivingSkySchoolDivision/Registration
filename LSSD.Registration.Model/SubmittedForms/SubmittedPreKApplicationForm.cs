@@ -14,5 +14,10 @@ namespace LSSD.Registration.Model.SubmittedForms
         {
             this.Form = Form;
         }
+
+        public SubmittedPreKApplicationForm(PreKRegistrationFormSubmission Form) : base(string.Empty)
+        {
+            this.Form = Form;
+        }
     }
 }

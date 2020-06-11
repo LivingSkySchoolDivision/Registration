@@ -1,5 +1,6 @@
 ﻿using LSSD.Registration.Data;
 using LSSD.Registration.FormGenerators;
+using LSSD.Registration.Forms;
 using LSSD.Registration.Model;
 using LSSD.Registration.Model.SubmittedForms;
 using Microsoft.Azure.KeyVault;
@@ -86,7 +87,7 @@ namespace LSSD.Registration.DebugConsole
         
         private static void createTestDocument()
         {
-            TestFormGenerator generator = new TestFormGenerator("test.docx");
+            PreKApplicationFormGenerator generator = new PreKApplicationFormGenerator(new SubmittedPreKApplicationForm(Examples.PreK));
         } 
 
 
