@@ -1,4 +1,5 @@
 ﻿using LSSD.Registration.Data;
+using LSSD.Registration.FormGenerators;
 using LSSD.Registration.Model;
 using LSSD.Registration.Model.SubmittedForms;
 using Microsoft.Azure.KeyVault;
@@ -43,6 +44,7 @@ namespace LSSD.Registration.DebugConsole
                 Console.WriteLine("  4. List schools");
                 Console.WriteLine("  5. List general registrations");
                 Console.WriteLine("  6. List prek applications");
+                Console.WriteLine("  7. Create a test document");
                 Console.WriteLine("  q. Quit");
 
                 Console.Write("Please make a selection: ");
@@ -68,6 +70,9 @@ namespace LSSD.Registration.DebugConsole
                     case "6":
                         recordExplore<SubmittedPreKApplicationForm>();
                         break;
+                    case "7":
+                        createTestDocument();
+                        break;
                 }
             }
         }
@@ -77,6 +82,11 @@ namespace LSSD.Registration.DebugConsole
         {
             Console.Write("Please enter a connection string: ");
             dbConnectionString = Console.ReadLine();
+        } 
+        
+        private static void createTestDocument()
+        {
+            TestFormGenerator generator = new TestFormGenerator("test.docx");
         } 
 
 
