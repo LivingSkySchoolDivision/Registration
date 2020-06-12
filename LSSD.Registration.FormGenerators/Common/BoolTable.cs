@@ -77,7 +77,9 @@ namespace LSSD.Registration.FormGenerators.Common
             );
 
             foreach(KeyValuePair<string, bool> item in items) {
-                itemTable.AppendChild(new TableRow(
+                TableRow newRow = new TableRow();
+                
+                newRow.AppendChild(
                     new TableCell(                        
                         new Paragraph(
                             new Run(
@@ -92,23 +94,46 @@ namespace LSSD.Registration.FormGenerators.Common
                                 }                                
                             }
                         }
-                    ),
-                    new TableCell(
-                        new Paragraph(
-                            new Run(
-                                new Text(item.Value.ToYesOrDash())
-                            )
-                        )  {
-                            ParagraphProperties = new ParagraphProperties(
-                                new Justification() { Val = JustificationValues.Center }
-                            ) {
-                                ParagraphStyleId = new ParagraphStyleId() {
-                                    Val = "Field Value"
+                    ));
+
+                if (item.Value == true) {
+                    newRow.AppendChild(
+                        new TableCell(
+                            new Paragraph(
+                                new Run(
+                                    new Text(item.Value.ToYesOrNo())
+                                )
+                            )  {
+                                ParagraphProperties = new ParagraphProperties(
+                                    new Justification() { Val = JustificationValues.Center }
+                                ) {
+                                    ParagraphStyleId = new ParagraphStyleId() {
+                                        Val = "Field Value Yes"
+                                    }
                                 }
                             }
-                        }
-                    )
-                ));
+                        ));
+                } else {
+                    newRow.AppendChild(
+                        new TableCell(
+                            new Paragraph(
+                                new Run(
+                                    new Text(item.Value.ToYesOrNo())
+                                )
+                            )  {
+                                ParagraphProperties = new ParagraphProperties(
+                                    new Justification() { Val = JustificationValues.Center }
+                                ) {
+                                    ParagraphStyleId = new ParagraphStyleId() {
+                                        Val = "Field Value No"
+                                    }
+                                }
+                            }
+                        ));
+                }
+
+
+                itemTable.AppendChild(newRow);
             }
 
             sectionParts.Add(itemTable);

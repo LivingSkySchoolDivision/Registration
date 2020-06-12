@@ -92,6 +92,39 @@ namespace LSSD.Registration.FormGenerators.Common {
                         new FontSize() { Val = "16" } // Double the font size value you see in Word
                     )
                 });
+
+                stylePart.Styles.Append(new Style(
+                    new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
+                    new StyleName() { Val = "Field Value Yes" }
+                ) { 
+                    Type = StyleValues.Paragraph,
+                    StyleId = "Field Value Yes",
+                    CustomStyle = true,
+                    Default = false,
+                    StyleRunProperties = new StyleRunProperties(
+                        new Bold(), 
+                        new RunFonts() { Ascii = "Arial" },
+                        new FontSize() { Val = "16" } // Double the font size value you see in Word
+                    ){
+                        Color = new Color() { Val = "007700" }
+                    }
+                });
+
+                stylePart.Styles.Append(new Style(
+                    new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
+                    new StyleName() { Val = "Field Value No" }
+                ) { 
+                    Type = StyleValues.Paragraph,
+                    StyleId = "Field Value No",
+                    CustomStyle = true,
+                    Default = false,
+                    StyleRunProperties = new StyleRunProperties(
+                        new RunFonts() { Ascii = "Arial" },
+                        new FontSize() { Val = "16" } // Double the font size value you see in Word
+                    ){
+                        Color = new Color() { Val = "C0C0C0" }
+                    }
+                }); 
             }
     }
 }
