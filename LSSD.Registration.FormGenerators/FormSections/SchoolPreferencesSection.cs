@@ -9,17 +9,6 @@ namespace LSSD.Registration.FormGenerators.FormSections
         public static IEnumerable<OpenXmlElement> GetSection(SchoolPreferenceList SchoolPreferences) 
         {
             return new List<OpenXmlElement>() {
-                new Paragraph(
-                    new Run(
-                        new Text("School Preferences")
-                    )
-                )  {
-                    ParagraphProperties = new ParagraphProperties() {
-                        ParagraphStyleId = new ParagraphStyleId() { 
-                            Val = "Section Title"
-                        }
-                    }
-                },
                 new Table(
                     new TableWidth() { Type = TableWidthUnitValues.Pct, Width = "5000" }, // 100% of the page
                     new TableRow( // Cells automatically fit themselves unless you tell them not to

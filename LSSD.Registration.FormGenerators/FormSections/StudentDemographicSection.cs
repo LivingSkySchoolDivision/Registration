@@ -17,7 +17,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 )  {
                     ParagraphProperties = new ParagraphProperties() {
                         ParagraphStyleId = new ParagraphStyleId() { 
-                            Val = "Section Title"
+                            Val = "Field Value"
                         }
                     }  
                 },

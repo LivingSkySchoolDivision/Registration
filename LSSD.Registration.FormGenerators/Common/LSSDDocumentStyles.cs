@@ -43,7 +43,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                         new Bold(), 
                         new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
                         new RunFonts() { Ascii = "Arial" },
-                        new FontSize() { Val = "36" } // Double the font size value you see in Word
+                        new FontSize() { Val = "32" } // Double the font size value you see in Word
                     )
                 });
 
@@ -58,7 +58,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                     StyleRunProperties = new StyleRunProperties(
                         new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
                         new RunFonts() { Ascii = "Arial" },
-                        new FontSize() { Val = "28" } // Double the font size value you see in Word
+                        new FontSize() { Val = "24" } // Double the font size value you see in Word
                     )
                 });
 

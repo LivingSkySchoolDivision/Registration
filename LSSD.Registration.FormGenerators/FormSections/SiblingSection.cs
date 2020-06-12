@@ -10,19 +10,6 @@ namespace LSSD.Registration.FormGenerators.FormSections
         public static IEnumerable<OpenXmlElement> GetSection(SiblingInfo Siblings) 
         {
             List<OpenXmlElement> sectionParts = new List<OpenXmlElement>();
-            sectionParts.Add(
-                new Paragraph(
-                    new Run(
-                        new Text("Sibling Information")
-                    )
-                )  {
-                    ParagraphProperties = new ParagraphProperties() {
-                        ParagraphStyleId = new ParagraphStyleId() { 
-                            Val = "Section Title"
-                        }
-                    }  
-                }
-            );
 
             if (Siblings?.Siblings.Count > 0) {
                 Table siblingTable = new Table(
@@ -31,7 +18,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         new TableCell(
                             new Paragraph(
                                 new Run(
-                                    new Text("Name")                                    
+                                    new Text("Sibling Name")                                    
                                 )      
                             )  {
                                 ParagraphProperties = new ParagraphProperties() {
