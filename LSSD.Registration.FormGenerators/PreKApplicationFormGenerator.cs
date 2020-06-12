@@ -47,25 +47,17 @@ namespace LSSD.Registration.FormGenerators {
 
             List<OpenXmlElement> pageParts = new List<OpenXmlElement>();
 
-            // Set narrow margins for the page
-            pageParts.Add(
-                new SectionProperties(
-                        new PageMargin() {
-                            Top = 720,
-                            Bottom = 720,
-                            Right = 720,
-                            Left = 720
-                        }
-                    )
-                );
-
             // Now add all the generated parts
             // The code for these parts is in /FormSections
             pageParts.AddRange(AdministrativeSection.GetSection(Form)); 
             pageParts.AddRange(SchoolPreferencesSection.GetSection(Form.Form.SchoolPreferences)); 
-            pageParts.AddRange(StudentDemographicSection.GetSection(Form.Form.Student));           
-            pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));
-            pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo));
+            pageParts.AddRange(StudentDemographicSection.GetSection(Form.Form.Student));  
+            pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo));         
+            pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));  
+
+            // Set the default for the document to be in a single column, 
+            // in case anything before this adds additional columns
+            pageParts.Add(ColumnHelper.SetPreviousSectionToColumns(1));
           
             return new Document(new Body(pageParts));
         }
