@@ -33,6 +33,22 @@ namespace LSSD.Registration.FormGenerators.Common {
                 // Create a new paragraph style element and specify some of the attributes.
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
+                    new StyleName() { Val = "Page Title" }
+                ) { 
+                    Type = StyleValues.Paragraph,
+                    StyleId = "Page Title",
+                    CustomStyle = true,
+                    Default = false,
+                    StyleRunProperties = new StyleRunProperties(
+                        new Bold(), 
+                        new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
+                        new RunFonts() { Ascii = "Arial" },
+                        new FontSize() { Val = "36" } // Double the font size value you see in Word
+                    )
+                });
+
+                stylePart.Styles.Append(new Style(
+                    new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
                     new StyleName() { Val = "Section Title" }
                 ) { 
                     Type = StyleValues.Paragraph,
@@ -40,7 +56,6 @@ namespace LSSD.Registration.FormGenerators.Common {
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
-                        new Bold(), 
                         new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
                         new RunFonts() { Ascii = "Arial" },
                         new FontSize() { Val = "28" } // Double the font size value you see in Word

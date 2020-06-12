@@ -8,6 +8,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using LSSD.Registration.Model;
 using LSSD.Registration.Model.SubmittedForms;
 using LSSD.Registration.FormGenerators.Common;
+using LSSD.Registration.FormGenerators.FormSections;
 
 namespace LSSD.Registration.FormGenerators {
 
@@ -25,253 +26,21 @@ namespace LSSD.Registration.FormGenerators {
             // Don't do all this in the constructor
             Generate(form);
         }
-
-        private IEnumerable<OpenXmlElement> GenerateAdministrativeSection(SubmittedPreKApplicationForm Form) {
-            return new List<OpenXmlElement>() {                
-                new Paragraph(
-                    new Run(
-                        new Text("LSSD Pre-Kindergarten Application Form")
-                    )
-                )  {
-                    ParagraphProperties = new ParagraphProperties() {
-                        ParagraphStyleId = new ParagraphStyleId() { 
-                            Val = "Section Title"
-                        }
-                    }
-                },
-                new Table(
-                    new TableWidth() { Type = TableWidthUnitValues.Pct, Width = "5000" }, // 100% of the page
-                    new TableRow( // Cells automatically fit themselves unless you tell them not to
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text("Application Received")                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Label"
-                                    }
-                                }
-                            }
-                        ),
-                        new TableCellWidth() { Type = TableWidthUnitValues.Pct, Width = "1000" },                          
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text($"{Form.DateReceivedUTC.ToLocalTime().ToLongDateString()} {Form.DateReceivedUTC.ToLocalTime().ToShortTimeString()}")                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
-                                    }
-                                }
-                            }
-                        )
-                    )
-                ),
-                new Paragraph()
-            };            
-        }
-
-        private IEnumerable<OpenXmlElement> GenerateSchoolPreferenceList(SchoolPreferenceList SchoolPreferences) 
-        {
-            return new List<OpenXmlElement>() {
-                new Paragraph(
-                    new Run(
-                        new Text("School Preferences")
-                    )
-                )  {
-                    ParagraphProperties = new ParagraphProperties() {
-                        ParagraphStyleId = new ParagraphStyleId() { 
-                            Val = "Section Title"
-                        }
-                    }
-                },
-                new Table(
-                    new TableWidth() { Type = TableWidthUnitValues.Pct, Width = "5000" }, // 100% of the page
-                    new TableRow( // Cells automatically fit themselves unless you tell them not to
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text("First school choice")                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Label"
-                                    }
-                                }
-                            }
-                        ),                         
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text("Second school choice")                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Label"
-                                    }
-                                }
-                            }
-                        ),
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text("Third school choice")                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Label"
-                                    }
-                                }
-                            }
-                        )
-                    ),
-                    new TableRow( // Cells automatically fit themselves unless you tell them not to
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text(SchoolPreferences?.FirstChoice.Name)                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
-                                    }
-                                }
-                            }
-                        ),                         
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text(SchoolPreferences?.SecondChoice.Name)                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
-                                    }
-                                }
-                            }
-                        ),
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text(SchoolPreferences?.ThirdChoice.Name)                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
-                                    }
-                                }
-                            }
-                        )
-                    ),
-                    new TableRow( // Cells automatically fit themselves unless you tell them not to
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text(((School)null)?.DAN)                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
-                                    }
-                                }
-                            }
-                        ),                         
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text(SchoolPreferences?.SecondChoice.DAN)                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
-                                    }
-                                }
-                            }
-                        ),
-                        new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text(SchoolPreferences?.SecondChoice.DAN)                                    
-                                )      
-                            )  {
-                                ParagraphProperties = new ParagraphProperties() {
-                                    ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
-                                    }
-                                }
-                            }
-                        )
-                    )
-                ),
-                new Paragraph()
-            };
-        }
-
-        private IEnumerable<OpenXmlElement> GenerateStudentDemographicSection(Student Student) 
-        {
-            return new List<OpenXmlElement>() {
-                new Paragraph(
-                    new Run(
-                        new Text("Student Information")
-                    )
-                )  {
-                    ParagraphProperties = new ParagraphProperties() {
-                        ParagraphStyleId = new ParagraphStyleId() { 
-                            Val = "Section Title"
-                        }
-                    }  
-                },
-                new Paragraph()         
-            };
-        }
-
-        private IEnumerable<OpenXmlElement> GenerateSiblingsSection(SiblingInfo Siblings) 
-        {
-            return new List<OpenXmlElement>() {
-                new Paragraph(
-                    new Run(
-                        new Text("Sibling Information")
-                    )
-                )  {
-                    ParagraphProperties = new ParagraphProperties() {
-                        ParagraphStyleId = new ParagraphStyleId() { 
-                            Val = "Section Title"
-                        }
-                    }  
-                },
-                new Paragraph()          
-            };
-        }
         
-
-        private IEnumerable<OpenXmlElement> GeneratePreKInfoSection(PreKInfo PreKInfo) 
+        public void Generate(SubmittedPreKApplicationForm Form) 
         {
-            return new List<OpenXmlElement>() {
-                new Paragraph(
-                    new Run(
-                        new Text("PreK Information")
-                    )
-                )  {
-                    ParagraphProperties = new ParagraphProperties() {
-                        ParagraphStyleId = new ParagraphStyleId() { 
-                            Val = "Section Title"
-                        }
-                    }  
-                },
-                new Paragraph()          
-            };
+            string filename = Form.Id.ToString() + ".docx";
+
+            if (File.Exists(filename)) {
+                File.Delete(filename);
+            }
+
+            using (WordprocessingDocument document = WordprocessingDocument.Create(filename, WordprocessingDocumentType.Document)) { 
+                // Create the main document part
+                MainDocumentPart mainPart = document.AddMainDocumentPart();                
+                LSSDDocumentStyles.AddStylesToDocument(document);
+                mainPart.Document = GenerateBody(Form);
+            }
         }
 
         private Document GenerateBody(SubmittedPreKApplicationForm Form) {
@@ -291,31 +60,16 @@ namespace LSSD.Registration.FormGenerators {
                 );
 
             // Now add all the generated parts
-            pageParts.AddRange(GenerateAdministrativeSection(Form)); 
-            pageParts.AddRange(GenerateSchoolPreferenceList(Form.Form.SchoolPreferences)); 
-            pageParts.AddRange(GenerateStudentDemographicSection(Form.Form.Student));           
-            pageParts.AddRange(GenerateSiblingsSection(Form.Form.Siblings));
-            pageParts.AddRange(GeneratePreKInfoSection(Form.Form.PreKInfo));
+            pageParts.AddRange(AdministrativeSection.GetSection(Form)); 
+            pageParts.AddRange(SchoolPreferencesSection.GetSection(Form.Form.SchoolPreferences)); 
+            pageParts.AddRange(StudentDemographicSection.GetSection(Form.Form.Student));           
+            pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));
+            pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo));
           
             return new Document(new Body(pageParts));
         }
+
         
-
-        public void Generate(SubmittedPreKApplicationForm Form) 
-        {
-            string filename = Form.Id.ToString() + ".docx";
-
-            if (File.Exists(filename)) {
-                File.Delete(filename);
-            }
-
-            using (WordprocessingDocument document = WordprocessingDocument.Create(filename, WordprocessingDocumentType.Document)) { 
-                // Create the main document part
-                MainDocumentPart mainPart = document.AddMainDocumentPart();                
-                LSSDDocumentStyles.AddStylesToDocument(document);
-                mainPart.Document = GenerateBody(Form);
-            }
-        }
 
 
     }
