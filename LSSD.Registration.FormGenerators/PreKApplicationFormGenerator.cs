@@ -47,7 +47,7 @@ namespace LSSD.Registration.FormGenerators {
 
             List<OpenXmlElement> pageParts = new List<OpenXmlElement>();
 
-            // First add the properties for the whole document
+            // Set narrow margins for the page
             pageParts.Add(
                 new SectionProperties(
                         new PageMargin() {
@@ -60,6 +60,7 @@ namespace LSSD.Registration.FormGenerators {
                 );
 
             // Now add all the generated parts
+            // The code for these parts is in /FormSections
             pageParts.AddRange(AdministrativeSection.GetSection(Form)); 
             pageParts.AddRange(SchoolPreferencesSection.GetSection(Form.Form.SchoolPreferences)); 
             pageParts.AddRange(StudentDemographicSection.GetSection(Form.Form.Student));           
