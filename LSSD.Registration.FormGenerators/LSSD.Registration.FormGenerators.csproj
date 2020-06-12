@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LSSD.Registration.Data\LSSD.Registration.Data.csproj" />
     <ProjectReference Include="..\LSSD.Registration.Model\LSSD.Registration.Model.csproj" />
   </ItemGroup>
 
