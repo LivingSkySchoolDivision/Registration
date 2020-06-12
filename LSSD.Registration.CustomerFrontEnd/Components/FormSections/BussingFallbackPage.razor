@@ -1,0 +1,44 @@
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+
+    private void OnClick_NextStepButton()
+    {
+        StepTracker.NextStep(FormName);
+    }
+
+    protected void OnClick_PreviousStepButton()
+    {
+        StepTracker.PreviousStep(FormName);
+    }
+}
+<div class="container" style="text-align: center;">
+    <div class="alert alert-primary " role="alert" style="text-align: initial">
+        <h1 class="alert-heading">Bussing</h1>
+        <p>Our digital bussing form isn't ready yet, unfortunately.</p>
+        <p>If you require bussing, or would like more information regarding bussing, please call our office at (306) 937-7702.</p>
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            @if (StepNumber > 0)
+            {
+                <div class="col">
+                    <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                </div>
+            }
+            <div class="col">
+                <button type="button" @onclick="OnClick_NextStepButton" class="btn btn-primary btn-block">Next Step</button>
+            </div>
+        </div>
+    </div>
+</div>
+
