@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -7,17 +8,17 @@ namespace LSSD.Registration.FormGenerators.FormSections
 {
     class AdministrativeSection 
     {
-        public static IEnumerable<OpenXmlElement> GetSection(SubmittedPreKApplicationForm Form)
+        public static IEnumerable<OpenXmlElement> GetSection(SubmittedPreKApplicationForm Form, TimeZoneInfo timezone)
         {
-            return GetSection(Form, "LSSD Pre-Kindergarten Application Form");
+            return GetSection(Form, timezone, "LSSD Pre-Kindergarten Application Form");
         } 
 
-        public static IEnumerable<OpenXmlElement> GetSection(SubmittedGeneralRegistrationForm Form)
+        public static IEnumerable<OpenXmlElement> GetSection(SubmittedGeneralRegistrationForm Form, TimeZoneInfo timezone)
         {
-            return GetSection(Form, "LSSD K-12 Registration Form");
+            return GetSection(Form, timezone, "LSSD K-12 Registration Form");
         } 
 
-        private static IEnumerable<OpenXmlElement> GetSection(BaseSubmittedForm Form, string Title) {
+        private static IEnumerable<OpenXmlElement> GetSection(BaseSubmittedForm Form, TimeZoneInfo timezone, string Title) {
             return new List<OpenXmlElement>() {                
                 new Paragraph(
                     new Run(
@@ -50,7 +51,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         new TableCell(
                             new Paragraph(
                                 new Run(
-                                    new Text($"{Form.DateReceivedUTC.ToLocalTime().ToLongDateString()} {Form.DateReceivedUTC.ToLocalTime().ToShortTimeString()}")                                    
+                                    new Text($"{TimeZoneInfo.ConvertTimeFromUtc(Form.DateReceivedUTC, timezone).ToLongDateString()} {TimeZoneInfo.ConvertTimeFromUtc(Form.DateReceivedUTC, timezone).ToShortTimeString()}")                                    
                                 )      
                             )  {
                                 ParagraphProperties = new ParagraphProperties() {

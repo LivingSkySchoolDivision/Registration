@@ -17,17 +17,17 @@ namespace LSSD.Registration.FormGenerators {
         // For help with how to work with OpenXml documents:
         // https://docs.microsoft.com/en-us/office/open-xml/how-do-i
 
-        public PreKApplicationFormGenerator(SubmittedPreKApplicationForm form) 
+        public PreKApplicationFormGenerator(SubmittedPreKApplicationForm form, TimeZoneInfo TimeZone) 
         {
             // Generate in a temp folder
             // Read the completed file into a stream of some sort
             // Deliver the file to the consumer of this generator
             // Delete the file
             // Don't do all this in the constructor
-            Generate(form);
+            Generate(form, TimeZone);
         }
         
-        public void Generate(SubmittedPreKApplicationForm Form) 
+        public void Generate(SubmittedPreKApplicationForm Form, TimeZoneInfo TimeZone) 
         {
             string filename = Form.Id.ToString() + ".docx";
 
@@ -39,19 +39,19 @@ namespace LSSD.Registration.FormGenerators {
                 // Create the main document part
                 MainDocumentPart mainPart = document.AddMainDocumentPart();                
                 LSSDDocumentStyles.AddStylesToDocument(document);
-                mainPart.Document = GenerateBody(Form);
+                mainPart.Document = GenerateBody(Form, TimeZone);
             }
         }
 
-        private Document GenerateBody(SubmittedPreKApplicationForm Form) {
+        private Document GenerateBody(SubmittedPreKApplicationForm Form, TimeZoneInfo TimeZone) {
 
             List<OpenXmlElement> pageParts = new List<OpenXmlElement>();
 
             // Now add all the generated parts
             // The code for these parts is in /FormSections
-            pageParts.AddRange(AdministrativeSection.GetSection(Form)); 
+            pageParts.AddRange(AdministrativeSection.GetSection(Form, TimeZone)); 
             pageParts.AddRange(SchoolPreferencesSection.GetSection(Form.Form.SchoolPreferences)); 
-            pageParts.AddRange(StudentDemographicSection.GetSection(Form.Form.Student));  
+            pageParts.AddRange(StudentDemographicSection.GetSection(Form.Form.Student, TimeZone));  
             pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo));         
             pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));  
 

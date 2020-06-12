@@ -87,7 +87,8 @@ namespace LSSD.Registration.DebugConsole
         
         private static void createTestDocument()
         {
-            PreKApplicationFormGenerator generator = new PreKApplicationFormGenerator(new SubmittedPreKApplicationForm(Examples.PreK));
+            TimeZoneInfo timezone = TimeZoneInfo.FindSystemTimeZoneById("Canada Central Standard Time");
+            PreKApplicationFormGenerator generator = new PreKApplicationFormGenerator(new SubmittedPreKApplicationForm(Examples.PreK), timezone);
         } 
 
 

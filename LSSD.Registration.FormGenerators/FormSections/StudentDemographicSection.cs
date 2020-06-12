@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -7,7 +8,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
 {
     class StudentDemographicSection
     {
-        public static IEnumerable<OpenXmlElement> GetSection(Student Student) 
+        public static IEnumerable<OpenXmlElement> GetSection(Student Student, TimeZoneInfo TimeZone) 
         {
             return new List<OpenXmlElement>() {
                 new Paragraph(
