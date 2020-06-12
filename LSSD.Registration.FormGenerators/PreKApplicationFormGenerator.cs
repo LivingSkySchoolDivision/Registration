@@ -12,8 +12,8 @@ using LSSD.Registration.FormGenerators.FormSections;
 
 namespace LSSD.Registration.FormGenerators {
 
-    public class PreKApplicationFormGenerator {
-
+    public class PreKApplicationFormGenerator 
+    {
         // For help with how to work with OpenXml documents:
         // https://docs.microsoft.com/en-us/office/open-xml/how-do-i
 
