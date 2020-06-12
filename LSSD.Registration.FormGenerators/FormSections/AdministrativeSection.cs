@@ -7,11 +7,21 @@ namespace LSSD.Registration.FormGenerators.FormSections
 {
     class AdministrativeSection 
     {
-        public static IEnumerable<OpenXmlElement> GetSection(SubmittedPreKApplicationForm Form) {
+        public static IEnumerable<OpenXmlElement> GetSection(SubmittedPreKApplicationForm Form)
+        {
+            return GetSection(Form, "LSSD Pre-Kindergarten Application Form");
+        } 
+
+        public static IEnumerable<OpenXmlElement> GetSection(SubmittedGeneralRegistrationForm Form)
+        {
+            return GetSection(Form, "LSSD K-12 Registration Form");
+        } 
+
+        private static IEnumerable<OpenXmlElement> GetSection(BaseSubmittedForm Form, string Title) {
             return new List<OpenXmlElement>() {                
                 new Paragraph(
                     new Run(
-                        new Text("LSSD Pre-Kindergarten Application Form")
+                        new Text(Title)
                     )
                 )  {
                     ParagraphProperties = new ParagraphProperties() {
