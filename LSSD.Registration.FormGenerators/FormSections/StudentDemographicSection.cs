@@ -21,8 +21,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                             Val = "Field Value"
                         }
                     }  
-                },
-                new Paragraph()         
+                }        
             };
         }
 

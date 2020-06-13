@@ -62,8 +62,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                             }
                         )
                     )
-                ),
-                new Paragraph()
+                )
             };            
         }
     }
