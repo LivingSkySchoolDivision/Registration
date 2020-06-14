@@ -67,5 +67,29 @@ namespace LSSD.Registration.Model
                 );            
         }
 
+        public string ToFormattedAddress() {
+            return ToFormattedAddress(false);
+        }
+        public string ToFormattedAddress(bool html) {
+            StringBuilder sb = new StringBuilder();
+            string newlineChar = html ? "<br>" : Environment.NewLine;
+
+            sb.Append(this.Line1);
+            sb.Append(newlineChar);
+            if (!string.IsNullOrEmpty(this.Line2)) {
+                sb.Append(this.Line2);
+                sb.Append(newlineChar);
+            }
+            sb.Append(this.City);
+            sb.Append(" ");
+            sb.Append(this.Province);
+            sb.Append(" ");
+            sb.Append(this.PostalCode);
+            sb.Append(" ");
+            sb.Append(newlineChar);
+            sb.Append(this.Country);
+
+            return sb.ToString();
+        }
     }
 }

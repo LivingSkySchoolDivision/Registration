@@ -63,7 +63,9 @@ namespace LSSD.Registration.FormGenerators.FormSections
                             }
                         )
                     )
-                )
+                ),
+                ColumnHelper.SetPreviousSectionToColumns(1),
+                ParagraphHelper.WhiteSpace()
             };            
         }
     }

@@ -72,8 +72,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
 
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
 
-            sectionParts.Add(ParagraphHelper.WhiteSpace());
-            sectionParts.Add(ParagraphHelper.Paragraph("Child receives supports from the following:", LSSDDocumentStyles.SectionTitle));
+            //sectionParts.Add(ParagraphHelper.WhiteSpace());
+            //sectionParts.Add(ParagraphHelper.Paragraph("Child receives supports from the following:", LSSDDocumentStyles.SectionTitle));
           
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
 

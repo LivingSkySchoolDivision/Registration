@@ -1,3 +1,4 @@
+using System;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Wordprocessing;
 
@@ -29,6 +30,29 @@ namespace LSSD.Registration.FormGenerators.Common
         public static OpenXmlElement Paragraph(string Text, string Style) 
         {
             return Paragraph(Text, Style, JustificationValues.Left);
+        }
+
+    
+        public static Run ConvertMultiLineString(string InputString) 
+        {
+            Run returnMe = new Run();
+
+            string[] newLineArray = { Environment.NewLine, "\n", "<br>" };
+            string[] textArray = InputString.Split( newLineArray, StringSplitOptions.None );
+
+            foreach ( string line in textArray )
+            {
+                if (returnMe.ChildElements.Count > 0)
+                {
+                    returnMe.Append( new Break( ) );
+                }
+
+                returnMe.AppendChild(
+                    new Text(line)
+                );
+            }
+
+            return returnMe;
         }
 
         public static OpenXmlElement Paragraph(string Text, string Style, JustificationValues Alignment) 

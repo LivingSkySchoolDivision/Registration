@@ -13,6 +13,10 @@ namespace LSSD.Registration.FormGenerators.Common
         public static Table StyledTable(params OpenXmlElement[] childItems) {
             Table table = new Table(
                 new TableLayout() {  Type = TableLayoutValues.Autofit },
+                new TableWidth() { 
+                    Type = TableWidthUnitValues.Pct, 
+                    Width = $"{95 * 50}"
+                    },
                 LSSDTableStyles.Borders(),
                 LSSDTableStyles.Margins()
             );
@@ -63,14 +67,6 @@ namespace LSSD.Registration.FormGenerators.Common
             return MakeTable(items, 95, _defaultBorderColor);
         }
 
-        public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items, decimal TablewidthPercent) {
-            return MakeTable(items, TablewidthPercent, _defaultBorderColor);
-        }
-
-        public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items, string BorderColor) {
-            return MakeTable(items, 95, BorderColor);
-        }
-
         public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items, decimal TablewidthPercent, string BorderColor) {
 
             Table itemTable = new Table(
@@ -96,14 +92,6 @@ namespace LSSD.Registration.FormGenerators.Common
 
         public static TableCell LabelCell(string Label) {
             return LabelCell(Label, JustificationValues.Left);
-        }
-
-        public static TableCell LabelCell(string Label, JustificationValues Alignment, bool AutoWidth) {
-            TableCell tc = LabelCell(Label, Alignment);
-            if (AutoWidth) {
-                tc.AppendChild(new TableCellWidth() { Width = "auto" });
-            }
-            return tc;
         }
 
         public static TableCell LabelCell(string Label, JustificationValues Alignment, decimal WidthPercent) {
@@ -137,11 +125,17 @@ namespace LSSD.Registration.FormGenerators.Common
         }
 
         public static TableCell ValueCell(string Value, JustificationValues Alignment)  {
+            return ValueCell(new Run(new Text(Value)), Alignment);
+        }
+
+        public static TableCell ValueCell(Run Value)  {
+            return ValueCell(Value, JustificationValues.Left);
+        }
+
+        public static TableCell ValueCell(Run Value, JustificationValues Alignment)  {
             TableCell tc = new TableCell(
                 new Paragraph(
-                    new Run(
-                        new Text(Value)
-                    )
+                    Value
                 )  {
                     ParagraphProperties = new ParagraphProperties(
                         new Justification() { Val = Alignment }
@@ -155,6 +149,7 @@ namespace LSSD.Registration.FormGenerators.Common
 
             return tc;
         }
+
 
         public static TableCell ValueCell(bool Value) {
             if (Value == true) {
@@ -206,27 +201,20 @@ namespace LSSD.Registration.FormGenerators.Common
             );
         } 
 
-        public static TableRow TableHeaderRow(IEnumerable<string> Headings) {
-            TableRow tr = new TableRow();
+        public static TableRow FieldTableRow(string Label, string Value) {
+            return new TableRow(
+                LabelCell(Label),
+                ValueCell(Value)
+            );
+        } 
+        public static TableRow FieldTableRow(string Label, bool Value) {
+            return new TableRow(
+                LabelCell(Label),
+                ValueCell(Value)
+            );
+        } 
 
-            foreach(string heading in Headings) {
-                tr.AppendChild(LabelCell(heading));
-            }
-
-            return tr;
-
-        }
-
-        public static TableRow TableValuesRow(IEnumerable<string> Values) {
-            TableRow tr = new TableRow();
-
-            foreach(string value in Values) {
-                tr.AppendChild(ValueCell(value));
-            }
-
-            return tr;
-        }
-
+        
 
     }
 }

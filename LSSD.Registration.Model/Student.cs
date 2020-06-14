@@ -51,6 +51,66 @@ namespace LSSD.Registration.Model
             this.MailingAddress = new Address();
         }
 
+        public string GetLegalName() {
+            if (!string.IsNullOrEmpty(this.LegalMiddleName)) {
+                return $"{this.LegalFirstName} {this.LegalMiddleName} {this.LegalLastName}";
+            } else {
+                return $"{this.LegalFirstName} {this.LegalLastName}";
+            } 
+        }
+
+        public string GetPreferredName() {
+            if (this.HasPreferredName) {
+                if (!string.IsNullOrEmpty(this.MiddleName)) {
+                    return $"{this.FirstName} {this.MiddleName} {this.LastName}";
+                } else {
+                    return $"{this.FirstName} {this.LastName}";
+                } 
+            } else { 
+                return string.Empty;
+            }
+        }
+
+
+        public int GetAge()
+        {
+            if (this.DateOfBirth.HasValue) {
+                return GetAge(DateTime.Today);
+            } else {
+                return 0;
+            }
+        }
+
+        public int GetAge(DateTime OnThisDate)
+        {
+            if (this.DateOfBirth.HasValue) {
+                int age = OnThisDate.Year - this.DateOfBirth.Value.Year;
+                // The above age includes the year they're currently working on
+                // But, in Canada anyway, that doesn't count until your birthday
+                // So remove one, unless it's their birthday
+                if (this.DateOfBirth > OnThisDate.AddYears(-age)) age--;
+                return age;
+            } else {
+                return 0;
+            }
+        }
+
+        public string GetDateOfBirthWithAge(DateTime OnThisDate) {
+            if (this.DateOfBirth.HasValue) {
+                return $"{this.DateOfBirth.Value.ToLongDateString()} ({GetAge(OnThisDate)})";
+            } else {
+                return "No DOB submitted";
+            }
+        }
+
+        public string GetDateOfBirthWithAge() {
+            if (this.DateOfBirth.HasValue) {
+                return GetDateOfBirthWithAge(DateTime.Today);
+            } else {
+                return "No DOB submitted";
+            }
+        }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             List<ValidationResult> errors = new List<ValidationResult>();

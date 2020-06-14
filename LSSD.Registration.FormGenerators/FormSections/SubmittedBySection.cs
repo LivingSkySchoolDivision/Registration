@@ -14,14 +14,15 @@ namespace LSSD.Registration.FormGenerators.FormSections
             return new List<OpenXmlElement>() {
                 TableHelper.StyledTable(
                     new TableRow(
-                        TableHelper.LabelCell("Submitted By", JustificationValues.Left, 50),
-                        TableHelper.LabelCell("Contact Details", JustificationValues.Left, 50)
+                        TableHelper.LabelCell("Form Submitted By", JustificationValues.Left, (decimal)47.5),
+                        TableHelper.LabelCell("Contact Details", JustificationValues.Left, (decimal)47.5)
                     ),
                     new TableRow(
                         TableHelper.ValueCell($"{submittedBy.FirstName} {submittedBy.LastName}", JustificationValues.Left),
                         TableHelper.ValueCell(submittedBy.ContactDetails)
                     )
                 ),
+                ColumnHelper.SetPreviousSectionToColumns(1),
                 ParagraphHelper.WhiteSpace()
             };
                 
