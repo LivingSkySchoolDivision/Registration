@@ -50,6 +50,7 @@ namespace LSSD.Registration.FormGenerators {
             // Now add all the generated parts
             // The code for these parts is in /FormSections
             pageParts.AddRange(AdministrativeSection.GetSection(Form, TimeZone)); 
+            pageParts.AddRange(SubmittedBySection.GetSection(Form.Form.SubmittedBy)); 
             pageParts.AddRange(SchoolPreferencesSection.GetSection(Form.Form.SchoolPreferences)); 
             pageParts.AddRange(StudentDemographicSection.GetSection(Form.Form.Student, TimeZone));  
             pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo));         
