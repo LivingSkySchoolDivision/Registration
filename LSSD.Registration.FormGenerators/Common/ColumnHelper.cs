@@ -6,12 +6,6 @@ namespace LSSD.Registration.FormGenerators.Common
 {
     public static class ColumnHelper 
     {
-        public static OpenXmlElement MarkSectionStart() 
-        {
-            return new Paragraph();
-        }
-
-
         public static OpenXmlElement SetPreviousSectionToColumns(int ColumnCount) {
             return SetPreviousSectionToColumns(ColumnCount, 0, 
                 new PageMargin() {
