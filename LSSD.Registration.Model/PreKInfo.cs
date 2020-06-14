@@ -18,7 +18,6 @@ namespace LSSD.Registration.Model
         [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string OtherDifficulties { get; set; }
         public bool OnlyOneParentInHome { get; set; }
-        public bool FrequentParentAbsence { get; set; }
         public bool NoFamilySupportSystem { get; set; }
         [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string TraumaticExperiences { get; set; }
@@ -32,7 +31,6 @@ namespace LSSD.Registration.Model
         public bool CanUseBathroomAlone { get; set; }
         public bool PottyTrainingInProgress { get; set; }
         public bool ConsentToShareFromAgencies { get; set; }
-        public DateTime ConsentGrantedDate { get; set; }
         [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string OtherConcerns { get; set; }
         [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
