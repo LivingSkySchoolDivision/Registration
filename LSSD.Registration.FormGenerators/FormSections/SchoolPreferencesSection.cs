@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Wordprocessing;
 using LSSD.Registration.Model;
+using LSSD.Registration.FormGenerators.Common;
 
 namespace LSSD.Registration.FormGenerators.FormSections
 {
@@ -69,7 +70,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                                     new Justification() { Val = JustificationValues.Center }
                                 ) {
                                     ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Label"
+                                        Val = LSSDDocumentStyles.FieldLabel
                                     }
                                 }
                             }
@@ -84,7 +85,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                                     new Justification() { Val = JustificationValues.Center }
                                 ) {
                                     ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Label"
+                                        Val = LSSDDocumentStyles.FieldLabel
                                     }
                                 }
                             }
@@ -99,7 +100,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                                     new Justification() { Val = JustificationValues.Center }
                                 ) {
                                     ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Label"
+                                        Val = LSSDDocumentStyles.FieldLabel
                                     }
                                 }
                             }
@@ -116,7 +117,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                                     new Justification() { Val = JustificationValues.Center }
                                 ) {
                                     ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
+                                        Val = LSSDDocumentStyles.FieldValue
                                     }
                                 }
                             }
@@ -131,7 +132,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                                     new Justification() { Val = JustificationValues.Center }
                                 ) {
                                     ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
+                                        Val = LSSDDocumentStyles.FieldValue
                                     }
                                 }
                             }
@@ -146,7 +147,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                                     new Justification() { Val = JustificationValues.Center }
                                 ) {
                                     ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
+                                        Val = LSSDDocumentStyles.FieldValue
                                     }
                                 }
                             }

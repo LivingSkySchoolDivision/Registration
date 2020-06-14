@@ -10,19 +10,33 @@ namespace LSSD.Registration.FormGenerators.Common
     {
         private const string _defaultBorderColor = "C0C0C0";
 
-        public static OpenXmlElement MakeTable(IEnumerable<KeyValuePair<string, string>> items) {
-            return MakeTable(items, 95, _defaultBorderColor);
+        public static Table StyledTable(params OpenXmlElement[] childItems) {
+            Table table = new Table(
+                new TableLayout() {  Type = TableLayoutValues.Autofit },
+                LSSDTableStyles.Borders(),
+                LSSDTableStyles.Margins()
+            );
+
+            foreach(OpenXmlElement e in childItems) {
+                table.AppendChild(e);
+            }
+
+            return table;
         }
 
-        public static OpenXmlElement MakeTable(IEnumerable<KeyValuePair<string, string>> items, decimal TablewidthPercent) {
+        public static Table MakeTable(IEnumerable<KeyValuePair<string, string>> items) {
+            return MakeTable(items, 95, _defaultBorderColor);            
+        }
+
+        public static Table MakeTable(IEnumerable<KeyValuePair<string, string>> items, decimal TablewidthPercent) {
             return MakeTable(items, TablewidthPercent, _defaultBorderColor);
         }
 
-        public static OpenXmlElement MakeTable(IEnumerable<KeyValuePair<string, string>> items, string BorderColor) {
+        public static Table MakeTable(IEnumerable<KeyValuePair<string, string>> items, string BorderColor) {
             return MakeTable(items, 95, BorderColor);
         }
         
-        public static OpenXmlElement MakeTable(IEnumerable<KeyValuePair<string, string>> items, decimal TablewidthPercent, string BorderColor) {
+        public static Table MakeTable(IEnumerable<KeyValuePair<string, string>> items, decimal TablewidthPercent, string BorderColor) {
 
             Table itemTable = new Table(
                 new TableWidth() { 
@@ -45,20 +59,19 @@ namespace LSSD.Registration.FormGenerators.Common
             return itemTable;
         }
 
-
-        public static OpenXmlElement MakeTable(IEnumerable<KeyValuePair<string, bool>> items) {
+        public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items) {
             return MakeTable(items, 95, _defaultBorderColor);
         }
 
-        public static OpenXmlElement MakeTable(IEnumerable<KeyValuePair<string, bool>> items, decimal TablewidthPercent) {
+        public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items, decimal TablewidthPercent) {
             return MakeTable(items, TablewidthPercent, _defaultBorderColor);
         }
 
-        public static OpenXmlElement MakeTable(IEnumerable<KeyValuePair<string, bool>> items, string BorderColor) {
+        public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items, string BorderColor) {
             return MakeTable(items, 95, BorderColor);
         }
 
-        public static OpenXmlElement MakeTable(IEnumerable<KeyValuePair<string, bool>> items, decimal TablewidthPercent, string BorderColor) {
+        public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items, decimal TablewidthPercent, string BorderColor) {
 
             Table itemTable = new Table(
                 new TableWidth() { 
@@ -81,33 +94,57 @@ namespace LSSD.Registration.FormGenerators.Common
             return itemTable;
         }
 
-        public static OpenXmlElement LabelCell(string Label) {
-            return new TableCell(
+        public static TableCell LabelCell(string Label) {
+            return LabelCell(Label, JustificationValues.Left);
+        }
+
+        public static TableCell LabelCell(string Label, JustificationValues Alignment, bool AutoWidth) {
+            TableCell tc = LabelCell(Label, Alignment);
+            if (AutoWidth) {
+                tc.AppendChild(new TableCellWidth() { Width = "auto" });
+            }
+            return tc;
+        }
+
+        public static TableCell LabelCell(string Label, JustificationValues Alignment, decimal WidthPercent) {
+            TableCell tc = LabelCell(Label, Alignment);
+            tc.AppendChild(new TableCellWidth() { Width = $"{WidthPercent * 50}", Type = TableWidthUnitValues.Pct });
+            return tc;
+        }
+
+        public static TableCell LabelCell(string Label, JustificationValues Alignment) {
+            TableCell tc = new TableCell(
                 new Paragraph(
                     new Run(
                         new Text(Label)
                     )
                 )  {
                     ParagraphProperties = new ParagraphProperties(
-                        new Justification() { Val = JustificationValues.Left }
+                        new Justification() { Val = Alignment }
                     ) {
                         ParagraphStyleId = new ParagraphStyleId() {
-                            Val = "Field Label"
+                            Val = LSSDDocumentStyles.FieldLabel
                         }
                     }
                 }
-            );
+            );           
+
+            return tc;
         }
 
-        public static OpenXmlElement ValueCell(string Value)  {
-            return new TableCell(
+        public static TableCell ValueCell(string Value) {
+            return ValueCell(Value, JustificationValues.Left);
+        }
+
+        public static TableCell ValueCell(string Value, JustificationValues Alignment)  {
+            TableCell tc = new TableCell(
                 new Paragraph(
                     new Run(
                         new Text(Value)
                     )
                 )  {
                     ParagraphProperties = new ParagraphProperties(
-                        new Justification() { Val = JustificationValues.Center }
+                        new Justification() { Val = Alignment }
                     ) {
                         ParagraphStyleId = new ParagraphStyleId() {
                             Val = "Field Value"
@@ -115,9 +152,11 @@ namespace LSSD.Registration.FormGenerators.Common
                     }
                 }
             );
+
+            return tc;
         }
 
-        public static OpenXmlElement ValueCell(bool Value) {
+        public static TableCell ValueCell(bool Value) {
             if (Value == true) {
                 return new TableCell(
                     new Paragraph(
@@ -153,18 +192,41 @@ namespace LSSD.Registration.FormGenerators.Common
             }
         }
         
-        public static OpenXmlElement TableRow(string Label, string Value) {
+        public static TableRow TableRow(string Label, string Value) {
             return new TableRow(
                 LabelCell(Label),
                 ValueCell(Value)
             );
         }
 
-        public static OpenXmlElement TableRow(string Label, bool Value) {
+        public static TableRow TableRow(string Label, bool Value) {
             return new TableRow(
                 LabelCell(Label),
                 ValueCell(Value)
             );
         } 
+
+        public static TableRow TableHeaderRow(IEnumerable<string> Headings) {
+            TableRow tr = new TableRow();
+
+            foreach(string heading in Headings) {
+                tr.AppendChild(LabelCell(heading));
+            }
+
+            return tr;
+
+        }
+
+        public static TableRow TableValuesRow(IEnumerable<string> Values) {
+            TableRow tr = new TableRow();
+
+            foreach(string value in Values) {
+                tr.AppendChild(ValueCell(value));
+            }
+
+            return tr;
+        }
+
+
     }
 }

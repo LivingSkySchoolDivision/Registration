@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Wordprocessing;
+using LSSD.Registration.FormGenerators.Common;
 using LSSD.Registration.Model;
 
 namespace LSSD.Registration.FormGenerators.FormSections
@@ -18,7 +19,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 )  {
                     ParagraphProperties = new ParagraphProperties() {
                         ParagraphStyleId = new ParagraphStyleId() { 
-                            Val = "Field Value"
+                            Val = LSSDDocumentStyles.FieldValue
                         }
                     }  
                 }        

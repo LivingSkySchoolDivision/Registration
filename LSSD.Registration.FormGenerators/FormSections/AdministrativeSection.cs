@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Wordprocessing;
+using LSSD.Registration.FormGenerators.Common;
 using LSSD.Registration.Model.SubmittedForms;
 
 namespace LSSD.Registration.FormGenerators.FormSections 
@@ -27,7 +28,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 )  {
                     ParagraphProperties = new ParagraphProperties() {
                         ParagraphStyleId = new ParagraphStyleId() { 
-                            Val = "Page Title"
+                            Val = LSSDDocumentStyles.PageTitle
                         }
                     }
                 },
@@ -42,7 +43,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                             )  {
                                 ParagraphProperties = new ParagraphProperties() {
                                     ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Label"
+                                        Val = LSSDDocumentStyles.FieldLabel
                                     }
                                 }
                             }
@@ -56,7 +57,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                             )  {
                                 ParagraphProperties = new ParagraphProperties() {
                                     ParagraphStyleId = new ParagraphStyleId() { 
-                                        Val = "Field Value"
+                                        Val = LSSDDocumentStyles.FieldValue
                                     }
                                 }
                             }

@@ -4,6 +4,13 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace LSSD.Registration.FormGenerators.Common {
     class LSSDDocumentStyles {
+        public const string FieldLabel = "Field Label";
+        public const string FieldValue = "Field Value";
+        public const string FieldValueYes = "Field Value Yes";
+        public const string FieldValueNo = "Field Value No";
+        public const string PageTitle = "Page Title";
+        public const string SectionTitle = "Section Title";
+
         private static StyleDefinitionsPart addStylePrerequisites(WordprocessingDocument doc)
         {
             if (doc?.MainDocumentPart?.StyleDefinitionsPart == null) {
@@ -33,10 +40,10 @@ namespace LSSD.Registration.FormGenerators.Common {
                 // Create a new paragraph style element and specify some of the attributes.
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
-                    new StyleName() { Val = "Page Title" }
+                    new StyleName() { Val = PageTitle }
                 ) { 
                     Type = StyleValues.Paragraph,
-                    StyleId = "Page Title",
+                    StyleId = PageTitle,
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
@@ -49,10 +56,10 @@ namespace LSSD.Registration.FormGenerators.Common {
 
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
-                    new StyleName() { Val = "Section Title" }
+                    new StyleName() { Val = SectionTitle }
                 ) { 
                     Type = StyleValues.Paragraph,
-                    StyleId = "Section Title",
+                    StyleId = SectionTitle,
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
@@ -64,10 +71,10 @@ namespace LSSD.Registration.FormGenerators.Common {
 
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
-                    new StyleName() { Val = "Field Label" }
+                    new StyleName() { Val = FieldLabel }
                 ) { 
                     Type = StyleValues.Paragraph,
-                    StyleId = "Field Label",
+                    StyleId = FieldLabel,
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
@@ -80,10 +87,10 @@ namespace LSSD.Registration.FormGenerators.Common {
                 
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
-                    new StyleName() { Val = "Field Value" }
+                    new StyleName() { Val = FieldValue }
                 ) { 
                     Type = StyleValues.Paragraph,
-                    StyleId = "Field Value",
+                    StyleId = FieldValue,
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
@@ -95,10 +102,10 @@ namespace LSSD.Registration.FormGenerators.Common {
 
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
-                    new StyleName() { Val = "Field Value Yes" }
+                    new StyleName() { Val = FieldValueYes }
                 ) { 
                     Type = StyleValues.Paragraph,
-                    StyleId = "Field Value Yes",
+                    StyleId = FieldValueYes,
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
@@ -112,10 +119,10 @@ namespace LSSD.Registration.FormGenerators.Common {
 
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
-                    new StyleName() { Val = "Field Value No" }
+                    new StyleName() { Val = FieldValueNo }
                 ) { 
                     Type = StyleValues.Paragraph,
-                    StyleId = "Field Value No",
+                    StyleId = FieldValueNo,
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(

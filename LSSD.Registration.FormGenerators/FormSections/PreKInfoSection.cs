@@ -49,8 +49,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         new TableCellProperties(
                             new GridSpan() { Val = 2 }
                         ),
-                        ParagraphHelper.Paragraph("Other difficulties:", "Field Label"),
-                        ParagraphHelper.Paragraph(PreKInfo.OtherDifficulties, "Field Value")
+                        ParagraphHelper.Paragraph("Other difficulties:", LSSDDocumentStyles.FieldLabel),
+                        ParagraphHelper.Paragraph(PreKInfo.OtherDifficulties, LSSDDocumentStyles.FieldValue)
                     )
                 )
             ));
@@ -74,7 +74,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
 
             sectionParts.Add(ParagraphHelper.WhiteSpace());
-            sectionParts.Add(ParagraphHelper.Paragraph("Child receives supports from the following:", "Field Label"));
+            sectionParts.Add(ParagraphHelper.Paragraph("Child receives supports from the following:", LSSDDocumentStyles.FieldLabel));
           
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
 
@@ -96,6 +96,10 @@ namespace LSSD.Registration.FormGenerators.FormSections
             
             // Make this section have 2 columns            
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(2, 200));
+
+            // Normalize back to a single column
+            sectionParts.Add(new Paragraph());
+            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
             return sectionParts;
         }
 
