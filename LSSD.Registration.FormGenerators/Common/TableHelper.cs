@@ -192,16 +192,16 @@ namespace LSSD.Registration.FormGenerators.Common
             }
         }
         
-        public static TableRow TableRow(string Label, string Value) {
+        public static TableRow FieldTableRow(string Label, string Value, JustificationValues Alignment, decimal LabelWidthPercent) {
             return new TableRow(
-                LabelCell(Label),
+                LabelCell(Label, Alignment, LabelWidthPercent),
                 ValueCell(Value)
             );
         }
 
-        public static TableRow TableRow(string Label, bool Value) {
+        public static TableRow FieldTableRow(string Label, bool Value, JustificationValues Alignment, decimal LabelWidthPercent) {
             return new TableRow(
-                LabelCell(Label),
+                LabelCell(Label, Alignment, LabelWidthPercent),
                 ValueCell(Value)
             );
         } 

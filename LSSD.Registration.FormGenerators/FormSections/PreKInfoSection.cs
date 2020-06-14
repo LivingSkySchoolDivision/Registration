@@ -15,7 +15,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
 
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1));
             
-            sectionParts.Add(new Paragraph());
+            sectionParts.Add(ParagraphHelper.WhiteSpace());
 
             sectionParts.Add(
                 TableHelper.MakeTable(new List<KeyValuePair<string, bool>>() {
@@ -57,24 +57,23 @@ namespace LSSD.Registration.FormGenerators.FormSections
 
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(2, 200));
 
-            sectionParts.Add(new Paragraph());
-            
+            sectionParts.Add(ParagraphHelper.WhiteSpace());
             sectionParts.Add(
-                TableHelper.MakeTable(new List<KeyValuePair<string, string>>() {
-                    new KeyValuePair<string, string>("Social, emotional, or behavior issues:", PreKInfo.SocialEmotionalOrBehaviourIssues),
-                    new KeyValuePair<string, string>("Traumatic experience within or impacting the family/child:", PreKInfo.TraumaticExperiences),
-                    new KeyValuePair<string, string>("Health care crisis impacting child or family:", PreKInfo.HealthcareCrisis),
-                    new KeyValuePair<string, string>("Referred by agency or agencies:", PreKInfo.ReferredByOtherAgency),
-                    new KeyValuePair<string, string>("Custody concerns:", PreKInfo.CustodyConcerns),
-                    new KeyValuePair<string, string>("Medical concerns:", PreKInfo.MedicalConcerns),
-                    new KeyValuePair<string, string>("Other concerns:", PreKInfo.OtherConcerns),
-                })
+                TableHelper.StyledTable(
+                    TableHelper.FieldTableRow("Social, emotional, or behavior issues:", PreKInfo.SocialEmotionalOrBehaviourIssues, JustificationValues.Left, 33),
+                    TableHelper.FieldTableRow("Traumatic experience within or impacting the family/child:", PreKInfo.TraumaticExperiences, JustificationValues.Left, 33),
+                    TableHelper.FieldTableRow("Health care crisis impacting child or family:", PreKInfo.HealthcareCrisis, JustificationValues.Left, 33),
+                    TableHelper.FieldTableRow("Referred by agency or agencies:", PreKInfo.ReferredByOtherAgency, JustificationValues.Left, 33),
+                    TableHelper.FieldTableRow("Custody concerns:", PreKInfo.CustodyConcerns, JustificationValues.Left, 33),
+                    TableHelper.FieldTableRow("Medical concerns:", PreKInfo.MedicalConcerns, JustificationValues.Left, 33),
+                    TableHelper.FieldTableRow("Other concerns:", PreKInfo.OtherConcerns, JustificationValues.Left, 33)                    
+                )
             );
 
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
 
             sectionParts.Add(ParagraphHelper.WhiteSpace());
-            sectionParts.Add(ParagraphHelper.Paragraph("Child receives supports from the following:", LSSDDocumentStyles.FieldLabel));
+            sectionParts.Add(ParagraphHelper.Paragraph("Child receives supports from the following:", LSSDDocumentStyles.SectionTitle));
           
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
 
@@ -98,7 +97,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(2, 200));
 
             // Normalize back to a single column
-            sectionParts.Add(new Paragraph());
+            sectionParts.Add(ParagraphHelper.WhiteSpace());
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
             return sectionParts;
         }

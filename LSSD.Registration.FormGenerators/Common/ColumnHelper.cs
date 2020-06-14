@@ -63,7 +63,13 @@ namespace LSSD.Registration.FormGenerators.Common
                         Type = BreakValues.Column 
                         }
                     )
-                );
+                ) {
+                    ParagraphProperties = new ParagraphProperties() {
+                        ParagraphStyleId = new ParagraphStyleId() {
+                            Val = LSSDDocumentStyles.WhiteSpace
+                        }
+                    }
+                };
         }
     }
 

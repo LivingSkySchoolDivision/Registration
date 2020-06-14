@@ -10,6 +10,11 @@ namespace LSSD.Registration.FormGenerators.Common {
         public const string FieldValueNo = "Field Value No";
         public const string PageTitle = "Page Title";
         public const string SectionTitle = "Section Title";
+        public const string SubSectionTitle = "SubSection Title";
+
+        public const string WhiteSpace = "Whitespace";
+
+        private const string FontName = "Arial";
 
         private static StyleDefinitionsPart addStylePrerequisites(WordprocessingDocument doc)
         {
@@ -49,7 +54,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                     StyleRunProperties = new StyleRunProperties(
                         new Bold(), 
                         new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
-                        new RunFonts() { Ascii = "Arial" },
+                        new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "32" } // Double the font size value you see in Word
                     )
                 });
@@ -64,8 +69,23 @@ namespace LSSD.Registration.FormGenerators.Common {
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
                         new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
-                        new RunFonts() { Ascii = "Arial" },
+                        new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "24" } // Double the font size value you see in Word
+                    )
+                });
+
+                stylePart.Styles.Append(new Style(
+                    new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
+                    new StyleName() { Val = SubSectionTitle }
+                ) { 
+                    Type = StyleValues.Paragraph,
+                    StyleId = SubSectionTitle,
+                    CustomStyle = true,
+                    Default = false,
+                    StyleRunProperties = new StyleRunProperties(
+                        new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
+                        new RunFonts() { Ascii = FontName },
+                        new FontSize() { Val = "20" } // Double the font size value you see in Word
                     )
                 });
 
@@ -80,7 +100,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                     StyleRunProperties = new StyleRunProperties(
                         new Bold(), 
                         new Color() { ThemeColor = ThemeColorValues.Text1 }, 
-                        new RunFonts() { Ascii = "Arial" },
+                        new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "16" } // Double the font size value you see in Word
                     )
                 });
@@ -95,7 +115,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
                         new Color() { ThemeColor = ThemeColorValues.Text1 }, 
-                        new RunFonts() { Ascii = "Arial" },
+                        new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "16" } // Double the font size value you see in Word
                     )
                 });
@@ -110,7 +130,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
                         new Bold(), 
-                        new RunFonts() { Ascii = "Arial" },
+                        new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "16" } // Double the font size value you see in Word
                     ){
                         Color = new Color() { Val = "007700" }
@@ -126,8 +146,24 @@ namespace LSSD.Registration.FormGenerators.Common {
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
-                        new RunFonts() { Ascii = "Arial" },
+                        new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "16" } // Double the font size value you see in Word
+                    ){
+                        Color = new Color() { Val = "C0C0C0" }
+                    }
+                }); 
+
+                stylePart.Styles.Append(new Style(
+                    new PrimaryStyle() { Val = OnOffOnlyValues.Off }, // Should it show up in the list of styles in the editor
+                    new StyleName() { Val = WhiteSpace }
+                ) { 
+                    Type = StyleValues.Paragraph,
+                    StyleId = WhiteSpace,
+                    CustomStyle = true,
+                    Default = false,
+                    StyleRunProperties = new StyleRunProperties(
+                        new RunFonts() { Ascii = FontName },
+                        new FontSize() { Val = "12" } // Double the font size value you see in Word
                     ){
                         Color = new Color() { Val = "C0C0C0" }
                     }

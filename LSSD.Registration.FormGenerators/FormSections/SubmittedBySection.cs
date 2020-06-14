@@ -22,7 +22,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.ValueCell(submittedBy.ContactDetails)
                     )
                 ),
-                new Paragraph()
+                ParagraphHelper.WhiteSpace()
             };
                 
         }
