@@ -28,8 +28,8 @@ namespace LSSD.Registration.EmailRunner
         */
 
         private const int _sleepMinutes = 15;
-        private static TimeZoneInfo _timeZone = TimeZoneInfo.FindSystemTimeZoneById("Canada Central Standard Time");
 
+       
         private static void ConsoleWrite(string message)
         {
             Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm K") + ": " + message);
@@ -62,11 +62,16 @@ namespace LSSD.Registration.EmailRunner
             }
             
             IConfigurationSection smtpConfig = configuration.GetSection("SMTP");
+            IConfigurationSection generalConfig = configuration.GetSection("Settings");
+
+            TimeZoneInfo _timeZone = TimeZoneInfo.FindSystemTimeZoneById(generalConfig["TimeZone"]);
+            ConsoleWrite($"Time zone for forms: {_timeZone}");
 
             string dbConnectionString = configuration.GetConnectionString("InternalDatabase") ?? string.Empty;
             ConsoleWrite($"Email server: {smtpConfig["hostname"]}");
 
-            // Check for empty configuration settings (all of them)
+            // TODO: Check for empty configuration settings (all of them)
+
 
             // Start main program loop
             while (true)
