@@ -21,9 +21,9 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.LabelCell("Third school choice", JustificationValues.Center, (decimal)33.3)
                     ),
                     new TableRow(
-                        TableHelper.ValueCell(SchoolPreferences?.FirstChoice.Name, JustificationValues.Center),
-                        TableHelper.ValueCell(SchoolPreferences?.SecondChoice.Name, JustificationValues.Center),
-                        TableHelper.ValueCell(SchoolPreferences?.ThirdChoice.Name, JustificationValues.Center)
+                        TableHelper.ValueCell(SchoolPreferences?.FirstChoice?.Name, JustificationValues.Center),
+                        TableHelper.ValueCell(SchoolPreferences?.SecondChoice?.Name, JustificationValues.Center),
+                        TableHelper.ValueCell(SchoolPreferences?.ThirdChoice?.Name, JustificationValues.Center)
                     )
                 ),
                 ColumnHelper.SetPreviousSectionToColumns(1),
