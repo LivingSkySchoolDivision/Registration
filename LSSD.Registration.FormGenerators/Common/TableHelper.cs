@@ -28,6 +28,24 @@ namespace LSSD.Registration.FormGenerators.Common
             return table;
         }
 
+        public static Table StyledTableForColumns(params OpenXmlElement[] childItems) {
+            Table table = new Table(
+                new TableLayout() {  Type = TableLayoutValues.Autofit },
+                new TableWidth() { 
+                    Type = TableWidthUnitValues.Pct, 
+                    Width = $"{90 * 50}"
+                    },
+                LSSDTableStyles.Borders(),
+                LSSDTableStyles.Margins()
+            );
+
+            foreach(OpenXmlElement e in childItems) {
+                table.AppendChild(e);
+            }
+
+            return table;
+        }
+
         public static Table MakeTable(IEnumerable<KeyValuePair<string, string>> items) {
             return MakeTable(items, 95, _defaultBorderColor);            
         }

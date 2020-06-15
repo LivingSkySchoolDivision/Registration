@@ -17,7 +17,6 @@ namespace LSSD.Registration.FormGenerators.FormSections
             }
 
             return new List<OpenXmlElement>() {
-                ColumnHelper.SetPreviousSectionToColumns(1),
                 TableHelper.StyledTable(                    
                     new TableRow(
                         TableHelper.LabelCell("First school choice", JustificationValues.Center, (decimal)33.3),
@@ -30,7 +29,6 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.ValueCell(SchoolPreferences?.ThirdChoice?.Name, JustificationValues.Center)
                     )
                 ),
-                ColumnHelper.SetPreviousSectionToColumns(1),
                 ParagraphHelper.WhiteSpace()
             };
         }

@@ -11,7 +11,8 @@ namespace LSSD.Registration.FormGenerators.Common {
         public const string PageTitle = "Page Title";
         public const string SectionTitle = "Section Title";
         public const string SubSectionTitle = "SubSection Title";
-
+        public const string NormalParagraph = "Normal Paragraph";
+        public const string Dim = "Dim";
         public const string WhiteSpace = "Whitespace";
 
         private const string FontName = "Arial";
@@ -101,10 +102,42 @@ namespace LSSD.Registration.FormGenerators.Common {
                         new Bold(), 
                         new Color() { ThemeColor = ThemeColorValues.Text1 }, 
                         new RunFonts() { Ascii = FontName },
-                        new FontSize() { Val = "16" } // Double the font size value you see in Word
+                        new FontSize() { Val = "18" } // Double the font size value you see in Word
                     )
                 });
                 
+                stylePart.Styles.Append(new Style(
+                    new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
+                    new StyleName() { Val = NormalParagraph }
+                ) { 
+                    Type = StyleValues.Paragraph,
+                    StyleId = NormalParagraph,
+                    CustomStyle = true,
+                    Default = false,
+                    StyleRunProperties = new StyleRunProperties(
+                        new RunFonts() { Ascii = FontName },
+                        new FontSize() { Val = "18" } // Double the font size value you see in Word
+                    ){
+                        Color = new Color() { Val = "000000" }
+                    }
+                });
+
+                stylePart.Styles.Append(new Style(
+                    new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
+                    new StyleName() { Val = Dim }
+                ) { 
+                    Type = StyleValues.Paragraph,
+                    StyleId = Dim,
+                    CustomStyle = true,
+                    Default = false,
+                    StyleRunProperties = new StyleRunProperties(
+                        new RunFonts() { Ascii = FontName },
+                        new FontSize() { Val = "16" } // Double the font size value you see in Word
+                    ){
+                        Color = new Color() { Val = "A0A0A0" }
+                    }
+                });
+
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
                     new StyleName() { Val = FieldValue }
@@ -114,10 +147,11 @@ namespace LSSD.Registration.FormGenerators.Common {
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
-                        new Color() { ThemeColor = ThemeColorValues.Text1 }, 
                         new RunFonts() { Ascii = FontName },
-                        new FontSize() { Val = "16" } // Double the font size value you see in Word
-                    )
+                        new FontSize() { Val = "18" } // Double the font size value you see in Word
+                    ){
+                        Color = new Color() { Val = "002060" }
+                    }
                 });
 
                 stylePart.Styles.Append(new Style(
@@ -131,7 +165,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                     StyleRunProperties = new StyleRunProperties(
                         new Bold(), 
                         new RunFonts() { Ascii = FontName },
-                        new FontSize() { Val = "16" } // Double the font size value you see in Word
+                        new FontSize() { Val = "18" } // Double the font size value you see in Word
                     ){
                         Color = new Color() { Val = "007700" }
                     }

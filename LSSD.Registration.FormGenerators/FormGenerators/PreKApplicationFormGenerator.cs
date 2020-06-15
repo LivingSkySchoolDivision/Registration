@@ -24,9 +24,11 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
             }
 
             using (WordprocessingDocument document = WordprocessingDocument.Create(FileName, WordprocessingDocumentType.Document)) { 
+                                
                 // Create the main document part
                 MainDocumentPart mainPart = document.AddMainDocumentPart();                
                 LSSDDocumentStyles.AddStylesToDocument(document);
+
                 mainPart.Document = GenerateBody(Form, TimeZone);
             }
         }
@@ -37,18 +39,13 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
 
             // Now add all the generated parts
             // The code for these parts is in /FormSections
-            pageParts.AddRange(AdministrativeSection.GetSection(Form, TimeZone)); 
-            pageParts.AddRange(PreKStudentInfoSection.GetSection(Form.Form.Student, TimeZone));
+            pageParts.AddRange(PageTitleSection.GetSection(Form, TimeZone)); 
             pageParts.AddRange(SchoolPreferencesSection.GetSection(Form.Form.SchoolPreferences));
-            pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings)); 
-            pageParts.AddRange(SubmittedBySection.GetSection(Form.Form.SubmittedBy));           
-            pageParts.Add(ParagraphHelper.PageBreak());
-            pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo));   
-
-            // Set the default for the document to be in a single column, 
-            // in case anything before this adds additional columns
-            pageParts.Add(ColumnHelper.SetPreviousSectionToColumns(1));
-          
+            pageParts.AddRange(PreKStudentInfoSection.GetSection(Form.Form.Student, TimeZone));
+            pageParts.AddRange(SubmittedBySection.GetSection(Form.Form.SubmittedBy));    
+            pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));
+            pageParts.Add(new Break() { Type = BreakValues.Page });
+            pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo)); 
             return new Document(new Body(pageParts));
         }
     }

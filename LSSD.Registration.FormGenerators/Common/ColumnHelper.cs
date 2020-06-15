@@ -37,6 +37,7 @@ namespace LSSD.Registration.FormGenerators.Common
         }
 
         public static OpenXmlElement SetPreviousSectionToColumns(int ColumnCount, int SpaceBetween, PageMargin Margins) {
+
             return new Paragraph(
                     new ParagraphProperties(
                         new SectionProperties(

@@ -13,9 +13,9 @@ namespace LSSD.Registration.FormGenerators.FormSections
         {
             List<OpenXmlElement> sectionParts = new List<OpenXmlElement>();
 
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1));
+            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 100));
             
-            sectionParts.Add(ParagraphHelper.WhiteSpace());
+            //sectionParts.Add(ParagraphHelper.WhiteSpace());
 
             sectionParts.Add(
                 TableHelper.MakeTable(new List<KeyValuePair<string, bool>>() {
@@ -31,7 +31,6 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 })
             );
 
-            sectionParts.Add(ColumnHelper.ColumnBreak());
 
             sectionParts.Add(
                 TableHelper.MakeTable(new List<KeyValuePair<string, bool>>() {
@@ -55,7 +54,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 )
             ));
 
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(2, 200));
+            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(2, 100));
 
             sectionParts.Add(ParagraphHelper.WhiteSpace());
             sectionParts.Add(
@@ -70,10 +69,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 )
             );
 
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
-
-            //sectionParts.Add(ParagraphHelper.WhiteSpace());
-            //sectionParts.Add(ParagraphHelper.Paragraph("Child receives supports from the following:", LSSDDocumentStyles.SectionTitle));
+            sectionParts.Add(ParagraphHelper.WhiteSpace());
+            sectionParts.Add(ParagraphHelper.Paragraph("Child receives supports from the following:", LSSDDocumentStyles.SectionTitle));
           
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
 
@@ -95,9 +92,6 @@ namespace LSSD.Registration.FormGenerators.FormSections
             
             // Make this section have 2 columns            
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(2, 200));
-
-            // Normalize back to a single column
-            sectionParts.Add(ParagraphHelper.WhiteSpace());
             sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
             return sectionParts;
         }
