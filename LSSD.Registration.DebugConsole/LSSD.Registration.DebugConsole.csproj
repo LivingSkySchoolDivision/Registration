@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LSSD.Registration.Data\LSSD.Registration.Data.csproj" />
     <ProjectReference Include="..\LSSD.Registration.Model\LSSD.Registration.Model.csproj" />
+    <ProjectReference Include="..\LSSD.Registration.FormGenerators\LSSD.Registration.FormGenerators.csproj" />
   </ItemGroup>
 
 </Project>

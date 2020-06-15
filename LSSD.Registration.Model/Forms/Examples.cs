@@ -82,10 +82,14 @@ namespace LSSD.Registration.Forms
                 ReferredByOtherAgency = string.Empty,
                 OtherDifficulties = string.Empty,
                 TraumaticExperiences = string.Empty,
-                HealthcareCrisis = string.Empty,
+                HealthcareCrisis = "Worldwide viral pandemic",
                 OtherConcerns = string.Empty,
                 CustodyConcerns = string.Empty,
-                MedicalConcerns = string.Empty
+                MedicalConcerns = string.Empty,
+                AssistanceFromKidsFirst = true,
+                AssistanceFromOccupationOrPhysicalTherapist = true,
+                LowIncomeFamily = true,
+                SpeechDifficulties = true
             }
         };
 

@@ -1,10 +1,13 @@
 ﻿using LSSD.Registration.Data;
+using LSSD.Registration.FormGenerators;
+using LSSD.Registration.Forms;
 using LSSD.Registration.Model;
 using LSSD.Registration.Model.SubmittedForms;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,6 +46,7 @@ namespace LSSD.Registration.DebugConsole
                 Console.WriteLine("  4. List schools");
                 Console.WriteLine("  5. List general registrations");
                 Console.WriteLine("  6. List prek applications");
+                Console.WriteLine("  7. Create a test document");
                 Console.WriteLine("  q. Quit");
 
                 Console.Write("Please make a selection: ");
@@ -68,6 +72,9 @@ namespace LSSD.Registration.DebugConsole
                     case "6":
                         recordExplore<SubmittedPreKApplicationForm>();
                         break;
+                    case "7":
+                        createTestDocument();
+                        break;
                 }
             }
         }
@@ -77,6 +84,24 @@ namespace LSSD.Registration.DebugConsole
         {
             Console.Write("Please enter a connection string: ");
             dbConnectionString = Console.ReadLine();
+        } 
+        
+        private static void createTestDocument()
+        {
+            TimeZoneInfo timezone = TimeZoneInfo.FindSystemTimeZoneById("Canada Central Standard Time");
+
+            using (FormFactory formFactory = new FormFactory()) 
+            {
+                string filename = formFactory.GenerateForm(new SubmittedPreKApplicationForm(Examples.PreK), timezone);
+
+                if (!string.IsNullOrEmpty(filename)) {
+                    Console.WriteLine("Form created: " + filename);
+                } else {
+                    Console.WriteLine("Something went wrong, and the form could not be created.");
+                }
+                Console.WriteLine("Press any key to continue (will delete all forms created)...");
+                Console.ReadKey();
+            }
         } 
 
 
@@ -238,6 +263,45 @@ namespace LSSD.Registration.DebugConsole
                     {
                         Console.WriteLine(System.Text.Json.JsonSerializer.Serialize<T>(obj, new JsonSerializerOptions() { WriteIndented = true }));
                     }
+
+                    Console.WriteLine("\n\nPress any key to continue...");
+                    Console.ReadKey();
+                } 
+
+                Console.Write("Dump to json files? [yN]?");
+                if (Console.ReadLine().ToLower() == "y")
+                {
+                    Console.WriteLine("Name of new directory where json files will be stored (if exists it will be deleted)");
+                    Console.Write($"Directory name: [{typeof(T).Name}]: ");
+                    string dirname = Console.ReadLine();
+                    if (string.IsNullOrEmpty(dirname)) {
+                        dirname = typeof(T).Name;
+                    }
+                    Console.WriteLine($"Creating folder {dirname}");
+                    
+                    if (Directory.Exists(dirname))
+                    {
+                        Directory.Delete(dirname, true);
+                    }
+
+                    if (!Directory.Exists(dirname))
+                    {
+                        Directory.CreateDirectory(dirname);
+                    } 
+
+                    Console.WriteLine("Dumping objects...");
+
+                    foreach(T obj in repository.GetAll())
+                    {
+                        using (StreamWriter fileStream = File.CreateText(Path.Combine(dirname, $"{obj.Id}.json")))
+                        {
+                            Newtonsoft.Json.JsonSerializer serializer= new Newtonsoft.Json.JsonSerializer();    
+                            serializer.Formatting = Formatting.Indented;                        
+                            serializer.Serialize(fileStream, obj, typeof(T));
+                        }
+                    }
+
+                    Console.WriteLine("Done!");
 
                     Console.WriteLine("\n\nPress any key to go back to main menu...");
                     Console.ReadKey();
