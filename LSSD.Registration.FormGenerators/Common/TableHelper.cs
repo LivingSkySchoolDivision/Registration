@@ -8,7 +8,6 @@ namespace LSSD.Registration.FormGenerators.Common
 {
     class TableHelper 
     {
-        private const string _defaultBorderColor = "C0C0C0";
 
         public static Table StyledTable(params OpenXmlElement[] childItems) {
             Table table = new Table(
@@ -47,11 +46,11 @@ namespace LSSD.Registration.FormGenerators.Common
         }
 
         public static Table MakeTable(IEnumerable<KeyValuePair<string, string>> items) {
-            return MakeTable(items, 95, _defaultBorderColor);            
+            return MakeTable(items, 95, LSSDTableStyles._defaultBorderColor);            
         }
 
         public static Table MakeTable(IEnumerable<KeyValuePair<string, string>> items, decimal TablewidthPercent) {
-            return MakeTable(items, TablewidthPercent, _defaultBorderColor);
+            return MakeTable(items, TablewidthPercent, LSSDTableStyles._defaultBorderColor);
         }
 
         public static Table MakeTable(IEnumerable<KeyValuePair<string, string>> items, string BorderColor) {
@@ -82,7 +81,7 @@ namespace LSSD.Registration.FormGenerators.Common
         }
 
         public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items) {
-            return MakeTable(items, 95, _defaultBorderColor);
+            return MakeTable(items, 95, LSSDTableStyles._defaultBorderColor);
         }
 
         public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items, decimal TablewidthPercent, string BorderColor) {

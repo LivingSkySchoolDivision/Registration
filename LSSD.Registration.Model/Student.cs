@@ -97,7 +97,7 @@ namespace LSSD.Registration.Model
 
         public string GetDateOfBirthWithAge(DateTime OnThisDate) {
             if (this.DateOfBirth.HasValue) {
-                return $"{this.DateOfBirth.Value.ToLongDateString()} ({GetAge(OnThisDate)})";
+                return $"{this.DateOfBirth.Value.ToLongDateString()} (age: {GetAge(OnThisDate)})";
             } else {
                 return "No DOB submitted";
             }

@@ -13,12 +13,12 @@ namespace LSSD.Registration.FormGenerators.FormSections
         
         public static IEnumerable<OpenXmlElement> GetSection(SubmittedPreKApplicationForm Form, TimeZoneInfo timezone)
         {
-            return GetSection(Form, timezone, "LSSD Pre-Kindergarten Application Form", Form.Id.ToString());
+            return GetSection(Form, timezone, "Pre-Kindergarten Application Form", Form.Id.ToString());
         } 
 
         public static IEnumerable<OpenXmlElement> GetSection(SubmittedGeneralRegistrationForm Form, TimeZoneInfo timezone)
         {
-            return GetSection(Form, timezone, "LSSD K-12 Registration Form", Form.Id.ToString());
+            return GetSection(Form, timezone, "K-12 Registration Form", Form.Id.ToString());
         } 
 
         private static IEnumerable<OpenXmlElement> GetSection(BaseSubmittedForm Form, TimeZoneInfo timezone, string Title, string FormId) {
