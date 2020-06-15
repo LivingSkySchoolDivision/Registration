@@ -30,25 +30,24 @@ namespace LSSD.Registration.FormGenerators
 
         public string GenerateForm(SubmittedPreKApplicationForm Form, TimeZoneInfo TimeZone)
         {
-            string filename = Path.Combine(_tempDirPath, genFilename(Form));
-            
-            try {                
-                PreKApplicationFormGenerator generator = new PreKApplicationFormGenerator();
-
-                // Generate the file
-                generator.Generate(Form, TimeZone, filename);
-
-                // Store the filename in the tracking list
-                _generatedFileNames.Add(filename);
-                
-                // Return the filename
-                return filename;
-
-            } catch(Exception ex) {
-                throw(ex);
+            if (Form == null) {
+                throw new Exception("Form cannot be null");
             }
 
-            return string.Empty;            
+
+            string filename = Path.Combine(_tempDirPath, genFilename(Form));
+                       
+            PreKApplicationFormGenerator generator = new PreKApplicationFormGenerator();
+
+            // Generate the file
+            generator.Generate(Form, TimeZone, filename);
+
+            // Store the filename in the tracking list
+            _generatedFileNames.Add(filename);
+            
+            // Return the filename
+            return filename;
+                    
         }
 
         private string genFilename(ISubmittedForm form) {
