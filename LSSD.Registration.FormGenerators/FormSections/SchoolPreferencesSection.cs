@@ -12,6 +12,10 @@ namespace LSSD.Registration.FormGenerators.FormSections
 
         public static IEnumerable<OpenXmlElement> GetSection(SchoolPreferenceList SchoolPreferences) 
         {
+            if (SchoolPreferences == null) {
+                throw new System.Exception("School preferences cannot be null");
+            }
+
             return new List<OpenXmlElement>() {
                 ColumnHelper.SetPreviousSectionToColumns(1),
                 TableHelper.StyledTable(                    
