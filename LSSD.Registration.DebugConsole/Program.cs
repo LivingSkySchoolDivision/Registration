@@ -7,6 +7,7 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -101,7 +102,6 @@ namespace LSSD.Registration.DebugConsole
                 Console.WriteLine("Press any key to continue (will delete all forms created)...");
                 Console.ReadKey();
             }
-
         } 
 
 
@@ -263,6 +263,45 @@ namespace LSSD.Registration.DebugConsole
                     {
                         Console.WriteLine(System.Text.Json.JsonSerializer.Serialize<T>(obj, new JsonSerializerOptions() { WriteIndented = true }));
                     }
+
+                    Console.WriteLine("\n\nPress any key to continue...");
+                    Console.ReadKey();
+                } 
+
+                Console.Write("Dump to json files? [yN]?");
+                if (Console.ReadLine().ToLower() == "y")
+                {
+                    Console.WriteLine("Name of new directory where json files will be stored (if exists it will be deleted)");
+                    Console.Write($"Directory name: [{typeof(T).Name}]: ");
+                    string dirname = Console.ReadLine();
+                    if (string.IsNullOrEmpty(dirname)) {
+                        dirname = typeof(T).Name;
+                    }
+                    Console.WriteLine($"Creating folder {dirname}");
+                    
+                    if (Directory.Exists(dirname))
+                    {
+                        Directory.Delete(dirname, true);
+                    }
+
+                    if (!Directory.Exists(dirname))
+                    {
+                        Directory.CreateDirectory(dirname);
+                    } 
+
+                    Console.WriteLine("Dumping objects...");
+
+                    foreach(T obj in repository.GetAll())
+                    {
+                        using (StreamWriter fileStream = File.CreateText(Path.Combine(dirname, $"{obj.Id}.json")))
+                        {
+                            Newtonsoft.Json.JsonSerializer serializer= new Newtonsoft.Json.JsonSerializer();    
+                            serializer.Formatting = Formatting.Indented;                        
+                            serializer.Serialize(fileStream, obj, typeof(T));
+                        }
+                    }
+
+                    Console.WriteLine("Done!");
 
                     Console.WriteLine("\n\nPress any key to go back to main menu...");
                     Console.ReadKey();
