@@ -155,8 +155,9 @@ namespace LSSD.Registration.EmailRunner
                                     <p>Attached is a pre-kindergarten application for " + form.Form.Student.LegalFirstName + " " + form.Form.Student.LegalLastName + @", 
                                     submitted " + submittedTime.ToLongDateString() + " at " + submittedTime.ToShortTimeString() + @"</p> 
                                     <p>If you have trouble opening this file, please create a Help Desk Ticket at https://helpdesk.lskysd.ca.</p>
-                                    <p>Note that parents may select up to three school choices, and all three choices are sent this email.</p>
+                                    <p>Note that parents may select up to three school choices, and all three schools are sent this email.</p>
                                     <p>The attached file may contain private personal information - please consider this when forwarding this email message.</p>
+                                    <p>This is an automated email message. Replying to this email will create a Help Desk ticket.</p>
                                     </body>
                                     </html>";                                
                                     msg.Subject = $"Pre-K Application for {form.Form.Student.LegalFirstName} {form.Form.Student.LegalLastName}";   
