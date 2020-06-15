@@ -90,17 +90,16 @@ namespace LSSD.Registration.EmailRunner
                 // PreK Forms                
                 
                 MongoRepository<SubmittedPreKApplicationForm> preKRepo = new MongoRepository<SubmittedPreKApplicationForm>(mongoDatabase);
-                List<SubmittedPreKApplicationForm> submittedPreKForms = preKRepo.GetAll().Where(x => x.NotificationSent == false).ToList();
+                List<SubmittedPreKApplicationForm> submittedPreKForms = preKRepo.Find(x => x.NotificationSent == false).ToList();
 
                 ConsoleWrite($"Found {submittedPreKForms.Count} Pre-K forms.");
 
-                ConsoleWrite($"Email server: {smtpConfig["hostname"]}");
                 if (submittedPreKForms.Count > 0) {
                     using (FormFactory factory = new FormFactory()) 
                     {
-                        using (SmtpClient smtpClient = new SmtpClient("smtp.office365.com")
+                        using (SmtpClient smtpClient = new SmtpClient(smtpConfig["hostname"])
                         {
-                            Port = 587,
+                            Port = int.Parse(smtpConfig["port"]),
                             UseDefaultCredentials = false,
                             EnableSsl = true,                            
                             Credentials = new NetworkCredential(smtpConfig["username"], smtpConfig["password"])
@@ -132,9 +131,7 @@ namespace LSSD.Registration.EmailRunner
                                         formNotifications.Add(schoolEmailsByDAN[form.Form.SchoolPreferences.ThirdChoice.DAN]);
                                     }
                                 }
-
-                                ConsoleWrite("This form should be sent to: " + string.Join(",", formNotifications));
-                                
+                               
                                 ConsoleWrite(">> Generating file...");
                                 string filename = factory.GenerateForm(form, _timeZone);
                                 ConsoleWrite($">> Done: {filename}");
@@ -146,7 +143,11 @@ namespace LSSD.Registration.EmailRunner
                                     ConsoleWrite(">> Creating an email notification");
                                     MailMessage msg = new MailMessage();
                                     
-                                    msg.To.Add("mark.strendin@lskysd.ca");
+                                    ConsoleWrite($">> Will send to {string.Join(",", formNotifications)}");
+                                    foreach(string addr in formNotifications) {
+                                        msg.To.Add(addr);
+                                    }
+                                    
                                     msg.Body = @"
                                     <html>
                                     <body>
@@ -154,6 +155,7 @@ namespace LSSD.Registration.EmailRunner
                                     <p>Attached is a pre-kindergarten application for " + form.Form.Student.LegalFirstName + " " + form.Form.Student.LegalLastName + @", 
                                     submitted " + submittedTime.ToLongDateString() + " at " + submittedTime.ToShortTimeString() + @"</p> 
                                     <p>If you have trouble opening this file, please create a Help Desk Ticket at https://helpdesk.lskysd.ca.</p>
+                                    <p>Note that parents may select up to three school choices, and all three choices are sent this email.</p>
                                     <p>The attached file may contain private personal information - please consider this when forwarding this email message.</p>
                                     </body>
                                     </html>";                                
@@ -162,19 +164,27 @@ namespace LSSD.Registration.EmailRunner
                                     msg.From = new MailAddress(smtpConfig["username"], "LSSD Registration Site");
                                     msg.ReplyToList.Add(new MailAddress(smtpConfig["username"], "LSSD Registration Site"));
                                     msg.IsBodyHtml = true;
-                                    //smtpClient.Send(msg);
+                                    smtpClient.Send(msg);
+                                    form.NotificationSent = true;
+                                }
+
+                                ConsoleWrite("Marking form as having it's notification sent");
+                                // Set to true above, unless something crashed
+                                if (form.NotificationSent) {
+                                    preKRepo.Update(form);
                                 }
                             }
                         }                     
-                    }                   
-                }               
+                    }  
+                    ConsoleWrite("Done!");                 
+                } else {
+                    ConsoleWrite("No forms to deal with.");
+                }              
 
                 // Sleep
                 ConsoleWrite($"Sleeping for {_sleepMinutes} minutes...");
                 Task.Delay(_sleepMinutes * 60 * 1000).Wait();
             }
-
-
         }
     }
 }
