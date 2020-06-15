@@ -88,7 +88,20 @@ namespace LSSD.Registration.DebugConsole
         private static void createTestDocument()
         {
             TimeZoneInfo timezone = TimeZoneInfo.FindSystemTimeZoneById("Canada Central Standard Time");
-            PreKApplicationFormGenerator generator = new PreKApplicationFormGenerator(new SubmittedPreKApplicationForm(Examples.PreK), timezone);
+
+            using (FormFactory formFactory = new FormFactory()) 
+            {
+                string filename = formFactory.GenerateForm(new SubmittedPreKApplicationForm(Examples.PreK), timezone);
+
+                if (!string.IsNullOrEmpty(filename)) {
+                    Console.WriteLine("Form created: " + filename);
+                } else {
+                    Console.WriteLine("Something went wrong, and the form could not be created.");
+                }
+                Console.WriteLine("Press any key to continue (will delete all forms created)...");
+                Console.ReadKey();
+            }
+
         } 
 
 

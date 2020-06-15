@@ -10,32 +10,20 @@ using LSSD.Registration.Model.SubmittedForms;
 using LSSD.Registration.FormGenerators.Common;
 using LSSD.Registration.FormGenerators.FormSections;
 
-namespace LSSD.Registration.FormGenerators {
+namespace LSSD.Registration.FormGenerators.FormGenerators {
 
-    public class PreKApplicationFormGenerator 
+    class PreKApplicationFormGenerator 
     {
         // For help with how to work with OpenXml documents:
         // https://docs.microsoft.com/en-us/office/open-xml/how-do-i
 
-        public PreKApplicationFormGenerator(SubmittedPreKApplicationForm form, TimeZoneInfo TimeZone) 
+        public void Generate(SubmittedPreKApplicationForm Form, TimeZoneInfo TimeZone, string FileName) 
         {
-            // Generate in a temp folder
-            // Read the completed file into a stream of some sort
-            // Deliver the file to the consumer of this generator
-            // Delete the file
-            // Don't do all this in the constructor
-            Generate(form, TimeZone);
-        }
-        
-        public void Generate(SubmittedPreKApplicationForm Form, TimeZoneInfo TimeZone) 
-        {
-            string filename = Form.Id.ToString() + ".docx";
-
-            if (File.Exists(filename)) {
-                File.Delete(filename);
+            if (File.Exists(FileName)) {
+                File.Delete(FileName);
             }
 
-            using (WordprocessingDocument document = WordprocessingDocument.Create(filename, WordprocessingDocumentType.Document)) { 
+            using (WordprocessingDocument document = WordprocessingDocument.Create(FileName, WordprocessingDocumentType.Document)) { 
                 // Create the main document part
                 MainDocumentPart mainPart = document.AddMainDocumentPart();                
                 LSSDDocumentStyles.AddStylesToDocument(document);
