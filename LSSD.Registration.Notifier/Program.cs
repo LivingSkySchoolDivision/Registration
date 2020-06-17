@@ -94,6 +94,17 @@ namespace LSSD.Registration.Notifier
                 // Flush notification handlers
                 notifications.Flush();
 
+                // Mark notifications as sent (if a handler indicated such)                
+                foreach(T form in foundForms.Where(f => f.NotificationSent == true)) {
+                    ConsoleWrite($"> Marking {form.Id} as notified.");
+                    repo.Update(form);
+
+                    // Maybe sort them into their base types and make new repositores for them??
+
+                    
+                }
+
+
                 // Sleep
                 ConsoleWrite($"Sleeping for {_sleepMinutes} minutes...");
                 Task.Delay(_sleepMinutes * 60 * 1000).Wait();
@@ -110,13 +121,11 @@ namespace LSSD.Registration.Notifier
             // The event handler should mark the form as notified=true
             // Don't try to do that here
             foreach(T form in foundForms) {
+                ConsoleWrite($"Triggering notifications for {form.Id} ({form.GetType().Name})");
                 notificationHandler.Notify(form);                
             }
 
-            // Update objects that need to be updated
-            foreach(T form in foundForms.Where(f => f.NotificationSent == true)) {
-                repo.Update(form);
-            }
+            
             
         }
 
