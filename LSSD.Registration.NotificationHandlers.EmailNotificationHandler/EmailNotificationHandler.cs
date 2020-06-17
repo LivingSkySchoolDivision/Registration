@@ -53,6 +53,7 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                     Credentials = new NetworkCredential(_smtpConnectionDetails.Username, _smtpConnectionDetails.Password)
                 })
                 {
+                    List<INotifiable> successfulNotifications = new List<INotifiable>();
                     foreach(INotifiable form in _backlog)
                     {
                         // Determine recipients of the message
@@ -86,22 +87,33 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                             msg.ReplyToList.Add(new MailAddress(_smtpConnectionDetails.ReplyToAddress, "LSSD Registration Site"));
                             msg.IsBodyHtml = true;
 
-                            if (!string.IsNullOrEmpty(emailNotification.AttachmentFilename))
+                            try 
                             {
-                                using (Attachment fileAttachment = new Attachment(emailNotification.AttachmentFilename) { Name = emailNotification.FriendlyAttachmentName }) {
-                                    msg.Attachments.Add(fileAttachment);
+                                if (!string.IsNullOrEmpty(emailNotification.AttachmentFilename))
+                                {
+                                    using (Attachment fileAttachment = new Attachment(emailNotification.AttachmentFilename) { Name = emailNotification.FriendlyAttachmentName }) {
+                                        msg.Attachments.Add(fileAttachment);
+                                        smtpClient.Send(msg);
+                                    }
+                                } else {
                                     smtpClient.Send(msg);
                                 }
-                            } else {
-                                smtpClient.Send(msg);
+
+                                successfulNotifications.Add(form);
+                                form.NotificationSent = true;
+                            } 
+                            catch(Exception ex) {
+                                //TODO: Log this better
+                                Console.WriteLine($"EXCEPTION: {ex.Message}");
                             }
-
-                            form.NotificationSent = true;
-
                         }
-
                     }
 
+                    // Remove successful notifications from the backlog
+                    // But keep unsuccessful ones.
+                    foreach(INotifiable form in successfulNotifications) {
+                        _backlog.Remove(form);
+                    }
 
                 }
             }
