@@ -4,6 +4,7 @@ using System.IO;
 using LSSD.Registration.Model;
 using LSSD.Registration.Model.SubmittedForms;
 using LSSD.Registration.FormGenerators.FormGenerators;
+using System.Text.RegularExpressions;
 
 namespace LSSD.Registration.FormGenerators 
 {
@@ -76,6 +77,10 @@ namespace LSSD.Registration.FormGenerators
             if (Directory.Exists(_tempDirPath)) {
                 Directory.Delete(_tempDirPath);
             }
+        }
+
+        public static string SanitizeFilename(string input) {
+            return Regex.Replace(input, "[^A-Za-z0-9-]", ""); 
         }
     }
 }

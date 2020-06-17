@@ -47,11 +47,11 @@ namespace LSSD.Registration.Notifier
             
             IConfigurationSection smtpConfig = configuration.GetSection("SMTP");
             IConfigurationSection generalConfig = configuration.GetSection("Settings");
-            TimeZoneInfo _timeZone = TimeZoneInfo.FindSystemTimeZoneById(generalConfig["TimeZone"]);
+            TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById(generalConfig["TimeZone"]);
             string dbConnectionString = configuration.GetConnectionString("InternalDatabase") ?? string.Empty;
             MongoDbConnection mongoDatabase = new MongoDbConnection(dbConnectionString);
 
-            ConsoleWrite($"Time zone for forms: {_timeZone}");
+            ConsoleWrite($"Time zone for forms: {timeZone}");
             ConsoleWrite($"Email server: {smtpConfig["hostname"]}");
 
             
@@ -59,12 +59,21 @@ namespace LSSD.Registration.Notifier
 
             MongoRepository<School> schoolRepo = new MongoRepository<School>(mongoDatabase);
 
-            NotificationHandler notifications = new NotificationHandler();
+            SMTPConnectionDetails smtpInfo = new SMTPConnectionDetails() 
+            {
+                Host = smtpConfig["hostname"],
+                Port = int.Parse(smtpConfig["port"]),
+                Username = smtpConfig["username"],
+                Password = smtpConfig["password"],
+                ReplyToAddress = smtpConfig["replytoaddress"],
+                FromAddress = smtpConfig["fromaddress"]               
+            };
 
-            // Register notification handlers
-            EmailNotificationHandler emailHandler = new EmailNotificationHandler(schoolRepo.GetAll());
-            
-            notifications.NewNotification += emailHandler.Handler;
+
+            // Register notification handlers            
+            NotificationHandler notifications = new NotificationHandler();
+            EmailNotificationHandler emailHandler = new EmailNotificationHandler(smtpInfo, timeZone, schoolRepo.GetAll());
+            notifications.RegisterHandler(emailHandler);
 
             // Start main loop
             while (true) 
@@ -82,6 +91,9 @@ namespace LSSD.Registration.Notifier
                     form.NotificationSent = true;
                 }
                 
+                // Flush notification handlers
+                notifications.Flush();
+
                 // Sleep
                 ConsoleWrite($"Sleeping for {_sleepMinutes} minutes...");
                 Task.Delay(_sleepMinutes * 60 * 1000).Wait();
@@ -95,19 +107,13 @@ namespace LSSD.Registration.Notifier
             // Find new objects
             List<T> foundForms = repo.Find(x => x.NotificationSent == false).ToList();
             
-            ConsoleWrite("PRE EVENT HANDLER");
-            foreach(T form in foundForms) {
-                ConsoleWrite($">>> Object with id {form.Id.ToString()} has notified set to: {form.NotificationSent}");
-            }
-
             // The event handler should mark the form as notified=true
             // Don't try to do that here
             foreach(T form in foundForms) {
                 notificationHandler.Notify(form);                
             }
 
-            ConsoleWrite("POST EVENT HANDLER");
-            // Mark found objects as notified
+            // Update objects that need to be updated
             foreach(T form in foundForms.Where(f => f.NotificationSent == true)) {
                 repo.Update(form);
             }

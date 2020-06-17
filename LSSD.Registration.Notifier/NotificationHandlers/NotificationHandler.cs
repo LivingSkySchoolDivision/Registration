@@ -8,15 +8,32 @@ namespace LSSD.Registration.Notifier
     class NotificationHandler
     {
         public event EventHandler<NotificationEventArgs> NewNotification;
+        public event EventHandler FlushNotifications;
 
-        protected void handleNewNotification(NotificationEventArgs e) 
+
+        public void Notify<T>(T form) where T : INotifiable 
+        {
+            triggerNewNotification(new NotificationEventArgs(form));
+        }
+
+        public void RegisterHandler(INotificationHandler handler) {
+            this.NewNotification += handler.Enqueue;
+            this.FlushNotifications += handler.Flush;
+        }
+
+        public void Flush() 
+        {
+            triggerFlush(new EventArgs());
+        }
+
+        protected void triggerNewNotification(NotificationEventArgs e) 
         {
             NewNotification?.Invoke(this, e);
         }
 
-        public void Notify<T>(T form) where T : INotifiable 
+        protected void triggerFlush(EventArgs e) 
         {
-            handleNewNotification(new NotificationEventArgs(form));
+            FlushNotifications?.Invoke(this, e);
         }
     }
 }

@@ -22,8 +22,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.DebugCons
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.FormGenerators", "LSSD.Registration.FormGenerators\LSSD.Registration.FormGenerators.csproj", "{BC54D99E-1EB3-4D22-972D-FF3397D02A04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.EmailRunner", "LSSD.Registration.EmailRunner\LSSD.Registration.EmailRunner.csproj", "{A739E728-982B-4F51-80E4-2C38BD7500D1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.Notifier", "LSSD.Registration.Notifier\LSSD.Registration.Notifier.csproj", "{2F2C01B5-C503-404F-A6E6-336E046D58F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSSD.Registration.NotificationHandlers.EmailNotificationHandler", "LSSD.Registration.NotificationHandlers.EmailNotificationHandler\LSSD.Registration.NotificationHandlers.EmailNotificationHandler.csproj", "{BD137C36-59A1-48DF-B2E8-6F260AF40BAF}"
@@ -58,10 +56,6 @@ Global
 		{BC54D99E-1EB3-4D22-972D-FF3397D02A04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC54D99E-1EB3-4D22-972D-FF3397D02A04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC54D99E-1EB3-4D22-972D-FF3397D02A04}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A739E728-982B-4F51-80E4-2C38BD7500D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A739E728-982B-4F51-80E4-2C38BD7500D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A739E728-982B-4F51-80E4-2C38BD7500D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A739E728-982B-4F51-80E4-2C38BD7500D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F2C01B5-C503-404F-A6E6-336E046D58F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F2C01B5-C503-404F-A6E6-336E046D58F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F2C01B5-C503-404F-A6E6-336E046D58F2}.Release|Any CPU.ActiveCfg = Release|Any CPU

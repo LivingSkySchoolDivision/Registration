@@ -16,5 +16,9 @@ namespace LSSD.Registration.Model.SubmittedForms
         public string ProcessedBy { get; set; }
         public List<string> Notes { get; set; }
 
+        public DateTime DateReceived(TimeZoneInfo timeZone) {
+             return TimeZoneInfo.ConvertTimeFromUtc(DateReceivedUTC, timeZone);                                
+        }
+
     }
 }
