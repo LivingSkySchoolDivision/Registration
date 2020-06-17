@@ -10,12 +10,7 @@ namespace LSSD.Registration.Model.SubmittedForms
         public Guid Id { get; set; } = Guid.NewGuid();
         public PreKRegistrationFormSubmission Form { get; set; }
 
-        public SubmittedPreKApplicationForm(PreKRegistrationFormSubmission Form, string IPAddress) : base(IPAddress)
-        {
-            this.Form = Form;
-        }
-
-        public SubmittedPreKApplicationForm(PreKRegistrationFormSubmission Form) : base(string.Empty)
+        public SubmittedPreKApplicationForm(PreKRegistrationFormSubmission Form)
         {
             this.Form = Form;
         }

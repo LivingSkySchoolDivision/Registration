@@ -10,7 +10,7 @@ namespace LSSD.Registration.Model.SubmittedForms
         public Guid Id { get; set; } = Guid.NewGuid();
         public GeneralRegistrationFormSubmission Form { get; set; }
 
-        public SubmittedGeneralRegistrationForm(GeneralRegistrationFormSubmission Form, string IPAddress) : base(IPAddress)
+        public SubmittedGeneralRegistrationForm(GeneralRegistrationFormSubmission Form)
         {
             this.Form = Form;
         }

@@ -53,10 +53,7 @@ namespace LSSD.Registration.PublicAPI.Controllers
             try
             {
                 Guid newObjectId = _repository.Insert(
-                    new SubmittedGeneralRegistrationForm(
-                        value,
-                        HttpContext.Connection.RemoteIpAddress.ToString()
-                        )
+                    new SubmittedGeneralRegistrationForm(value)
                     );
 
                 return Accepted(new APIResponse(true, newObjectId));
