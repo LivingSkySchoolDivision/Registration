@@ -77,8 +77,7 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                         if (emailNotification != null) {
                             MailMessage msg = new MailMessage();
                             foreach(string addr in recipients) {
-                                //msg.To.Add(addr);
-                                msg.To.Add("mark.strendin@lskysd.ca");
+                                msg.To.Add(addr);
                             }
 
                             msg.Body = emailNotification.Body;
