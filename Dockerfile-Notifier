@@ -8,7 +8,7 @@ COPY ["LSSD.Registration.FormGenerators/LSSD.Registration.FormGenerators.csproj"
 COPY ["LSSD.Registration.Model/LSSD.Registration.Model.csproj", "LSSD.Registration.Model/"]
 COPY ["LSSD.Registration.Data/LSSD.Registration.Data.csproj", "LSSD.Registration.Data/"]
 COPY ["LSSD.Registration.NotificationHandlers.EmailNotificationHandler/LSSD.Registration.NotificationHandlers.EmailNotificationHandler.csproj", "LSSD.Registration.NotificationHandlers.EmailNotificationHandler/"]
-RUN dotnet restore "LSSD.Registration.Notifier/LSSD.Registration.ENotifiermailRunner.csproj"
+RUN dotnet restore "LSSD.Registration.Notifier/LSSD.Registration.Notifier.csproj"
 COPY . .
 WORKDIR "/src/LSSD.Registration.Notifier"
 RUN dotnet build "LSSD.Registration.Notifier.csproj" -c Release -o /app/build
