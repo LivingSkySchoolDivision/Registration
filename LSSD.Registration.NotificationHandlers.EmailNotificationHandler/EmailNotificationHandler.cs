@@ -109,7 +109,7 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                             }
                         }
                     }
-
+                    
                     // Remove successful notifications from the backlog
                     // But keep unsuccessful ones.
                     foreach(INotifiable form in successfulNotifications) {

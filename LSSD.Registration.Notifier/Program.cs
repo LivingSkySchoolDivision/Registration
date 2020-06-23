@@ -45,20 +45,17 @@ namespace LSSD.Registration.Notifier
                     .Build();
             }
             
-            IConfigurationSection smtpConfig = configuration.GetSection("SMTP");
             IConfigurationSection generalConfig = configuration.GetSection("Settings");
             TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById(generalConfig["TimeZone"]);
+
             string dbConnectionString = configuration.GetConnectionString("InternalDatabase") ?? string.Empty;
             MongoDbConnection mongoDatabase = new MongoDbConnection(dbConnectionString);
 
             ConsoleWrite($"Time zone for forms: {timeZone}");
-            ConsoleWrite($"Email server: {smtpConfig["hostname"]}");
-
-            
-            // TODO: Make sure we have all the configuration parts that we need
 
             MongoRepository<School> schoolRepo = new MongoRepository<School>(mongoDatabase);
 
+            IConfigurationSection smtpConfig = configuration.GetSection("SMTP");
             SMTPConnectionDetails smtpInfo = new SMTPConnectionDetails() 
             {
                 Host = smtpConfig["hostname"],
@@ -69,11 +66,10 @@ namespace LSSD.Registration.Notifier
                 FromAddress = smtpConfig["fromaddress"]               
             };
 
-
-            // Register notification handlers            
             NotificationHandler notifications = new NotificationHandler();
-            EmailNotificationHandler emailHandler = new EmailNotificationHandler(smtpInfo, timeZone, schoolRepo.GetAll());
-            notifications.RegisterHandler(emailHandler);
+
+            // Register notification handlers          
+            notifications.RegisterHandler(new EmailNotificationHandler(smtpInfo, timeZone, schoolRepo.GetAll()));
 
             // Start main loop
             while (true) 
@@ -81,29 +77,6 @@ namespace LSSD.Registration.Notifier
                 // Connect to the DB and check for new submitted forms
                 handleBatch<SubmittedPreKApplicationForm>(mongoDatabase, notifications);
                 handleBatch<SubmittedGeneralRegistrationForm>(mongoDatabase, notifications);
-
-                List<INotifiable> foundForms = new List<INotifiable>();
-
-                // If we find any, trigger some notifications
-
-                // Mark the ones we've found as being seen
-                foreach(INotifiable form in foundForms) {
-                    form.NotificationSent = true;
-                }
-                
-                // Flush notification handlers
-                notifications.Flush();
-
-                // Mark notifications as sent (if a handler indicated such)                
-                foreach(T form in foundForms.Where(f => f.NotificationSent == true)) {
-                    ConsoleWrite($"> Marking {form.Id} as notified.");
-                    repo.Update(form);
-
-                    // Maybe sort them into their base types and make new repositores for them??
-
-                    
-                }
-
 
                 // Sleep
                 ConsoleWrite($"Sleeping for {_sleepMinutes} minutes...");
@@ -118,16 +91,23 @@ namespace LSSD.Registration.Notifier
             // Find new objects
             List<T> foundForms = repo.Find(x => x.NotificationSent == false).ToList();
             
-            // The event handler should mark the form as notified=true
-            // Don't try to do that here
             foreach(T form in foundForms) {
                 ConsoleWrite($"Triggering notifications for {form.Id} ({form.GetType().Name})");
-                notificationHandler.Notify(form);                
-            }
+                notificationHandler.AddNotification(form);                
+            } 
 
-            
-            
+            // Send all notifications that we queued
+            notificationHandler.Flush();
+
+            // Mark objects that suceeded as complete
+            foreach(T form in foundForms.Where(f => f.NotificationSent == true)) {
+                ConsoleWrite($"Marking {form.Id} as notified ({form.GetType().Name})");
+                repo.Update(form);
+            } 
+
+
         }
+
 
     }
 }

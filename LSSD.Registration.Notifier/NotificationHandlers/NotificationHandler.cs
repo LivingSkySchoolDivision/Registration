@@ -11,7 +11,7 @@ namespace LSSD.Registration.Notifier
         public event EventHandler FlushNotifications;
 
 
-        public void Notify<T>(T form) where T : INotifiable 
+        public void AddNotification<T>(T form) where T : INotifiable 
         {
             triggerNewNotification(new NotificationEventArgs(form));
         }
