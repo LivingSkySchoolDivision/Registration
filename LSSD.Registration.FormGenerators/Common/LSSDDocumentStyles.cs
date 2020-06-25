@@ -15,7 +15,7 @@ namespace LSSD.Registration.FormGenerators.Common {
         public const string Dim = "Dim";
         public const string WhiteSpace = "Whitespace";
 
-        private const string FontName = "Arial";
+        private const string FontName = "Times New Roman";
 
         private static StyleDefinitionsPart addStylePrerequisites(WordprocessingDocument doc)
         {

@@ -14,8 +14,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
             return new List<OpenXmlElement>() {
                 TableHelper.StyledTable(
                     new TableRow(
-                        TableHelper.LabelCell("Form Submitted By", JustificationValues.Left, (decimal)47.5),
-                        TableHelper.LabelCell("Contact Details", JustificationValues.Left, (decimal)47.5)
+                        TableHelper.LabelCell("Form Submitted By", JustificationValues.Left, 1, 47.5),
+                        TableHelper.LabelCell("Contact Details", JustificationValues.Left, 1, 47.5)
                     ),
                     new TableRow(
                         TableHelper.ValueCell($"{submittedBy.FirstName} {submittedBy.LastName}", JustificationValues.Left),

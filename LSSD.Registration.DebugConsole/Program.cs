@@ -46,7 +46,8 @@ namespace LSSD.Registration.DebugConsole
                 Console.WriteLine("  4. List schools");
                 Console.WriteLine("  5. List general registrations");
                 Console.WriteLine("  6. List prek applications");
-                Console.WriteLine("  7. Create a test document");
+                Console.WriteLine("  7. Create a test PreK application document");
+                Console.WriteLine("  8. Create a test General registration document");
                 Console.WriteLine("  q. Quit");
 
                 Console.Write("Please make a selection: ");
@@ -73,7 +74,10 @@ namespace LSSD.Registration.DebugConsole
                         recordExplore<SubmittedPreKApplicationForm>();
                         break;
                     case "7":
-                        createTestDocument();
+                        createTestPreKDocument();
+                        break;
+                    case "8":
+                        createTestGeneralDocument();
                         break;
                 }
             }
@@ -86,13 +90,31 @@ namespace LSSD.Registration.DebugConsole
             dbConnectionString = Console.ReadLine();
         } 
         
-        private static void createTestDocument()
+        private static void createTestPreKDocument()
         {
             TimeZoneInfo timezone = TimeZoneInfo.FindSystemTimeZoneById("Canada Central Standard Time");
 
             using (FormFactory formFactory = new FormFactory()) 
             {
                 string filename = formFactory.GenerateForm(new SubmittedPreKApplicationForm(Examples.PreK), timezone);
+
+                if (!string.IsNullOrEmpty(filename)) {
+                    Console.WriteLine("Form created: " + filename);
+                } else {
+                    Console.WriteLine("Something went wrong, and the form could not be created.");
+                }
+                Console.WriteLine("Press any key to continue (will delete all forms created)...");
+                Console.ReadKey();
+            }
+        } 
+
+         private static void createTestGeneralDocument()
+        {
+            TimeZoneInfo timezone = TimeZoneInfo.FindSystemTimeZoneById("Canada Central Standard Time");
+
+            using (FormFactory formFactory = new FormFactory()) 
+            {
+                string filename = formFactory.GenerateForm(new SubmittedGeneralRegistrationForm(Examples.General), timezone);
 
                 if (!string.IsNullOrEmpty(filename)) {
                     Console.WriteLine("Form created: " + filename);

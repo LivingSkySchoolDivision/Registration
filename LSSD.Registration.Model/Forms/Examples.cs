@@ -234,7 +234,7 @@ namespace LSSD.Registration.Forms
                     new Contact()
                     {
                         FirstName = "Emergency Contact First Name",
-                        LastName = "PEmergency Contact Last Name",
+                        LastName = "Emergency Contact Last Name",
                         RelationshipToStudent = "Emergency Contact",
                         ContactPriority = 3,
                         LivesWithStudent = false,
