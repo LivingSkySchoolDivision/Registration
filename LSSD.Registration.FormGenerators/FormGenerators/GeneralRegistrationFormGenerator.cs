@@ -44,6 +44,7 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
             pageParts.AddRange(SubmittedBySection.GetSection(Form.Form.SubmittedBy));     
             pageParts.AddRange(StudentInfoSection.GetSection(Form.Form.Student, TimeZone));
             pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));
+            pageParts.Add(new Break() { Type = BreakValues.Page });
             pageParts.AddRange(ContactsSection.GetSection(Form.Form.Contacts));
             // EAL
             // Citizenship

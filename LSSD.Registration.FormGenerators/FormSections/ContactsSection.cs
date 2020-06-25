@@ -38,36 +38,45 @@ namespace LSSD.Registration.FormGenerators.FormSections
 
                 foreach(Contact contact in Contacts.Contacts) {
                     sectionParts.Add(
-                        TableHelper.StyledTable(
-                            new TableRow(
-                                TableHelper.ValueCell(contact.GetDisplayName(), JustificationValues.Left, 4)
+                        TableHelper.StyledTableBordered(
+                            TableHelper.StickyTableRow(
+                                TableHelper.LabelCell("Name:"),
+                                TableHelper.ValueCell(contact.GetDisplayName(), JustificationValues.Left).WithColspan(3)
                             ),
-                            new TableRow(
-                                TableHelper.LabelCell("Phone:", JustificationValues.Left, 1, 15),
+                            TableHelper.StickyTableRow(
+                                TableHelper.LabelCell("Relation:", JustificationValues.Left).WithWidth(15),
+                                TableHelper.ValueCell(contact.RelationshipToStudent),
+                                TableHelper.LabelCell("Employer:"),
+                                TableHelper.ValueCell(contact.Employer)
+                            ),
+                            TableHelper.StickyTableRow(
+                                TableHelper.LabelCell("Phone:", JustificationValues.Left).WithWidth(15),
                                 TableHelper.ValueCell(phoneNumberBlob(contact.HomePhone, contact.WorkPhone, contact.CellPhone)),
-                                TableHelper.LabelCell("Rcv. Mail:"),
-                                TableHelper.ValueCell(contact.ShouldRecieveMailAboutStudent),
-                                TableHelper.ValueCell(ParagraphHelper.ConvertMultiLineString(contact.PrimaryAddress.ToFormattedAddress()))
+                                TableHelper.LabelCell("Priority:"),
+                                TableHelper.ValueCell(contact.ContactPriority.ToString())                                
                             ),
-                            new TableRow(
+                            TableHelper.StickyTableRow(
                                 TableHelper.LabelCell("Email:"),
                                 TableHelper.ValueCell(contact.EmailAddress),
                                 TableHelper.LabelCell("Lives With:"),
                                 TableHelper.ValueCell(contact.LivesWithStudent)
                             ),
-                            new TableRow(
+                            TableHelper.StickyTableRow(
                                 TableHelper.LabelCell("Alt contact info:"),
-                                TableHelper.ValueCell(contact.AlternateContactInfo),
-                                TableHelper.LabelCell("Employer:"),
-                                TableHelper.ValueCell(contact.Employer),
-                                TableHelper.ValueCell(ParagraphHelper.ConvertMultiLineString(contact.MailingAddress.ToFormattedAddress()))
+                                TableHelper.ValueCell(contact.AlternateContactInfo),TableHelper.LabelCell("Rcv. Mail:"),
+                                TableHelper.ValueCell(contact.ShouldRecieveMailAboutStudent)
                             ),
-                            new TableRow(                                
-                                TableHelper.LabelCell("Primary Addr", JustificationValues.Left, 2),
-                                TableHelper.LabelCell("Mailing Addr", JustificationValues.Left, 2)
+                            TableHelper.StickyTableRow(                                
+                                TableHelper.LabelCell("Primary Addr", JustificationValues.Left).WithColspan(2),
+                                TableHelper.LabelCell("Mailing Addr", JustificationValues.Left).WithColspan(2)
                             ),
-                            new TableRow(
-
+                            TableHelper.StickyTableRow(                                
+                                TableHelper.ValueCell(ParagraphHelper.ConvertMultiLineString(contact.PrimaryAddress.ToFormattedAddress()), JustificationValues.Left).WithColspan(2),
+                                TableHelper.ValueCell(ParagraphHelper.ConvertMultiLineString(contact.MailingAddress.ToFormattedAddress()), JustificationValues.Left).WithColspan(2)
+                            ),
+                            TableHelper.StickyTableRow(                                
+                                TableHelper.LabelCell("Notes:"),
+                                TableHelper.ValueCell(contact.Note).WithColspan(3)
                             )
                             
                         )

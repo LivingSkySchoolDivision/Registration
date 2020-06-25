@@ -63,7 +63,9 @@ namespace LSSD.Registration.FormGenerators.Common
                 )
             )  {
                     ParagraphProperties = new ParagraphProperties(
-                        new Justification() { Val = Alignment }
+                        new Justification() { Val = Alignment },
+                        new KeepNext(),
+                        new KeepLines()
                     ) {
                         ParagraphStyleId = new ParagraphStyleId() {
                             Val = Style

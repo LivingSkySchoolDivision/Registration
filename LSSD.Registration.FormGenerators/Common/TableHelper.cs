@@ -27,6 +27,53 @@ namespace LSSD.Registration.FormGenerators.Common
             return table;
         }
 
+        public static Table StyledTableBordered(params OpenXmlElement[] childItems) {
+            
+            Table table = new Table(
+                new TableLayout() {  Type = TableLayoutValues.Autofit },
+                new TableWidth() { 
+                    Type = TableWidthUnitValues.Pct, 
+                    Width = $"{95 * 50}"
+                    },
+                LSSDTableStyles.ThickOutsideBorders(),
+                LSSDTableStyles.Margins()
+            );
+
+            foreach(OpenXmlElement e in childItems) {
+                table.AppendChild(e);
+            }
+
+            return table;
+        }
+
+        
+        public static TableRow StickyTableRow(params OpenXmlElement[] childItems) 
+        {
+            TableRow tr = new TableRow(
+                new TableRowProperties(
+                    new CantSplit()
+                ) 
+            );        
+            
+            foreach(OpenXmlElement e in childItems) {
+                tr.AppendChild(e);
+            }
+            return tr;
+        }
+
+        public static TableCell WithWidth(this TableCell TC, double WidthPercent) {
+            TC.AppendChild(new TableCellWidth() { Width = $"{WidthPercent * 50}", Type = TableWidthUnitValues.Pct });
+            return TC;
+        }
+        public static TableCell WithWidth(this TableCell TC, int WidthPercent) {
+            return WithWidth(TC, (double)WidthPercent);
+        }
+
+        public static TableCell WithColspan(this TableCell TC, int Columns) {
+            TC.AppendChild(new TableCellProperties(new GridSpan() { Val = Columns }));
+            return TC;
+        }
+
         public static Table StyledTableForColumns(params OpenXmlElement[] childItems) {
             Table table = new Table(
                 new TableLayout() {  Type = TableLayoutValues.Autofit },
@@ -71,32 +118,12 @@ namespace LSSD.Registration.FormGenerators.Common
 
             return itemTable;
         }
-
-
-
         
         public static TableCell LabelCell(string Label) {
             return LabelCell(Label, JustificationValues.Left);
         }
-
-        public static TableCell LabelCell(string Label, JustificationValues Alignment) {
-            return LabelCell(Label, Alignment, 1);
-        }
-
         
-        public static TableCell LabelCell(string Label, JustificationValues Alignment, int ColSpan, double WidthPercent) {
-            TableCell tc = LabelCell(Label, Alignment);
-            tc.AppendChild(new TableCellWidth() { Width = $"{WidthPercent * 50}", Type = TableWidthUnitValues.Pct });
-            return tc;
-        }
-
-        public static TableCell LabelCell(string Label, JustificationValues Alignment, int ColSpan, int WidthPercent) {
-            TableCell tc = LabelCell(Label, Alignment);
-            tc.AppendChild(new TableCellWidth() { Width = $"{WidthPercent * 50}", Type = TableWidthUnitValues.Pct });
-            return tc;
-        }
-
-        public static TableCell LabelCell(string Label, JustificationValues Alignment, int ColSpan) {
+        public static TableCell LabelCell(string Label, JustificationValues Alignment) {
             TableCell tc = new TableCell(
                 new Paragraph(
                     new Run(
@@ -110,62 +137,32 @@ namespace LSSD.Registration.FormGenerators.Common
                             Val = LSSDDocumentStyles.FieldLabel
                         }
                     }
-                },
-                new TableCellProperties(
-                    new GridSpan() { Val = ColSpan }
-                )
+                }                
             );          
 
             return tc;
         }
 
+        public static TableCell ValueCell(string Value)  {
+            return ValueCell(new Run(new Text(Value)));
+        }
+
         public static TableCell ValueCell(Run Value)  {
             return ValueCell(Value, JustificationValues.Left);
         }
-
-        public static TableCell ValueCell(string Value)  {
-            return ValueCell(new Run(Value));
-        }
-
-        public static TableCell ValueCell(Run Value, JustificationValues Alignment)  {
-            return ValueCell(Value, Alignment, 1);
-        }
         public static TableCell ValueCell(string Value, JustificationValues Alignment)  {
-            return ValueCell(new Run(Value), Alignment, 1);
+            return ValueCell(new Run(new Text(Value)), Alignment, LSSDDocumentStyles.FieldValue);
+        }
+        public static TableCell ValueCell(Run Value, JustificationValues Alignment)  {
+            return ValueCell(Value, Alignment, LSSDDocumentStyles.FieldValue);
         }
 
-        public static TableCell ValueCell(string Value, JustificationValues Alignment, int ColSpan)  {
-            return ValueCell(new Run(Value), Alignment, ColSpan);
-        }
-        public static TableCell ValueCell(Run Value, JustificationValues Alignment, int ColSpan, double WidthPercent)  {
-            TableCell tc = ValueCell(Value, Alignment);
-            tc.AppendChild(new TableCellWidth() { Width = $"{WidthPercent * 50}", Type = TableWidthUnitValues.Pct });
-            return tc;
-
-        }
-        
-        public static TableCell ValueCell(string Value, JustificationValues Alignment, int ColSpan, double WidthPercent)  {
-            TableCell tc = ValueCell(Value, Alignment);
-            tc.AppendChild(new TableCellWidth() { Width = $"{WidthPercent * 50}", Type = TableWidthUnitValues.Pct });
-            return tc;
-
-        }
-        
-        public static TableCell ValueCell(Run Value, JustificationValues Alignment, int ColSpan, int WidthPercent)  {
-            TableCell tc = ValueCell(Value, Alignment);
-            tc.AppendChild(new TableCellWidth() { Width = $"{WidthPercent * 50}", Type = TableWidthUnitValues.Pct });
-            return tc;
-
-        }
-        
-        public static TableCell ValueCell(string Value, JustificationValues Alignment, int ColSpan, int WidthPercent)  {
-            TableCell tc = ValueCell(Value, Alignment);
-            tc.AppendChild(new TableCellWidth() { Width = $"{WidthPercent * 50}", Type = TableWidthUnitValues.Pct });
-            return tc;
-
+        public static TableCell ValueCell(string Value, JustificationValues Alignment, string Style)  {
+            return ValueCell(new Run(new Text(Value)), Alignment, Style);
         }
 
-        public static TableCell ValueCell(Run Value, JustificationValues Alignment, int ColSpan)  {
+
+        public static TableCell ValueCell(Run Value, JustificationValues Alignment, string Style)  {
             TableCell tc = new TableCell(
                 new Paragraph(
                     Value
@@ -174,64 +171,45 @@ namespace LSSD.Registration.FormGenerators.Common
                         new Justification() { Val = Alignment }
                     ) {
                         ParagraphStyleId = new ParagraphStyleId() {
-                            Val = "Field Value"
+                            Val = Style
                         }
                     }
-                },
-                new TableCellProperties(
-                    new GridSpan() { Val = ColSpan }
-                )
+                }
             );
 
             return tc;
         }
 
         public static TableCell ValueCell(bool Value) {
-            if (Value == true) {
-                return new TableCell(
-                    new Paragraph(
-                        new Run(
-                            new Text(Value.ToYesOrNo())
-                        )
-                    )  {
-                        ParagraphProperties = new ParagraphProperties(
-                            new Justification() { Val = JustificationValues.Center }
-                        ) {
-                            ParagraphStyleId = new ParagraphStyleId() {
-                                Val = "Field Value Yes"
-                            }
+            string fieldStyle = Value ? LSSDDocumentStyles.FieldValueYes : LSSDDocumentStyles.FieldValueNo;
+            return new TableCell(
+                new Paragraph(
+                    new Run(
+                        new Text(Value.ToYesOrNo())
+                    )
+                )  {
+                    ParagraphProperties = new ParagraphProperties(
+                        new Justification() { Val = JustificationValues.Center }
+                    ) {
+                        ParagraphStyleId = new ParagraphStyleId() {
+                            Val = fieldStyle
                         }
                     }
-                );
-            } else {
-                return new TableCell(
-                    new Paragraph(
-                        new Run(
-                            new Text(Value.ToYesOrNo())
-                        )
-                    )  {
-                        ParagraphProperties = new ParagraphProperties(
-                            new Justification() { Val = JustificationValues.Center }
-                        ) {
-                            ParagraphStyleId = new ParagraphStyleId() {
-                                Val = "Field Value No"
-                            }
-                        }
-                    }
-                );
-            }
+                }
+            );
+
         }
         
         public static TableRow FieldTableRow(string Label, string Value, JustificationValues Alignment, double LabelWidthPercent) {
             return new TableRow(
-                LabelCell(Label, Alignment, 1, LabelWidthPercent),
+                LabelCell(Label, Alignment).WithWidth(LabelWidthPercent),
                 ValueCell(Value)
             );
         }
 
         public static TableRow FieldTableRow(string Label, bool Value, JustificationValues Alignment, double LabelWidthPercent) {
             return new TableRow(
-                LabelCell(Label, Alignment, 1, LabelWidthPercent),
+                LabelCell(Label, Alignment).WithWidth(LabelWidthPercent),
                 ValueCell(Value)
             );
         } 

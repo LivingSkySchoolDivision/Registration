@@ -24,10 +24,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 )
             );
             
-            sectionParts.Add(new Break() { 
-                    Type = BreakValues.Column 
-                }
-            );
+            sectionParts.Add(new Break() { Type = BreakValues.Column } );
 
             sectionParts.Add(
                 TableHelper.StyledTableForColumns(                  
