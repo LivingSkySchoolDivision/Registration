@@ -8,7 +8,7 @@ using LSSD.Registration.Model.SubmittedForms;
 
 namespace LSSD.Registration.FormGenerators.FormSections 
 {
-    class PageTitleSection 
+    class FormEndSection 
     {
         
         public static IEnumerable<OpenXmlElement> GetSection(SubmittedPreKApplicationForm Form, TimeZoneInfo timezone)
@@ -22,8 +22,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
         } 
 
         private static IEnumerable<OpenXmlElement> GetSection(BaseSubmittedForm Form, TimeZoneInfo timezone, string Title, string FormId) {
-            return new List<OpenXmlElement>() {                
-                ParagraphHelper.Paragraph(Title, LSSDDocumentStyles.PageTitle, JustificationValues.Center),
+            return new List<OpenXmlElement>() {
+                ParagraphHelper.Paragraph(Title, LSSDDocumentStyles.Dim, JustificationValues.Center),
                 ParagraphHelper.Paragraph($"Form id: {FormId}, submitted {TimeZoneInfo.ConvertTimeFromUtc(Form.DateReceivedUTC,timezone).ToShortDateString()}", LSSDDocumentStyles.Dim, JustificationValues.Center),
                 ParagraphHelper.WhiteSpace()
             };            

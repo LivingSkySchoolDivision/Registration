@@ -3,13 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LSSD.Registration.Data\LSSD.Registration.Data.csproj" />
-    <ProjectReference Include="..\LSSD.Registration.FormGenerators\LSSD.Registration.FormGenerators.csproj" />
     <ProjectReference Include="..\LSSD.Registration.Model\LSSD.Registration.Model.csproj" />
+    <ProjectReference Include="..\LSSD.Registration.NotificationHandlers.EmailNotificationHandler\LSSD.Registration.NotificationHandlers.EmailNotificationHandler.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -19,9 +19,9 @@ namespace LSSD.Registration.FormGenerators.FormSections
             return new List<OpenXmlElement>() {
                 TableHelper.StyledTable(                    
                     new TableRow(
-                        TableHelper.LabelCell("First school choice", JustificationValues.Center, (decimal)33.3),
-                        TableHelper.LabelCell("Second school choice", JustificationValues.Center, (decimal)33.3),
-                        TableHelper.LabelCell("Third school choice", JustificationValues.Center, (decimal)33.3)
+                        TableHelper.LabelCell("First school choice", JustificationValues.Center).WithWidth(33.3),
+                        TableHelper.LabelCell("Second school choice", JustificationValues.Center).WithWidth(33.3),
+                        TableHelper.LabelCell("Third school choice", JustificationValues.Center).WithWidth(33.3)
                     ),
                     new TableRow(
                         TableHelper.ValueCell(SchoolPreferences?.FirstChoice?.Name, JustificationValues.Center),

@@ -44,7 +44,6 @@ namespace LSSD.Registration.Forms
                 LandDescription = "SE-12-20-33-W1",
                 Gender = "Unspecified",
                 DateOfBirth = DateTime.Today.AddYears(-5).Date,
-                PreviousSchools = "John Smith's Elementary School",
                 MedicalNotes = "Allergic to bees",
                 HealthServicesNumber = string.Empty,
                 PrimaryAddress = new Address()
@@ -234,7 +233,7 @@ namespace LSSD.Registration.Forms
                     new Contact()
                     {
                         FirstName = "Emergency Contact First Name",
-                        LastName = "PEmergency Contact Last Name",
+                        LastName = "Emergency Contact Last Name",
                         RelationshipToStudent = "Emergency Contact",
                         ContactPriority = 3,
                         LivesWithStudent = false,

@@ -6,6 +6,7 @@ namespace LSSD.Registration.FormGenerators.Common {
     class LSSDDocumentStyles {
         public const string FieldLabel = "Field Label";
         public const string FieldValue = "Field Value";
+        public const string FieldValueBig = "Field Value Big";
         public const string FieldValueYes = "Field Value Yes";
         public const string FieldValueNo = "Field Value No";
         public const string PageTitle = "Page Title";
@@ -15,7 +16,8 @@ namespace LSSD.Registration.FormGenerators.Common {
         public const string Dim = "Dim";
         public const string WhiteSpace = "Whitespace";
 
-        private const string FontName = "Arial";
+        private const string DefaultValueColour = "375ca6";
+        private const string FontName = "Times New Roman";
 
         private static StyleDefinitionsPart addStylePrerequisites(WordprocessingDocument doc)
         {
@@ -54,7 +56,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
                         new Bold(), 
-                        new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
+                        new Color() { ThemeColor = ThemeColorValues.Accent2 }, 
                         new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "32" } // Double the font size value you see in Word
                     )
@@ -69,7 +71,8 @@ namespace LSSD.Registration.FormGenerators.Common {
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
-                        new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
+                        new Bold(),
+                        new Color() { ThemeColor = ThemeColorValues.Accent2 }, 
                         new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "24" } // Double the font size value you see in Word
                     )
@@ -84,7 +87,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
-                        new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
+                        new Color() { ThemeColor = ThemeColorValues.Accent2 }, 
                         new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "20" } // Double the font size value you see in Word
                     )
@@ -92,7 +95,8 @@ namespace LSSD.Registration.FormGenerators.Common {
 
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
-                    new StyleName() { Val = FieldLabel }
+                    new StyleName() { Val = FieldLabel },
+                    new ContextualSpacing() { Val = false }
                 ) { 
                     Type = StyleValues.Paragraph,
                     StyleId = FieldLabel,
@@ -140,7 +144,8 @@ namespace LSSD.Registration.FormGenerators.Common {
 
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
-                    new StyleName() { Val = FieldValue }
+                    new StyleName() { Val = FieldValue },
+                    new ContextualSpacing() { Val = false }
                 ) { 
                     Type = StyleValues.Paragraph,
                     StyleId = FieldValue,
@@ -150,13 +155,31 @@ namespace LSSD.Registration.FormGenerators.Common {
                         new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "18" } // Double the font size value you see in Word
                     ){
-                        Color = new Color() { Val = "002060" }
+                        Color = new Color() { Val = DefaultValueColour }
                     }
                 });
 
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
-                    new StyleName() { Val = FieldValueYes }
+                    new StyleName() { Val = FieldValueBig },
+                    new ContextualSpacing() { Val = false }
+                ) { 
+                    Type = StyleValues.Paragraph,
+                    StyleId = FieldValueBig,
+                    CustomStyle = true,
+                    Default = false,
+                    StyleRunProperties = new StyleRunProperties(
+                        new RunFonts() { Ascii = FontName },
+                        new FontSize() { Val = "22" } // Double the font size value you see in Word
+                    ){
+                        Color = new Color() { Val = DefaultValueColour }
+                    }
+                });
+
+                stylePart.Styles.Append(new Style(
+                    new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
+                    new StyleName() { Val = FieldValueYes },
+                    new ContextualSpacing() { Val = false }
                 ) { 
                     Type = StyleValues.Paragraph,
                     StyleId = FieldValueYes,
@@ -173,7 +196,8 @@ namespace LSSD.Registration.FormGenerators.Common {
 
                 stylePart.Styles.Append(new Style(
                     new PrimaryStyle() { Val = OnOffOnlyValues.On }, // Should it show up in the list of styles in the editor
-                    new StyleName() { Val = FieldValueNo }
+                    new StyleName() { Val = FieldValueNo },
+                    new ContextualSpacing() { Val = false }
                 ) { 
                     Type = StyleValues.Paragraph,
                     StyleId = FieldValueNo,

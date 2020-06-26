@@ -4,6 +4,7 @@ using System.IO;
 using LSSD.Registration.Model;
 using LSSD.Registration.Model.SubmittedForms;
 using LSSD.Registration.FormGenerators.FormGenerators;
+using System.Text.RegularExpressions;
 
 namespace LSSD.Registration.FormGenerators 
 {
@@ -28,12 +29,12 @@ namespace LSSD.Registration.FormGenerators
             Console.WriteLine("Temp directory is: " + _tempDirPath);
         }
 
+        // TODO: Improve resuablility of the following two methods
         public string GenerateForm(SubmittedPreKApplicationForm Form, TimeZoneInfo TimeZone)
         {
             if (Form == null) {
                 throw new Exception("Form cannot be null");
             }
-
 
             string filename = Path.Combine(_tempDirPath, genFilename(Form));
                        
@@ -47,7 +48,26 @@ namespace LSSD.Registration.FormGenerators
             
             // Return the filename
             return filename;
-                    
+        }
+
+        public string GenerateForm(SubmittedGeneralRegistrationForm Form, TimeZoneInfo TimeZone)
+        {
+            if (Form == null) {
+                throw new Exception("Form cannot be null");
+            }
+
+            string filename = Path.Combine(_tempDirPath, genFilename(Form));
+                       
+            GeneralRegistrationFormGenerator generator = new GeneralRegistrationFormGenerator();
+
+            // Generate the file
+            generator.Generate(Form, TimeZone, filename);
+
+            // Store the filename in the tracking list
+            _generatedFileNames.Add(filename);
+            
+            // Return the filename
+            return filename;
         }
 
         private string genFilename(ISubmittedForm form) {
@@ -76,6 +96,10 @@ namespace LSSD.Registration.FormGenerators
             if (Directory.Exists(_tempDirPath)) {
                 Directory.Delete(_tempDirPath);
             }
+        }
+
+        public static string SanitizeFilename(string input) {
+            return Regex.Replace(input, "[^A-Za-z0-9-]", ""); 
         }
     }
 }

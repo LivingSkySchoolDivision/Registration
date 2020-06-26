@@ -67,5 +67,9 @@ namespace LSSD.Registration.Model
 
             return false;
         }
+
+        public string GetDisplayName() {            
+            return $"{this.FirstName} {this.LastName}";             
+        }
     }
 }
