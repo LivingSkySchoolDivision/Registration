@@ -89,8 +89,6 @@ namespace LSSD.Registration.FormGenerators.FormSections
                     ParagraphHelper.Paragraph("No contact information entered", LSSDDocumentStyles.FieldValue)
                 );
             }
-
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1));
             sectionParts.Add(ParagraphHelper.WhiteSpace());
 
             return sectionParts;

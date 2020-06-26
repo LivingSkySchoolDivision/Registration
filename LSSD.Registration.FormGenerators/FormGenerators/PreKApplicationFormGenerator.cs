@@ -44,7 +44,6 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
             pageParts.AddRange(PreKStudentInfoSection.GetSection(Form.Form.Student, TimeZone));
             pageParts.AddRange(SubmittedBySection.GetSection(Form.Form.SubmittedBy));    
             pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));
-            pageParts.Add(new Break() { Type = BreakValues.Page });
             pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo)); 
             return new Document(new Body(pageParts));
         }

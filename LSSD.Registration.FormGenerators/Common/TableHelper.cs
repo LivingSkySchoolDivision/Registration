@@ -131,7 +131,8 @@ namespace LSSD.Registration.FormGenerators.Common
                     )
                 )  {
                     ParagraphProperties = new ParagraphProperties(
-                        new Justification() { Val = Alignment }
+                        new Justification() { Val = Alignment },
+                        new SpacingBetweenLines() { Before = "0", After = "0" }
                     ) {
                         ParagraphStyleId = new ParagraphStyleId() {
                             Val = LSSDDocumentStyles.FieldLabel
@@ -168,7 +169,8 @@ namespace LSSD.Registration.FormGenerators.Common
                     Value
                 )  {
                     ParagraphProperties = new ParagraphProperties(
-                        new Justification() { Val = Alignment }
+                        new Justification() { Val = Alignment },
+                        new SpacingBetweenLines() { Before = "0", After = "0" }
                     ) {
                         ParagraphStyleId = new ParagraphStyleId() {
                             Val = Style
@@ -189,7 +191,8 @@ namespace LSSD.Registration.FormGenerators.Common
                     )
                 )  {
                     ParagraphProperties = new ParagraphProperties(
-                        new Justification() { Val = JustificationValues.Center }
+                        new Justification() { Val = JustificationValues.Center },
+                        new SpacingBetweenLines() { Before = "0", After = "0" }
                     ) {
                         ParagraphStyleId = new ParagraphStyleId() {
                             Val = fieldStyle

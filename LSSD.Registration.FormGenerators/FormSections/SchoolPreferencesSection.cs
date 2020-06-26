@@ -28,7 +28,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.ValueCell(SchoolPreferences?.SecondChoice?.Name, JustificationValues.Center),
                         TableHelper.ValueCell(SchoolPreferences?.ThirdChoice?.Name, JustificationValues.Center)
                     )
-                )
+                ),
+                ParagraphHelper.WhiteSpace()
             };
         }
     }

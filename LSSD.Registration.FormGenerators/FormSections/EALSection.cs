@@ -33,8 +33,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
                     )
                 );
 
+                sectionParts.Add(ParagraphHelper.WhiteSpace());
             }
-
             
             return sectionParts;
         }
