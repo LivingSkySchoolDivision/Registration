@@ -19,8 +19,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
             return new List<OpenXmlElement>() {
                 TableHelper.StyledTable(                    
                     new TableRow(
-                        TableHelper.LabelCell("School", JustificationValues.Center).WithWidth(66.6),
-                        TableHelper.LabelCell("Grade", JustificationValues.Center).WithWidth(33.3)
+                        TableHelper.LabelCell("School:", JustificationValues.Center).WithWidth(66.6),
+                        TableHelper.LabelCell("Grade:", JustificationValues.Center).WithWidth(33.3)
                     ),
                     new TableRow(
                         TableHelper.ValueCell($"{School?.Name} ({School?.DAN})", JustificationValues.Center),

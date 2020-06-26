@@ -58,7 +58,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                             TableHelper.StickyTableRow(
                                 TableHelper.LabelCell("Priority:"),
                                 TableHelper.ValueCell(contact.ContactPriority.ToString()),
-                                TableHelper.LabelCell("Employer"),
+                                TableHelper.LabelCell("Employer:"),
                                 TableHelper.ValueCell(contact.Employer),
                                 TableHelper.LabelCell("Rcv. Mail:"),
                                 TableHelper.ValueCell(contact.ShouldRecieveMailAboutStudent)
@@ -68,9 +68,9 @@ namespace LSSD.Registration.FormGenerators.FormSections
                                 TableHelper.ValueCell(contact.Note, JustificationValues.Left).WithColspan(5)
                             ),
                             TableHelper.StickyTableRow(                        
-                                TableHelper.LabelCell("Contact", JustificationValues.Left).WithColspan(2).WithWidth(33.3),        
-                                TableHelper.LabelCell("Primary Addr", JustificationValues.Left).WithColspan(2).WithWidth(33.3),
-                                TableHelper.LabelCell("Mailing Addr", JustificationValues.Left).WithColspan(2).WithWidth(33.3)
+                                TableHelper.LabelCell("Contact:", JustificationValues.Left).WithColspan(2).WithWidth(33.3),        
+                                TableHelper.LabelCell("Primary Addr:", JustificationValues.Left).WithColspan(2).WithWidth(33.3),
+                                TableHelper.LabelCell("Mailing Addr:", JustificationValues.Left).WithColspan(2).WithWidth(33.3)
                             ),
                             TableHelper.StickyTableRow(    
                                 TableHelper.ValueCell(phoneNumberBlob(contact.HomePhone, contact.WorkPhone, contact.CellPhone, contact.AlternateContactInfo)).WithColspan(2),

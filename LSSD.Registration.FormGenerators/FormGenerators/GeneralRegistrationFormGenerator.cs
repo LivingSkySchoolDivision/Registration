@@ -44,11 +44,12 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
             pageParts.AddRange(SubmittedBySection.GetSection(Form.Form.SubmittedBy));     
             pageParts.AddRange(StudentInfoSection.GetSection(Form.Form.Student, TimeZone));
             pageParts.AddRange(EnrolmentDetailsSection.GetSection(Form.Form.EnrollmentDetails));
-            pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));
-            pageParts.AddRange(ContactsSection.GetSection(Form.Form.Contacts));             
+            pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));           
             pageParts.AddRange(EALSection.GetSection(Form.Form.EALInfo));
             pageParts.AddRange(CitizenshipSection.GetSection(Form.Form.Citizenship));
             pageParts.AddRange(FirstNationsSection.GetSection(Form.Form.FirstNationsInfo));
+            pageParts.Add(ParagraphHelper.PageBreak());  
+            pageParts.AddRange(ContactsSection.GetSection(Form.Form.Contacts));  
             return new Document(new Body(pageParts));
         }
     }

@@ -22,7 +22,6 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.ValueCell(submittedBy.ContactDetails)
                     )
                 ),
-                ColumnHelper.SetPreviousSectionToColumns(1),
                 ParagraphHelper.WhiteSpace()
             };
                 

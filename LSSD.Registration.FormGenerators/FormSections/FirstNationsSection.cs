@@ -20,21 +20,21 @@ namespace LSSD.Registration.FormGenerators.FormSections
                     sectionParts.Add(
                         TableHelper.StyledTable(
                             TableHelper.StickyTableRow(
-                                TableHelper.LabelCell("Aboriginal group"),
+                                TableHelper.LabelCell("Aboriginal group:"),
                                 TableHelper.ValueCell(FNInfo.AboriginalStatus),
-                                TableHelper.LabelCell("Status Number"),
+                                TableHelper.LabelCell("Status Number:"),
                                 TableHelper.ValueCell(FNInfo.StatusNumber)
                             ),
                             TableHelper.StickyTableRow(
-                                TableHelper.LabelCell("Resides On Reserve"),
+                                TableHelper.LabelCell("Resides On Reserve:"),
                                 TableHelper.ValueCell(FNInfo.ResidesOnReserve),
-                                TableHelper.LabelCell("Reserve of Residence"),
+                                TableHelper.LabelCell("Reserve of Residence:"),
                                 TableHelper.ValueCell(FNInfo.ReserveName)
                             ),
                             TableHelper.StickyTableRow(
-                                TableHelper.LabelCell("Band Name"),
+                                TableHelper.LabelCell("Band Name:"),
                                 TableHelper.ValueCell(FNInfo.BandName),
-                                TableHelper.LabelCell("Reserve House"),
+                                TableHelper.LabelCell("Reserve House:"),
                                 TableHelper.ValueCell(FNInfo.ReserveHouse)
                             )
                         )

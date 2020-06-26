@@ -13,10 +13,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
         {
             List<OpenXmlElement> sectionParts = new List<OpenXmlElement>();
                    
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 100));
-
             sectionParts.Add(
-                TableHelper.StyledTableForColumns(
+                TableHelper.StyledTable(
                     TableHelper.FieldTableRow("Legal Name:", Student.GetLegalName()),
                     TableHelper.FieldTableRow("Preferred Name:", Student.GetPreferredName()),
                     TableHelper.FieldTableRow("Gender:", Student.Gender)
@@ -24,14 +22,13 @@ namespace LSSD.Registration.FormGenerators.FormSections
             );
 
             sectionParts.Add(
-                TableHelper.StyledTableForColumns(
+                TableHelper.StyledTable(
                     TableHelper.FieldTableRow("Date of Birth:", Student.GetDateOfBirthWithAge()),                    
                     TableHelper.FieldTableRow("Land Description:", Student.LandDescription),
                     TableHelper.FieldTableRow("Medical Notes:", Student.MedicalNotes)
                 )
             );
 
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(2, 100));
             sectionParts.Add(ParagraphHelper.WhiteSpace());
 
             // The code below will crash if the addresses are null, so check

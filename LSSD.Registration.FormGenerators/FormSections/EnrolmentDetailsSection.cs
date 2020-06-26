@@ -17,21 +17,21 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 sectionParts.Add(
                     TableHelper.StyledTable(
                         TableHelper.StickyTableRow(
-                            TableHelper.LabelCell("No Previous Schooling"),
-                            TableHelper.ValueCell(EnrolmentInfo.NoPreviousSchooling),
-                            TableHelper.LabelCell("Exchange Student"),
-                            TableHelper.ValueCell(EnrolmentInfo.ExchangeStudent)
+                            TableHelper.LabelCell("No Previous Schooling:").WithWidth(40),
+                            TableHelper.ValueCell(EnrolmentInfo.NoPreviousSchooling).WithWidth(5),
+                            TableHelper.LabelCell("Exchange Student:").WithWidth(40),
+                            TableHelper.ValueCell(EnrolmentInfo.ExchangeStudent).WithWidth(5)
                         ),
                         TableHelper.StickyTableRow(
-                            TableHelper.LabelCell("Transfer from another province"),
+                            TableHelper.LabelCell("Transfer from another province:"),
                             TableHelper.ValueCell(EnrolmentInfo.TransferFromAnotherProvince),
-                            TableHelper.LabelCell("Transfer from Home-Based"),
+                            TableHelper.LabelCell("Transfer from Home-Based:"),
                             TableHelper.ValueCell(EnrolmentInfo.TransferFromHomeBased)
                         ),
                         TableHelper.StickyTableRow(
-                            TableHelper.LabelCell("Transfer from another SASK school"),
+                            TableHelper.LabelCell("Transfer from another SASK school:"),
                             TableHelper.ValueCell(EnrolmentInfo.TransferFromAnotherSaskSchool),
-                            TableHelper.LabelCell("Transfer from another country"),
+                            TableHelper.LabelCell("Transfer from another country:"),
                             TableHelper.ValueCell(EnrolmentInfo.TransferFromAnotherCountry)
                         )
                     )

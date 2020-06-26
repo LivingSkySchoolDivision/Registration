@@ -12,77 +12,107 @@ namespace LSSD.Registration.FormGenerators.FormSections
         public static IEnumerable<OpenXmlElement> GetSection(PreKInfo PreKInfo)
         {
             List<OpenXmlElement> sectionParts = new List<OpenXmlElement>();
-
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 100));
             
-            //sectionParts.Add(ParagraphHelper.WhiteSpace());
-
             sectionParts.Add(
-                TableHelper.MakeTable(new List<KeyValuePair<string, bool>>() {
-                    new KeyValuePair<string, bool>("Single parent or frequent parent absence", PreKInfo.OnlyOneParentInHome),
-                    new KeyValuePair<string, bool>("Lack of family support system", PreKInfo.NoFamilySupportSystem),
-                    new KeyValuePair<string, bool>("Low income family in financial need", PreKInfo.LowIncomeFamily),
-                    new KeyValuePair<string, bool>("Primary caregiver less than high school education", PreKInfo.PrimaryCaregiverLessThanHighSchoolEducation),
-                    new KeyValuePair<string, bool>("Child lives with teen parent", PreKInfo.TeenParent),
-                    new KeyValuePair<string, bool>("Child in foster care", PreKInfo.InFosterCare),
-                    new KeyValuePair<string, bool>("Little opportunity to interact with other same age", PreKInfo.LittleOpportunityToInteractWithSameAge),
-                    new KeyValuePair<string, bool>("Can use bathroom by self", PreKInfo.CanUseBathroomAlone),
-                    new KeyValuePair<string, bool>("Bathroom training in progress", PreKInfo.PottyTrainingInProgress),
-                })
-            );
-
-
-            sectionParts.Add(
-                TableHelper.MakeTable(new List<KeyValuePair<string, bool>>() {
-                    new KeyValuePair<string, bool>("Speech difficulties", PreKInfo.SpeechDifficulties),
-                    new KeyValuePair<string, bool>("Language difficulties", PreKInfo.LanguageDifficulties),
-                    new KeyValuePair<string, bool>("Gross Motor difficulties", PreKInfo.GrossMotorDifficulties),
-                    new KeyValuePair<string, bool>("Fine Motor difficulties", PreKInfo.FineMotorDifficulties)
-                })
-            );
-            sectionParts.Add(new Table(
-                LSSDTableStyles.Borders(),
-                LSSDTableStyles.Margins(),
-                new TableRow(
-                    new TableCell(
-                        new TableCellProperties(
-                            new GridSpan() { Val = 2 }
-                        ),
-                        ParagraphHelper.Paragraph("Other difficulties:", LSSDDocumentStyles.FieldLabel),
-                        ParagraphHelper.Paragraph(PreKInfo.OtherDifficulties, LSSDDocumentStyles.FieldValue)
+                TableHelper.StyledTable(                    
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Little opportunity to interact with other same age:").WithWidth(40),
+                        TableHelper.ValueCell(PreKInfo.LittleOpportunityToInteractWithSameAge).WithWidth(5),
+                        TableHelper.LabelCell("Low income family in financial need:").WithWidth(40),
+                        TableHelper.ValueCell(PreKInfo.LowIncomeFamily).WithWidth(5)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Single parent or frequent parent absence:"),
+                        TableHelper.ValueCell(PreKInfo.OnlyOneParentInHome),
+                        TableHelper.LabelCell("Lack of family support system:"),
+                        TableHelper.ValueCell(PreKInfo.NoFamilySupportSystem)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Primary caregiver less than high school education:"),
+                        TableHelper.ValueCell(PreKInfo.PrimaryCaregiverLessThanHighSchoolEducation),
+                        TableHelper.LabelCell("Speech difficulties:"),
+                        TableHelper.ValueCell(PreKInfo.SpeechDifficulties)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Child in foster care:"),
+                        TableHelper.ValueCell(PreKInfo.InFosterCare),
+                        TableHelper.LabelCell("Language difficulties:"),
+                        TableHelper.ValueCell(PreKInfo.LanguageDifficulties)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Can use bathroom by self:"),
+                        TableHelper.ValueCell(PreKInfo.CanUseBathroomAlone),
+                        TableHelper.LabelCell("Fine Motor difficulties:"),
+                        TableHelper.ValueCell(PreKInfo.FineMotorDifficulties)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Bathroom training in progress:"),
+                        TableHelper.ValueCell(PreKInfo.PottyTrainingInProgress),
+                        TableHelper.LabelCell("Gross Motor difficulties:"),
+                        TableHelper.ValueCell(PreKInfo.GrossMotorDifficulties)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Child lives with teen parent:"),
+                        TableHelper.ValueCell(PreKInfo.TeenParent),
+                        TableHelper.LabelCell(""),
+                        TableHelper.ValueCell("")
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Other difficulties:").WithColspan(4)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.ValueCell(PreKInfo.OtherDifficulties).WithColspan(4)
                     )
                 )
-            ));
-
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(2, 100));
-
-            
+            );          
 
             sectionParts.Add(ParagraphHelper.WhiteSpace());
             sectionParts.Add(ParagraphHelper.Paragraph("Child receives supports from the following:", LSSDDocumentStyles.SectionTitle));
           
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
-
             sectionParts.Add(
-                TableHelper.MakeTable(new List<KeyValuePair<string, bool>>() {
-                    new KeyValuePair<string, bool>("KidsFirst", PreKInfo.AssistanceFromKidsFirst),
-                    new KeyValuePair<string, bool>("Early Childhood Intervention Program", PreKInfo.AssistanceFromEarlyChildhoodIntervention),
-                    new KeyValuePair<string, bool>("Occupational/Physical Therapist", PreKInfo.AssistanceFromOccupationOrPhysicalTherapist),
-                    new KeyValuePair<string, bool>("Early Childhood Psychologist", PreKInfo.AssistanceFromChildhoodPsychologist),
-                    new KeyValuePair<string, bool>("Pre-School/Daycare/Family Day Home", PreKInfo.AssistanceFromPreSchoolOrDaycare),
-                    new KeyValuePair<string, bool>("Licensed Child Care", PreKInfo.AssistanceFromKidsFirst),
-                    new KeyValuePair<string, bool>("Autism Consultant or Resource Center", PreKInfo.AssistanceFromEarlyChildhoodIntervention),
-                    new KeyValuePair<string, bool>("Speech/Language Pathologist", PreKInfo.AssistanceFromOccupationOrPhysicalTherapist),
-                    new KeyValuePair<string, bool>("Social Services", PreKInfo.AssistanceFromChildhoodPsychologist),
-                    new KeyValuePair<string, bool>("Kinsmen Child Development Center", PreKInfo.AssistanceFromPreSchoolOrDaycare),
-                    new KeyValuePair<string, bool>("Aboriginal HeadStart", PreKInfo.AssistanceFromKidsFirst),
-                    new KeyValuePair<string, bool>("Consent to share information with these agencies", PreKInfo.ConsentToShareFromAgencies)
-                }));
+                TableHelper.StyledTable(
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("KidsFirst").WithWidth(40),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromKidsFirst).WithWidth(5),
+                        TableHelper.LabelCell("Early Childhood Intervention Program:").WithWidth(40),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromEarlyChildhoodIntervention).WithWidth(5)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Occupational/Physical Therapist:"),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromOccupationOrPhysicalTherapist),
+                        TableHelper.LabelCell("Early Childhood Psychologist:"),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromChildhoodPsychologist)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Pre-School/Daycare/Family Day Home:"),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromPreSchoolOrDaycare),
+                        TableHelper.LabelCell("Licensed Child Care:"),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromKidsFirst)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Autism Consultant or Resource Center:"),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromEarlyChildhoodIntervention),
+                        TableHelper.LabelCell("Speech/Language Pathologist:"),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromOccupationOrPhysicalTherapist)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Social Services:"),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromChildhoodPsychologist),
+                        TableHelper.LabelCell("Kinsmen Child Development Center:"),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromPreSchoolOrDaycare)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Aboriginal HeadStart:"),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromKidsFirst),
+                        TableHelper.LabelCell("Consent to share information with these agencies:"),
+                        TableHelper.ValueCell(PreKInfo.ConsentToShareFromAgencies)
+                    )
+                    
+                )
+            );
             
-            // Make this section have 2 columns            
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(2, 200));
+            sectionParts.Add(ParagraphHelper.PageBreak());
 
-            sectionParts.Add(ParagraphHelper.WhiteSpace());
             sectionParts.Add(
                 TableHelper.StyledTable(
                     TableHelper.FieldTableRow("Social, emotional, or behavior issues:", PreKInfo.SocialEmotionalOrBehaviourIssues, JustificationValues.Left, 33),
@@ -95,7 +125,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 )
             );
 
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 200));
+            sectionParts.Add(ParagraphHelper.WhiteSpace());
+
             return sectionParts;
         }
 

@@ -13,28 +13,18 @@ namespace LSSD.Registration.FormGenerators.FormSections
         {
             List<OpenXmlElement> sectionParts = new List<OpenXmlElement>();
                    
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 100));
-
             sectionParts.Add(
-                TableHelper.StyledTableForColumns(
+                TableHelper.StyledTable(
                     TableHelper.FieldTableRow("Legal Name:", Student.GetLegalName()),
                     TableHelper.FieldTableRow("Preferred Name:", Student.GetPreferredName()),
                     TableHelper.FieldTableRow("Gender:", Student.Gender),
-                    TableHelper.FieldTableRow("Date of Birth:", Student.GetDateOfBirthWithAge())
-                )
-            );
-            
-            sectionParts.Add(new Break() { Type = BreakValues.Column } );
-
-            sectionParts.Add(
-                TableHelper.StyledTableForColumns(                  
-                    TableHelper.FieldTableRow("Land Description:", Student.LandDescription),
+                    TableHelper.FieldTableRow("Date of Birth:", Student.GetDateOfBirthWithAge()),
                     TableHelper.FieldTableRow("Health Services #:", Student.HealthServicesNumber),
-                    TableHelper.FieldTableRow("Medical Notes:", Student.MedicalNotes)
+                    TableHelper.FieldTableRow("Medical Notes:", Student.MedicalNotes),
+                    TableHelper.FieldTableRow("Land Description:", Student.LandDescription)
                 )
             );
 
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(2, 100));
             sectionParts.Add(ParagraphHelper.WhiteSpace());
 
             // The code below will crash if the addresses are null, so check
@@ -61,7 +51,6 @@ namespace LSSD.Registration.FormGenerators.FormSections
             );
 
             // Previous schools            
-            sectionParts.Add(ColumnHelper.SetPreviousSectionToColumns(1, 100));
             sectionParts.Add(ParagraphHelper.WhiteSpace());
             sectionParts.Add(
                 TableHelper.StyledTable(

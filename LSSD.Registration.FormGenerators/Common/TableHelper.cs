@@ -14,7 +14,7 @@ namespace LSSD.Registration.FormGenerators.Common
                 new TableLayout() {  Type = TableLayoutValues.Autofit },
                 new TableWidth() { 
                     Type = TableWidthUnitValues.Pct, 
-                    Width = $"{95 * 50}"
+                    Width = $"{100 * 50}"
                     },
                 LSSDTableStyles.Borders(),
                 LSSDTableStyles.Margins()
@@ -33,7 +33,7 @@ namespace LSSD.Registration.FormGenerators.Common
                 new TableLayout() {  Type = TableLayoutValues.Autofit },
                 new TableWidth() { 
                     Type = TableWidthUnitValues.Pct, 
-                    Width = $"{95 * 50}"
+                    Width = $"{100 * 50}"
                     },
                 LSSDTableStyles.ThickOutsideBorders(),
                 LSSDTableStyles.Margins()
@@ -74,50 +74,6 @@ namespace LSSD.Registration.FormGenerators.Common
             return TC;
         }
 
-        public static Table StyledTableForColumns(params OpenXmlElement[] childItems) {
-            Table table = new Table(
-                new TableLayout() {  Type = TableLayoutValues.Autofit },
-                new TableWidth() { 
-                    Type = TableWidthUnitValues.Pct, 
-                    Width = $"{90 * 50}"
-                    },
-                LSSDTableStyles.Borders(),
-                LSSDTableStyles.Margins()
-            );
-
-            foreach(OpenXmlElement e in childItems) {
-                table.AppendChild(e);
-            }
-
-            return table;
-        }
-
-        public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items) {
-            return MakeTable(items, 95, LSSDTableStyles._defaultBorderColor);
-        }
-
-        public static Table MakeTable(IEnumerable<KeyValuePair<string, bool>> items, decimal TablewidthPercent, string BorderColor) {
-
-            Table itemTable = new Table(
-                new TableWidth() { 
-                    Type = TableWidthUnitValues.Pct, 
-                    Width = $"{TablewidthPercent * 50}"
-                    },
-                LSSDTableStyles.Borders(BorderColor),
-                LSSDTableStyles.Margins()
-            );
-
-            foreach(KeyValuePair<string, bool> item in items) {
-                itemTable.AppendChild(
-                    new TableRow(
-                        LabelCell(item.Key),
-                        ValueCell(item.Value)
-                    )
-                );
-            }
-
-            return itemTable;
-        }
         
         public static TableCell LabelCell(string Label) {
             return LabelCell(Label, JustificationValues.Left);
@@ -204,28 +160,28 @@ namespace LSSD.Registration.FormGenerators.Common
         }
         
         public static TableRow FieldTableRow(string Label, string Value, JustificationValues Alignment, double LabelWidthPercent) {
-            return new TableRow(
+            return StickyTableRow(
                 LabelCell(Label, Alignment).WithWidth(LabelWidthPercent),
                 ValueCell(Value)
             );
         }
 
         public static TableRow FieldTableRow(string Label, bool Value, JustificationValues Alignment, double LabelWidthPercent) {
-            return new TableRow(
+            return StickyTableRow(
                 LabelCell(Label, Alignment).WithWidth(LabelWidthPercent),
                 ValueCell(Value)
             );
         } 
 
         public static TableRow FieldTableRow(string Label, string Value) {
-            return new TableRow(
+            return StickyTableRow(
                 LabelCell(Label),
                 ValueCell(Value)
             );
         } 
 
         public static TableRow FieldTableRow(string Label, bool Value) {
-            return new TableRow(
+            return StickyTableRow(
                 LabelCell(Label),
                 ValueCell(Value)
             );

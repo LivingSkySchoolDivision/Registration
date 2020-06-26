@@ -19,15 +19,15 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 sectionParts.Add(
                     TableHelper.StyledTable(
                         TableHelper.StickyTableRow(
-                            TableHelper.LabelCell("Is EAL"),
+                            TableHelper.LabelCell("Is EAL:"),
                             TableHelper.ValueCell(EALInfo.IsEAL),
-                            TableHelper.LabelCell("First CDN School?"),
+                            TableHelper.LabelCell("First CDN School?:"),
                             TableHelper.ValueCell(EALInfo.IsFirstCanadianSchool)
                         ),
                         TableHelper.StickyTableRow(
-                            TableHelper.LabelCell("Entry date to Canada"),
+                            TableHelper.LabelCell("Entry date to Canada:"),
                             TableHelper.ValueCell(EALInfo.EntryDateToCanada?.ToShortDateString()),
-                            TableHelper.LabelCell("Entry date to CDN school"),
+                            TableHelper.LabelCell("Entry date to CDN school:"),
                             TableHelper.ValueCell(EALInfo.EntryDateToCanadianSchool?.ToShortDateString())
                         )
                     )
