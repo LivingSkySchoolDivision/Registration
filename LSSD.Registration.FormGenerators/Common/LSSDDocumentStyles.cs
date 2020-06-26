@@ -56,7 +56,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
                         new Bold(), 
-                        new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
+                        new Color() { ThemeColor = ThemeColorValues.Accent2 }, 
                         new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "32" } // Double the font size value you see in Word
                     )
@@ -71,7 +71,8 @@ namespace LSSD.Registration.FormGenerators.Common {
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
-                        new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
+                        new Bold(),
+                        new Color() { ThemeColor = ThemeColorValues.Accent2 }, 
                         new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "24" } // Double the font size value you see in Word
                     )
@@ -86,7 +87,7 @@ namespace LSSD.Registration.FormGenerators.Common {
                     CustomStyle = true,
                     Default = false,
                     StyleRunProperties = new StyleRunProperties(
-                        new Color() { ThemeColor = ThemeColorValues.Accent1 }, 
+                        new Color() { ThemeColor = ThemeColorValues.Accent2 }, 
                         new RunFonts() { Ascii = FontName },
                         new FontSize() { Val = "20" } // Double the font size value you see in Word
                     )

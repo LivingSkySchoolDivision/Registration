@@ -5,7 +5,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace LSSD.Registration.FormGenerators.Common {
     static class LSSDTableStyles {
-        public const string _defaultBorderColor = "D0D0D0";
+        public const string _defaultBorderColor = "707070";
 
         public static OpenXmlElement Margins() {
             return new TableCellMarginDefault(
