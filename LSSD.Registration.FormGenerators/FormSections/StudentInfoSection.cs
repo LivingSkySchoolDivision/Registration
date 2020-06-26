@@ -9,10 +9,14 @@ namespace LSSD.Registration.FormGenerators.FormSections
 {
     class StudentInfoSection
     {
-        public static IEnumerable<OpenXmlElement> GetSection(Student Student, TimeZoneInfo TimeZone) 
+        public static IEnumerable<OpenXmlElement> GetSection(Student Student, TimeZoneInfo TimeZone, bool IsPreKForm = false) 
         {
             List<OpenXmlElement> sectionParts = new List<OpenXmlElement>();
-                   
+            
+            if (IsPreKForm) {
+                Student.HealthServicesNumber = "(Not collected for PreK applications)";
+            }
+
             sectionParts.Add(
                 TableHelper.StyledTable(
                     TableHelper.FieldTableRow("Legal Name:", Student.GetLegalName()),
@@ -39,29 +43,31 @@ namespace LSSD.Registration.FormGenerators.FormSections
 
             sectionParts.Add(
               TableHelper.StyledTable(
-                    new TableRow(
+                    TableHelper.StickyTableRow(
                         TableHelper.LabelCell("Primary Address"),                        
                         TableHelper.LabelCell("Mailing Address")
                     ),
-                    new TableRow(
+                    TableHelper.StickyTableRow(
                         TableHelper.ValueCell(ParagraphHelper.ConvertMultiLineString(Student.PrimaryAddress.ToFormattedAddress())),
                         TableHelper.ValueCell(ParagraphHelper.ConvertMultiLineString(Student.MailingAddress.ToFormattedAddress()))
                     )
                 )  
             );
 
-            // Previous schools            
-            sectionParts.Add(ParagraphHelper.WhiteSpace());
-            sectionParts.Add(
-                TableHelper.StyledTable(
-                    new TableRow(
-                        TableHelper.LabelCell("Previous Schools")
-                    ),
-                    new TableRow(
-                        TableHelper.ValueCell(string.IsNullOrEmpty(Student.PreviousSchools) ? "None" : Student.PreviousSchools)
+            // Previous schools 
+            if (!string.IsNullOrEmpty(Student.PreviousSchools)) {           
+                sectionParts.Add(ParagraphHelper.WhiteSpace());
+                sectionParts.Add(
+                    TableHelper.StyledTable(
+                        TableHelper.StickyTableRow(
+                            TableHelper.LabelCell("Previous Schools")
+                        ),
+                        TableHelper.StickyTableRow(
+                            TableHelper.ValueCell(string.IsNullOrEmpty(Student.PreviousSchools) ? "None" : Student.PreviousSchools)
+                        )
                     )
-                )
-            );
+                );
+            }
 
             sectionParts.Add(ParagraphHelper.WhiteSpace());
             return sectionParts;

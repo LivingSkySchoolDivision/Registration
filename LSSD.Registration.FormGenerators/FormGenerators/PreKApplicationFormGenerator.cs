@@ -41,10 +41,11 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
             // The code for these parts is in /FormSections
             pageParts.AddRange(PageTitleSection.GetSection(Form, TimeZone)); 
             pageParts.AddRange(SchoolPreferencesSection.GetSection(Form.Form.SchoolPreferences));
-            pageParts.AddRange(PreKStudentInfoSection.GetSection(Form.Form.Student, TimeZone));
+            pageParts.AddRange(StudentInfoSection.GetSection(Form.Form.Student, TimeZone, true));
             pageParts.AddRange(SubmittedBySection.GetSection(Form.Form.SubmittedBy));    
             pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));
             pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo)); 
+            pageParts.AddRange(FormEndSection.GetSection(Form, TimeZone)); 
             return new Document(new Body(pageParts));
         }
     }

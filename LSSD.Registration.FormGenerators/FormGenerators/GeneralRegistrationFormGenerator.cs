@@ -49,7 +49,8 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
             pageParts.AddRange(CitizenshipSection.GetSection(Form.Form.Citizenship));
             pageParts.AddRange(FirstNationsSection.GetSection(Form.Form.FirstNationsInfo));
             pageParts.Add(ParagraphHelper.PageBreak());  
-            pageParts.AddRange(ContactsSection.GetSection(Form.Form.Contacts));  
+            pageParts.AddRange(ContactsSection.GetSection(Form.Form.Contacts));   
+            pageParts.AddRange(FormEndSection.GetSection(Form, TimeZone)); 
             return new Document(new Body(pageParts));
         }
     }
