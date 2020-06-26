@@ -75,11 +75,15 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                             emailNotification = new PreKEmailNotification((SubmittedPreKApplicationForm)form, factory, _timeZone);
                         }
 
+                        if (form.GetType() == typeof(SubmittedGeneralRegistrationForm))
+                        {
+                            emailNotification = new GeneralRegistrationEmailNotification((SubmittedGeneralRegistrationForm)form, factory, _timeZone);
+                        }
+
                         if (emailNotification != null) {
                             MailMessage msg = new MailMessage();
                             foreach(string addr in recipients) {
-                                //msg.To.Add(addr);
-                                msg.To.Add("mark.strendin@lskysd.ca");
+                                msg.To.Add(addr);
                             }
 
                             msg.Body = emailNotification.Body;

@@ -34,11 +34,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                 }
 
                 sectionParts.Add(siblingTable);
-            } else {
-                sectionParts.Add(
-                    ParagraphHelper.Paragraph("No sibling information entered", LSSDDocumentStyles.FieldValue)
-                );
-            }
+            } 
 
             sectionParts.Add(ParagraphHelper.WhiteSpace());
 
