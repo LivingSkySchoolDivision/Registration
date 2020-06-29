@@ -12,5 +12,10 @@ namespace LSSD.Registration.Model
         public bool TransferFromAnotherSaskSchool { get; set; }
         public bool TransferFromHomeBased { get; set; }
         public bool TransferFromAnotherCountry { get; set; }
+
+        public string SchoolTransferredFrom { get;set; }
+        public string ProvinceTransferredFrom { get;set; }
+        public string CountryTransferredFrom { get; set; }
+        public string ExchangeStudentFrom { get; set; }
     }
 }

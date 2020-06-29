@@ -81,6 +81,18 @@
             </div>
         </div>
 
+        @if (EnrollmentData.TransferFromAnotherCountry)
+        {
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <label for="studentLanguage" class="small">Country transferred from </label>
+                    <InputText id="studentLanguage" class="form-control form-control-sm" @bind-Value="@EnrollmentData.CountryTransferredFrom"></InputText>
+                    <ValidationMessage class="offset-sm-4" For="@(() => EnrollmentData.CountryTransferredFrom)" />
+                </div>
+            </div>
+        }
+
         <div class="form-row">
             <div class="col-sm-4"></div>
             <div class="col-sm-8">
@@ -89,6 +101,18 @@
             </div>
         </div>
 
+        @if (EnrollmentData.TransferFromAnotherProvince)
+        {
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <label for="studentLanguage" class="small">Province transferred from </label>
+                    <InputText id="studentLanguage" class="form-control form-control-sm" @bind-Value="@EnrollmentData.ProvinceTransferredFrom"></InputText>
+                    <ValidationMessage class="offset-sm-4" For="@(() => EnrollmentData.ProvinceTransferredFrom)" />
+                </div>
+            </div>
+        }
+
         <div class="form-row">
             <div class="col-sm-4"></div>
             <div class="col-sm-8">
@@ -96,6 +120,18 @@
                 <label for="" class="">@studentFirstName is transferring from another <b>saskatchewan school</b></label>
             </div>
         </div>
+
+        @if (EnrollmentData.TransferFromAnotherSaskSchool)
+        {
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <label for="studentLanguage" class="small">School transferred from </label>
+                    <InputText id="studentLanguage" class="form-control form-control-sm" @bind-Value="@EnrollmentData.SchoolTransferredFrom"></InputText>
+                    <ValidationMessage class="offset-sm-4" For="@(() => EnrollmentData.SchoolTransferredFrom)" />
+                </div>
+            </div>
+        }
 
         <div class="form-row">
             <div class="col-sm-4"></div>
@@ -112,6 +148,18 @@
                 <label for="" class="">@studentFirstName is an exchange student</label>
             </div>
         </div>
+
+        @if (EnrollmentData.ExchangeStudent)
+        {
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <label for="studentLanguage" class="small">Exchange student from </label>
+                    <InputText id="studentLanguage" class="form-control form-control-sm" @bind-Value="@EnrollmentData.ExchangeStudentFrom"></InputText>
+                    <ValidationMessage class="offset-sm-4" For="@(() => EnrollmentData.ExchangeStudentFrom)" />
+                </div>
+            </div>
+        }
 
 
         <br /><br />
