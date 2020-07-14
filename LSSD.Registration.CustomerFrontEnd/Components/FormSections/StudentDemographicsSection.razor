@@ -184,6 +184,12 @@
             <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.PreviousSchools)" />
         </div>
 
+        <div class="form-group row">
+            <label for="studentCellPhone" class="col-sm-3">Student Cell Phone Number: </label>
+            <InputText id="studentCellPhone" class="form-control col-sm-8" @bind-Value="@StudentDemographicData.CellPhone"></InputText>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => StudentDemographicData.CellPhone)" />
+        </div>
+
         <div class="form-group">
             <h3>Primary Physical Address</h3>
             <div class="offset-sm-3">

@@ -25,7 +25,8 @@ namespace LSSD.Registration.FormGenerators.FormSections
                     TableHelper.FieldTableRow("Date of Birth:", Student.GetDateOfBirthWithAge()),
                     TableHelper.FieldTableRow("Health Services #:", Student.HealthServicesNumber),
                     TableHelper.FieldTableRow("Medical Notes:", Student.MedicalNotes),
-                    TableHelper.FieldTableRow("Land Description:", Student.LandDescription)
+                    TableHelper.FieldTableRow("Land Description:", Student.LandDescription),
+                    TableHelper.FieldTableRow("Student Cell #:", Student.CellPhone)
                 )
             );
 
