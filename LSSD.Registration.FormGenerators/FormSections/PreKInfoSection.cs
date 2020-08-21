@@ -87,23 +87,23 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.LabelCell("Pre-School/Daycare/Family Day Home:"),
                         TableHelper.ValueCell(PreKInfo.AssistanceFromPreSchoolOrDaycare),
                         TableHelper.LabelCell("Licensed Child Care:"),
-                        TableHelper.ValueCell(PreKInfo.AssistanceFromKidsFirst)
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromLicensedChildCare)
                     ),
                     TableHelper.StickyTableRow(
                         TableHelper.LabelCell("Autism Consultant or Resource Center:"),
-                        TableHelper.ValueCell(PreKInfo.AssistanceFromEarlyChildhoodIntervention),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromAutismConsultant),
                         TableHelper.LabelCell("Speech/Language Pathologist:"),
-                        TableHelper.ValueCell(PreKInfo.AssistanceFromOccupationOrPhysicalTherapist)
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromSpeechLangagePathologist)
                     ),
                     TableHelper.StickyTableRow(
                         TableHelper.LabelCell("Social Services:"),
-                        TableHelper.ValueCell(PreKInfo.AssistanceFromChildhoodPsychologist),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromSocialServices),
                         TableHelper.LabelCell("Kinsmen Child Development Center:"),
-                        TableHelper.ValueCell(PreKInfo.AssistanceFromPreSchoolOrDaycare)
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromKinsmenChildDevCenter)
                     ),
                     TableHelper.StickyTableRow(
                         TableHelper.LabelCell("Aboriginal HeadStart:"),
-                        TableHelper.ValueCell(PreKInfo.AssistanceFromKidsFirst),
+                        TableHelper.ValueCell(PreKInfo.AssistanceFromAboriginalHeadstart),
                         TableHelper.LabelCell("Consent to share information with these agencies:"),
                         TableHelper.ValueCell(PreKInfo.ConsentToShareFromAgencies)
                     )
