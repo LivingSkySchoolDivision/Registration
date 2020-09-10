@@ -12,5 +12,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LSSD.Registration.Model\LSSD.Registration.Model.csproj" />
+    <ProjectReference Include="..\LSSD.Registration.Data\LSSD.Registration.Data.csproj" />    
+  </ItemGroup>
 
 </Project>

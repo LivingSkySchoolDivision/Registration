@@ -8,6 +8,9 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using LSSD.Registration.Model;
+using LSSD.Registration.Model.SubmittedForms;
+using LSSD.Registration.Data;
 
 namespace LSSD.Registration.AdminFrontEnd
 {
@@ -57,6 +60,11 @@ namespace LSSD.Registration.AdminFrontEnd
             services.AddAuthorization();
             services.AddRazorPages().AddRazorPagesOptions(options => { options.Conventions.AuthorizeFolder("/"); });
             services.AddServerSideBlazor();
+
+            services.AddScoped<MongoDbConnection>();
+            services.AddScoped<IRegistrationRepository<School>, MongoRepository<School>>();
+            services.AddScoped<IRegistrationRepository<SubmittedGeneralRegistrationForm>, MongoRepository<SubmittedGeneralRegistrationForm>>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
