@@ -4,13 +4,36 @@
 @using LSSD.Registration.Data;
 @code {
     [Inject]
-    IRegistrationRepository<SubmittedPreKApplicationForm> _FormRepo {get;set;}
+    IRegistrationRepository<SubmittedPreKApplicationForm> _FormRepo { get; set; }
+    
 }
 
 <h1>Submitted PreK Application Forms</h1>
 
+<table class="table">
+    <thead>
+    <tr>
+        <th>Form ID</th>
+        <th>Student Name</th>
+        <th>Submitted On</th>
+        <th>School Choice 1</th>
+        <th>School Choice 2</th>
+        <th>School Choice 3</th>
+        <th>Form Submitter</th>
+    </tr>
+    </thead>    
+
 @foreach(SubmittedPreKApplicationForm form in _FormRepo.GetAll().OrderBy(x => x.DateProcessedUTC)) 
 {
-    <h2>@(form.Id)</h2>
-    @(form.Form.Student.FirstName) @(form.Form.Student.LastName)
+    <tr>
+        <td><small>@(form.Id)</small></td>
+        <td>@(form.Form.Student.FirstName) @(form.Form.Student.LastName)</td>
+        <td>@(form.DateReceivedUTC.ToString())</td>
+        <td>@(form.Form.SchoolPreferences.FirstChoice?.Name)</td>
+        <td>@(form.Form.SchoolPreferences.SecondChoice?.Name)</td>
+        <td>@(form.Form.SchoolPreferences.ThirdChoice?.Name)</td>
+        <td>@(form.Form.SubmittedBy.FirstName) @(form.Form.SubmittedBy.LastName)</td>
+    </tr>
 }
+
+</table>

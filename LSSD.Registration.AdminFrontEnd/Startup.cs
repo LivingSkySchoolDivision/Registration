@@ -64,8 +64,7 @@ namespace LSSD.Registration.AdminFrontEnd
             services.AddScoped<MongoDbConnection>();
             services.AddScoped<IRegistrationRepository<School>, MongoRepository<School>>();
             services.AddScoped<IRegistrationRepository<SubmittedGeneralRegistrationForm>, MongoRepository<SubmittedGeneralRegistrationForm>>();
-            services.AddScoped<IRegistrationRepository<SubmittedPreKApplicationForm>, MongoRepository<SubmittedPreKApplicationForm>>();
-            
+            services.AddScoped<IRegistrationRepository<SubmittedPreKApplicationForm>, MongoRepository<SubmittedPreKApplicationForm>>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

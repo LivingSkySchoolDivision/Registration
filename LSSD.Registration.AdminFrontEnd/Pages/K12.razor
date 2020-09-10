@@ -9,8 +9,26 @@
 
 <h1>Submitted K-12 Registration Forms</h1>
 
+<table class="table">
+    <thead>
+    <tr>
+        <th>Form Id</th>
+        <th>Submitted On</th>
+        <th>School</th>
+        <th>Student Name</th>
+        <th>Form Submitter</th>
+    </tr>
+    </thead>    
+
 @foreach(SubmittedGeneralRegistrationForm form in _FormRepo.GetAll().OrderBy(x => x.DateProcessedUTC)) 
 {
-    <h2>@(form.Id) - @(form.Form.School)</h2>
-    @(form.Form.Student.FirstName) @(form.Form.Student.LastName)
+    <tr>
+        <td><small>@(form.Id)</small></td>
+        <td>@(form.DateReceivedUTC.ToString())</td>
+        <td>@(form.Form.School.Name)</td>
+        <td>@(form.Form.Student.FirstName) @(form.Form.Student.LastName)</td>
+        <td>@(form.Form.SubmittedBy.FirstName) @(form.Form.SubmittedBy.LastName)</td>
+    </tr>
 }
+
+</table>
