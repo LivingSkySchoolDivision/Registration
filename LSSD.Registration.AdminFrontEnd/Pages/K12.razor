@@ -1,0 +1,16 @@
+@page "/k12"
+@using LSSD.Registration.Model;
+@using LSSD.Registration.Model.SubmittedForms;
+@using LSSD.Registration.Data;
+@code {
+    [Inject]
+    IRegistrationRepository<SubmittedGeneralRegistrationForm> _FormRepo {get;set;}
+}
+
+<h1>Submitted K-12 Registration Forms</h1>
+
+@foreach(SubmittedGeneralRegistrationForm form in _FormRepo.GetAll().OrderBy(x => x.DateProcessedUTC)) 
+{
+    <h2>@(form.Id) - @(form.Form.School)</h2>
+    @(form.Form.Student.FirstName) @(form.Form.Student.LastName)
+}

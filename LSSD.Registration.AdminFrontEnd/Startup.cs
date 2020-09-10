@@ -64,6 +64,7 @@ namespace LSSD.Registration.AdminFrontEnd
             services.AddScoped<MongoDbConnection>();
             services.AddScoped<IRegistrationRepository<School>, MongoRepository<School>>();
             services.AddScoped<IRegistrationRepository<SubmittedGeneralRegistrationForm>, MongoRepository<SubmittedGeneralRegistrationForm>>();
+            services.AddScoped<IRegistrationRepository<SubmittedPreKApplicationForm>, MongoRepository<SubmittedPreKApplicationForm>>();
             
         }
 

@@ -1,0 +1,16 @@
+@page "/prek"
+@using LSSD.Registration.Model;
+@using LSSD.Registration.Model.SubmittedForms;
+@using LSSD.Registration.Data;
+@code {
+    [Inject]
+    IRegistrationRepository<SubmittedPreKApplicationForm> _FormRepo {get;set;}
+}
+
+<h1>Submitted PreK Application Forms</h1>
+
+@foreach(SubmittedPreKApplicationForm form in _FormRepo.GetAll().OrderBy(x => x.DateProcessedUTC)) 
+{
+    <h2>@(form.Id)</h2>
+    @(form.Form.Student.FirstName) @(form.Form.Student.LastName)
+}
