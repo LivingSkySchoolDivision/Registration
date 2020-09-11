@@ -1,10 +1,15 @@
 @page "/schools"
+@page "/schools/{schoolid}"
 @using LSSD.Registration.Model;
 @using LSSD.Registration.Model.SubmittedForms;
 @using LSSD.Registration.Data;
 @code {
     [Inject]
     IRegistrationRepository<School> _SchoolRepo {get;set;}
+
+    [Parameter]
+    public string schoolid { get; set; }
+    
 }
 
 <h1>Schools</h1>

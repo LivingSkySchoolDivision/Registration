@@ -1,0 +1,29 @@
+@using LSSD.Registration.Model;
+@using LSSD.Registration.Model.SubmittedForms;
+@code {
+
+    [Parameter]
+    public SubmittedGeneralRegistrationForm form { get; set; }
+
+    [Parameter]
+    public bool? Editable { get; set; } = false;
+}
+<div>    
+<h3>Form</h3>
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-6">Form ID</div>
+        <div class="col-sm-6">@form.Id</div>
+    </div>
+</div>
+
+<h3>School</h3>
+
+
+<h3>Submitted By</h3>
+<h3>Student</h3>
+<h3>EAL</h3>
+<h3>Citizenship</h3>
+<h3>Students of First Nations Ancestry</h3>
+<h3>Contacts</h3>
+</div>

@@ -1,12 +1,17 @@
 @page "/k12"
+@page "/k12/{formid}"
 @using LSSD.Registration.Model;
 @using LSSD.Registration.Model.SubmittedForms;
 @using LSSD.Registration.Data;
 @code {
     [Inject]
     IRegistrationRepository<SubmittedGeneralRegistrationForm> _FormRepo {get;set;}
+
+    [Parameter]
+    public string formid { get; set; }
 }
 
+@if (string.IsNullOrEmpty(formid)) {
 <h1>Submitted K-12 Registration Forms</h1>
 
 <table class="table">
@@ -32,3 +37,10 @@
 }
 
 </table>
+    
+} else {
+    @* Back button *@
+    @* Support for edit form stuff? *@
+    @* Form razor component*@
+}
+
