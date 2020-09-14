@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src
+COPY ["LSSD.Registration.AdminFrontEnd/LSSD.Registration.AdminFrontEnd.csproj", "LSSD.Registration.AdminFrontEnd/"]
+COPY ["LSSD.Registration.Model/LSSD.Registration.Model.csproj", "LSSD.Registration.Model/"]
+RUN dotnet restore "LSSD.Registration.AdminFrontEnd/LSSD.Registration.AdminFrontEnd.csproj"
+COPY . .
+WORKDIR "/src/LSSD.Registration.AdminFrontEnd"
+RUN dotnet build "LSSD.Registration.AdminFrontEnd.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "LSSD.Registration.AdminFrontEnd.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "LSSD.Registration.AdminFrontEnd.dll"]

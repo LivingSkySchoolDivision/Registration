@@ -1,0 +1,28 @@
+@page "/k12/{FormId}"
+@using LSSD.Registration.Model;
+@using LSSD.Registration.Model.SubmittedForms;
+@using LSSD.Registration.Data;
+@using LSSD.Registration.AdminFrontEnd.Components;
+@code {
+    [Inject]
+    IRegistrationRepository<SubmittedGeneralRegistrationForm> _FormRepo {get;set;}
+
+    [Parameter]
+    public string FormId {get;set;}    
+}
+
+<h1>K-12 Registration Form</h1>
+<div style="width: 80%; margin-left: auto; margin-right: auto;">
+
+@if (!string.IsNullOrEmpty(FormId)) {
+    SubmittedGeneralRegistrationForm form = _FormRepo.GetById(FormId);
+    if (form != null) {
+        <GeneralRegistrationFormComponent Form="@form" />
+    } else {
+        <p>Form not found.</p>
+    }
+} else {
+    <p>Form not found (empty).</p>
+}
+
+</div>
