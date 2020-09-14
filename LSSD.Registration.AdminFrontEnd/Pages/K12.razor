@@ -1,17 +1,13 @@
 @page "/k12"
-@page "/k12/{formid}"
 @using LSSD.Registration.Model;
 @using LSSD.Registration.Model.SubmittedForms;
 @using LSSD.Registration.Data;
+@using LSSD.Registration.AdminFrontEnd.Components;
 @code {
     [Inject]
     IRegistrationRepository<SubmittedGeneralRegistrationForm> _FormRepo {get;set;}
-
-    [Parameter]
-    public string formid { get; set; }
 }
 
-@if (string.IsNullOrEmpty(formid)) {
 <h1>Submitted K-12 Registration Forms</h1>
 
 <table class="table">
@@ -28,7 +24,7 @@
 @foreach(SubmittedGeneralRegistrationForm form in _FormRepo.GetAll().OrderBy(x => x.DateProcessedUTC)) 
 {
     <tr>
-        <td><small>@(form.Id)</small></td>
+        <td><a href="K12/@(form.Id)"><small>@(form.Id)</small></a></td>
         <td>@(form.DateReceivedUTC.ToString())</td>
         <td>@(form.Form.School.Name)</td>
         <td>@(form.Form.Student.FirstName) @(form.Form.Student.LastName)</td>
@@ -37,10 +33,5 @@
 }
 
 </table>
-    
-} else {
-    @* Back button *@
-    @* Support for edit form stuff? *@
-    @* Form razor component*@
-}
+
 

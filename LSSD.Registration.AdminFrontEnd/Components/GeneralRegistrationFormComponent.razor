@@ -3,27 +3,297 @@
 @code {
 
     [Parameter]
-    public SubmittedGeneralRegistrationForm form { get; set; }
-
-    [Parameter]
-    public bool? Editable { get; set; } = false;
-}
-<div>    
+    public SubmittedGeneralRegistrationForm Form { get; set; }
+}   
+<div>
 <h3>Form</h3>
 <div class="form-group">
     <div class="row">
-        <div class="col-sm-6">Form ID</div>
-        <div class="col-sm-6">@form.Id</div>
+        <div class="col-sm-3">Form ID</div>
+        <div class="col-sm-6">@Form.Id</div>
     </div>
 </div>
 
-<h3>School</h3>
+<h3>Enrollment Details</h3>
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">No previous schooling</div>
+        <div class="col-sm-6">@(Form.Form.EnrollmentDetails.NoPreviousSchooling ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Transfer from another province</div>
+        <div class="col-sm-6">@(Form.Form.EnrollmentDetails.TransferFromAnotherProvince ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Exchange student</div>
+        <div class="col-sm-6">@(Form.Form.EnrollmentDetails.ExchangeStudent ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Transfer from another SASK school</div>
+        <div class="col-sm-6">@(Form.Form.EnrollmentDetails.TransferFromAnotherSaskSchool ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Transfer from home based</div>
+        <div class="col-sm-6">@(Form.Form.EnrollmentDetails.TransferFromHomeBased ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Transfer from another country</div>
+        <div class="col-sm-6">@(Form.Form.EnrollmentDetails.TransferFromAnotherCountry ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">School Transferred From</div>
+        <div class="col-sm-6">@Form.Form.EnrollmentDetails.SchoolTransferredFrom</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Province Transferred From</div>
+        <div class="col-sm-6">@Form.Form.EnrollmentDetails.ProvinceTransferredFrom</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Country Transferred From</div>
+        <div class="col-sm-6">@Form.Form.EnrollmentDetails.CountryTransferredFrom</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Exchange student from</div>
+        <div class="col-sm-6">@Form.Form.EnrollmentDetails.ExchangeStudentFrom</div>
+    </div>
+</div>
 
+<h3>School and Grade</h3>
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">School Name</div>
+        <div class="col-sm-6">@Form.Form.School.Name</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">School DAN</div>
+        <div class="col-sm-6">@Form.Form.School.DAN</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Grade</div>
+        <div class="col-sm-6">@Form.Form.Grade.Grade</div>
+    </div>
+</div>
 
 <h3>Submitted By</h3>
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">Submitted By</div>
+        <div class="col-sm-6">@Form.Form.SubmittedBy.FirstName @Form.Form.SubmittedBy.LastName</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Contact Details</div>
+        <div class="col-sm-6">@Form.Form.SubmittedBy.ContactDetails</div>
+    </div>
+</div>
+
 <h3>Student</h3>
-<h3>EAL</h3>
-<h3>Citizenship</h3>
-<h3>Students of First Nations Ancestry</h3>
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">Legal Name</div>
+        <div class="col-sm-6">@Form.Form.Student.FirstName @Form.Form.Student.MiddleName @Form.Form.Student.LastName</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Preferred Name</div>
+        <div class="col-sm-6">@Form.Form.Student.LegalFirstName @Form.Form.Student.LegalMiddleName @Form.Form.Student.LegalLastName</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Date of Birth</div>
+        <div class="col-sm-6">@Form.Form.Student.DateOfBirth?.ToLongDateString()</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Primary Address</div>
+        <div class="col-sm-6">@Form.Form.Student.PrimaryAddress.ToFormattedAddress()</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Mailing Address</div>
+        <div class="col-sm-6">@Form.Form.Student.MailingAddress.ToFormattedAddress()</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Land Description</div>
+        <div class="col-sm-6">@Form.Form.Student.LandDescription</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Previous Schools</div>
+        <div class="col-sm-6">@Form.Form.Student.PreviousSchools</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Health Services Number</div>
+        <div class="col-sm-6">@Form.Form.Student.HealthServicesNumber</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Medical Notes</div>
+        <div class="col-sm-6">@Form.Form.Student.MedicalNotes</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Cell Phone</div>
+        <div class="col-sm-6">@Form.Form.Student.CellPhone</div>
+    </div>
+</div>
+
 <h3>Contacts</h3>
+@foreach(Contact contact in Form.Form.Contacts.Contacts) 
+{
+<div class="form-group" style="border: 1px solid rgba(0,0,0,0.2);">
+    <div class="row">
+        <div class="col-sm-3">Name</div>
+        <div class="col-sm-6">@contact.FirstName @contact.LastName</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Relation to student</div>
+        <div class="col-sm-6">@contact.RelationshipToStudent</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Priority</div>
+        <div class="col-sm-6">@contact.ContactPriority</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Lives with student</div>
+        <div class="col-sm-6">@(contact.LivesWithStudent ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Same primary address as student</div>
+        <div class="col-sm-6">@(contact.SamePrimaryAddressAsStudent ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Same mailing address as student</div>
+        <div class="col-sm-6">@(contact.SameMailingAddressAsStudent ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Should receive mail for student</div>
+        <div class="col-sm-6">@(contact.ShouldRecieveMailAboutStudent ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Primary Address</div>
+        <div class="col-sm-6">@contact.PrimaryAddress.ToFormattedAddress()</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Mailing Address</div>
+        <div class="col-sm-6">@contact.MailingAddress.ToFormattedAddress()</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Home phone</div>
+        <div class="col-sm-6">@contact.HomePhone</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Work phone</div>
+        <div class="col-sm-6">@contact.WorkPhone</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Cell phone</div>
+        <div class="col-sm-6">@contact.CellPhone</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Alternate contact info</div>
+        <div class="col-sm-6">@contact.AlternateContactInfo</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Employer</div>
+        <div class="col-sm-6">@contact.Employer</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Email</div>
+        <div class="col-sm-6">@contact.EmailAddress</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Notes</div>
+        <div class="col-sm-6">@contact.Note</div>
+    </div>
+</div>
+}
+
+<h3>Siblings</h3>
+@foreach(Sibling sibling in Form.Form.Siblings.Siblings)
+{
+<div class="form-group" style="border: 1px solid rgba(0,0,0,0.2);">
+    <div class="row">
+        <div class="col-sm-3">Name</div>
+        <div class="col-sm-6">@sibling.FirstName @sibling.LastName</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">School attending</div>
+        <div class="col-sm-6">@sibling.SchoolAttending</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Date of birth</div>
+        <div class="col-sm-6">@sibling.DateOfBirth?.ToLongDateString()</div>
+    </div>
+</div>
+}
+
+<h3>EAL</h3>
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">Is EAL</div>
+        <div class="col-sm-6">@(Form.Form.EALInfo.IsEAL ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Is first Canadian school?</div>
+        <div class="col-sm-6">@(Form.Form.EALInfo.IsFirstCanadianSchool ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Entry date to Canada</div>
+        <div class="col-sm-6">@Form.Form.EALInfo.EntryDateToCanada?.ToLongDateString() </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Entry date to Canadian School</div>
+        <div class="col-sm-6">@Form.Form.EALInfo.EntryDateToCanadianSchool?.ToLongDateString() </div>
+    </div>
+</div>
+
+<h3>Citizenship</h3>
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">Country of Birth</div>
+        <div class="col-sm-6">@Form.Form.Citizenship.CountryOfBirth</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Citizenship</div>
+        <div class="col-sm-6">@Form.Form.Citizenship.Citizenship</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Language spoken at home</div>
+        <div class="col-sm-6">@Form.Form.Citizenship.LanguageSpokenAtHome</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Previous country</div>
+        <div class="col-sm-6">@Form.Form.Citizenship.PreviousCountry</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Residency type</div>
+        <div class="col-sm-6">@Form.Form.Citizenship.ResidencyType</div>
+    </div>
+</div>
+
+<h3>Students of First Nations Ancestry</h3>
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">Is declaring First Nations status?</div>
+        <div class="col-sm-6">@(Form.Form.FirstNationsInfo.IsDeclaringFirstNationsInfo ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Resides on reserve?</div>
+        <div class="col-sm-6">@(Form.Form.FirstNationsInfo.ResidesOnReserve ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Aboriginal Status</div>
+        <div class="col-sm-6">@Form.Form.FirstNationsInfo.AboriginalStatus </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Band Name</div>
+        <div class="col-sm-6">@Form.Form.FirstNationsInfo.BandName </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Reserve Name</div>
+        <div class="col-sm-6">@Form.Form.FirstNationsInfo.ReserveName </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Reserve House</div>
+        <div class="col-sm-6">@Form.Form.FirstNationsInfo.ReserveHouse </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Status Number</div>
+        <div class="col-sm-6">@Form.Form.FirstNationsInfo.StatusNumber </div>
+    </div>
+</div>
+
 </div>
