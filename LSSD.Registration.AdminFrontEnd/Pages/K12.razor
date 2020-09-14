@@ -6,9 +6,16 @@
 @code {
     [Inject]
     IRegistrationRepository<SubmittedGeneralRegistrationForm> _FormRepo {get;set;}
+    List<SubmittedGeneralRegistrationForm> AllForms = new List<SubmittedGeneralRegistrationForm>();
+
+    protected override void OnInitialized()
+    {
+        AllForms = _FormRepo.GetAll().OrderByDescending(x => x.DateProcessedUTC).ToList();        
+    }
 }
 
 <h1>Submitted K-12 Registration Forms</h1>
+<p>Found @(AllForms.Count) form(s). Sorted descending (most recent at the top).</p>
 
 <table class="table">
     <thead>
@@ -22,7 +29,7 @@
     </tr>
     </thead>    
 
-@foreach(SubmittedGeneralRegistrationForm form in _FormRepo.GetAll().OrderBy(x => x.DateProcessedUTC)) 
+@foreach(SubmittedGeneralRegistrationForm form in AllForms) 
 {
     <tr>
         <td><a href="K12/@(form.Id)"><small>@(form.Id)</small></a></td>
