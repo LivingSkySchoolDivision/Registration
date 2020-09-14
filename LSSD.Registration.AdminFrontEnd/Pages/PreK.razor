@@ -20,6 +20,7 @@
         <th>School Choice 2</th>
         <th>School Choice 3</th>
         <th>Form Submitter</th>
+        <th>Notification sent to school</th>
     </tr>
     </thead>    
 
@@ -33,6 +34,7 @@
         <td>@(form.Form.SchoolPreferences.SecondChoice?.Name)</td>
         <td>@(form.Form.SchoolPreferences.ThirdChoice?.Name)</td>
         <td>@(form.Form.SubmittedBy.FirstName) @(form.Form.SubmittedBy.LastName)</td>
+        <td>@(form.NotificationSent ? "Yes" : "No")</td>
     </tr>
 }
 

@@ -18,6 +18,7 @@
         <th>School</th>
         <th>Student Name</th>
         <th>Form Submitter</th>
+        <th>Notification to school</th>
     </tr>
     </thead>    
 
@@ -29,6 +30,7 @@
         <td>@(form.Form.School.Name)</td>
         <td>@(form.Form.Student.FirstName) @(form.Form.Student.LastName)</td>
         <td>@(form.Form.SubmittedBy.FirstName) @(form.Form.SubmittedBy.LastName)</td>
+        <td>@(form.NotificationSent ? "Yes" : "No")</td>
     </tr>
 }
 
