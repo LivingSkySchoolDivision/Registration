@@ -31,7 +31,7 @@ pipeline {
         }
         stage('Docker build - Admin Front End') {
             steps {
-                sh "docker build -f Dockerfile-Notifier -t ${PRIVATE_DOCKER_REGISTRY}/${REPO_ADMINFRONTEND}:latest -t ${PRIVATE_DOCKER_REGISTRY}/${REPO_ADMINFRONTEND}:${TAG} ."                
+                sh "docker build -f Dockerfile-AdminFrontEnd -t ${PRIVATE_DOCKER_REGISTRY}/${REPO_ADMINFRONTEND}:latest -t ${PRIVATE_DOCKER_REGISTRY}/${REPO_ADMINFRONTEND}:${TAG} ."                
             }
         }
         stage('Docker push') {
