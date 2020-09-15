@@ -1,0 +1,217 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public School School { get; set; }
+    
+    [Parameter]
+    public bool Editable { get;set; }
+
+
+}
+
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-sm-3">
+            <label for="requestorFirstName" class="font-weight-bold">School Name: </label>
+        </div>
+        <div class="col-sm-4">
+            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.Name" placeholder=""></InputText>
+            <ValidationMessage For="@(() => School.Name)" />
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-sm-3">
+            <label for="requestorFirstName" class="font-weight-bold">DAN: </label>
+        </div>
+        <div class="col-sm-4">
+            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.DAN" placeholder=""></InputText>
+            <ValidationMessage For="@(() => School.DAN)" />
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-sm-3">
+            <label for="requestorFirstName" class="font-weight-bold">SchoolLogicID: </label>
+        </div>
+        <div class="col-sm-4">
+            <InputNumber id="requestorFirstName" class="form-control" @bind-Value="@School.SchoolLogicSchoolID" placeholder=""></InputNumber>
+            <ValidationMessage For="@(() => School.SchoolLogicSchoolID)" />
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="col-sm-3">
+            <label for="requestorFirstName" class="font-weight-bold">Phone: </label>
+        </div>
+        <div class="col-sm-4">
+            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.PhoneNumber" placeholder=""></InputText>
+            <ValidationMessage For="@(() => School.PhoneNumber)" />
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-sm-3">
+            <label for="requestorFirstName" class="font-weight-bold">Website: </label>
+        </div>
+        <div class="col-sm-4">
+            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.WebsiteURL" placeholder=""></InputText>
+            <ValidationMessage For="@(() => School.WebsiteURL)" />
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-sm-3">
+            <label for="requestorFirstName" class="font-weight-bold">Email </label>
+        </div>
+        <div class="col-sm-4">
+            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.EmailAddress" placeholder=""></InputText>
+            <ValidationMessage For="@(() => School.EmailAddress)" />
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-sm-3">
+            <label for="requestorFirstName" class="font-weight-bold">Facebook: </label>
+        </div>
+        <div class="col-sm-4">
+            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.Facebook" placeholder=""></InputText>
+            <ValidationMessage For="@(() => School.Facebook)" />
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-sm-3">
+            <label for="requestorFirstName" class="font-weight-bold">Twitter: </label>
+        </div>
+        <div class="col-sm-4">
+            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.Twitter" placeholder=""></InputText>
+            <ValidationMessage For="@(() => School.Twitter)" />
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="col-sm-3">
+            <label for="requestorFirstName" class="font-weight-bold">Communities: </label>
+        </div>
+        <div class="col-sm-4">                        
+            <ul>
+            @foreach(string community in @School.Communities) {
+                <li>@community</li>
+            }
+            </ul>  
+        </div>
+    </div>
+
+
+
+
+
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.IsAvailableForRegistration"></InputCheckbox>
+            <label for="" class="">School is available for registrations</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.IsAvailableForRegistration)" />
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.IsAvailableForRegistration"></InputCheckbox>
+            <label for="" class="">School offers Pre-K</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGradePK)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.IsAvailableForRegistration"></InputCheckbox>
+            <label for="" class="">School offers Kindergarten</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGradeK)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade1"></InputCheckbox>
+            <label for="" class="">School offers Grade 1</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade1)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade2"></InputCheckbox>
+            <label for="" class="">School offers Grade 2</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade2)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade3"></InputCheckbox>
+            <label for="" class="">School offers Grade 3</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade3)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade4"></InputCheckbox>
+            <label for="" class="">School offers Grade 4</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade4)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade5"></InputCheckbox>
+            <label for="" class="">School offers Grade 5</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade5)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade6"></InputCheckbox>
+            <label for="" class="">School offers Grade 6</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade6)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade7"></InputCheckbox>
+            <label for="" class="">School offers Grade 7</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade7)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade8"></InputCheckbox>
+            <label for="" class="">School offers Grade 8</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade8)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade9"></InputCheckbox>
+            <label for="" class="">School offers Grade 9</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade9)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade10"></InputCheckbox>
+            <label for="" class="">School offers Grade 10</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade10)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade11"></InputCheckbox>
+            <label for="" class="">School offers Grade 11</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade11)" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.HasGrade12"></InputCheckbox>
+            <label for="" class="">School offers Grade 12</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.HasGrade12)" />
+        </div>
+    </div>
+
+</div>

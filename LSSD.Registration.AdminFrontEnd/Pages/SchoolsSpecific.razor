@@ -1,0 +1,78 @@
+@page "/schools/{schoolid}"
+@using LSSD.Registration.Model;
+@using LSSD.Registration.Model.SubmittedForms;
+@using LSSD.Registration.Data;
+@using LSSD.Registration.AdminFrontEnd.Components;
+@code {
+    [Inject]
+    IRegistrationRepository<School> _SchoolRepo {get;set;}
+
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
+    [Parameter]
+    public string schoolid { get; set; } 
+
+    
+    School selectedSchool = null;
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrEmpty(schoolid)) 
+        {
+            selectedSchool = _SchoolRepo.GetById(schoolid);
+        }      
+    } 
+
+    protected void HandleValidSubmit()
+    {
+        // Save the data    
+        _SchoolRepo.Update(selectedSchool);
+
+        // Navigate back 
+        NavigationManager.NavigateTo("/schools");   
+
+    }
+
+    protected void HandleInValidSubmit()
+    {
+        // Do nothing
+    }
+
+    
+    protected void OnClick_PreviousStepButton()
+    {
+        NavigationManager.NavigateTo("/schools");
+    }
+}
+
+<h1>School</h1>
+<div style="width: 80%; margin-left: auto; margin-right: auto;">
+
+@if (!string.IsNullOrEmpty(schoolid)) {
+    if (selectedSchool != null) {
+        <EditForm Model="selectedSchool" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <SchoolComponent School="@selectedSchool" Editable=true />
+        
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary">Back to school list</button>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    } else {
+        <p>School not found.</p>
+    }
+} else {
+    <p>School not found (empty).</p>
+}
+
+</div>
