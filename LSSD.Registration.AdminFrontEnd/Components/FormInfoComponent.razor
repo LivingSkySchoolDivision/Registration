@@ -1,0 +1,11 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public ISubmittedForm Form { get; set; }
+}
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">Form ID</div>
+        <div class="col-sm-6">@Form.Id</div>
+    </div>
+</div>

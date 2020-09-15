@@ -1,0 +1,47 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public EnrolmentInfo Section { get; set; }
+}
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">No previous schooling</div>
+        <div class="col-sm-6">@(Section.NoPreviousSchooling ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Transfer from another province</div>
+        <div class="col-sm-6">@(Section.TransferFromAnotherProvince ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Exchange student</div>
+        <div class="col-sm-6">@(Section.ExchangeStudent ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Transfer from another SASK school</div>
+        <div class="col-sm-6">@(Section.TransferFromAnotherSaskSchool ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Transfer from home based</div>
+        <div class="col-sm-6">@(Section.TransferFromHomeBased ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Transfer from another country</div>
+        <div class="col-sm-6">@(Section.TransferFromAnotherCountry ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">School Transferred From</div>
+        <div class="col-sm-6">@Section.SchoolTransferredFrom</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Province Transferred From</div>
+        <div class="col-sm-6">@Section.ProvinceTransferredFrom</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Country Transferred From</div>
+        <div class="col-sm-6">@Section.CountryTransferredFrom</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Exchange student from</div>
+        <div class="col-sm-6">@Section.ExchangeStudentFrom</div>
+    </div>
+</div>

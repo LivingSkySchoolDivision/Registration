@@ -1,0 +1,74 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public ContactsInfo Contacts { get; set; }
+}
+@foreach(Contact contact in Contacts.Contacts) 
+{
+<div class="form-group" style="border: 1px solid rgba(0,0,0,0.2);">
+    <div class="row">
+        <div class="col-sm-3">Name</div>
+        <div class="col-sm-6">@contact.FirstName @contact.LastName</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Relation to student</div>
+        <div class="col-sm-6">@contact.RelationshipToStudent</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Priority</div>
+        <div class="col-sm-6">@contact.ContactPriority</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Lives with student</div>
+        <div class="col-sm-6">@(contact.LivesWithStudent ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Same primary address as student</div>
+        <div class="col-sm-6">@(contact.SamePrimaryAddressAsStudent ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Same mailing address as student</div>
+        <div class="col-sm-6">@(contact.SameMailingAddressAsStudent ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Should receive mail for student</div>
+        <div class="col-sm-6">@(contact.ShouldRecieveMailAboutStudent ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Primary Address</div>
+        <div class="col-sm-6">@contact.PrimaryAddress.ToFormattedAddress()</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Mailing Address</div>
+        <div class="col-sm-6">@contact.MailingAddress.ToFormattedAddress()</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Home phone</div>
+        <div class="col-sm-6">@contact.HomePhone</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Work phone</div>
+        <div class="col-sm-6">@contact.WorkPhone</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Cell phone</div>
+        <div class="col-sm-6">@contact.CellPhone</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Alternate contact info</div>
+        <div class="col-sm-6">@contact.AlternateContactInfo</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Employer</div>
+        <div class="col-sm-6">@contact.Employer</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Email</div>
+        <div class="col-sm-6">@contact.EmailAddress</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Notes</div>
+        <div class="col-sm-6">@contact.Note</div>
+    </div>
+</div>
+}

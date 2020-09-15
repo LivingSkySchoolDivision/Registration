@@ -1,0 +1,24 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public SiblingInfo Siblings { get; set; }
+
+}
+
+@foreach(Sibling sibling in Siblings.Siblings)
+{
+<div class="form-group" style="border: 1px solid rgba(0,0,0,0.2);">
+    <div class="row">
+        <div class="col-sm-3">Name</div>
+        <div class="col-sm-6">@sibling.FirstName @sibling.LastName</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">School attending</div>
+        <div class="col-sm-6">@sibling.SchoolAttending</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Date of birth</div>
+        <div class="col-sm-6">@sibling.DateOfBirth?.ToLongDateString()</div>
+    </div>
+</div>
+}

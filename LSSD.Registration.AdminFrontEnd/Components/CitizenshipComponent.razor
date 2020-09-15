@@ -1,0 +1,27 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public CitizenshipInfo Section { get; set; }
+}
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">Country of Birth</div>
+        <div class="col-sm-6">@Section.CountryOfBirth</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Citizenship</div>
+        <div class="col-sm-6">@Section.Citizenship</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Language spoken at home</div>
+        <div class="col-sm-6">@Section.LanguageSpokenAtHome</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Previous country</div>
+        <div class="col-sm-6">@Section.PreviousCountry</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Residency type</div>
+        <div class="col-sm-6">@Section.ResidencyType</div>
+    </div>
+</div>
