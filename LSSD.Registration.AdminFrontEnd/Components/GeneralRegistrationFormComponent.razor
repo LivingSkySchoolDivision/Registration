@@ -1,9 +1,24 @@
 @using LSSD.Registration.Model;
 @using LSSD.Registration.Model.SubmittedForms;
 @code {
+    [Inject]
+    IRegistrationRepository<SubmittedGeneralRegistrationForm> _FormRepo {get;set;}
 
     [Parameter]
     public SubmittedGeneralRegistrationForm Form { get; set; }
+
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
+    private void toggleNotifications() 
+    {
+        if (Form != null) 
+        {
+            Form.NotificationSent = !Form.NotificationSent;            
+            _FormRepo.Update(Form);
+            NavigationManager.NavigateTo("/K12");
+        }
+    }
 }   
 <div>
 <h3>Form</h3>
@@ -295,5 +310,14 @@
         <div class="col-sm-6">@Form.Form.FirstNationsInfo.StatusNumber </div>
     </div>
 </div>
+
+<button class="btn btn-danger" @onclick="toggleNotifications">
+    @if(Form.NotificationSent) {
+        <span>Resend notifications</span>
+    } else {
+        <span>Mark as notified</span>
+    }
+</button>
+<br/>
 
 </div>
