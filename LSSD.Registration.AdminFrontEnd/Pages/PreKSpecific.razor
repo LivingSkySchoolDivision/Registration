@@ -1,0 +1,29 @@
+@page "/prek/{FormId}"
+@using LSSD.Registration.Model;
+@using LSSD.Registration.Model.SubmittedForms;
+@using LSSD.Registration.Data;
+@using LSSD.Registration.AdminFrontEnd.Components;
+@code {
+    [Inject]
+    IRegistrationRepository<SubmittedPreKApplicationForm> _FormRepo {get;set;}
+
+    [Parameter]
+    public string FormId {get;set;}    
+
+}
+
+<h1>Pre-K Application Form</h1>
+<div style="width: 80%; margin-left: auto; margin-right: auto;">
+
+@if (!string.IsNullOrEmpty(FormId)) {
+    SubmittedPreKApplicationForm form = _FormRepo.GetById(FormId);
+    if (form != null) {
+        <PrekRegistrationFormComponent Form="@form" />
+    } else {
+        <p>Form not found.</p>
+    }
+} else {
+    <p>Form not found (empty).</p>
+}
+
+</div>

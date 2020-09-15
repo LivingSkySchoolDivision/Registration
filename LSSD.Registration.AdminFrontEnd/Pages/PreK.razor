@@ -27,7 +27,7 @@
 @foreach(SubmittedPreKApplicationForm form in _FormRepo.GetAll().OrderBy(x => x.DateProcessedUTC)) 
 {
     <tr>
-        <td><small>@(form.Id)</small></td>
+        <td><a href="prek/@(form.Id)"><small>@(form.Id)</small></a></td>
         <td>@(form.Form.Student.FirstName) @(form.Form.Student.LastName)</td>
         <td>@(form.DateReceivedUTC.ToString())</td>
         <td>@(form.Form.SchoolPreferences.FirstChoice?.Name)</td>

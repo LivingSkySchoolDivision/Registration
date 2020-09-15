@@ -1,0 +1,19 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public SchoolPreferenceList Section { get; set; }
+}
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">First choice</div>
+        <div class="col-sm-6">@Section.FirstChoice?.Name</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Second choice</div>
+        <div class="col-sm-6">@Section.SecondChoice?.Name</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Third choice</div>
+        <div class="col-sm-6">@Section.ThirdChoice?.Name</div>
+    </div>
+</div>

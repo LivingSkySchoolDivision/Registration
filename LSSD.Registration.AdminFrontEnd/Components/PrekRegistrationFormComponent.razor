@@ -1,0 +1,51 @@
+@using LSSD.Registration.Model;
+@using LSSD.Registration.Model.SubmittedForms;
+@code {
+    [Inject]
+    IRegistrationRepository<SubmittedPreKApplicationForm> _FormRepo {get;set;}
+
+    [Parameter]
+    public SubmittedPreKApplicationForm Form { get; set; }
+
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
+    private void toggleNotifications() 
+    {
+        if (Form != null) 
+        {
+            Form.NotificationSent = !Form.NotificationSent;            
+            _FormRepo.Update(Form);
+            NavigationManager.NavigateTo("/K12");
+        }
+    }
+}   
+<div>
+<h3>Form</h3>
+<FormInfoComponent Form="@Form"/>
+
+<h3>School preferences</h3>
+<SchoolPreferencesComponent Section="@Form.Form.SchoolPreferences" />
+
+<h3>Submitted By</h3>
+<SubmittedByComponent Section="@Form.Form.SubmittedBy" />
+
+<h3>Student</h3>
+<StudentDemographicComponent Student="@Form.Form.Student" />
+
+<h3>Siblings</h3>
+<SiblingsComponent Siblings="@Form.Form.Siblings" />
+
+<h3>PreK Info</h3>
+<PreKInfoComponent Section="@Form.Form.PreKInfo" />
+
+<button class="btn btn-danger" @onclick="toggleNotifications">
+    @if(Form.NotificationSent) {
+        <span>Resend notifications</span>
+    } else {
+        <span>Mark as notified</span>
+    }
+</button>
+<br/><br/><br/><br/><br/>
+
+</div>
