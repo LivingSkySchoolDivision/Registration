@@ -1,0 +1,24 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public EALInfo Section { get; set; }
+
+}
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">Is EAL</div>
+        <div class="col-sm-6">@(Section.IsEAL ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Is first Canadian school?</div>
+        <div class="col-sm-6">@(Section.IsFirstCanadianSchool ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Entry date to Canada</div>
+        <div class="col-sm-6">@Section.EntryDateToCanada?.ToLongDateString() </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Entry date to Canadian School</div>
+        <div class="col-sm-6">@Section.EntryDateToCanadianSchool?.ToLongDateString() </div>
+    </div>
+</div>

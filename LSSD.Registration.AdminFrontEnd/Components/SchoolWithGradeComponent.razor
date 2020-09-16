@@ -1,0 +1,22 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public SelectedSchool School { get; set; }
+
+    [Parameter]
+    public GradeInfo Grade { get; set; }
+}
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">School Name</div>
+        <div class="col-sm-6">@School.Name</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">School DAN</div>
+        <div class="col-sm-6">@School.DAN</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Grade</div>
+        <div class="col-sm-6">@Grade.Grade</div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public FirstNationsInfo Section { get; set; }
+}
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">Is declaring First Nations status?</div>
+        <div class="col-sm-6">@(Section.IsDeclaringFirstNationsInfo ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Resides on reserve?</div>
+        <div class="col-sm-6">@(Section.ResidesOnReserve ? "Yes" : "No") </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Aboriginal Status</div>
+        <div class="col-sm-6">@Section.AboriginalStatus </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Band Name</div>
+        <div class="col-sm-6">@Section.BandName </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Reserve Name</div>
+        <div class="col-sm-6">@Section.ReserveName </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Reserve House</div>
+        <div class="col-sm-6">@Section.ReserveHouse </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Status Number</div>
+        <div class="col-sm-6">@Section.StatusNumber </div>
+    </div>
+</div>

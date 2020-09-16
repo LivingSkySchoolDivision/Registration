@@ -2,10 +2,10 @@
 @using LSSD.Registration.Model.SubmittedForms;
 @code {
     [Inject]
-    IRegistrationRepository<SubmittedGeneralRegistrationForm> _FormRepo {get;set;}
+    IRegistrationRepository<SubmittedPreKApplicationForm> _FormRepo {get;set;}
 
     [Parameter]
-    public SubmittedGeneralRegistrationForm Form { get; set; }
+    public SubmittedPreKApplicationForm Form { get; set; }
 
     [Inject]
     NavigationManager NavigationManager { get; set; }
@@ -24,11 +24,8 @@
 <h3>Form</h3>
 <FormInfoComponent Form="@Form"/>
 
-<h3>Enrolment Details</h3>
-<EnrolmentInfoComponent Section="@Form.Form.EnrollmentDetails" />
-
-<h3>School and Grade</h3>
-<SchoolWithGradeComponent School="@Form.Form.School" Grade="@Form.Form.Grade" />
+<h3>School preferences</h3>
+<SchoolPreferencesComponent Section="@Form.Form.SchoolPreferences" />
 
 <h3>Submitted By</h3>
 <SubmittedByComponent Section="@Form.Form.SubmittedBy" />
@@ -36,20 +33,11 @@
 <h3>Student</h3>
 <StudentDemographicComponent Student="@Form.Form.Student" />
 
-<h3>Contacts</h3>
-<ContactsComponent Contacts="@Form.Form.Contacts" />
-
 <h3>Siblings</h3>
 <SiblingsComponent Siblings="@Form.Form.Siblings" />
 
-<h3>EAL</h3>
-<EALInfoComponent Section="@Form.Form.EALInfo" />
-
-<h3>Citizenship</h3>
-<CitizenshipComponent Section="@Form.Form.Citizenship" />
-
-<h3>Students of First Nations Ancestry</h3>
-<FirstNationsComponent Section="@Form.Form.FirstNationsInfo" />
+<h3>PreK Info</h3>
+<PreKInfoComponent Section="@Form.Form.PreKInfo" />
 
 <button class="btn btn-danger" @onclick="toggleNotifications">
     @if(Form.NotificationSent) {

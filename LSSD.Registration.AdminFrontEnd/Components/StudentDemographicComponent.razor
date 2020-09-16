@@ -1,0 +1,48 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public Student Student { get; set; }
+}
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">Legal Name</div>
+        <div class="col-sm-6">@Student.FirstName @Student.MiddleName @Student.LastName</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Preferred Name</div>
+        <div class="col-sm-6">@Student.LegalFirstName @Student.LegalMiddleName @Student.LegalLastName</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Date of Birth</div>
+        <div class="col-sm-6">@Student.DateOfBirth?.ToLongDateString()</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Primary Address</div>
+        <div class="col-sm-6">@Student.PrimaryAddress.ToFormattedAddress()</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Mailing Address</div>
+        <div class="col-sm-6">@Student.MailingAddress.ToFormattedAddress()</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Land Description</div>
+        <div class="col-sm-6">@Student.LandDescription</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Previous Schools</div>
+        <div class="col-sm-6">@Student.PreviousSchools</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Health Services Number</div>
+        <div class="col-sm-6">@Student.HealthServicesNumber</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Medical Notes</div>
+        <div class="col-sm-6">@Student.MedicalNotes</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">Cell Phone</div>
+        <div class="col-sm-6">@Student.CellPhone</div>
+    </div>
+</div>

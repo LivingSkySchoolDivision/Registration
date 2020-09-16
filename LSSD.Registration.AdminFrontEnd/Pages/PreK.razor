@@ -5,10 +5,18 @@
 @code {
     [Inject]
     IRegistrationRepository<SubmittedPreKApplicationForm> _FormRepo { get; set; }
+
+    List<SubmittedPreKApplicationForm> AllForms = new List<SubmittedPreKApplicationForm>();
+
+    protected override void OnInitialized()
+    {
+        AllForms = _FormRepo.GetAll().OrderByDescending(x => x.DateProcessedUTC).ToList();        
+    }
     
 }
 
 <h1>Submitted PreK Application Forms</h1>
+<p>Found @(AllForms.Count) form(s). Sorted descending (most recent at the top).</p>
 
 <table class="table">
     <thead>
@@ -24,10 +32,10 @@
     </tr>
     </thead>    
 
-@foreach(SubmittedPreKApplicationForm form in _FormRepo.GetAll().OrderBy(x => x.DateProcessedUTC)) 
+@foreach(SubmittedPreKApplicationForm form in AllForms) 
 {
     <tr>
-        <td><small>@(form.Id)</small></td>
+        <td><a href="prek/@(form.Id)"><small>@(form.Id)</small></a></td>
         <td>@(form.Form.Student.FirstName) @(form.Form.Student.LastName)</td>
         <td>@(form.DateReceivedUTC.ToString())</td>
         <td>@(form.Form.SchoolPreferences.FirstChoice?.Name)</td>

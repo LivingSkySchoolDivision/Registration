@@ -1,24 +1,24 @@
-@page "/k12/{FormId}"
+@page "/prek/{FormId}"
 @using LSSD.Registration.Model;
 @using LSSD.Registration.Model.SubmittedForms;
 @using LSSD.Registration.Data;
 @using LSSD.Registration.AdminFrontEnd.Components;
 @code {
     [Inject]
-    IRegistrationRepository<SubmittedGeneralRegistrationForm> _FormRepo {get;set;}
+    IRegistrationRepository<SubmittedPreKApplicationForm> _FormRepo {get;set;}
 
     [Parameter]
     public string FormId {get;set;}    
 
 }
 
-<h1>K-12 Registration Form</h1>
+<h1>Pre-K Application Form</h1>
 <div style="width: 80%; margin-left: auto; margin-right: auto;">
 
 @if (!string.IsNullOrEmpty(FormId)) {
-    SubmittedGeneralRegistrationForm form = _FormRepo.GetById(FormId);
+    SubmittedPreKApplicationForm form = _FormRepo.GetById(FormId);
     if (form != null) {
-        <GeneralRegistrationFormComponent Form="@form" />
+        <PrekRegistrationFormComponent Form="@form" />
     } else {
         <p>Form not found.</p>
     }
