@@ -53,7 +53,6 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                     Credentials = new NetworkCredential(_smtpConnectionDetails.Username, _smtpConnectionDetails.Password)
                 })
                 {
-                    List<INotifiable> successfulNotifications = new List<INotifiable>();
                     foreach(INotifiable form in _backlog)
                     {
                         // Determine recipients of the message
@@ -104,7 +103,6 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                                     smtpClient.Send(msg);
                                 }
 
-                                successfulNotifications.Add(form);
                                 form.NotificationSent = true;
                             } 
                             catch(Exception ex) {
@@ -115,6 +113,7 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                     }
 
                     // Empty the queue. Some may have failed, but they won't be marked as notified in the DB, so the next run will catch them.
+                    // This prevents an SMTP outage from enqueuing the same email hundreds of times.
                     _backlog.Clear();
                 }
             }
