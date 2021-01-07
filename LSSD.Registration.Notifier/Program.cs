@@ -27,9 +27,9 @@ namespace LSSD.Registration.Notifier
         {
             // Load configuration
             IConfiguration configuration = new ConfigurationBuilder()
-                   .AddEnvironmentVariables()
-                   .Build();
-            
+                .AddEnvironmentVariables()
+                .Build();
+
             string keyvault_endpoint = configuration["KEYVAULT_ENDPOINT"];
             if (!string.IsNullOrEmpty(keyvault_endpoint))
             {
@@ -44,7 +44,7 @@ namespace LSSD.Registration.Notifier
                     .AddAzureKeyVault(keyvault_endpoint, keyVaultClient, new DefaultKeyVaultSecretManager())
                     .Build();
             }
-            
+
             IConfigurationSection generalConfig = configuration.GetSection("Settings");
             TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById(generalConfig["TimeZone"]);
 
@@ -52,28 +52,31 @@ namespace LSSD.Registration.Notifier
             MongoDbConnection mongoDatabase = new MongoDbConnection(dbConnectionString);
 
             ConsoleWrite($"Time zone for forms: {timeZone}");
-
-            MongoRepository<School> schoolRepo = new MongoRepository<School>(mongoDatabase);
-
+            
             IConfigurationSection smtpConfig = configuration.GetSection("SMTP");
-            SMTPConnectionDetails smtpInfo = new SMTPConnectionDetails() 
+            SMTPConnectionDetails smtpInfo = new SMTPConnectionDetails()
             {
                 Host = smtpConfig["hostname"],
                 Port = int.Parse(smtpConfig["port"]),
                 Username = smtpConfig["username"],
                 Password = smtpConfig["password"],
                 ReplyToAddress = smtpConfig["replytoaddress"],
-                FromAddress = smtpConfig["fromaddress"]               
+                FromAddress = smtpConfig["fromaddress"]
             };
 
-            NotificationHandler notifications = new NotificationHandler();
-
-            // Register notification handlers          
-            notifications.RegisterHandler(new EmailNotificationHandler(smtpInfo, timeZone, schoolRepo.GetAll()));
-
             // Start main loop
-            while (true) 
+            while (true)
             {
+                ConsoleWrite($"Checking for notifications to send...");
+                ConsoleWrite($"> Loading schools...");
+                MongoRepository<School> schoolRepo = new MongoRepository<School>(mongoDatabase);
+                ConsoleWrite($"> Setting up notification handlers...");
+                NotificationHandler notifications = new NotificationHandler();
+
+                // Register notification handlers          
+                notifications.RegisterHandler(new EmailNotificationHandler(smtpInfo, timeZone, schoolRepo.GetAll()));
+
+                ConsoleWrite($"> Checking for notifications...");
                 // Connect to the DB and check for new submitted forms
                 handleBatch<SubmittedPreKApplicationForm>(mongoDatabase, notifications);
                 handleBatch<SubmittedGeneralRegistrationForm>(mongoDatabase, notifications);
@@ -86,13 +89,15 @@ namespace LSSD.Registration.Notifier
 
         private static void handleBatch<T>(MongoDbConnection dbConnection, NotificationHandler notificationHandler) where T : IGUIDable, INotifiable
         {
+
+            ConsoleWrite($">> Checking for {typeof(T)}...");
             MongoRepository<T> repo = new MongoRepository<T>(dbConnection);
 
             // Find new objects
             List<T> foundForms = repo.Find(x => x.NotificationSent == false).ToList();
             
             foreach(T form in foundForms) {
-                ConsoleWrite($"Triggering notifications for {form.Id} ({form.GetType().Name})");
+                ConsoleWrite($">> Enqueuing notifications for {form.Id} ({form.GetType().Name})");
                 notificationHandler.AddNotification(form);                
             } 
 
@@ -101,7 +106,7 @@ namespace LSSD.Registration.Notifier
 
             // Mark objects that suceeded as complete
             foreach(T form in foundForms.Where(f => f.NotificationSent == true)) {
-                ConsoleWrite($"Marking {form.Id} as notified ({form.GetType().Name})");
+                ConsoleWrite($">> Marking {form.Id} as notified ({form.GetType().Name})");
                 repo.Update(form);
             } 
 
