@@ -7,7 +7,7 @@ namespace LSSD.Registration.Model
 {
     public class ContactsInfo : IValidatableObject
     {
-        private const int _minContacts = 1;
+        private const int _minContacts = 2;
 
         public List<Contact> Contacts { get; set; }
 
