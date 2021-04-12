@@ -34,7 +34,7 @@ namespace LSSD.Registration.CustomerFrontEnd
             IConfigurationSection settingsSection = Configuration.GetSection("Settings");
 
             // Default to what's in Properties/launchSettings.json for the API project.
-            string apiURI = settingsSection["APIURI"] ?? "https://localhost:4001";
+            string apiURI = settingsSection["APIURI"] ?? "https://registration-api.lskysd.ca";
 
             Console.WriteLine("API URL is: " + apiURI);
 
