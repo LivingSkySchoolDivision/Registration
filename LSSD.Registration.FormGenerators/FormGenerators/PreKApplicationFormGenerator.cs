@@ -42,10 +42,11 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
             pageParts.AddRange(PageTitleSection.GetSection(Form, TimeZone)); 
             pageParts.AddRange(SchoolPreferencesSection.GetSection(Form.Form.SchoolPreferences));
             pageParts.AddRange(StudentInfoSection.GetSection(Form.Form.Student, TimeZone, true));
-            pageParts.AddRange(SubmittedBySection.GetSection(Form.Form.SubmittedBy));    
+            pageParts.AddRange(SubmittedBySection.GetSection(Form.Form.SubmittedBy)); 
             pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));
             pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo)); 
-            pageParts.AddRange(FormEndSection.GetSection(Form, TimeZone)); 
+            pageParts.AddRange(ContactsSection.GetSection(Form.Form.Contacts));  
+            pageParts.AddRange(FormEndSection.GetSection(Form, TimeZone));    
             return new Document(new Body(pageParts));
         }
     }
