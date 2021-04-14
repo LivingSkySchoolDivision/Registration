@@ -15,5 +15,7 @@ namespace LSSD.Registration.Model.Forms
         public SiblingInfo Siblings { get; set; }
         [Required]
         public PreKInfo PreKInfo { get; set; }
+        [Required]
+        public ContactsInfo Contacts { get; set; }
     }
 }

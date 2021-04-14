@@ -36,6 +36,7 @@
         form.SchoolPreferences = await BrowserStorage.Get<SchoolPreferenceList>(StorageKeys.MultiSchool);
         form.Siblings = await BrowserStorage.Get<SiblingInfo>(StorageKeys.Siblings);
         form.PreKInfo = await BrowserStorage.Get<PreKInfo>(StorageKeys.PreKInfo);
+        form.Contacts =  await BrowserStorage.Get<ContactsInfo>(StorageKeys.Contacts);
 
         if (form.Student != null)
         {

@@ -76,6 +76,119 @@ namespace LSSD.Registration.Forms
                     }
                 } 
             },
+            Contacts = new ContactsInfo()
+            {
+                Contacts = new List<Contact>()
+                {
+                    new Contact()
+                    {
+                        FirstName = "Parent's First Name",
+                        LastName = "Parent's Last Name",
+                        RelationshipToStudent = "Parent",
+                        ContactPriority = 1,
+                        LivesWithStudent = true,
+                        SamePrimaryAddressAsStudent = true,
+                        SameMailingAddressAsStudent = true,
+                        ShouldRecieveMailAboutStudent = true,
+                        HomePhone = "1234567890",
+                        WorkPhone = "0987654321",
+                        CellPhone = "3216540987",
+                        AlternateContactInfo = "Facebook: MyFacebookName",
+                        Employer = "Spacely Space Sprockets Inc",
+                        EmailAddress = "email@domain.com",
+                        PrimaryAddress = new Address()
+                        {
+                            Line1 = "123 Fake Street",
+                            Line2 = "Apartment 72",
+                            City = "Cake Town",
+                            Province = "SK",
+                            Country = "Canada",
+                            PostalCode = "H0H 0H0"
+                        },
+                        MailingAddress = new Address()
+                        {
+                            Line1 = "PO Box 123",
+                            Line2 = "",
+                            City = "Cake Town",
+                            Province = "SK",
+                            PostalCode = "H0H 0H0",
+                            Country = "Canada"
+                        }
+                    },
+                    new Contact()
+                    {
+                        FirstName = "Parent 2's First Name",
+                        LastName = "Parent 2's Last Name",
+                        RelationshipToStudent = "Parent",
+                        ContactPriority = 2,
+                        LivesWithStudent = true,
+                        SamePrimaryAddressAsStudent = true,
+                        SameMailingAddressAsStudent = true,
+                        ShouldRecieveMailAboutStudent = true,
+                        HomePhone = "1234567890",
+                        WorkPhone = "0987654321",
+                        CellPhone = "3216540987",
+                        AlternateContactInfo = "Facebook: MyFacebookName",
+                        Employer = "Spacely Space Sprockets Inc",
+                        EmailAddress = "email@domain.com",
+                        Note = "Not reachable during work day",
+                        PrimaryAddress = new Address()
+                        {
+                            Line1 = "123 Fake Street",
+                            Line2 = "Apartment 72",
+                            City = "Cake Town",
+                            Province = "SK",
+                            Country = "Canada",
+                            PostalCode = "H0H 0H0"
+                        },
+                        MailingAddress = new Address()
+                        {
+                            Line1 = "PO Box 123",
+                            Line2 = "",
+                            City = "Cake Town",
+                            Province = "SK",
+                            PostalCode = "H0H 0H0",
+                            Country = "Canada"
+                        }
+                    },
+                    new Contact()
+                    {
+                        FirstName = "Emergency Contact First Name",
+                        LastName = "Emergency Contact Last Name",
+                        RelationshipToStudent = "Emergency Contact",
+                        ContactPriority = 3,
+                        LivesWithStudent = false,
+                        SamePrimaryAddressAsStudent = false,
+                        SameMailingAddressAsStudent = false,
+                        ShouldRecieveMailAboutStudent = false,
+                        HomePhone = string.Empty,
+                        WorkPhone = "0987654321",
+                        CellPhone = "3216540987",
+                        AlternateContactInfo = string.Empty,
+                        Employer = "Cogswell's Cogs",
+                        EmailAddress = "email@domain.com",
+                        Note = "Has no home phone",
+                        PrimaryAddress = new Address()
+                        {
+                            Line1 = "321 Fake Street",
+                            Line2 = string.Empty,
+                            City = "Cake Town",
+                            Province = "SK",
+                            Country = "Canada",
+                            PostalCode = "H0H 0H0"
+                        },
+                        MailingAddress = new Address()
+                        {
+                            Line1 = "PO Box 123",
+                            Line2 = "",
+                            City = "Cake Town",
+                            Province = "SK",
+                            PostalCode = "H0H 0H0",
+                            Country = "Canada"
+                        }
+                    }
+                }
+            },
             PreKInfo = new PreKInfo() {
                 SocialEmotionalOrBehaviourIssues = string.Empty,
                 ReferredByOtherAgency = string.Empty,
