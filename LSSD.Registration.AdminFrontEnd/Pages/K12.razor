@@ -10,7 +10,7 @@
 
     protected override void OnInitialized()
     {
-        AllForms = _FormRepo.GetAll().OrderByDescending(x => x.DateProcessedUTC).ToList();        
+        AllForms = _FormRepo.GetAll().ToList();        
     }
 }
 
@@ -29,7 +29,7 @@
     </tr>
     </thead>    
 
-@foreach(SubmittedGeneralRegistrationForm form in AllForms) 
+@foreach(SubmittedGeneralRegistrationForm form in AllForms.OrderByDescending(x => x.DateReceivedUTC)) 
 {
     <tr>
         <td><a href="K12/@(form.Id)"><small>@(form.Id)</small></a></td>
