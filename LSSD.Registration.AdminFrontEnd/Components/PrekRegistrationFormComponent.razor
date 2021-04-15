@@ -16,7 +16,7 @@
         {
             Form.NotificationSent = !Form.NotificationSent;            
             _FormRepo.Update(Form);
-            NavigationManager.NavigateTo("/K12");
+            NavigationManager.NavigateTo("/prek");
         }
     }
 }   
@@ -36,6 +36,9 @@
 <h3>Siblings</h3>
 <SiblingsComponent Siblings="@Form.Form.Siblings" />
 
+<h3>Contacts</h3>
+<ContactsComponent Contacts="@Form.Form.Contacts" />
+
 <h3>PreK Info</h3>
 <PreKInfoComponent Section="@Form.Form.PreKInfo" />
 
@@ -46,6 +49,13 @@
         <span>Mark as notified</span>
     }
 </button>
+
+<br/><br/>
+<h3>Raw</h3>
+@{
+    string rawJSON = Newtonsoft.Json.JsonConvert.SerializeObject(Form, Newtonsoft.Json.Formatting.Indented);
+}
+<pre>@rawJSON</pre>
 <br/><br/><br/><br/><br/>
 
 </div>

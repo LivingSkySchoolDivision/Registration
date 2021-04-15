@@ -6,14 +6,26 @@
 <div class="form-group">
     <div class="row">
         <div class="col-sm-3">First choice</div>
-        <div class="col-sm-6">@Section.FirstChoice?.Name</div>
+        <div class="col-sm-6">
+            @if(Section.FirstChoice != null) { 
+                <div>@Section.FirstChoice?.Name (@Section.FirstChoice?.DAN)</div> 
+            }
+        </div>
     </div>
     <div class="row">
         <div class="col-sm-3">Second choice</div>
-        <div class="col-sm-6">@Section.SecondChoice?.Name</div>
+        <div class="col-sm-6">
+            @if(Section.SecondChoice != null) { 
+                <div>@Section.SecondChoice?.Name (@Section.SecondChoice?.DAN)</div>
+            }
+        </div>
     </div>
     <div class="row">
         <div class="col-sm-3">Third choice</div>
-        <div class="col-sm-6">@Section.ThirdChoice?.Name</div>
+        <div class="col-sm-6">
+            @if(Section.ThirdChoice != null) { 
+                <div>@Section.ThirdChoice?.Name (@Section.ThirdChoice?.DAN)</div>
+            }
+        </div>
     </div>
 </div>
