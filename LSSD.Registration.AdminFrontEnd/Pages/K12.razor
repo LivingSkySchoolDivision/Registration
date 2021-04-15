@@ -20,11 +20,9 @@
 <table class="table">
     <thead>
     <tr>
-        <th>Form Id</th>
+        <th>Student Name</th>
         <th>Submitted On</th>
         <th>School</th>
-        <th>Student Name</th>
-        <th>Form Submitter</th>
         <th>Notification to school</th>
     </tr>
     </thead>    
@@ -35,7 +33,6 @@
         <td><a href="K12/@(form.Id)">@(form.Form.SubmittedBy.FirstName) @(form.Form.SubmittedBy.LastName)</a></td>
         <td>@(form.DateReceivedUTC.ToString())</td>
         <td>@(form.Form.School.Name)</td>
-        <td>@(form.Form.Student.FirstName) @(form.Form.Student.LastName)</td>
         <td>@(form.NotificationSent ? "Yes" : "No")</td>
     </tr>
 }
