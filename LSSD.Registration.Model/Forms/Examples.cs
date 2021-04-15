@@ -19,12 +19,12 @@ namespace LSSD.Registration.Forms
             SchoolPreferences = new SchoolPreferenceList() {
                 FirstChoice = new SelectedSchool()
                 {
-                    DAN = "Find DAN and ID from /school in this API",
+                    DAN = "123456",
                     Name = "Miskatonic High School"
                 },
                 SecondChoice = new SelectedSchool()
                 {
-                    DAN = "123456",
+                    DAN = "234567",
                     Name = "Springfield Elementary School"
                 },
                 ThirdChoice = new SelectedSchool()

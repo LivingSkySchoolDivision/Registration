@@ -1,10 +1,21 @@
 ﻿@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+   
+    protected void OnClick_ResetProgress()
+    {
+        StepTracker.ResetAll();
+    }
+}
+
 
 <div class="container">
     <hr />
     <div class="row">
         <div class="text-left col">
-            <a href="/">Back to start</a>
+            <a href="/" @onclick="OnClick_ResetProgress">Back to start</a>
         </div>
 
         <div class="text-center col">
