@@ -1,0 +1,76 @@
+@page "/debug"
+@using Forms
+@using LSSD.Registration.Model
+@using LSSD.Registration.Model.Forms
+@using LSSD.Registration.CustomerFrontEnd.BlazorComponents;
+@using System.Linq;
+@using Services
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
+    
+    protected override void OnInitialized()
+    {
+    }
+    
+    private async void OnClick_loadPreKExampleData() 
+    {
+        PreKRegistrationFormSubmission example = Examples.PreK;
+        await BrowserStorage.Set(StorageKeys.Requestor, example.SubmittedBy);
+        await BrowserStorage.Set(StorageKeys.StudentDemographics, example.Student);
+        await BrowserStorage.Set(StorageKeys.MultiSchool, example.SchoolPreferences);
+        await BrowserStorage.Set(StorageKeys.Siblings, example.Siblings);
+        await BrowserStorage.Set(StorageKeys.PreKInfo, example.PreKInfo);
+        await BrowserStorage.Set(StorageKeys.Contacts, example.Contacts);
+    }
+    private async void OnClick_loadK12ExampleData() 
+    {
+        GeneralRegistrationFormSubmission example = Examples.General;
+        await BrowserStorage.Set(StorageKeys.Grade, example.Grade);
+        await BrowserStorage.Set(StorageKeys.StudentDemographics, example.Student);
+        await BrowserStorage.Set(StorageKeys.Requestor, example.SubmittedBy);
+        await BrowserStorage.Set(StorageKeys.School, example.School);
+        await BrowserStorage.Set(StorageKeys.Contacts, example.Contacts);
+        await BrowserStorage.Set(StorageKeys.Siblings, example.Siblings);
+        await BrowserStorage.Set(StorageKeys.Bussing, example.BussingInfo);
+        await BrowserStorage.Set(StorageKeys.FirstNations, example.FirstNationsInfo);
+        await BrowserStorage.Set(StorageKeys.EAL, example.EALInfo);
+        await BrowserStorage.Set(StorageKeys.Citizenship, example.Citizenship);
+        await BrowserStorage.Set(StorageKeys.Enrolment, example.EnrollmentDetails);
+    }
+
+    
+    protected async void OnClick_ClearSavedData()
+    {
+        await BrowserStorage.Clear();
+    }
+
+    protected void OnClick_ResetProgress()
+    {
+        StepTracker.ResetAll();
+    }
+}
+<HeaderComponent />
+<div class="container">
+    <h1>Debug and Development Tools</h1>
+    <button class="btn btn-danger" @onclick="OnClick_ClearSavedData">
+        <span>Clear all saved form data</span>
+    </button>
+    <button class="btn btn-danger" @onclick="OnClick_ResetProgress">
+        <span>Reset form progress</span>
+    </button>
+    <br/><br/>
+    <h2>K-12 Form</h2>
+    <button class="btn btn-danger" @onclick="OnClick_loadK12ExampleData">
+        <span>Load example data into browser storage</span>
+    </button>
+    <br/><br/>
+    <h2>Pre-K Form</h2>
+    <button class="btn btn-danger" @onclick="OnClick_loadPreKExampleData">
+        <span>Load example data into browser storage</span>
+    </button>
+</div>
+<FooterComponent />

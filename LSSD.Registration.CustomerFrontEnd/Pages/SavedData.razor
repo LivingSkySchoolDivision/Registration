@@ -7,12 +7,25 @@
     [Inject]
     public BrowserStorageService BrowserStorage { get; set; }
 
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
     bool buttonPushed = false;
 
     protected async void OnClick_ClearSavedData()
     {
+        // Also reset page progress
+        StepTracker.ResetAll();
+
+        // Clear browser storage data
         await BrowserStorage.Clear();
         buttonPushed = true;
+
+        // Navigate to the index page
+        NavigationManager.NavigateTo("/");
     }
 }
 
