@@ -61,5 +61,18 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
                 flagChanged();
             }
         }
+
+        public void Reset(string FormName) 
+        {
+            if (currentStepByFormName.ContainsKey(FormName))
+            {
+                currentStepByFormName[FormName] = 0;
+                flagChanged();
+            }
+        }
+
+        public void ResetAll() 
+        {currentStepByFormName.Clear();
+        }
     }
 }
