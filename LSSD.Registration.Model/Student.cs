@@ -30,7 +30,7 @@ namespace LSSD.Registration.Model
         [MaxLength(32, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string Gender { get; set; }
         [Required]
-        [BirthdayValidator(MinimumAge = 3, MaximumAge = 21)]
+        [BirthdayValidator(MinimumAge = 2, MaximumAge = 21)]
         public DateTime? DateOfBirth { get; set; }
         [Required]
         public Address PrimaryAddress { get; set; }
