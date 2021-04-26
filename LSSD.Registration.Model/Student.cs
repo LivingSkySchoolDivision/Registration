@@ -68,7 +68,11 @@ namespace LSSD.Registration.Model
                     return $"{this.FirstName} {this.LastName}";
                 } 
             } else { 
-                return string.Empty;
+                if (!string.IsNullOrEmpty(this.LegalMiddleName)) {
+                    return $"{this.LegalFirstName} {this.LegalMiddleName} {this.LegalLastName}";
+                } else {
+                    return $"{this.LegalFirstName} {this.LegalLastName}";
+                } 
             }
         }
 
