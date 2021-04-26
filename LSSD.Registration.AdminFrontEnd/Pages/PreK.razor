@@ -32,7 +32,7 @@
 @foreach(SubmittedPreKApplicationForm form in AllForms.OrderByDescending(x => x.DateReceivedUTC)) 
 {
     <tr>
-        <td><a href="prek/@(form.Id)">@(form.Form.Student.FirstName) @(form.Form.Student.LastName)</a></td>
+        <td><a href="prek/@(form.Id)">@(form.Form.Student.GetPreferredName())</a></td>
         <td>@(form.DateReceivedUTC.ToString())</td>
         <td>
             @(form.Form.SchoolPreferences.FirstChoice?.Name)
