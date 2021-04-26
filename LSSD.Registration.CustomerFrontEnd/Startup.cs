@@ -12,6 +12,9 @@ using Microsoft.Extensions.Hosting;
 using LSSD.Registration.CustomerFrontEnd.Services;
 using Blazored.LocalStorage;
 using System.Net.Http;
+using LSSD.Registration.Data;
+using LSSD.Registration.Model;
+using LSSD.Registration.Model.SubmittedForms;
 
 namespace LSSD.Registration.CustomerFrontEnd
 {
@@ -32,21 +35,14 @@ namespace LSSD.Registration.CustomerFrontEnd
         public void ConfigureServices(IServiceCollection services)
         {
             IConfigurationSection settingsSection = Configuration.GetSection("Settings");
-
-            // Default to what's in Properties/launchSettings.json for the API project.
-            string apiURI = settingsSection["APIURI"] ?? "https://registration-api.lskysd.ca";
-
-            Console.WriteLine("API URL is: " + apiURI);
-
+            
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            // Add an HttpClient that we can use
-            services.AddScoped<HttpClient>(s =>
-            {
-                var client = new HttpClient { BaseAddress = new System.Uri(apiURI) };
-                return client;
-            });
+            services.AddScoped<MongoDbConnection>();
+            services.AddScoped<IRegistrationRepository<School>, MongoRepository<School>>();
+            services.AddScoped<IRegistrationRepository<SubmittedGeneralRegistrationForm>, MongoRepository<SubmittedGeneralRegistrationForm>>();
+            services.AddScoped<IRegistrationRepository<SubmittedPreKApplicationForm>, MongoRepository<SubmittedPreKApplicationForm>>();
 
             services.AddScoped<FormStepTrackerService>();
             services.AddScoped<SchoolDataService>();

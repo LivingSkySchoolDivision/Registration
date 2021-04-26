@@ -43,7 +43,7 @@
 
     protected async Task HandleValidSubmit()
     {
-        apiResponse = await FormSubmitterService.SubmitForm(form);
+        apiResponse = FormSubmitterService.SubmitForm(form);
 
         // Clear the saved stuff in browser storage
         // IF ITS SUCCESSFUL

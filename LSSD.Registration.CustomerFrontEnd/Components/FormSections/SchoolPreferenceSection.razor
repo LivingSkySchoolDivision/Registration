@@ -87,7 +87,7 @@
     private async void loadSchools()
     {
         schoolAPIReturned = false;
-        allSchools = (await SchoolRepository.GetAll()).ToList();
+        allSchools = SchoolRepository.GetAll().ToList();
         if (OnlyPreK == true)
         {
             allSchools = allSchools.Where(s => s.HasGradePK).ToList();
