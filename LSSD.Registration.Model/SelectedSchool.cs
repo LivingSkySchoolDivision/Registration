@@ -13,6 +13,8 @@ namespace LSSD.Registration.Model
         [MaxLength(100, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string Name { get; set; }
 
+        public DateTime AnticipatedStartDate { get; set; }
+
         public SelectedSchool(School School)
         {
             if (School != null)

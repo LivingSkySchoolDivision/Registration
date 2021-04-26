@@ -11,6 +11,7 @@ namespace LSSD.Registration.Model
         public SelectedSchool SecondChoice { get; set; }
         public SelectedSchool ThirdChoice { get; set; }
 
+        public DateTime AnticipatedStartDate { get; set; }
         public bool IsFull()
         {
             return (
