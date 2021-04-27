@@ -84,7 +84,7 @@
         await saveData();
     }
 
-    private async void loadSchools()
+    private void loadSchools()
     {
         schoolAPIReturned = false;
         allSchools = SchoolRepository.GetAll().ToList();
