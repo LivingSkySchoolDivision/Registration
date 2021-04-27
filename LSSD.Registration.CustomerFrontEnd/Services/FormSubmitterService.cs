@@ -15,100 +15,43 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
 {
     public class FormSubmitterService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IRegistrationRepository<SubmittedGeneralRegistrationForm> k12Repository;
+        private readonly IRegistrationRepository<SubmittedPreKApplicationForm> preKRepository;
 
-        public FormSubmitterService(HttpClient httpClient)
+        public FormSubmitterService(IRegistrationRepository<SubmittedGeneralRegistrationForm> k12repo, IRegistrationRepository<SubmittedPreKApplicationForm> prekrepo)
         {
-            _httpClient = httpClient;
+            k12Repository = k12repo;
+            preKRepository = prekrepo;
         }
 
-        private APIResponse translateErrorToAPIResponse(string errorText)
+        public APIResponse SubmitForm(GeneralRegistrationFormSubmission form) 
         {
-            // https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-3.1
-            // Try deserializing to a ValidationProblemDetails
-
-            try
-            {
-                ValidationProblemDetails returnedError = JsonSerializer.Deserialize<ValidationProblemDetails>(errorText);
-                List<string> errors = new List<string>();
-
-                foreach (var error in returnedError.Errors)
-                {
-                    foreach(string errorDetail in error.Value)
-                    {
-                        errors.Add($"{error.Key}: {errorDetail}");
-                    }
-                }
-
-                return new APIResponse(false, errors);
+            try {
+                Guid newObjectId = k12Repository.Insert(
+                        new SubmittedGeneralRegistrationForm(form)
+                        );
+                return new APIResponse(true, newObjectId);
             }
-            catch { }
-
-            // Try deserializing to a SerializableError
-            try
+            catch(Exception ex) 
             {
-                SerializableError returnedError = JsonSerializer.Deserialize<SerializableError>(errorText);
-                List<string> errors = new List<string>();
-
-                foreach (var error in returnedError)
-                {
-                    foreach(var errorDetail in (string[])error.Value)
-                    {
-                        errors.Add($"{error.Key}: {errorDetail}");
-                    }
-                }
-
-                return new APIResponse(false, errors);
+                return new APIResponse(false, new List<string>() {"Exception occurred when submitting form: " + ex.Message} );
             }
-            catch { }
-
-            // Just send back a generic error
-
-            return new APIResponse(false, new Guid(), "An error occurred while attempting to list the errors. Sorry.");
         }
-
-        public async Task<APIResponse> SubmitForm<T>(string apiRoute, T form)
+        public APIResponse SubmitForm(PreKRegistrationFormSubmission form) 
         {
-            StringContent json = new StringContent(JsonSerializer.Serialize<T>(form), Encoding.UTF8, "application/json");
-
-            try
+            try {
+                Guid newObjectId = preKRepository.Insert(
+                        new SubmittedPreKApplicationForm(form)
+                        );
+                return new APIResponse(true, newObjectId);
+            }
+            catch(Exception ex) 
             {
-                var response = await _httpClient.PostAsync(apiRoute, json);
-
-                // Deserialize the APIRepsonse that we should get back
-                if (response.IsSuccessStatusCode)
-                {
-                    try
-                    {
-                        string jsonResponse = await response.Content.ReadAsStringAsync();
-                        return Newtonsoft.Json.JsonConvert.DeserializeObject<APIResponse>(jsonResponse);
-                    }
-                    catch
-                    {
-                        return new APIResponse(true, new Guid());
-                    }                   
-                }
-                else
-                {
-                    string jsonResponse = await response.Content.ReadAsStringAsync();
-                    return translateErrorToAPIResponse(jsonResponse);
-                }
-
-            } catch(Exception ex)
-            {
-                return new APIResponse(false, new Guid(), new List<string>() { "An error occurred, preventing your form from being submitted.", ex.Message });
+                return new APIResponse(false, new List<string>() {"Exception occurred when submitting form: " + ex.Message} );
             }
         }
 
-        public async Task<APIResponse> SubmitForm(GeneralRegistrationFormSubmission form)
-        {
-            return await SubmitForm("General", form);
-        }
 
-        public async Task<APIResponse> SubmitForm(PreKRegistrationFormSubmission form)
-        {
-            return await SubmitForm("PreK", form);
-        }
 
     }
 }

@@ -11,16 +11,17 @@ namespace LSSD.Registration.CustomerFrontEnd.Services
 {
     public class SchoolDataService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IRegistrationRepository<School> _repository;
 
-        public SchoolDataService(HttpClient httpClient)
+
+        public SchoolDataService(IRegistrationRepository<School> SchoolRepository)
         {
-            _httpClient = httpClient;
+            this._repository = SchoolRepository;
         }
 
-        public async Task<IEnumerable<School>> GetAll()
+        public IEnumerable<School> GetAll()
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<School>>(await _httpClient.GetStringAsync("/school/"));
+            return _repository.GetAll().Where(s => s.IsAvailableForRegistration == true);
         }
 
 

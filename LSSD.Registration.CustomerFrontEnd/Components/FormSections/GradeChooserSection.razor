@@ -34,7 +34,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        List<School> allSchools = (await SchoolRepository.GetAll()).ToList();
+        List<School> allSchools = SchoolRepository.GetAll().ToList();
         ChosenGrade = await BrowserStorage.GetOrNew<GradeInfo>(StorageKeys.Grade);
         SelectedSchool chosenSchool = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School);
         School chosenSchoolRecord = allSchools.Where(x => x.DAN == chosenSchool.DAN).FirstOrDefault();

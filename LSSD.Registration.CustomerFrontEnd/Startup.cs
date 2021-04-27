@@ -12,11 +12,16 @@ using Microsoft.Extensions.Hosting;
 using LSSD.Registration.CustomerFrontEnd.Services;
 using Blazored.LocalStorage;
 using System.Net.Http;
+using LSSD.Registration.Data;
+using LSSD.Registration.Model;
+using LSSD.Registration.Model.SubmittedForms;
 
 namespace LSSD.Registration.CustomerFrontEnd
 {
     public class Startup
     {
+        private bool HostedInContainer => Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = new ConfigurationBuilder()
@@ -32,21 +37,14 @@ namespace LSSD.Registration.CustomerFrontEnd
         public void ConfigureServices(IServiceCollection services)
         {
             IConfigurationSection settingsSection = Configuration.GetSection("Settings");
-
-            // Default to what's in Properties/launchSettings.json for the API project.
-            string apiURI = settingsSection["APIURI"] ?? "https://registration-api.lskysd.ca";
-
-            Console.WriteLine("API URL is: " + apiURI);
-
+            
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            // Add an HttpClient that we can use
-            services.AddScoped<HttpClient>(s =>
-            {
-                var client = new HttpClient { BaseAddress = new System.Uri(apiURI) };
-                return client;
-            });
+            services.AddScoped<MongoDbConnection>();
+            services.AddScoped<IRegistrationRepository<School>, MongoRepository<School>>();
+            services.AddScoped<IRegistrationRepository<SubmittedGeneralRegistrationForm>, MongoRepository<SubmittedGeneralRegistrationForm>>();
+            services.AddScoped<IRegistrationRepository<SubmittedPreKApplicationForm>, MongoRepository<SubmittedPreKApplicationForm>>();
 
             services.AddScoped<FormStepTrackerService>();
             services.AddScoped<SchoolDataService>();
@@ -69,6 +67,11 @@ namespace LSSD.Registration.CustomerFrontEnd
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }
+
+            if (HostedInContainer)
+            {
+                Console.WriteLine("We appear to be running in a container");
             }
 
             app.UseHttpsRedirection();
