@@ -1,0 +1,141 @@
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
+@using Model
+@using Services
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.SchoolDataService SchoolRepository { get; set; }
+
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
+    
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    StVitalExtraRequirements stVitalExtraRequirements { get; set; }
+    string studentFirstName = "the child";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+       
+        // If the selected school doesn't have the "St Vital Extra" flag, automatically skip to the next section
+        SelectedSchool selectedSchool = await BrowserStorage.Get<SelectedSchool>(StorageKeys.School);
+        if (selectedSchool == null)
+        {
+            StepTracker.NextStep(FormName);
+        } else {
+
+            // Make a list of all schools with the "St Vital Extra" flag set in the DB
+            // (probably only St Vital)
+            List<string> schoolDANsWithStVitalExtraFlag = SchoolRepository.GetAll().Where( x => x.ShowStVitalExtraRequirements).Select(x => x.DAN).ToList();
+
+            // If the selected school isn't on the list, skip to the next step
+            if (!schoolDANsWithStVitalExtraFlag.Contains(selectedSchool.DAN))
+            {
+                StepTracker.NextStep(FormName);
+            } else {
+                stVitalExtraRequirements = await BrowserStorage.GetOrNew<StVitalExtraRequirements>(StorageKeys.StVitalExtra);
+                Student savedStudent = await BrowserStorage.Get<Student>(StorageKeys.StudentDemographics);
+                if (savedStudent != null)
+                {
+                    if (!string.IsNullOrEmpty(savedStudent.FirstName))
+                    {
+                        studentFirstName = savedStudent.FirstName;
+                    }
+                }
+               
+            }
+        }
+    }
+
+    private void OnClick_NextStepButton()
+    {
+        StepTracker.NextStep(FormName);
+    }
+
+    protected void OnClick_PreviousStepButton()
+    {
+        StepTracker.PreviousStep(FormName);
+    }
+
+    
+    private async Task saveData()
+    {
+        await BrowserStorage.Set(StorageKeys.StVitalExtra, stVitalExtraRequirements);
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        await saveData();
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async Task HandleInValidSubmit()
+    {
+        await saveData();
+    }
+}
+<div class="container">
+    <h2>St. Vital Catholic School Admission Policy</h2>
+    <p>St. Vital Catholic School is a Catholic school in a public, school division.  This is a unique situation that allows the Living Sky School Division No. 202 to limit admission to St. Vital Catholic School exclusively to children of the Catholic faith.  Our mission is to provide Catholic education for Catholic children.  Students wishing to attend St. Vital Catholic School must meet the criteria for admission as outlined by the Catholic Advisory Committee and ratified by the Board of Education</p>
+    <p>Students will be admitted to St. Vital Catholic School provided they meet one of the following criteria.</p>
+
+    <ol>
+        <li>They are baptized in the Catholic Faith.</li>
+        <li>There is commitment that they will undertake to have their child(ren) baptized in the Catholic Faith within a period of one year.</li>
+    </ol>
+
+    <EditForm Model="@stVitalExtraRequirements" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        
+        <div class="form-row">
+            <div>
+                <InputCheckbox @bind-Value="@stVitalExtraRequirements.AcknowledgesPolicy"></InputCheckbox>
+                <label class="">I acknowledge that I understand this additional condition of admittance for St. Vital Catholic School.</label>
+                <ValidationMessage For="@(() => stVitalExtraRequirements.AcknowledgesPolicy)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div>
+                <InputCheckbox @bind-Value="@stVitalExtraRequirements.ChildIsCatholic"></InputCheckbox>
+                <label class="">I assert that @studentFirstName <b>has been</b> baptized in the Catholic faith.</label>
+                <ValidationMessage For="@(() => stVitalExtraRequirements.ChildIsCatholic)" />
+            </div>
+        </div>
+                
+        <div class="form-row">
+            <div>
+                <InputCheckbox @bind-Value="@stVitalExtraRequirements.CommitToBaptize"></InputCheckbox>
+                <label class="">I will commit to having @studentFirstName baptized in the Catholic faith within a period of one year from now.</label>
+                <ValidationMessage For="@(() => stVitalExtraRequirements.CommitToBaptize)" />
+            </div>
+        </div>
+       
+        <div class="form-row">
+            <div>
+                <InputCheckbox @bind-Value="@stVitalExtraRequirements.ShareInfoWithParish"></InputCheckbox>
+                <label class="">I agree to share my name and contact information with the St. Vital Parish office.</label>
+                <ValidationMessage For="@(() => stVitalExtraRequirements.ShareInfoWithParish)" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div>
+                <InputCheckbox @bind-Value="@stVitalExtraRequirements.AcknowledgeFailureState"></InputCheckbox>
+                <label class="">I understand that failure to follow through with this commitment may result in @studentFirstName discontinuing his/her attendnace at St. Vital Catholic School.</label>
+                <ValidationMessage For="@(() => stVitalExtraRequirements.AcknowledgeFailureState)" />
+            </div>
+        </div>
+
+    </EditForm>
+
+</div>
+

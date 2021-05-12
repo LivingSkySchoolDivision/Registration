@@ -11,5 +11,7 @@ namespace LSSD.Registration.Model
         public bool AcknowledgesPolicy { get; set; }
         public bool ChildIsCatholic { get; set; }
         public bool CommitToBaptize { get; set; }
+        public bool ShareInfoWithParish { get; set; }
+        public bool AcknowledgeFailureState { get; set; }
     }
 }

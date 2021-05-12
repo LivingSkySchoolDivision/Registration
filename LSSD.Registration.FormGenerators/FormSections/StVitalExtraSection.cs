@@ -14,19 +14,31 @@ namespace LSSD.Registration.FormGenerators.FormSections
             List<OpenXmlElement> sectionParts = new List<OpenXmlElement>();
             
             if (stVitalExtraRequirements != null) {
+                sectionParts.Add(ParagraphHelper.Paragraph("St. Vital Catholic School Admission Policy :", LSSDDocumentStyles.SectionTitle));
+          
                 sectionParts.Add(
                     TableHelper.StyledTable(
                         TableHelper.StickyTableRow(
-                            TableHelper.LabelCell("Acknowledges Policy"),                        
-                            TableHelper.LabelCell("Child is baptized"),                      
-                            TableHelper.LabelCell("Child will be baptized within 1 year")
+                            TableHelper.LabelCell("Form submitter acknowledges that they understand policy:"),
+                            TableHelper.ValueCell(stVitalExtraRequirements.AcknowledgesPolicy)
                         ),
                         TableHelper.StickyTableRow(
-                            TableHelper.ValueCell(stVitalExtraRequirements.AcknowledgesPolicy ? "Yes" : "No"),
-                            TableHelper.ValueCell(stVitalExtraRequirements.ChildIsCatholic ? "Yes" : "No"),                            
-                            TableHelper.ValueCell(stVitalExtraRequirements.CommitToBaptize ? "Yes" : "No")
+                            TableHelper.LabelCell("Child is already baptized in Catholic faith:"),
+                            TableHelper.ValueCell(stVitalExtraRequirements.ChildIsCatholic)
+                        ),
+                        TableHelper.StickyTableRow(
+                            TableHelper.LabelCell("Will commit to baptising within 1 year:"),
+                            TableHelper.ValueCell(stVitalExtraRequirements.CommitToBaptize)
+                        ),
+                        TableHelper.StickyTableRow(
+                            TableHelper.LabelCell("Acknowledges failure to baptize means discontinuing enrolment at St Vital:"),
+                            TableHelper.ValueCell(stVitalExtraRequirements.AcknowledgeFailureState)
+                        ),
+                        TableHelper.StickyTableRow(
+                            TableHelper.LabelCell("Understands that contact info will be shared with St. Vital Parish:"),
+                            TableHelper.ValueCell(stVitalExtraRequirements.ShareInfoWithParish)
                         )
-                    )  
+                    )                    
                 );
 
                 sectionParts.Add(ParagraphHelper.WhiteSpace());

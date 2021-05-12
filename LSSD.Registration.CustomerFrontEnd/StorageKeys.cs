@@ -20,6 +20,7 @@ namespace LSSD.Registration.CustomerFrontEnd
         public const string Enrolment = "REG-SECTION-ENROLMENT";
         public const string Grade = "REG-SECTION-GRADE";
         public const string MultiSchool = "REG-SECTION-MULTI-SCHOOL";
+        public const string StVitalExtra = "REG-SECTION-STVITAL-EXTRA";
 
     }
 }
