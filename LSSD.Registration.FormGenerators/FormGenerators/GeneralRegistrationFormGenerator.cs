@@ -48,7 +48,12 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
             pageParts.AddRange(EALSection.GetSection(Form.Form.EALInfo));
             pageParts.AddRange(CitizenshipSection.GetSection(Form.Form.Citizenship));
             pageParts.AddRange(FirstNationsSection.GetSection(Form.Form.FirstNationsInfo));
-            pageParts.AddRange(ContactsSection.GetSection(Form.Form.Contacts));   
+            pageParts.AddRange(ContactsSection.GetSection(Form.Form.Contacts));
+
+            if (Form.Form.StVitalExtraRequirements != null) {
+                pageParts.AddRange(StVitalExtraSection.GetSection(Form.Form.StVitalExtraRequirements));
+            }
+
             pageParts.AddRange(FormEndSection.GetSection(Form, TimeZone)); 
             return new Document(new Body(pageParts));
         }
