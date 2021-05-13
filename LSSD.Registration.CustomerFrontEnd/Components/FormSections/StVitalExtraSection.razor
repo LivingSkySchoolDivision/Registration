@@ -23,6 +23,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        stVitalExtraRequirements = new StVitalExtraRequirements();
        
         // If the selected school doesn't have the "St Vital Extra" flag, automatically skip to the next section
         SelectedSchool selectedSchool = await BrowserStorage.Get<SelectedSchool>(StorageKeys.School);
@@ -95,46 +96,64 @@
         <DataAnnotationsValidator />
         <ValidationSummary />
         
-        <div class="form-row">
-            <div>
-                <InputCheckbox @bind-Value="@stVitalExtraRequirements.AcknowledgesPolicy"></InputCheckbox>
-                <label class="">I acknowledge that I understand this additional condition of admittance for St. Vital Catholic School.</label>
-                <ValidationMessage For="@(() => stVitalExtraRequirements.AcknowledgesPolicy)" />
+        <div class="offset-sm-4 col-sm-8">        
+            <div class="form-row">
+                <div>
+                    <InputCheckbox @bind-Value="@stVitalExtraRequirements.AcknowledgesPolicy"></InputCheckbox>
+                    <label class="">I acknowledge that I understand this additional condition of admittance for St. Vital Catholic School.</label>
+                    <ValidationMessage For="@(() => stVitalExtraRequirements.AcknowledgesPolicy)" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div>
+                    <InputCheckbox @bind-Value="@stVitalExtraRequirements.ChildIsCatholic"></InputCheckbox>
+                    <label class="">I assert that @studentFirstName <b>has been</b> baptized in the Catholic faith.</label>
+                    <ValidationMessage For="@(() => stVitalExtraRequirements.ChildIsCatholic)" />
+                </div>
+            </div>
+                    
+            @if (stVitalExtraRequirements.ChildIsCatholic == false) {
+                <div class="form-row">
+                    <div>
+                        <InputCheckbox @bind-Value="@stVitalExtraRequirements.CommitToBaptize"></InputCheckbox>
+                        <label class="">I will commit to having @studentFirstName baptized in the Catholic faith within a period of one year from now.</label>
+                        <ValidationMessage For="@(() => stVitalExtraRequirements.CommitToBaptize)" />
+                    </div>
+                </div>
+            }
+        
+            <div class="form-row">
+                <div>
+                    <InputCheckbox @bind-Value="@stVitalExtraRequirements.ShareInfoWithParish"></InputCheckbox>
+                    <label class="">I agree to share my name and contact information with the St. Vital Parish office.</label>
+                    <ValidationMessage For="@(() => stVitalExtraRequirements.ShareInfoWithParish)" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div>
+                    <InputCheckbox @bind-Value="@stVitalExtraRequirements.AcknowledgeFailureState"></InputCheckbox>
+                    <label class="">I understand that failure to follow through with this commitment may result in @studentFirstName discontinuing his/her attendnace at St. Vital Catholic School.</label>
+                    <ValidationMessage For="@(() => stVitalExtraRequirements.AcknowledgeFailureState)" />
+                </div>
             </div>
         </div>
 
-        <div class="form-row">
-            <div>
-                <InputCheckbox @bind-Value="@stVitalExtraRequirements.ChildIsCatholic"></InputCheckbox>
-                <label class="">I assert that @studentFirstName <b>has been</b> baptized in the Catholic faith.</label>
-                <ValidationMessage For="@(() => stVitalExtraRequirements.ChildIsCatholic)" />
+        <br /><br />
+        <div class="form-group">
+            <div class="form-row">
+                @if (StepNumber > 0)
+                {
+                    <div class="col">
+                        <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    </div>
+                }
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+                </div>
             </div>
         </div>
-                
-        <div class="form-row">
-            <div>
-                <InputCheckbox @bind-Value="@stVitalExtraRequirements.CommitToBaptize"></InputCheckbox>
-                <label class="">I will commit to having @studentFirstName baptized in the Catholic faith within a period of one year from now.</label>
-                <ValidationMessage For="@(() => stVitalExtraRequirements.CommitToBaptize)" />
-            </div>
-        </div>
-       
-        <div class="form-row">
-            <div>
-                <InputCheckbox @bind-Value="@stVitalExtraRequirements.ShareInfoWithParish"></InputCheckbox>
-                <label class="">I agree to share my name and contact information with the St. Vital Parish office.</label>
-                <ValidationMessage For="@(() => stVitalExtraRequirements.ShareInfoWithParish)" />
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div>
-                <InputCheckbox @bind-Value="@stVitalExtraRequirements.AcknowledgeFailureState"></InputCheckbox>
-                <label class="">I understand that failure to follow through with this commitment may result in @studentFirstName discontinuing his/her attendnace at St. Vital Catholic School.</label>
-                <ValidationMessage For="@(() => stVitalExtraRequirements.AcknowledgeFailureState)" />
-            </div>
-        </div>
-
     </EditForm>
 
 </div>

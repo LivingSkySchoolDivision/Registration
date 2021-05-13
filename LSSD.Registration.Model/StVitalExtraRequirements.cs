@@ -7,7 +7,6 @@ namespace LSSD.Registration.Model
 {
     public class StVitalExtraRequirements
     {
-        [Required]
         public bool AcknowledgesPolicy { get; set; }
         public bool ChildIsCatholic { get; set; }
         public bool CommitToBaptize { get; set; }
