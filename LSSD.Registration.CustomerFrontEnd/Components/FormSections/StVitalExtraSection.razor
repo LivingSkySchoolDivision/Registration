@@ -132,6 +132,9 @@
             </div>
                     
             @if (stVitalExtraRequirements.ChildIsCatholic == false) {
+                <div class="form-rom">
+                    <div class="col-sm-1" style="text-align: center;"><sup>or</sup></div>
+                </div>
                 <div class="form-row">
                     <div class="col-sm-1" style="text-align: center;">
                         <InputCheckbox @bind-Value="@stVitalExtraRequirements.CommitToBaptize"></InputCheckbox>
