@@ -17,42 +17,13 @@
     [Parameter]
     public int StepNumber { get; set; }
 
-    StVitalExtraRequirements stVitalExtraRequirements { get; set; }
+    StVitalExtraRequirements stVitalExtraRequirements = new StVitalExtraRequirements();
     string studentFirstName = "the child";
 
 
     protected override async Task OnInitializedAsync()
     {
-        stVitalExtraRequirements = new StVitalExtraRequirements();
-       
-        // If the selected school doesn't have the "St Vital Extra" flag, automatically skip to the next section
-        SelectedSchool selectedSchool = await BrowserStorage.Get<SelectedSchool>(StorageKeys.School);
-        if (selectedSchool == null)
-        {
-            StepTracker.NextStep(FormName);
-        } else {
-
-            // Make a list of all schools with the "St Vital Extra" flag set in the DB
-            // (probably only St Vital)
-            List<string> schoolDANsWithStVitalExtraFlag = SchoolRepository.GetAll().Where( x => x.ShowStVitalExtraRequirements).Select(x => x.DAN).ToList();
-
-            // If the selected school isn't on the list, skip to the next step
-            if (!schoolDANsWithStVitalExtraFlag.Contains(selectedSchool.DAN))
-            {
-                StepTracker.NextStep(FormName);
-            } else {
-                stVitalExtraRequirements = await BrowserStorage.GetOrNew<StVitalExtraRequirements>(StorageKeys.StVitalExtra);
-                Student savedStudent = await BrowserStorage.Get<Student>(StorageKeys.StudentDemographics);
-                if (savedStudent != null)
-                {
-                    if (!string.IsNullOrEmpty(savedStudent.FirstName))
-                    {
-                        studentFirstName = savedStudent.FirstName;
-                    }
-                }
-               
-            }
-        }
+        stVitalExtraRequirements = await BrowserStorage.GetOrNew<StVitalExtraRequirements>(StorageKeys.StVitalExtra);       
     }
 
     private void OnClick_NextStepButton()

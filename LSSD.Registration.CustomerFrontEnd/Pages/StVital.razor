@@ -1,15 +1,15 @@
-﻿@page "/General"
+@page "/StVital"
 @using LSSD.Registration.CustomerFrontEnd.BlazorComponents;
 
 @code {
     [Inject]
     LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
 
-    string FormName = "GENREG";
+    string FormName = "STVITAL";
     private static List<string> workflow = new List<string>()
 {
         "RequestorSection",
-        "SchoolChooser",
+        "StVitalExtraSection",
         "GradeChooserSection",
         "StudentDemographicsSection",
         "CitizenshipSection",
@@ -34,7 +34,7 @@
 }
 <HeaderComponent />
 <div class="container">
-    <h1>LSSD K-12 Registration Form</h1>
+    <h1>St. Vital Catholic School Registration Form</h1>
     <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@workflow.Count()" />
     <br />
     @if (StepTracker.Step(FormName) >= 0 && StepTracker.Step(FormName) < workflow.Count)
