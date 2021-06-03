@@ -18,12 +18,21 @@
     public int StepNumber { get; set; }
 
     StVitalExtraRequirements stVitalExtraRequirements = new StVitalExtraRequirements();
-    string studentFirstName = "the child";
+    string studentFirstName = "my child";
 
 
     protected override async Task OnInitializedAsync()
     {
         stVitalExtraRequirements = await BrowserStorage.GetOrNew<StVitalExtraRequirements>(StorageKeys.StVitalExtra);       
+
+        Student savedStudent = await BrowserStorage.Get<Student>(StorageKeys.StudentDemographics);
+        if (savedStudent != null)
+        {
+            if (!string.IsNullOrEmpty(savedStudent.FirstName))
+            {
+                studentFirstName = savedStudent.FirstName;
+            }
+        }
     }
 
     private void OnClick_NextStepButton()
