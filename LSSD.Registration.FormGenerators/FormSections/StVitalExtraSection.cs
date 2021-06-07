@@ -28,11 +28,11 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         ),
                         TableHelper.StickyTableRow(
                             TableHelper.LabelCell("Will commit to baptising within 1 year:"),
-                            TableHelper.ValueCell(stVitalExtraRequirements.CommitToBaptize)
+                            TableHelper.ValueCell(stVitalExtraRequirements.ChildIsCatholic ? "N/A" : (stVitalExtraRequirements.CommitToBaptize ? "Yes" : "No"))
                         ),
                         TableHelper.StickyTableRow(
                             TableHelper.LabelCell("Acknowledges failure to baptize means discontinuing enrolment at St Vital:"),
-                            TableHelper.ValueCell(stVitalExtraRequirements.AcknowledgeFailureState)
+                            TableHelper.ValueCell(stVitalExtraRequirements.ChildIsCatholic ? "N/A" : (stVitalExtraRequirements.AcknowledgeFailureState ? "Yes" : "No"))
                         ),
                         TableHelper.StickyTableRow(
                             TableHelper.LabelCell("Understands that contact info will be shared with St. Vital Parish:"),
