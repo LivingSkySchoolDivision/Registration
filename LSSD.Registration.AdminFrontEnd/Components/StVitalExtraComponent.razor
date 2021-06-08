@@ -1,0 +1,22 @@
+@using LSSD.Registration.Model;
+@code {
+    [Parameter]
+    public StVitalExtraRequirements Section { get; set; }
+}
+
+@if(Section != null) {
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-3">Submitter acknowledges extra requirements?</div>
+            <div class="col-sm-6">@(Section.AcknowledgesPolicy ? "Yes" : "No") </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">Child is Catholic?</div>
+            <div class="col-sm-6">@(Section.ChildIsCatholic ? "Yes" : "No") </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">Child will be Catholic within 1 year?</div>
+            <div class="col-sm-6">@Section.CommitToBaptize </div>
+        </div>
+    </div>
+}

@@ -77,6 +77,15 @@
     case "BussingFallbackPage":
         <BussingFallbackPage FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
         break;
+    case "StVitalExtraSection":
+        <StVitalExtraSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "GradeChooserStVital":
+        <GradeChooserStVital FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
+    case "SubmitStVitalSection":
+        <SubmitStVitalSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
     default:
         <UnknownComponent FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
         break;

@@ -73,10 +73,10 @@
         return returnMe;
     }
 
-    private async void loadSchools()
+    private void loadSchools()
     {
         schoolAPIReturned = false;
-        allSchools = SchoolRepository.GetAll().ToList();
+        allSchools = SchoolRepository.GetAll().Where(s => s.ShowStVitalExtraRequirements == false).ToList();
         if (OnlyPreK == true)
         {
             allSchools = allSchools.Where(s => s.HasGradePK).ToList();

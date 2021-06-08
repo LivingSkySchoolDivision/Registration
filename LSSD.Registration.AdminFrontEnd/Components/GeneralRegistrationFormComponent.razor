@@ -51,6 +51,11 @@
 <h3>Students of First Nations Ancestry</h3>
 <FirstNationsComponent Section="@Form.Form.FirstNationsInfo" />
 
+@if (Form.Form.StVitalExtraRequirements != null) {
+    <h3>St. Vital Extra Admission Requirements</h3>
+    <StVitalExtraComponent Section="@Form.Form.StVitalExtraRequirements" />
+}
+
 <button class="btn btn-danger" @onclick="toggleNotifications">
     @if(Form.NotificationSent) {
         <span>Resend notifications</span>

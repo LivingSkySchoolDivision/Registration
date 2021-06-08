@@ -35,6 +35,7 @@ namespace LSSD.Registration.Model
         public bool HasGrade12 { get; set; }
         public bool IsAvailableForRegistration { get; set; }
         public int SchoolLogicSchoolID { get; set; }
+        public bool ShowStVitalExtraRequirements { get; set; }
 
         public void SetGradesOffered(
             bool PK,

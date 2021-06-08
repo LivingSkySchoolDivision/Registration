@@ -1,0 +1,45 @@
+@page "/StVital"
+@using LSSD.Registration.CustomerFrontEnd.BlazorComponents;
+
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    string FormName = "STVITAL";
+    private static List<string> workflow = new List<string>()
+{
+        "RequestorSection",
+        "GradeChooserStVital",
+        "StudentDemographicsSection",
+        "StVitalExtraSection",
+        "CitizenshipSection",
+        "EnrolmentSection",
+        "EALSection",
+        "ContactsSection",
+        "SiblingsSection",
+        "BussingFallbackPage",
+        "FirstNationsSection",
+        "SubmitStVitalSection"
+    };
+
+    protected override void OnInitialized()
+    {
+        StepTracker.StepHasChanged += RefreshComponents;
+    }
+
+    private void RefreshComponents()
+    {
+        StateHasChanged();
+    }
+}
+<HeaderComponent />
+<div class="container">
+    <h1>St. Vital Catholic School Registration Form</h1>
+    <ProgressBarComponent CurrentStep="StepTracker.Step(FormName)" TotalSteps="@workflow.Count()" />
+    <br />
+    @if (StepTracker.Step(FormName) >= 0 && StepTracker.Step(FormName) < workflow.Count)
+    {
+        <ComponentDisplayerComponent ComponentName="@workflow[StepTracker.Step(FormName)]" FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+    }
+</div>
+<FooterComponent />

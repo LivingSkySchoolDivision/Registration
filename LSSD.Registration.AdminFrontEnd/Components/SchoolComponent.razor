@@ -214,4 +214,14 @@
         </div>
     </div>
 
+    <br/>
+    
+    <div class="form-row">
+        <div class="offset-sm-3 col-sm-8">
+            <InputCheckbox @bind-Value="@School.ShowStVitalExtraRequirements"></InputCheckbox>
+            <label for="" class="">Show St. Vital extra admission requirements page</label>
+            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => School.ShowStVitalExtraRequirements)" />
+        </div>
+    </div>
+
 </div>

@@ -34,26 +34,24 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // Find the school named "St. Vital"
         List<School> allSchools = SchoolRepository.GetAll().ToList();
+        School stVital = allSchools.Where(x => x.Name.Contains("Vital")).FirstOrDefault();
+        
+        if (stVital != null) {
+            AvailableGrades = stVital.GetGradesOffered();
+        }
+
+        // Load the chosen grade from browser storage, if it exists        
         ChosenGrade = await BrowserStorage.GetOrNew<GradeInfo>(StorageKeys.Grade);
-        SelectedSchool chosenSchool = await BrowserStorage.GetOrNew<SelectedSchool>(StorageKeys.School);
-        School chosenSchoolRecord = allSchools.Where(x => x.DAN == chosenSchool.DAN).FirstOrDefault();
-        if (chosenSchoolRecord != null)
+        
+        
+        // If the current school doesn't offer the current grade, wipe out the grade
+        if (!stVital.GetGradesOffered().Contains(ChosenGrade.Grade))
         {
-            AvailableGrades = chosenSchoolRecord.GetGradesOffered();
-            ChosenSchool = chosenSchoolRecord;
-        }
-
-        // Do some basic validation, if they've changed schools around
-        if ((chosenSchoolRecord != null) && (ChosenGrade != null))
-        {
-            // If the current school doesn't offer the current grade, wipe out the grade
-            if (!chosenSchoolRecord.GetGradesOffered().Contains(ChosenGrade.Grade))
-            {
-                ChosenGrade = new GradeInfo();
-            }
-        }
-
+            ChosenGrade = new GradeInfo();
+        }   
+         
         // Remove Pre-K from available grades - user should use PreK form for that
         if (AvailableGrades.Contains("Pre-Kindergarten")) {
             AvailableGrades.Remove("Pre-Kindergarten");
