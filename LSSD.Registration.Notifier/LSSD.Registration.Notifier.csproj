@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>08d4ceda-f0f9-4f12-9b6d-1e5f237a2b52</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
