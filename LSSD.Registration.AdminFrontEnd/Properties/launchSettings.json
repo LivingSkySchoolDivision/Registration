@@ -13,7 +13,6 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:6001;http://localhost:6000",
       "environmentVariables": {        
-        "KEYVAULT_ENDPOINT": "https://lssd-registration-priv.vault.azure.net//",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }

@@ -7,10 +7,7 @@ using LSSD.Registration.Forms;
 using LSSD.Registration.Model;
 using LSSD.Registration.Model.SubmittedForms;
 using LSSD.Registration.NotificationHandlers.EmailNotificationHandler;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.AzureKeyVault;
 
 namespace LSSD.Registration.Notifier
 {
@@ -29,21 +26,6 @@ namespace LSSD.Registration.Notifier
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
                 .Build();
-
-            string keyvault_endpoint = configuration["KEYVAULT_ENDPOINT"];
-            if (!string.IsNullOrEmpty(keyvault_endpoint))
-            {
-                ConsoleWrite("Loading configuration from Azure Key Vault: " + keyvault_endpoint);
-                var azureServiceTokenProvider = new AzureServiceTokenProvider();
-                var keyVaultClient = new KeyVaultClient(
-                                new KeyVaultClient.AuthenticationCallback(
-                                    azureServiceTokenProvider.KeyVaultTokenCallback));
-
-                configuration = new ConfigurationBuilder()
-                    .AddConfiguration(configuration)
-                    .AddAzureKeyVault(keyvault_endpoint, keyVaultClient, new DefaultKeyVaultSecretManager())
-                    .Build();
-            }
 
             IConfigurationSection generalConfig = configuration.GetSection("Settings");
             TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById(generalConfig["TimeZone"]);
