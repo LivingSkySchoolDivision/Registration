@@ -1,0 +1,143 @@
+@using LSSD.Registration.Model;
+@using LSSD.Registration.CustomerFrontEnd.Services;
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Inject]
+    public BrowserStorageService BrowserStorage { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    private const string procedureURL = "https://public.lskysd.ca/files/office/procedures/4-schooloperations/440PermissionforUseofStudentsWorkandPersonalInformation.pdf";
+
+    StudentConsentInfo sectionData = new StudentConsentInfo();
+    string studentFirstName = "the child";
+
+    protected override async Task OnInitializedAsync()
+    {
+        sectionData = await BrowserStorage.GetOrNew<StudentConsentInfo>(StorageKeys.StudentConsent);
+        Student savedStudent = await BrowserStorage.Get<Student>(StorageKeys.StudentDemographics);
+        if (savedStudent != null)
+        {
+            if (!string.IsNullOrEmpty(savedStudent.FirstName))
+            {
+                studentFirstName = savedStudent.FirstName;
+            }
+        }
+    }
+
+    private async Task saveData()
+    {
+        await BrowserStorage.Set(StorageKeys.StudentConsent, sectionData);
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        await saveData();
+        StepTracker.NextStep(FormName);
+    }
+
+    protected async Task OnClick_PreviousStepButton()
+    {
+        await saveData();
+        StepTracker.PreviousStep(FormName);
+    }
+}
+<div class="container">
+    <EditForm Model="@sectionData" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />        
+
+    <h2>Consent</h2>    
+    <p>In keeping with the Saskatchewan Local Authority of Freedom of Information and Protection of Privacy Act (LAFOIP), parents/guardians and students who are of the age of majority must provide informed consent before student images, work or information is shared. The accompanying <a target="_blank" href="@procedureURL">Procedure 4.40 Permission for Use of Students’ Work and Personal Information</a> describes how and where sharing may occur. Please fill out the information below as appropriate.</p>
+
+        
+    <h3>School/School Division Consent</h3>
+    <p>Consent to be photographed and/or have personal information shared by the school/school division, as described in <a target="_blank" href="@procedureURL">Procedure 4.40 Permission for Use of Students' Work and Personal Information</a>.</p>
+    <p>Examples include:
+        <ul>
+            <li>School/School division newsletters.</li>
+            <li>School/School division publications, such as brochures, flyers, and marketing materials.</li>
+            <li>Video, multimedia (including portfolios), photography created as school or school division based projects.</li>
+            <li>School/School division websites.</li>
+            <li>Social Media, which may include Facebook, Twitter, Instagram, YouTube.</li>                        
+            <li>School Yearbook</li>
+        </ul>
+    </p>
+
+
+    <div class="form-group form-row" style="padding: 20px; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px;">
+        <div>               
+            <InputCheckbox @bind-Value="@sectionData.ShareWithSchoolDivision"></InputCheckbox>
+            <b>&nbsp;<label for="" class="">Yes, I give permission to share details in school/school division communications</label></b>
+            <ValidationMessage For="@(() => sectionData.ShareWithSchoolDivision)" />    
+        </div>
+    </div>
+
+    <h3>Media Consent</h3>
+    <p>Consent for the school/school division to allow authorized members of the media to photograph, interview, and/or videotape @studentFirstName in connection with school events or activities, including publishing photographs and student information, as described in <a target="_blank" href="@procedureURL">Procedure 4.40 Permission for Use of Students' Work and Personal Information</a>.</p>
+    <p>Interviews are always done in the presence of a student's teacher, or a school/school division staff member.</p>
+    <p>Examples include:
+        <ul>
+            <li>News coverage.</li>
+            <li>Student interviews.</li>
+            <li>Newspaper articles.</li>
+            <li>News media websites and social media.</li>
+        </ul>
+    </p>
+
+    <div class="form-group form-row" style="padding: 20px; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px;">
+        <div>               
+            <InputCheckbox @bind-Value="@sectionData.ShareWithMedia"></InputCheckbox>
+            <b>&nbsp;<label for="" class="">Yes, I give permission to share details in school/school division communications</label></b>
+            <ValidationMessage For="@(() => sectionData.ShareWithMedia)" />    
+        </div>
+    </div>
+
+    <h3>Authorization</h3>
+    <div class="form-group" style="padding: 20px; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px;">
+        <div>               
+            <InputCheckbox @bind-Value="@sectionData.UnderstandsLimitedBySchool"></InputCheckbox>
+            &nbsp;<label for="" class="">I understand that this consent is valid for the duration of that @studentFirstName attends this school.</label>
+            <ValidationMessage For="@(() => sectionData.UnderstandsLimitedBySchool)" />    
+        </div>
+        <br/>
+        <div>               
+            <InputCheckbox @bind-Value="@sectionData.UnderstandsCanBeRevoked"></InputCheckbox>
+            &nbsp;<label for="" class="">I understand that I may revoke consent at any time with written notice.</label>
+            <ValidationMessage For="@(() => sectionData.UnderstandsCanBeRevoked)" />    
+        </div>
+        <br/>
+        <div>               
+            <InputCheckbox @bind-Value="@sectionData.GaveConsentVoluntarily"></InputCheckbox>
+            &nbsp;<label for="" class="">I have given this consent voluntarily.</label>
+            <ValidationMessage For="@(() => sectionData.GaveConsentVoluntarily)" />    
+        </div>
+        <div>               
+            <InputCheckbox @bind-Value="@sectionData.UnderstandsGivenAnswers"></InputCheckbox>
+            &nbsp;<label for="" class="">I understand that I haven chosen to <b>@(sectionData.ShareWithSchoolDivision ? "grant" : "NOT grant")</b> consent for school division purposes, and <b>@(sectionData.ShareWithMedia ? "grant" : "NOT grant")</b> consent to share with the media.</label>
+            <ValidationMessage For="@(() => sectionData.UnderstandsGivenAnswers)" />    
+        </div>
+    </div>
+
+
+        <div class="form-group">
+            <div class="form-row">
+                @if (StepNumber > 0)
+                {
+                    <div class="col">
+                        <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    </div>
+                }
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>

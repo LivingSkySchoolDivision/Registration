@@ -86,6 +86,9 @@
     case "SubmitStVitalSection":
         <SubmitStVitalSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
         break;
+    case "StudentConsentSection":
+        <StudentConsentSection FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
+        break;
     default:
         <UnknownComponent FormName="@FormName" StepNumber="StepTracker.Step(FormName)" />
         break;

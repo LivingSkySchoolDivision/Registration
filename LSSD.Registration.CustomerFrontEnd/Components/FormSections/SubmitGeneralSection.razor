@@ -39,6 +39,7 @@
         form.EALInfo = await BrowserStorage.Get<EALInfo>(StorageKeys.EAL);
         form.Citizenship = await BrowserStorage.Get<CitizenshipInfo>(StorageKeys.Citizenship);
         form.EnrollmentDetails = await BrowserStorage.Get<EnrolmentInfo>(StorageKeys.Enrolment);
+        form.Consent = await BrowserStorage.Get<StudentConsentInfo>(StorageKeys.StudentConsent);
     }
 
     protected async Task HandleValidSubmit()

@@ -46,7 +46,8 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
             pageParts.AddRange(SiblingSection.GetSection(Form.Form.Siblings));
             pageParts.AddRange(PreKInfoSection.GetSection(Form.Form.PreKInfo)); 
             pageParts.AddRange(ContactsSection.GetSection(Form.Form.Contacts));  
-            pageParts.AddRange(FormEndSection.GetSection(Form, TimeZone));    
+            pageParts.AddRange(StudentConsentSection.GetSection(Form.Form.Consent)); 
+            pageParts.AddRange(FormEndSection.GetSection(Form, TimeZone));   
             return new Document(new Body(pageParts));
         }
     }
