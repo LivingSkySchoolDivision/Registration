@@ -68,9 +68,9 @@ namespace LSSD.Registration.Data
             {
                 return default(T);
             }
-            catch (Exception ex) 
+            catch
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -101,7 +101,7 @@ namespace LSSD.Registration.Data
 
         public void Update(T entity)
         {
-            if (entity.Id == null)
+            if (entity.Id.ToString() == new Guid().ToString())
             {
                 Insert(entity);
             } else

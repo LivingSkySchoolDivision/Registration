@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using MongoDB.Bson.Serialization.Conventions;
+﻿using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -7,22 +6,10 @@ using System.Text;
 
 namespace LSSD.Registration.Data
 {
-    public class MongoDbConnection
+     public class MongoDbConnection
     {
         readonly MongoClient _client;
         public readonly IMongoDatabase DB;
-
-        public MongoDbConnection(IConfiguration Configuration)
-        {
-            MongoUrl connectionString = new MongoUrl(Configuration.GetConnectionString("InternalDatabase"));
-            
-            var pack = new ConventionPack();
-            pack.Add(new IgnoreExtraElementsConvention(true));
-            ConventionRegistry.Register("My Solution Conventions", pack, t => true);
-
-            _client = new MongoClient(connectionString);
-            DB = _client.GetDatabase(connectionString.DatabaseName);
-        }
 
         public MongoDbConnection(string ConnectionString)
         {

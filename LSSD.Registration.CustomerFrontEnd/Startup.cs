@@ -36,12 +36,16 @@ namespace LSSD.Registration.CustomerFrontEnd
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            IConfigurationSection settingsSection = Configuration.GetSection("Settings");
-            
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddScoped<MongoDbConnection>();
+            string dbConnString = Configuration.GetConnectionString("InternalDatabase");
+            if (string.IsNullOrEmpty(dbConnString)) 
+            {
+                throw new Exception("No DB connection string - can't continue!!");
+            }
+
+            services.AddScoped<MongoDbConnection>(x => new MongoDbConnection(dbConnString));            
             services.AddScoped<IRegistrationRepository<School>, MongoRepository<School>>();
             services.AddScoped<IRegistrationRepository<SubmittedGeneralRegistrationForm>, MongoRepository<SubmittedGeneralRegistrationForm>>();
             services.AddScoped<IRegistrationRepository<SubmittedPreKApplicationForm>, MongoRepository<SubmittedPreKApplicationForm>>();
