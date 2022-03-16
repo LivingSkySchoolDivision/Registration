@@ -49,6 +49,7 @@ namespace LSSD.Registration.FormGenerators.FormGenerators {
             pageParts.AddRange(CitizenshipSection.GetSection(Form.Form.Citizenship));
             pageParts.AddRange(FirstNationsSection.GetSection(Form.Form.FirstNationsInfo));
             pageParts.AddRange(ContactsSection.GetSection(Form.Form.Contacts));
+            pageParts.AddRange(StudentConsentSection.GetSection(Form.Form.Consent));
 
             if (Form.Form.StVitalExtraRequirements != null) {
                 pageParts.AddRange(StVitalExtraSection.GetSection(Form.Form.StVitalExtraRequirements));

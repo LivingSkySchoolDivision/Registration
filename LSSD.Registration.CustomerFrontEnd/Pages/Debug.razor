@@ -25,6 +25,7 @@
         await BrowserStorage.Set(StorageKeys.Siblings, example.Siblings);
         await BrowserStorage.Set(StorageKeys.PreKInfo, example.PreKInfo);
         await BrowserStorage.Set(StorageKeys.Contacts, example.Contacts);
+        await BrowserStorage.Set(StorageKeys.StudentConsent, example.Consent);
     }
     private async void OnClick_loadK12ExampleData() 
     {
@@ -40,6 +41,7 @@
         await BrowserStorage.Set(StorageKeys.EAL, example.EALInfo);
         await BrowserStorage.Set(StorageKeys.Citizenship, example.Citizenship);
         await BrowserStorage.Set(StorageKeys.Enrolment, example.EnrollmentDetails);
+        await BrowserStorage.Set(StorageKeys.StudentConsent, example.Consent);
     }
 
     

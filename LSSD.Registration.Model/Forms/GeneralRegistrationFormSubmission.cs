@@ -28,5 +28,6 @@ namespace LSSD.Registration.Model.Forms
         [Required]
         public CitizenshipInfo Citizenship { get; set; }
         public StVitalExtraRequirements StVitalExtraRequirements { get; set;}
+        public StudentConsentInfo Consent { get; set; }
     }
 }

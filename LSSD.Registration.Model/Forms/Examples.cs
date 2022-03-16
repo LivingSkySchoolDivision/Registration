@@ -202,6 +202,14 @@ namespace LSSD.Registration.Forms
                 AssistanceFromOccupationOrPhysicalTherapist = true,
                 LowIncomeFamily = true,
                 SpeechDifficulties = true
+            },
+            Consent = new StudentConsentInfo() {
+                ShareWithMedia = false,
+                ShareWithSchoolDivision = true,
+                UnderstandsCanBeRevoked = true,
+                UnderstandsGivenAnswers = true,
+                GaveConsentVoluntarily = true,
+                UnderstandsLimitedBySchool = true
             }
         };
 
@@ -428,6 +436,14 @@ namespace LSSD.Registration.Forms
                 LanguageSpokenAtHome = "English",
                 PreviousCountry = string.Empty,
                 ResidencyType = "Canadian Citizen"
+            },
+            Consent = new StudentConsentInfo() {
+                ShareWithMedia = false,
+                ShareWithSchoolDivision = true,
+                UnderstandsCanBeRevoked = true,
+                UnderstandsGivenAnswers = true,
+                GaveConsentVoluntarily = true,
+                UnderstandsLimitedBySchool = true
             }
 
         };

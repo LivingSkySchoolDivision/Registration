@@ -17,5 +17,6 @@ namespace LSSD.Registration.Model.Forms
         public PreKInfo PreKInfo { get; set; }
         [Required]
         public ContactsInfo Contacts { get; set; }
+        public StudentConsentInfo Consent { get; set; }
     }
 }
