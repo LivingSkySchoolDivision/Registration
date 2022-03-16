@@ -11,7 +11,6 @@
       "DebugConsole": {
         "commandName": "Project",
         "environmentVariables": {
-          "KEYVAULT_ENDPOINT": "https://lssd-registration-priv.vault.azure.net/"
         }
       },
       "Docker": {
