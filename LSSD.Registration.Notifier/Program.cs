@@ -8,6 +8,8 @@ using LSSD.Registration.Model;
 using LSSD.Registration.Model.SubmittedForms;
 using LSSD.Registration.NotificationHandlers.EmailNotificationHandler;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.UserSecrets;
+
 
 namespace LSSD.Registration.Notifier
 {
@@ -21,14 +23,16 @@ namespace LSSD.Registration.Notifier
         }
 
         static void Main(string[] args)
-        {
+        {            
+            
             // Load configuration
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
+                .AddUserSecrets<Program>()
                 .Build();
 
-            IConfigurationSection generalConfig = configuration.GetSection("Settings");
-            TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById(generalConfig["TimeZone"]);
+            
+            TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById(configuration["Settings:TimeZone"]);
 
             string dbConnectionString = configuration.GetConnectionString("InternalDatabase") ?? string.Empty;
             MongoDbConnection mongoDatabase = new MongoDbConnection(dbConnectionString);

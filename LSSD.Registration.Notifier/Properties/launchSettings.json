@@ -11,6 +11,7 @@
       "DebugConsole": {
         "commandName": "Project",
         "environmentVariables": {
+          "Hi": "Derp"
         }
       },
       "Docker": {
