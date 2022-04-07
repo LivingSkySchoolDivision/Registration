@@ -103,7 +103,7 @@
     <div class="form-group" style="padding: 20px; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px;">
         <div>               
             <InputCheckbox @bind-Value="@sectionData.UnderstandsLimitedBySchool"></InputCheckbox>
-            &nbsp;<label for="" class="">I understand that this consent is valid for the duration of that @studentFirstName attends this school.</label>
+            &nbsp;<label for="" class="">I understand that this consent is valid for the duration that @studentFirstName attends this school.</label>
             <ValidationMessage For="@(() => sectionData.UnderstandsLimitedBySchool)" />    
         </div>
         <br/>
