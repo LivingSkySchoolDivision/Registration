@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Dockerfile-FrontEnd = Dockerfile-FrontEnd
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.DebugConsole", "LSSD.Registration.DebugConsole\LSSD.Registration.DebugConsole.csproj", "{7380E2F9-3842-4241-AD37-8EF87EF25FDC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.FormGenerators", "LSSD.Registration.FormGenerators\LSSD.Registration.FormGenerators.csproj", "{BC54D99E-1EB3-4D22-972D-FF3397D02A04}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSSD.Registration.Notifier", "LSSD.Registration.Notifier\LSSD.Registration.Notifier.csproj", "{2F2C01B5-C503-404F-A6E6-336E046D58F2}"
