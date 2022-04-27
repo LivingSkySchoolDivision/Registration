@@ -18,7 +18,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.LabelCell("Contact Details", JustificationValues.Left).WithWidth(47.5)
                     ),
                     new TableRow(
-                        TableHelper.ValueCell($"{submittedBy.FirstName} {submittedBy.LastName}", JustificationValues.Left),
+                        TableHelper.ValueCell($"{submittedBy.FirstName} {submittedBy.LastName} ({submittedBy.RelationToStudent})", JustificationValues.Left),
                         TableHelper.ValueCell(submittedBy.ContactDetails)
                     )
                 ),
