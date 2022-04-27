@@ -14,7 +14,8 @@ namespace LSSD.Registration.Forms
             SubmittedBy = new FormSubmitter() {
                 FirstName = "Your first name",
                 LastName = "Your last name",
-                ContactDetails = "Cell: 1234567890, Twitter: @Twitter"
+                ContactDetails = "Cell: 1234567890, Twitter: @Twitter",
+                RelationToStudent = "Guardian - of the galaxy"
             },
             SchoolPreferences = new SchoolPreferenceList() {
                 FirstChoice = new SelectedSchool()
@@ -219,7 +220,8 @@ namespace LSSD.Registration.Forms
             {
                 FirstName = "Your first name",
                 LastName = "Your last name",
-                ContactDetails = "Cell: 1234567890, Twitter: @Twitter"
+                ContactDetails = "Cell: 1234567890, Twitter: @Twitter",
+                RelationToStudent = "Guardian - of the galaxy"
             },
             School = new SelectedSchool()
             {

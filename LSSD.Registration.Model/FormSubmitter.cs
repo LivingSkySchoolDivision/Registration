@@ -19,6 +19,10 @@ namespace LSSD.Registration.Model
         [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string ContactDetails { get; set; }
 
+        [Required]
+        [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
+        public string RelationToStudent { get; set; }
+
         
     }
 }
