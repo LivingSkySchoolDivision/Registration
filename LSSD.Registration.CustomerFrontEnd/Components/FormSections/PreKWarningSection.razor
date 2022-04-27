@@ -21,22 +21,36 @@
     }
 
 }
-<div class="container" style="text-align: center;">
-    <div class="alert alert-danger " role="alert" style="text-align: initial">
-        <h2 class="alert-heading">Before you apply</h2>
-        <p>Note that this is an <b>application</b> form, not a registration form. Your application will be reviewed, and you will be notified if your child is accepted into our Pre-Kindergarten program.</p>
-    </div>
+<div class="container" style="text-align: center;">    
+    <div style="text-align: initial;">
+        <h2>Before you apply</h2>
+        <br/>
 
-    <div class="form-group">
-        <div class="form-row">
-            @if (StepNumber > 0)
-            {
+        <h3>Application not registration</h3>
+        <p>Our Pre-Kindergarten program space is limited, and applications must be reviewed and approved by school division staff before your child is fully registered. </p>
+        <p>You will be notified if your child is accepted into the Pre-K program.</p>
+
+        <br/>
+
+        <h3>Eligibility</h3>
+        <p>Students must be at least 3 years of age on or before December 31st of the current school year.</p>
+        <br/>
+
+        <h3>Joint Pre-K program with Light of Christ Catholic Schools (Spiritwood)</h3>
+        <p>The Pre-K program available in <b>Spiritwood</b> is a joint program between Living Sky School Division and Light of Christ Catholic Schools. To apply in Spiritwood, please use the registration for Light of Christ Catholic Schools: <a href="https://www.loccsd.ca/reglanding">https://www.loccsd.ca/reglanding</a></p>
+        <br/>
+        
+        <div class="form-group">
+            <div class="form-row">
+                @if (StepNumber > 0)
+                {
+                    <div class="col">
+                        <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    </div>
+                }
                 <div class="col">
-                    <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    <button type="button" @onclick="OnClick_NextStepButton" class="btn btn-primary btn-block">Next Step</button>
                 </div>
-            }
-            <div class="col">
-                <button type="button" @onclick="OnClick_NextStepButton" class="btn btn-primary btn-block">Next Step</button>
             </div>
         </div>
     </div>
