@@ -16,6 +16,7 @@ namespace LSSD.Registration.Notifier
     class Program
     {
         private const int _sleepMinutes = 15;
+        private const int _daysToKeepNotifiedFormsInDB = 90;
 
         private static void ConsoleWrite(string message)
         {
@@ -67,9 +68,30 @@ namespace LSSD.Registration.Notifier
                 handleBatch<SubmittedPreKApplicationForm>(mongoDatabase, notifications);
                 handleBatch<SubmittedGeneralRegistrationForm>(mongoDatabase, notifications);
 
+
+                ConsoleWrite("Finding old applications to purge..");
+                purgeOldForms<SubmittedPreKApplicationForm>(mongoDatabase, _daysToKeepNotifiedFormsInDB);
+                purgeOldForms<SubmittedGeneralRegistrationForm>(mongoDatabase, _daysToKeepNotifiedFormsInDB);
+
+
+
                 // Sleep
                 ConsoleWrite($"Sleeping for {_sleepMinutes} minutes...");
                 Task.Delay(_sleepMinutes * 60 * 1000).Wait();
+            }
+        }
+
+        private static void purgeOldForms<T>(MongoDbConnection dbConnection, int daysToKeep) where T : IGUIDable, INotifiable, ISubmittedForm
+        {
+            ConsoleWrite($">> Checking for {typeof(T)}...");
+            MongoRepository<T> repo = new MongoRepository<T>(dbConnection);
+            
+            List<T> foundForms = repo.Find(x => x.NotificationSent == true && x.DateReceivedUTC < DateTime.UtcNow.AddDays(daysToKeep * -1)).ToList();
+            foreach(T form in foundForms)
+            {
+                IGUIDable f = (IGUIDable)form;
+                ConsoleWrite("Removing " + f.Id + " submitted " + form.DateReceivedUTC + " (UTC)");
+                repo.Delete(form);
             }
         }
 
