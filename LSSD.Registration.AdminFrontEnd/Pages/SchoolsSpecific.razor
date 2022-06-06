@@ -11,26 +11,31 @@
     NavigationManager NavigationManager { get; set; }
 
     [Parameter]
-    public string schoolid { get; set; } 
+    public string schoolid { get; set; }
 
-    
+
     School selectedSchool = null;
 
     protected override void OnInitialized()
     {
-        if (!string.IsNullOrEmpty(schoolid)) 
+        if (schoolid == "new") {
+            selectedSchool = new School() {
+                Name = "New School"           
+            };
+
+        } else if (!string.IsNullOrEmpty(schoolid))
         {
             selectedSchool = _SchoolRepo.GetById(schoolid);
-        }      
-    } 
+        }
+    }
 
     protected void HandleValidSubmit()
     {
-        // Save the data    
+        // Save the data
         _SchoolRepo.Update(selectedSchool);
 
-        // Navigate back 
-        NavigationManager.NavigateTo("/schools");   
+        // Navigate back
+        NavigationManager.NavigateTo("/schools");
 
     }
 
@@ -39,7 +44,7 @@
         // Do nothing
     }
 
-    
+
     protected void OnClick_PreviousStepButton()
     {
         NavigationManager.NavigateTo("/schools");
@@ -56,7 +61,7 @@
             <ValidationSummary />
 
             <SchoolComponent School="@selectedSchool" Editable=true />
-        
+
             <div class="form-group">
                 <div class="form-row">
                     <div class="col">
