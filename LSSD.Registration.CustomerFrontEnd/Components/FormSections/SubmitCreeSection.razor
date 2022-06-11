@@ -31,7 +31,7 @@
         form.Grade = new GradeInfo() { Grade = "K" };
         form.Student = await BrowserStorage.Get<Student>(StorageKeys.StudentDemographics);
         form.SubmittedBy = await BrowserStorage.Get<FormSubmitter>(StorageKeys.Requestor);
-        form.School = new SelectedSchool() { Name = "Cree Language Program", DAN = "CREE" };
+        form.School = new SelectedSchool() { Name = "Kihci Cree Experience", DAN = "KIHCI" };
         form.Contacts = await BrowserStorage.Get<ContactsInfo>(StorageKeys.Contacts);
         form.Siblings = await BrowserStorage.Get<SiblingInfo>(StorageKeys.Siblings);
         form.BussingInfo = await BrowserStorage.Get<BussingInfo>(StorageKeys.Bussing);
