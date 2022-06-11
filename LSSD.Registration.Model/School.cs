@@ -37,6 +37,10 @@ namespace LSSD.Registration.Model
         public int SchoolLogicSchoolID { get; set; }
         public bool ShowStVitalExtraRequirements { get; set; }
 
+        public School() {
+            this.Communities = new List<string>();
+        }
+
         public void SetGradesOffered(
             bool PK,
             bool K,

@@ -1,0 +1,60 @@
+@namespace LSSD.Registration.CustomerFrontEnd.BlazorComponents.FormSections
+@code {
+    [Inject]
+    LSSD.Registration.CustomerFrontEnd.Services.FormStepTrackerService StepTracker { get; set; }
+
+    [Parameter]
+    public string FormName { get; set; }
+
+
+    [Parameter]
+    public int StepNumber { get; set; }
+
+    private void OnClick_NextStepButton()
+    {
+        StepTracker.NextStep(FormName);
+    }
+
+    protected void OnClick_PreviousStepButton()
+    {
+        StepTracker.PreviousStep(FormName);
+    }
+
+}
+<div class="container" style="text-align: center;">
+    <div style="text-align: initial;">
+        <h2>Before you register</h2>
+        <br/>
+        <h4>ᑭᐦᒋ (Kihci)</h4>
+        <p>Kihci, is a Cree word meaning "important", "necessary", or "great".</p>
+        <p>Kihci is the name of our Cree Language and Culture Experience for Kindergarten. Kihci is designed around indigenized early learning principles, and will feature Cree language and culture embededed throughout the learning.</p>
+        <ul>
+            <li>At this time Kihci is only available for <b>Kindergarten</b> students.</li>
+            <li>Kihci will include approximately 50% Cree (Y-dialect), and 50% English.</li>
+            <li>Students may register from <b>The Battlefords and area</b>.</li>
+            <li>You will be notified before the end of July which school will house Kihci.</li>
+        </ul>
+        <h4>Eligibility</h4>
+        <ul>
+            <li>Must be five (5) years old on or before December 31<sup>st</sup> of the current school year.</li>
+            <li>Preference will be given to students of Indigenous descent, however all children may register.</li>
+        </ul>
+        <br/>
+        <p>Click the "Next Step" button below to begin registration.</p>
+        <br/>
+        <div class="form-group">
+            <div class="form-row">
+                @if (StepNumber > 0)
+                {
+                    <div class="col">
+                        <button type="button" @onclick="OnClick_PreviousStepButton" class="btn btn-secondary btn-block">Previous Step</button>
+                    </div>
+                }
+                <div class="col">
+                    <button type="button" @onclick="OnClick_NextStepButton" class="btn btn-primary btn-block">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

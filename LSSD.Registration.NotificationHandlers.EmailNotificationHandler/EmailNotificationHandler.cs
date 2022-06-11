@@ -22,16 +22,19 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
             this._timeZone = TimeZone;
             this._smtpConnectionDetails = SMTPConnectionDetails;
             foreach(School school in SchoolList) {
-                if (!_schoolEmailsByDAN.ContainsKey(school.DAN)) {
-                    if (!string.IsNullOrEmpty(school.EmailAddress)) {
-                        _schoolEmailsByDAN.Add(school.DAN, school.EmailAddress);
+                
+                if (!string.IsNullOrEmpty(school.DAN)) {
+                    if (!_schoolEmailsByDAN.ContainsKey(school.DAN)) {
+                        if (!string.IsNullOrEmpty(school.EmailAddress)) {
+                            _schoolEmailsByDAN.Add(school.DAN, school.EmailAddress);
+                        }
                     }
                 }
             }
         }
 
         public void Enqueue(object sender, NotificationEventArgs e)
-        {
+        {            
             _backlog.Add(e.NotificationContext);
         }
 
@@ -66,50 +69,57 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                             }
                         }
 
-                        // Handle the form based on what kind of form it is
-                        IEmailNotification emailNotification = null;
+                        if(recipients.Count == 0) {
+                            Console.WriteLine("Unable to send email notification - no email recipients found for school");
+                            
+                        } else {
+                            // Handle the form based on what kind of form it is
+                            IEmailNotification emailNotification = null;
 
-                        if (form.GetType() == typeof(SubmittedPreKApplicationForm))
-                        {
-                            emailNotification = new PreKEmailNotification((SubmittedPreKApplicationForm)form, factory, _timeZone);
-                        }
-
-                        if (form.GetType() == typeof(SubmittedGeneralRegistrationForm))
-                        {
-                            emailNotification = new GeneralRegistrationEmailNotification((SubmittedGeneralRegistrationForm)form, factory, _timeZone);
-                        }
-
-                        if (emailNotification != null) {
-                            MailMessage msg = new MailMessage();
-                            foreach(string addr in recipients) {
-                                msg.To.Add(addr);
+                            if (form.GetType() == typeof(SubmittedPreKApplicationForm))
+                            {
+                                emailNotification = new PreKEmailNotification((SubmittedPreKApplicationForm)form, factory, _timeZone);
                             }
 
-                            msg.Body = emailNotification.Body;
-                            msg.Subject = emailNotification.Subject;
-                            msg.From = new MailAddress(_smtpConnectionDetails.FromAddress, "LSSD Registration Site");
-                            msg.ReplyToList.Add(new MailAddress(_smtpConnectionDetails.ReplyToAddress, "LSSD Registration Site"));
-                            msg.IsBodyHtml = true;
-
-                            try 
+                            if (form.GetType() == typeof(SubmittedGeneralRegistrationForm))
                             {
-                                if (!string.IsNullOrEmpty(emailNotification.AttachmentFilename))
-                                {
-                                    using (Attachment fileAttachment = new Attachment(emailNotification.AttachmentFilename) { Name = emailNotification.FriendlyAttachmentName }) {
-                                        msg.Attachments.Add(fileAttachment);
-                                        smtpClient.Send(msg);
-                                    }
-                                } else {
-                                    smtpClient.Send(msg);
+                                emailNotification = new GeneralRegistrationEmailNotification((SubmittedGeneralRegistrationForm)form, factory, _timeZone);
+                            }
+
+                            if (emailNotification != null) {
+                                MailMessage msg = new MailMessage();
+                                foreach(string addr in recipients) {
+                                    msg.To.Add(addr);
                                 }
 
-                                form.NotificationSent = true;
-                            } 
-                            catch(Exception ex) {
-                                //TODO: Log this better
-                                Console.WriteLine($"EXCEPTION: {ex.Message}");
+                                msg.Body = emailNotification.Body;
+                                msg.Subject = emailNotification.Subject;
+                                msg.From = new MailAddress(_smtpConnectionDetails.FromAddress, "LSSD Registration Site");
+                                msg.ReplyToList.Add(new MailAddress(_smtpConnectionDetails.ReplyToAddress, "LSSD Registration Site"));
+                                msg.IsBodyHtml = true;
+
+                                try 
+                                {
+                                    if (!string.IsNullOrEmpty(emailNotification.AttachmentFilename))
+                                    {
+                                        using (Attachment fileAttachment = new Attachment(emailNotification.AttachmentFilename) { Name = emailNotification.FriendlyAttachmentName }) {
+                                            msg.Attachments.Add(fileAttachment);
+                                            smtpClient.Send(msg);
+                                        }
+                                    } else {
+                                        smtpClient.Send(msg);
+                                    }
+
+                                    form.NotificationSent = true;
+                                } 
+                                catch(Exception ex) {
+                                    //TODO: Log this better
+                                    Console.WriteLine($"EXCEPTION: {ex.Message}");
+                                }
                             }
                         }
+
+                        
                     }
 
                     // Empty the queue. Some may have failed, but they won't be marked as notified in the DB, so the next run will catch them.
