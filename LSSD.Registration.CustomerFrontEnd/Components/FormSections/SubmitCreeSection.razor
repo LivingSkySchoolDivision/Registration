@@ -31,7 +31,7 @@
         form.Grade = new GradeInfo() { Grade = "K" };
         form.Student = await BrowserStorage.Get<Student>(StorageKeys.StudentDemographics);
         form.SubmittedBy = await BrowserStorage.Get<FormSubmitter>(StorageKeys.Requestor);
-        form.School = new SelectedSchool() { Name = "Kihci Cree Experience", DAN = "KIHCI" };
+        form.School = new SelectedSchool() { Name = "kihci Cree Experience", DAN = "kihci" };
         form.Contacts = await BrowserStorage.Get<ContactsInfo>(StorageKeys.Contacts);
         form.Siblings = await BrowserStorage.Get<SiblingInfo>(StorageKeys.Siblings);
         form.BussingInfo = await BrowserStorage.Get<BussingInfo>(StorageKeys.Bussing);
@@ -62,7 +62,7 @@
 }
 
 <div class="container">
-    <h2>Submit Kihci Registration</h2>
+    <h2>Submit kihci Registration</h2>
 
     <EditForm Model="@form" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
         <DataAnnotationsValidator />
