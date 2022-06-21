@@ -25,11 +25,11 @@ jobs:
       matrix:
         include:
           - dockerfile: ./Dockerfile-AdminFrontEnd
-            image: ${{ env.IMAGE_NAME }}-adminfrontend
+            image: ghcr.io/livingskyschooldivision/registration-adminfrontend
           - dockerfile: ./Dockerfile-Notifier
-            image: ${{ env.IMAGE_NAME }}-notifier
+            image: ghcr.io/livingskyschooldivision/registration-notifier
           - dockerfile: ./Dockerfile-FrontEnd
-            image: ${{ env.IMAGE_NAME }}-frontend
+            image: ghcr.io/livingskyschooldivision/registration-frontend
     permissions:
       contents: read
       packages: write
