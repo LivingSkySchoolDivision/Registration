@@ -11,7 +11,8 @@ namespace LSSD.Registration.Model
         public string PhoneNumber { get; set; }
         public List<string> Communities { get; set; }
         public string WebsiteURL { get; set; }
-        public  string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
+        public string NotificationEmailAddress { get; set; }
         public Address MailingAddress { get; set; }
         public Address PhysicalAddress { get; set; }
         public string Facebook { get; set; }

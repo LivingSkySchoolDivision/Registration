@@ -21,11 +21,19 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
         {
             this._timeZone = TimeZone;
             this._smtpConnectionDetails = SMTPConnectionDetails;
-            foreach(School school in SchoolList) {
-                
-                if (!string.IsNullOrEmpty(school.DAN)) {
-                    if (!_schoolEmailsByDAN.ContainsKey(school.DAN)) {
-                        if (!string.IsNullOrEmpty(school.EmailAddress)) {
+            foreach(School school in SchoolList)
+            {
+                if (!string.IsNullOrEmpty(school.DAN))
+                {
+                    if (!_schoolEmailsByDAN.ContainsKey(school.DAN))
+                    {
+                        // If we have a "notification" email, use that
+                        // If we don't, use the general school email
+                        if (!string.IsNullOrEmpty(school.NotificationEmailAddress))
+                        {
+                            _schoolEmailsByDAN.Add(school.DAN, school.NotificationEmailAddress);
+                        } else if (!string.IsNullOrEmpty(school.EmailAddress))
+                        {
                             _schoolEmailsByDAN.Add(school.DAN, school.EmailAddress);
                         }
                     }
@@ -34,7 +42,7 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
         }
 
         public void Enqueue(object sender, NotificationEventArgs e)
-        {            
+        {
             _backlog.Add(e.NotificationContext);
         }
 
@@ -71,7 +79,7 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
 
                         if(recipients.Count == 0) {
                             Console.WriteLine("Unable to send email notification - no email recipients found for school");
-                            
+
                         } else {
                             // Handle the form based on what kind of form it is
                             IEmailNotification emailNotification = null;
@@ -98,7 +106,7 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                                 msg.ReplyToList.Add(new MailAddress(_smtpConnectionDetails.ReplyToAddress, "LSSD Registration Site"));
                                 msg.IsBodyHtml = true;
 
-                                try 
+                                try
                                 {
                                     if (!string.IsNullOrEmpty(emailNotification.AttachmentFilename))
                                     {
@@ -111,7 +119,7 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                                     }
 
                                     form.NotificationSent = true;
-                                } 
+                                }
                                 catch(Exception ex) {
                                     //TODO: Log this better
                                     Console.WriteLine($"EXCEPTION: {ex.Message}");
@@ -119,7 +127,7 @@ namespace LSSD.Registration.NotificationHandlers.EmailNotificationHandler
                             }
                         }
 
-                        
+
                     }
 
                     // Empty the queue. Some may have failed, but they won't be marked as notified in the DB, so the next run will catch them.
