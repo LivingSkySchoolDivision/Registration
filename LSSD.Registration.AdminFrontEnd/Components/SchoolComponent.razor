@@ -12,10 +12,10 @@
 <div class="form-group">
     <div class="form-row">
         <div class="col-sm-3">
-            <label for="requestorFirstName" class="font-weight-bold">School Name: </label>
+            <label for="schoolName" class="font-weight-bold">School Name: </label>
         </div>
         <div class="col-sm-4">
-            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.Name" placeholder=""></InputText>
+            <InputText id="schoolName" class="form-control" @bind-Value="@School.Name" placeholder=""></InputText>
             <ValidationMessage For="@(() => School.Name)" />
         </div>
     </div>
@@ -23,10 +23,10 @@
 
     <div class="form-row">
         <div class="col-sm-3">
-            <label for="requestorFirstName" class="font-weight-bold">DAN: </label>
+            <label for="schoolDAN" class="font-weight-bold">DAN: </label>
         </div>
         <div class="col-sm-4">
-            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.DAN" placeholder=""></InputText>
+            <InputText id="schoolDAN" class="form-control" @bind-Value="@School.DAN" placeholder=""></InputText>
             <ValidationMessage For="@(() => School.DAN)" />
         </div>
     </div>
@@ -45,10 +45,10 @@
     
     <div class="form-row">
         <div class="col-sm-3">
-            <label for="requestorFirstName" class="font-weight-bold">Phone: </label>
+            <label for="schoolPhone" class="font-weight-bold">Phone: </label>
         </div>
         <div class="col-sm-4">
-            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.PhoneNumber" placeholder=""></InputText>
+            <InputText id="schoolPhone" class="form-control" @bind-Value="@School.PhoneNumber" placeholder=""></InputText>
             <ValidationMessage For="@(() => School.PhoneNumber)" />
         </div>
     </div>
@@ -56,10 +56,10 @@
 
     <div class="form-row">
         <div class="col-sm-3">
-            <label for="requestorFirstName" class="font-weight-bold">Website: </label>
+            <label for="schoolWebsite" class="font-weight-bold">Website: </label>
         </div>
         <div class="col-sm-4">
-            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.WebsiteURL" placeholder=""></InputText>
+            <InputText id="schoolWebsite" class="form-control" @bind-Value="@School.WebsiteURL" placeholder=""></InputText>
             <ValidationMessage For="@(() => School.WebsiteURL)" />
         </div>
     </div>
@@ -67,10 +67,10 @@
 
     <div class="form-row">
         <div class="col-sm-3">
-            <label for="requestorFirstName" class="font-weight-bold">Email </label>
+            <label for="schoolEmail" class="font-weight-bold">Email </label>
         </div>
         <div class="col-sm-4">
-            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.EmailAddress" placeholder=""></InputText>
+            <InputText id="schoolEmail" class="form-control" @bind-Value="@School.EmailAddress" placeholder=""></InputText>
             <ValidationMessage For="@(() => School.EmailAddress)" />
         </div>
     </div>
@@ -89,10 +89,10 @@
 
     <div class="form-row">
         <div class="col-sm-3">
-            <label for="requestorFirstName" class="font-weight-bold">Facebook: </label>
+            <label for="schoolFacebook" class="font-weight-bold">Facebook: </label>
         </div>
         <div class="col-sm-4">
-            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.Facebook" placeholder=""></InputText>
+            <InputText id="schoolFacebook" class="form-control" @bind-Value="@School.Facebook" placeholder=""></InputText>
             <ValidationMessage For="@(() => School.Facebook)" />
         </div>
     </div>
@@ -100,10 +100,10 @@
 
     <div class="form-row">
         <div class="col-sm-3">
-            <label for="requestorFirstName" class="font-weight-bold">Twitter: </label>
+            <label for="schoolTwitter" class="font-weight-bold">Twitter: </label>
         </div>
         <div class="col-sm-4">
-            <InputText id="requestorFirstName" class="form-control" @bind-Value="@School.Twitter" placeholder=""></InputText>
+            <InputText id="schoolTwitter" class="form-control" @bind-Value="@School.Twitter" placeholder=""></InputText>
             <ValidationMessage For="@(() => School.Twitter)" />
         </div>
     </div>
@@ -111,7 +111,7 @@
     
     <div class="form-row">
         <div class="col-sm-3">
-            <label for="requestorFirstName" class="font-weight-bold">Communities: </label>
+            <label for="schoolCommunities" class="font-weight-bold">Communities: </label>
         </div>
         <div class="col-sm-4">                        
             <ul>
