@@ -39,9 +39,7 @@ namespace LSSD.Registration.Model
         [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string LandDescription { get; set; }
         [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
-        public string PreviousSchools { get; set; }
-        [MaxLength(25, ErrorMessage = "{0} cannot exceed {1} characters")]
-        public string HealthServicesNumber { get; set; }
+        public string PreviousSchools { get; set; }        
         [MaxLength(1000, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string MedicalNotes { get; set; }
         public string CellPhone { get;set; }

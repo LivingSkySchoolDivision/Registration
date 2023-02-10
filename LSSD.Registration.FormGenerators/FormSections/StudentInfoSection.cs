@@ -13,17 +13,12 @@ namespace LSSD.Registration.FormGenerators.FormSections
         {
             List<OpenXmlElement> sectionParts = new List<OpenXmlElement>();
             
-            if (IsPreKForm) {
-                Student.HealthServicesNumber = "(Not collected for PreK applications)";
-            }
-
             sectionParts.Add(
                 TableHelper.StyledTable(
                     TableHelper.FieldTableRow("Legal Name:", Student.GetLegalName()),
                     TableHelper.FieldTableRow("Preferred Name:", Student.GetPreferredName()),
                     TableHelper.FieldTableRow("Gender:", Student.Gender),
                     TableHelper.FieldTableRow("Date of Birth:", Student.GetDateOfBirthWithAge()),
-                    TableHelper.FieldTableRow("Health Services #:", Student.HealthServicesNumber),
                     TableHelper.FieldTableRow("Medical Notes:", Student.MedicalNotes),
                     TableHelper.FieldTableRow("Land Description:", Student.LandDescription),
                     TableHelper.FieldTableRow("Student Cell #:", Student.CellPhone)
