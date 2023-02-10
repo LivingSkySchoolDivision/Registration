@@ -46,7 +46,6 @@ namespace LSSD.Registration.Forms
                 Gender = "Unspecified",
                 DateOfBirth = DateTime.Today.AddYears(-5).Date,
                 MedicalNotes = "Allergic to bees",
-                HealthServicesNumber = string.Empty,
                 PrimaryAddress = new Address()
                 {
                     Line1 = "123 Fake Street",
@@ -242,7 +241,6 @@ namespace LSSD.Registration.Forms
                 DateOfBirth = DateTime.Today.AddYears(-5).Date,
                 PreviousSchools = "John Smith's Elementary School",
                 MedicalNotes = "Allergic to bees",
-                HealthServicesNumber = string.Empty,
                 PrimaryAddress = new Address()
                 {
                     Line1 = "123 Fake Street",
