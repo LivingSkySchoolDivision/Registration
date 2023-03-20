@@ -108,9 +108,9 @@
                     }
                     <InputSelect id="SchoolYearRegisteringFor" class="form-control col-sm-8" @bind-Value="@FormSubmitterData.SchoolYearRegisteringFor">
                         <option value="">Please select a school year</option>
-                        @foreach (string val in FormDefaults.AvailableResidencyTypes)
+                        @for(int x = 0; x <= 1; x++)
                         {
-                            string currentSchoolYearValue = "September " + currentSchoolYear + " to June " + (currentSchoolYear + 1);
+                            string currentSchoolYearValue = "September " + (currentSchoolYear + x) + " to June " + (currentSchoolYear + 1 + x);
                             <option value="@currentSchoolYearValue">@currentSchoolYearValue</option>
                         }
                     </InputSelect>
