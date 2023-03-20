@@ -96,6 +96,31 @@
 
         <div class="form-group">
             <div class="form-row">
+                <div class="col-sm-3">
+                    <label for="requestorFirstName" class="font-weight-bold">School year registering/applying for </label>
+                </div>
+                <div class="col-sm-9">
+                    @{
+                        int currentSchoolYear = DateTime.Today.Year;
+                        if ((DateTime.Today.Month >= 1) && (DateTime.Today.Month <= 6)) {
+                            currentSchoolYear = currentSchoolYear - 1;
+                        }
+                    }
+                    <InputSelect id="SchoolYearRegisteringFor" class="form-control col-sm-8" @bind-Value="@FormSubmitterData.SchoolYearRegisteringFor">
+                        <option value="">Please select a school year</option>
+                        @foreach (string val in FormDefaults.AvailableResidencyTypes)
+                        {
+                            string currentSchoolYearValue = "September " + currentSchoolYear + " to June " + (currentSchoolYear + 1);
+                            <option value="@currentSchoolYearValue">@currentSchoolYearValue</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => FormSubmitterData.SchoolYearRegisteringFor)" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-row">
                 @if (StepNumber > 0)
                 {
                     <div class="col">

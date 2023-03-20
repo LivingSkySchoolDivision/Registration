@@ -15,7 +15,8 @@ namespace LSSD.Registration.Forms
                 FirstName = "Your first name",
                 LastName = "Your last name",
                 ContactDetails = "Cell: 1234567890, Twitter: @Twitter",
-                RelationToStudent = "Guardian - of the galaxy"
+                RelationToStudent = "Guardian - of the galaxy",
+                SchoolYearRegisteringFor = "September 1905 to June 4056"
             },
             SchoolPreferences = new SchoolPreferenceList() {
                 FirstChoice = new SelectedSchool()
@@ -220,7 +221,8 @@ namespace LSSD.Registration.Forms
                 FirstName = "Your first name",
                 LastName = "Your last name",
                 ContactDetails = "Cell: 1234567890, Twitter: @Twitter",
-                RelationToStudent = "Guardian - of the galaxy"
+                RelationToStudent = "Guardian - of the galaxy",
+                SchoolYearRegisteringFor = "September 1905 to June 4056"
             },
             School = new SelectedSchool()
             {

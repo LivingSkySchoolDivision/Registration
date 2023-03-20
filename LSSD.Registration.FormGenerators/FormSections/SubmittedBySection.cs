@@ -14,6 +14,13 @@ namespace LSSD.Registration.FormGenerators.FormSections
             return new List<OpenXmlElement>() {
                 TableHelper.StyledTable(
                     new TableRow(
+                        TableHelper.LabelCell("For school year", JustificationValues.Left).WithWidth(47.5),
+                        TableHelper.ValueCell(submittedBy.SchoolYearRegisteringFor, JustificationValues.Left).WithWidth(47.5)
+                    )
+                ),   
+                ParagraphHelper.WhiteSpace(),
+                TableHelper.StyledTable(
+                    new TableRow(
                         TableHelper.LabelCell("Form Submitted By", JustificationValues.Left).WithWidth(47.5),
                         TableHelper.LabelCell("Contact Details", JustificationValues.Left).WithWidth(47.5)
                     ),
@@ -22,7 +29,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.ValueCell(submittedBy.ContactDetails)
                     )
                 ),
-                ParagraphHelper.WhiteSpace()
+                ParagraphHelper.WhiteSpace(),                
             };
                 
         }
