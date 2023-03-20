@@ -120,7 +120,7 @@
         </div>
         <div>               
             <InputCheckbox @bind-Value="@sectionData.UnderstandsGivenAnswers"></InputCheckbox>
-            &nbsp;<label for="" class="">I understand that I haven chosen to <b>@(sectionData.ShareWithSchoolDivision ? "grant" : "NOT grant")</b> consent for school division purposes, and <b>@(sectionData.ShareWithMedia ? "grant" : "NOT grant")</b> consent to share with the media.</label>
+            &nbsp;<label for="" class="">I understand that I have chosen to <b>@(sectionData.ShareWithSchoolDivision ? "grant" : "NOT grant")</b> consent for school division purposes, and <b>@(sectionData.ShareWithMedia ? "grant" : "NOT grant")</b> consent to share with the media.</label>
             <ValidationMessage For="@(() => sectionData.UnderstandsGivenAnswers)" />    
         </div>
     </div>

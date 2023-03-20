@@ -24,6 +24,7 @@
         <th>Submitted On</th>
         <th>School</th>
         <th>Notification to school</th>
+        <th>Id</th>
     </tr>
     </thead>    
 
@@ -34,6 +35,7 @@
         <td>@(form.DateReceivedUTC.ToString())</td>
         <td>@(form.Form.School.Name)</td>
         <td>@(form.NotificationSent ? "Yes" : "No")</td>
+        <td>@(form.Id)</td>
     </tr>
 }
 

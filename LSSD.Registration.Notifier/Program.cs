@@ -31,7 +31,6 @@ namespace LSSD.Registration.Notifier
                 .AddEnvironmentVariables()
                 .AddUserSecrets<Program>()
                 .Build();
-
             
             TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById(configuration["Settings:TimeZone"]);
 
@@ -41,6 +40,7 @@ namespace LSSD.Registration.Notifier
             ConsoleWrite($"Time zone for forms: {timeZone}");
             
             IConfigurationSection smtpConfig = configuration.GetSection("SMTP");
+
             SMTPConnectionDetails smtpInfo = new SMTPConnectionDetails()
             {
                 Host = smtpConfig["hostname"],
@@ -50,6 +50,10 @@ namespace LSSD.Registration.Notifier
                 ReplyToAddress = smtpConfig["replytoaddress"],
                 FromAddress = smtpConfig["fromaddress"]
             };
+
+            Console.WriteLine(smtpInfo.Username);
+            Console.WriteLine(smtpInfo.Password);
+
 
             // Start main loop
             while (true)
@@ -68,12 +72,9 @@ namespace LSSD.Registration.Notifier
                 handleBatch<SubmittedPreKApplicationForm>(mongoDatabase, notifications);
                 handleBatch<SubmittedGeneralRegistrationForm>(mongoDatabase, notifications);
 
-
                 ConsoleWrite("Finding old applications to purge..");
                 purgeOldForms<SubmittedPreKApplicationForm>(mongoDatabase, _daysToKeepNotifiedFormsInDB);
                 purgeOldForms<SubmittedGeneralRegistrationForm>(mongoDatabase, _daysToKeepNotifiedFormsInDB);
-
-
 
                 // Sleep
                 ConsoleWrite($"Sleeping for {_sleepMinutes} minutes...");

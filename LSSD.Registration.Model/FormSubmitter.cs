@@ -22,7 +22,9 @@ namespace LSSD.Registration.Model
         [Required]
         [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string RelationToStudent { get; set; }
-
         
+        [Required]
+        [MaxLength(100, ErrorMessage = "{0} cannot exceed {1} characters")]
+        public string SchoolYearRegisteringFor { get; set; }
     }
 }
