@@ -19,6 +19,7 @@ namespace LSSD.Registration.Model
         [Range(1,int.MaxValue, ErrorMessage = "Priority must be at least 1.")]
         public int ContactPriority { get; set; }
         public bool LivesWithStudent { get; set; }
+        public bool IsParentOrGuardian { get; set; }
         public bool SamePrimaryAddressAsStudent { get; set; }
         public bool SameMailingAddressAsStudent { get; set; }
         public bool ShouldRecieveMailAboutStudent { get; set; }

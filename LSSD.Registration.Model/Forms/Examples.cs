@@ -14,7 +14,7 @@ namespace LSSD.Registration.Forms
             SubmittedBy = new FormSubmitter() {
                 FirstName = "Your first name",
                 LastName = "Your last name",
-                ContactDetails = "Cell: 1234567890, Twitter: @Twitter",
+                EmailAddress = "noreply@lskysd.ca",
                 RelationToStudent = "Guardian - of the galaxy",
                 SchoolYearRegisteringFor = "September 1905 to June 4056"
             },
@@ -77,6 +77,15 @@ namespace LSSD.Registration.Forms
                     }
                 } 
             },
+            FirstNationsInfo = new FirstNationsInfo()
+            {
+                IsDeclaringFirstNationsInfo = true,
+                ResidesOnReserve = true,
+                AboriginalStatus = "Registered/Treaty/Status Indian",
+                BandName = "Band name here",
+                ReserveName = "Reserve name residing on",
+                ReserveHouse = "House number on reserve"
+            },
             Contacts = new ContactsInfo()
             {
                 Contacts = new List<Contact>()
@@ -123,6 +132,7 @@ namespace LSSD.Registration.Forms
                         RelationshipToStudent = "Parent",
                         ContactPriority = 2,
                         LivesWithStudent = true,
+                        IsParentOrGuardian = true,
                         SamePrimaryAddressAsStudent = true,
                         SameMailingAddressAsStudent = true,
                         ShouldRecieveMailAboutStudent = true,
@@ -202,7 +212,8 @@ namespace LSSD.Registration.Forms
                 AssistanceFromKidsFirst = true,
                 AssistanceFromOccupationOrPhysicalTherapist = true,
                 LowIncomeFamily = true,
-                SpeechDifficulties = true
+                SpeechOrLanguageDifficulties = true,
+                MotorControlDifficulties = true
             },
             Consent = new StudentConsentInfo() {
                 ShareWithMedia = false,
@@ -220,7 +231,7 @@ namespace LSSD.Registration.Forms
             {
                 FirstName = "Your first name",
                 LastName = "Your last name",
-                ContactDetails = "Cell: 1234567890, Twitter: @Twitter",
+                EmailAddress = "noreply@lskysd.ca",
                 RelationToStudent = "Guardian - of the galaxy",
                 SchoolYearRegisteringFor = "September 1905 to June 4056"
             },
@@ -295,6 +306,7 @@ namespace LSSD.Registration.Forms
                         HomePhone = "1234567890",
                         WorkPhone = "0987654321",
                         CellPhone = "3216540987",
+                        IsParentOrGuardian = true,
                         AlternateContactInfo = "Facebook: MyFacebookName",
                         Employer = "Spacely Space Sprockets Inc",
                         EmailAddress = "email@domain.com",
