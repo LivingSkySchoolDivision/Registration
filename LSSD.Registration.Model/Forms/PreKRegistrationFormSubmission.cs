@@ -18,5 +18,6 @@ namespace LSSD.Registration.Model.Forms
         [Required]
         public ContactsInfo Contacts { get; set; }
         public StudentConsentInfo Consent { get; set; }
+        public FirstNationsInfo FirstNationsInfo { get; set; }
     }
 }

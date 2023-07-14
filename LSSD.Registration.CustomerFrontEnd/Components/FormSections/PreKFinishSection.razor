@@ -38,6 +38,7 @@
         form.PreKInfo = await BrowserStorage.Get<PreKInfo>(StorageKeys.PreKInfo);
         form.Contacts = await BrowserStorage.Get<ContactsInfo>(StorageKeys.Contacts);
         form.Consent = await BrowserStorage.Get<StudentConsentInfo>(StorageKeys.StudentConsent);
+        form.FirstNationsInfo = await BrowserStorage.Get<FirstNationsInfo>(StorageKeys.FirstNations);
 
         if (form.Student != null)
         {

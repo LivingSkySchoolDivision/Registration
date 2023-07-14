@@ -45,7 +45,9 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.StyledTableBordered(
                             TableHelper.StickyTableRow(
                                 TableHelper.LabelCell("Name:"),
-                                TableHelper.ValueCell(contact.GetDisplayName(), JustificationValues.Left).WithColspan(5)
+                                TableHelper.ValueCell(contact.GetDisplayName(), JustificationValues.Left).WithColspan(3),
+                                TableHelper.LabelCell("Parent/Guardian:"),
+                                TableHelper.ValueCell(contact.IsParentOrGuardian)
                             ),
                             TableHelper.StickyTableRow(
                                 TableHelper.LabelCell("Relation:", JustificationValues.Left).WithWidth(15),

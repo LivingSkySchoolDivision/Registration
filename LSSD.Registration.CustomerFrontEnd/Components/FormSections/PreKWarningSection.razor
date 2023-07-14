@@ -24,20 +24,32 @@
 <div class="container" style="text-align: center;">    
     <div style="text-align: initial;">
         <h2>Before you apply</h2>
+        <p>Please read this page thoroughly before continuing to the next step.</p>
         <br/>
 
-        <h3>Application not registration</h3>
+        <h4>⚠️ This is an application not a registration</h4>
         <p>Our Pre-Kindergarten program space is limited, and applications must be reviewed and approved by school division staff before your child is fully registered. </p>
-        <p><span style="background-color: #FFFF00;">You will be notified if your child is accepted into the Pre-K program.</span></p>
+        <p><span style="background-color: #FFFF00;">We will contact you if your child is accepted into the Pre-K program.</span>
+        @{
+            if (DateTime.Today < (new DateTime(2023,9,15))) {
+                <span> You will be notified if your child is accepted on or before <b>September 15th, 2023</b>.</span>
+            }
+        }
+        </p>
 
         <br/>
-
-        <h3>Eligibility</h3>
-        <p>Students must be at least 3 years of age on or before December 31st of the current school year.</p>
         <br/>
 
-        <h3>Joint Pre-K program with Light of Christ Catholic Schools (Spiritwood)</h3>
-        <p>The Pre-K program available in <b>Spiritwood</b> is a joint program between Living Sky School Division and Light of Christ Catholic Schools. To apply in Spiritwood, please use the registration for Light of Christ Catholic Schools: <a href="https://www.loccsd.ca/reglanding">https://www.loccsd.ca/reglanding</a></p>
+        <h4>⚠️ Pre-K at St. Vital is available to non-Catholic students</h4>
+        <p>The Pre-Kindergarten program offered at St. Vital is open to all students, regardless of student or family faith.</p>
+
+        <br/>
+        <br/>
+
+        <h4>⚠️ Pre-Kindergarten in Spiritwood, SK</h4>
+        <p>The Pre-K program available in Spiritwood is a joint program between Living Sky School Division and Light of Christ Catholic Schools. To apply in Spiritwood, please use the registration for Light of Christ Catholic Schools: <a href="https://www.loccsd.ca/reglanding">https://www.loccsd.ca/reglanding</a></p>
+        
+        <br/>
         <br/>
         
         <div class="form-group">

@@ -74,23 +74,15 @@
                 </div>
             </div>
         </div>
-
-        <div class="form-group form-row">
-            <div class="col-sm-3">
-                <label for="requestorEmail" class="font-weight-bold">Preferred method of contact:</label>
-                <p class="text-muted small">
-                    Examples:
-                    <ul class="text-muted small">
-                        <li>Cell: (123) 456-7890</li>
-                        <li>Text: (321) 654-0987</li>
-                        <li>Email: john@smith.com</li>
-                        <li>Facebook: MyFacebookName</li>
-                    </ul>
-                </p>
-            </div>
-            <div class="col-sm-9">
-                <InputTextArea id="requestorEmail" class="form-control" @bind-Value="@FormSubmitterData.ContactDetails"></InputTextArea>
-                <ValidationMessage For="@(() => FormSubmitterData.ContactDetails)" />
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col-sm-3">
+                    <label for="requestorEmail" class="font-weight-bold">Your email address </label>
+                </div>
+                <div class="col-sm-9">
+                    <InputText id="requestorEmail" class="form-control" @bind-Value="@FormSubmitterData.EmailAddress" placeholder="you@email.com"></InputText>
+                    <ValidationMessage For="@(() => FormSubmitterData.EmailAddress)" />
+                </div>
             </div>
         </div>
 

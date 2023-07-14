@@ -26,8 +26,13 @@ namespace LSSD.Registration.Model
                     "Please provide at least " + _minContacts + " contact(s).", new[] { nameof(Contacts) }));
             }
 
+            bool foundAtLeastOneParent = false;
             foreach(Contact contact in this.Contacts)
             {
+                if (contact.IsParentOrGuardian) {
+                    foundAtLeastOneParent = true;
+                }
+
                 if (string.IsNullOrEmpty(contact.RelationshipToStudent))
                 {
                     errors.Add(new ValidationResult(
@@ -39,6 +44,11 @@ namespace LSSD.Registration.Model
                     errors.Add(new ValidationResult(
                         "Please specify a relationship for all contacts.", new[] { nameof(Contacts) }));
                 }
+            }
+
+            if (foundAtLeastOneParent == false) {
+                errors.Add(new ValidationResult(
+                    "Please provide at least one contact who is a parent or legal guardian of the child.", new[] { nameof(Contacts) }));                
             }
 
             return errors;

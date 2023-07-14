@@ -12,7 +12,22 @@ namespace LSSD.Registration.FormGenerators.FormSections
         public static IEnumerable<OpenXmlElement> GetSection(PreKInfo PreKInfo)
         {
             List<OpenXmlElement> sectionParts = new List<OpenXmlElement>();
+
+            sectionParts.Add(
+                TableHelper.StyledTable(
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Attends childcare?").WithWidth(40),
+                        TableHelper.ValueCell(PreKInfo.AttendsChildCare).WithWidth(5),   
+                        TableHelper.LabelCell("")                 
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.ValueCell(PreKInfo.ChildCareProviderName).WithColspan(3)
+                    )
+                )
+            );  
             
+            sectionParts.Add(ParagraphHelper.WhiteSpace());
+
             sectionParts.Add(
                 TableHelper.StyledTable(                    
                     TableHelper.StickyTableRow(
@@ -22,41 +37,35 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.ValueCell(PreKInfo.LowIncomeFamily).WithWidth(5)
                     ),
                     TableHelper.StickyTableRow(
-                        TableHelper.LabelCell("Single parent or frequent parent absence:"),
+                        TableHelper.LabelCell("Only one parent in the home"),
                         TableHelper.ValueCell(PreKInfo.OnlyOneParentInHome),
+                        TableHelper.LabelCell("Frequent parent absence"),
+                        TableHelper.ValueCell(PreKInfo.FrequentParentAbsence)
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Teen parent"),
+                        TableHelper.ValueCell(PreKInfo.TeenParent),
+                        TableHelper.LabelCell("English not first language"),
+                        TableHelper.ValueCell(PreKInfo.EnglishAsAdditionalLanguage)
+                    ),
+                    TableHelper.StickyTableRow(
                         TableHelper.LabelCell("Lack of family support system:"),
-                        TableHelper.ValueCell(PreKInfo.NoFamilySupportSystem)
+                        TableHelper.ValueCell(PreKInfo.NoFamilySupportSystem),
+                        TableHelper.LabelCell("Child in foster care:"),
+                        TableHelper.ValueCell(PreKInfo.InFosterCare)
                     ),
                     TableHelper.StickyTableRow(
                         TableHelper.LabelCell("Primary caregiver less than high school education:"),
                         TableHelper.ValueCell(PreKInfo.PrimaryCaregiverLessThanHighSchoolEducation),
-                        TableHelper.LabelCell("Speech difficulties:"),
-                        TableHelper.ValueCell(PreKInfo.SpeechDifficulties)
+                        TableHelper.LabelCell("Speech or Language difficulties:"),
+                        TableHelper.ValueCell(PreKInfo.SpeechOrLanguageDifficulties)
                     ),
                     TableHelper.StickyTableRow(
-                        TableHelper.LabelCell("Child in foster care:"),
-                        TableHelper.ValueCell(PreKInfo.InFosterCare),
-                        TableHelper.LabelCell("Language difficulties:"),
-                        TableHelper.ValueCell(PreKInfo.LanguageDifficulties)
-                    ),
-                    TableHelper.StickyTableRow(
-                        TableHelper.LabelCell("Can use bathroom by self:"),
-                        TableHelper.ValueCell(PreKInfo.CanUseBathroomAlone),
-                        TableHelper.LabelCell("Fine Motor difficulties:"),
-                        TableHelper.ValueCell(PreKInfo.FineMotorDifficulties)
-                    ),
-                    TableHelper.StickyTableRow(
-                        TableHelper.LabelCell("Bathroom training in progress:"),
-                        TableHelper.ValueCell(PreKInfo.PottyTrainingInProgress),
-                        TableHelper.LabelCell("Gross Motor difficulties:"),
-                        TableHelper.ValueCell(PreKInfo.GrossMotorDifficulties)
-                    ),
-                    TableHelper.StickyTableRow(
-                        TableHelper.LabelCell("Child lives with teen parent:"),
-                        TableHelper.ValueCell(PreKInfo.TeenParent),
+                        TableHelper.LabelCell("Motor control difficulties:"),
+                        TableHelper.ValueCell(PreKInfo.MotorControlDifficulties),
                         TableHelper.LabelCell(""),
                         TableHelper.ValueCell("")
-                    ),
+                    ),                    
                     TableHelper.StickyTableRow(
                         TableHelper.LabelCell("Other difficulties:").WithColspan(4)
                     ),
@@ -64,9 +73,25 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.ValueCell(PreKInfo.OtherDifficulties).WithColspan(4)
                     )
                 )
-            );          
+            ); 
 
-            sectionParts.Add(ParagraphHelper.WhiteSpace());
+            sectionParts.Add(ParagraphHelper.WhiteSpace()); 
+
+            sectionParts.Add(
+                TableHelper.StyledTable(
+                    TableHelper.StickyTableRow(
+                        TableHelper.LabelCell("Can use bathroom by self?").WithWidth(40),
+                        TableHelper.ValueCell(PreKInfo.CanUseBathroomAlone).WithWidth(5), 
+                        TableHelper.LabelCell("Bathroom training in progress?").WithWidth(40),
+                        TableHelper.ValueCell(PreKInfo.CanUseBathroomAlone).WithWidth(5)                       
+                    ),
+                    TableHelper.StickyTableRow(
+                        TableHelper.ValueCell(PreKInfo.BathroomTrainingDetails).WithColspan(4)
+                    )
+                )
+            );  
+            
+            sectionParts.Add(ParagraphHelper.WhiteSpace()); 
             sectionParts.Add(ParagraphHelper.Paragraph("Child receives supports from the following:", LSSDDocumentStyles.SectionTitle));
           
             sectionParts.Add(
@@ -74,7 +99,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                     TableHelper.StickyTableRow(
                         TableHelper.LabelCell("KidsFirst").WithWidth(40),
                         TableHelper.ValueCell(PreKInfo.AssistanceFromKidsFirst).WithWidth(5),
-                        TableHelper.LabelCell("Early Childhood Intervention Program:").WithWidth(40),
+                        TableHelper.LabelCell("Early Childhood Intervention Program (ECIP):").WithWidth(40),
                         TableHelper.ValueCell(PreKInfo.AssistanceFromEarlyChildhoodIntervention).WithWidth(5)
                     ),
                     TableHelper.StickyTableRow(
@@ -84,13 +109,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.ValueCell(PreKInfo.AssistanceFromChildhoodPsychologist)
                     ),
                     TableHelper.StickyTableRow(
-                        TableHelper.LabelCell("Pre-School/Daycare/Family Day Home:"),
-                        TableHelper.ValueCell(PreKInfo.AssistanceFromPreSchoolOrDaycare),
-                        TableHelper.LabelCell("Licensed Child Care:"),
-                        TableHelper.ValueCell(PreKInfo.AssistanceFromLicensedChildCare)
-                    ),
-                    TableHelper.StickyTableRow(
-                        TableHelper.LabelCell("Autism Consultant or Resource Center:"),
+                        TableHelper.LabelCell("Autism Consultant:"),
                         TableHelper.ValueCell(PreKInfo.AssistanceFromAutismConsultant),
                         TableHelper.LabelCell("Speech/Language Pathologist:"),
                         TableHelper.ValueCell(PreKInfo.AssistanceFromSpeechLangagePathologist)
@@ -104,10 +123,9 @@ namespace LSSD.Registration.FormGenerators.FormSections
                     TableHelper.StickyTableRow(
                         TableHelper.LabelCell("Aboriginal HeadStart:"),
                         TableHelper.ValueCell(PreKInfo.AssistanceFromAboriginalHeadstart),
-                        TableHelper.LabelCell("Consent to share information with these agencies:"),
-                        TableHelper.ValueCell(PreKInfo.ConsentToShareFromAgencies)
-                    )
-                    
+                        TableHelper.LabelCell(""),
+                        TableHelper.ValueCell("")
+                    )                    
                 )
             );
             

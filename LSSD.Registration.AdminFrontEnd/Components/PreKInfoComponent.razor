@@ -6,45 +6,61 @@
 @if (Section != null) {
 <div class="form-group">
     <div class="row">
-        <div class="col-sm-6">Has speech difficulties?</div>
-        <div class="col-sm-6">@(Section.SpeechDifficulties ? "Yes" : "No")</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Has language difficulties?</div>
-        <div class="col-sm-6">@(Section.LanguageDifficulties ? "Yes" : "No")</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Has gross motor difficulties?</div>
-        <div class="col-sm-6">@(Section.GrossMotorDifficulties ? "Yes" : "No")</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Has fine motor difficulties?</div>
-        <div class="col-sm-6">@(Section.FineMotorDifficulties ? "Yes" : "No")</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Has other difficulties?</div>
-        <div class="col-sm-6">@(Section.OtherDifficulties)</div>
+        <div class="col-sm-6">Attends childcare?</div>
+        <div class="col-sm-6">@(Section.AttendsChildCare ? "Yes" : "No")</div>
     </div>    
     <div class="row">
-        <div class="col-sm-6">Only one parent at home?</div>
-        <div class="col-sm-6">@(Section.OnlyOneParentInHome ? "Yes" : "No")</div>
-    </div>    
+        <div class="col-sm-6">Childcare name and location?</div>
+        <div class="col-sm-6">@(Section.ChildCareProviderName)</div>
+    </div>
     <div class="row">
-        <div class="col-sm-6">No family support system</div>
-        <div class="col-sm-6">@(Section.NoFamilySupportSystem ? "Yes" : "No")</div>
+        <div class="col-sm-6">Social Emotional or Behavior Issues</div>
+        <div class="col-sm-6">@(Section.SocialEmotionalOrBehaviourIssues)</div>
     </div>
     <div class="row">
         <div class="col-sm-6">Traumatic Experiences?</div>
         <div class="col-sm-6">@Section.TraumaticExperiences</div>
-    </div>    
+    </div>  
     <div class="row">
         <div class="col-sm-6">Healthcare crisis?</div>
         <div class="col-sm-6">@Section.HealthcareCrisis</div>
-    </div>    
+    </div>  
+    <div class="row">
+        <div class="col-sm-6">Referred by an agency?</div>
+        <div class="col-sm-6">@(Section.ReferredByOtherAgency)</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Has speech or language difficulties?</div>
+        <div class="col-sm-6">@(Section.SpeechOrLanguageDifficulties ? "Yes" : "No")</div>
+    </div> 
+    <div class="row">
+        <div class="col-sm-6">Has motor difficulties (gross/fine)?</div>
+        <div class="col-sm-6">@(Section.MotorControlDifficulties ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Has other difficulties?</div>
+        <div class="col-sm-6">@(Section.OtherDifficulties)</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Only one parent at home?</div>
+        <div class="col-sm-6">@(Section.OnlyOneParentInHome ? "Yes" : "No")</div>
+    </div>   
+    <div class="row">
+        <div class="col-sm-6">Frequent Parent Absence?</div>
+        <div class="col-sm-6">@(Section.FrequentParentAbsence ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">English not first language?</div>
+        <div class="col-sm-6">@(Section.EnglishAsAdditionalLanguage ? "Yes" : "No")</div>
+    </div> 
+    <div class="row">
+        <div class="col-sm-6">No family support system</div>
+        <div class="col-sm-6">@(Section.NoFamilySupportSystem ? "Yes" : "No")</div>
+    </div> 
     <div class="row">
         <div class="col-sm-6">Low income family?</div>
         <div class="col-sm-6">@(Section.LowIncomeFamily ? "Yes" : "No")</div>
-    </div>
+    </div> 
     <div class="row">
         <div class="col-sm-6">Primary caregiver has less than high school education</div>
         <div class="col-sm-6">@(Section.PrimaryCaregiverLessThanHighSchoolEducation ? "Yes" : "No")</div>
@@ -64,70 +80,62 @@
     <div class="row">
         <div class="col-sm-6">Can use bathroom alone?</div>
         <div class="col-sm-6">@(Section.CanUseBathroomAlone ? "Yes" : "No")</div>
-    </div>
+    </div> 
     <div class="row">
         <div class="col-sm-6">Potty training in progress?</div>
         <div class="col-sm-6">@(Section.PottyTrainingInProgress ? "Yes" : "No")</div>
+    </div> 
+    <div class="row">
+        <div class="col-sm-6">Bathroom training details</div>
+        <div class="col-sm-6">@(Section.BathroomTrainingDetails)</div>
     </div>
     <div class="row">
-        <div class="col-sm-6">Consent to share data from agencies?</div>
-        <div class="col-sm-6">@(Section.ConsentToShareFromAgencies ? "Yes" : "No")</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Social Emotional or Behavior Issues</div>
-        <div class="col-sm-6">@(Section.SocialEmotionalOrBehaviourIssues)</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Other concerns</div>
-        <div class="col-sm-6">@Section.OtherConcerns</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Medical concerns</div>
-        <div class="col-sm-6">@Section.MedicalConcerns</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Assistance from Kids First?</div>
-        <div class="col-sm-6">@(Section.AssistanceFromKidsFirst ? "Yes" : "No")</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Assistance from Early Childhood Intervension?</div>
-        <div class="col-sm-6">@(Section.AssistanceFromEarlyChildhoodIntervention ? "Yes" : "No")</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Assistance from Occupational or Physical therapist?</div>
-        <div class="col-sm-6">@(Section.AssistanceFromOccupationOrPhysicalTherapist ? "Yes" : "No")</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Assistance from Childhood Psychologist?</div>
-        <div class="col-sm-6">@(Section.AssistanceFromChildhoodPsychologist ? "Yes" : "No")</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Assistance from Preschool or Daycare?</div>
-        <div class="col-sm-6">@(Section.AssistanceFromPreSchoolOrDaycare ? "Yes" : "No")</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">Assistance from licensed childcare?</div>
-        <div class="col-sm-6">@(Section.AssistanceFromLicensedChildCare ? "Yes" : "No")</div>
+        <div class="col-sm-6">Assistance from Aboriginal Headstart?</div>
+        <div class="col-sm-6">@(Section.AssistanceFromAboriginalHeadstart ? "Yes" : "No")</div>
     </div>
     <div class="row">
         <div class="col-sm-6">Assistance from Autism Consultant?</div>
         <div class="col-sm-6">@(Section.AssistanceFromAutismConsultant ? "Yes" : "No")</div>
     </div>
     <div class="row">
-        <div class="col-sm-6">Assistance from speech language pathologist?</div>
-        <div class="col-sm-6">@(Section.AssistanceFromSpeechLangagePathologist ? "Yes" : "No")</div>
+        <div class="col-sm-6">Assistance from Early Childhood Intervension (ECIP)?</div>
+        <div class="col-sm-6">@(Section.AssistanceFromEarlyChildhoodIntervention ? "Yes" : "No")</div>
     </div>
     <div class="row">
-        <div class="col-sm-6">Assistance from Social Services?</div>
-        <div class="col-sm-6">@(Section.AssistanceFromSocialServices ? "Yes" : "No")</div>
+        <div class="col-sm-6">Assistance from Childhood Psychologist?</div>
+        <div class="col-sm-6">@(Section.AssistanceFromChildhoodPsychologist ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Assistance from Kids First?</div>
+        <div class="col-sm-6">@(Section.AssistanceFromKidsFirst ? "Yes" : "No")</div>
     </div>
     <div class="row">
         <div class="col-sm-6">Assistance from Kinsmen Child Development Center?</div>
         <div class="col-sm-6">@(Section.AssistanceFromKinsmenChildDevCenter ? "Yes" : "No")</div>
     </div>
     <div class="row">
-        <div class="col-sm-6">Assistance from Aboriginal Headstart?</div>
-        <div class="col-sm-6">@(Section.AssistanceFromAboriginalHeadstart ? "Yes" : "No")</div>
+        <div class="col-sm-6">Assistance from Occupational or Physical therapist?</div>
+        <div class="col-sm-6">@(Section.AssistanceFromOccupationOrPhysicalTherapist ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Assistance from Social Services?</div>
+        <div class="col-sm-6">@(Section.AssistanceFromSocialServices ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Assistance from speech language pathologist?</div>
+        <div class="col-sm-6">@(Section.AssistanceFromSpeechLangagePathologist ? "Yes" : "No")</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Custody concerns</div>
+        <div class="col-sm-6">@Section.CustodyConcerns</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Medical concerns</div>
+        <div class="col-sm-6">@Section.MedicalConcerns</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Other concerns</div>
+        <div class="col-sm-6">@Section.OtherConcerns</div>
     </div>
 </div>
 }

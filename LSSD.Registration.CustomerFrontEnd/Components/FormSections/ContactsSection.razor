@@ -100,25 +100,25 @@
 }
 
 <div class="container">
-    <h2>Contacts</h2>
+    <h2>Parents, Guardians, Emergency Contacts</h2>
     <EditForm Model="@ContactsInfoData" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInValidSubmit">
-        <p>A contact might be:</p>
+        <p>We require at least two adult contacts, at least one of which must be the parent or legal guardian of the child. You can add as many additional contacts as you wish. Do not add family doctors as contacts.</p>
+        <h3>Please add:</h3>
         <ul>
-            <li>A parent or legal guardian of the child.</li>
-            <li>Anyone who might transport the child to/from school (excluding school busses).</li>
-            <li>Anyone who might call the school to explain an absence.</li>
-            <li>A family member, friend, or billet whose home the child might go to before or after school, or during extreme weather</li>
-            <li>An emergency contact, such as a family friend or neighbour.</li>
-            <li>Anyone who should have access to the child's data, or who should receive school notifications.</li>
+            <li>At least one parent or legal guardian of the child</li>
+            <li>At least one additional emergency contact</li>
+            <li>Yourself, if you aren't any of the above</li>
         </ul>
-        <p><b>Do not</b> include family doctors as contacts. </p>
+        <br/>
         <DataAnnotationsValidator />
         <ValidationSummary />
-        <button type="button" class="btn-sm btn-primary" @onclick="AddContact">Add Contact</button>
+        <button type="button" class="btn-sm btn-primary" @onclick="AddContact">Click to add a contact</button>
+        @*
         @if (SavedFormSubmitter != null)
         {
             <button type="button" class="btn-sm btn-info" @onclick="AddMe">Add Me</button>
         }
+        *@
         <br />
         <br />
         @if (ContactsInfoData.Contacts.Count > 0)
@@ -126,6 +126,10 @@
             @foreach (Contact Contact in ContactsInfoData.Contacts)
             {
                 <div class="form-group container p-2" style="border: 1px solid #dbdbdb;border-radius:2px">
+                    <div class="form-row">
+                        <h3 style="font-weight: bold;">New Contact</h3>
+                    </div>
+
                     <div class="form-row">
                         <label class="col-sm-3 font-weight-normal">First Name: </label>
                         <InputText id="studentLegalFirstName" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.FirstName"></InputText>
@@ -179,6 +183,15 @@
 
                         <div class="form-row">
                             <div class="offset-sm-3">
+                                <InputCheckbox id="" @bind-Value="@Contact.IsParentOrGuardian"></InputCheckbox>
+                                <label class="font-weight-normal">This contact is a parent or guardian to the student </label>
+                                <ValidationMessage For="@(() => Contact.IsParentOrGuardian)" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="offset-sm-3">
                                 <InputCheckbox id="" @bind-Value="@Contact.LivesWithStudent"></InputCheckbox>
                                 <label class="font-weight-normal">This contact lives with the student </label>
                                 <ValidationMessage For="@(() => Contact.LivesWithStudent)" />
@@ -188,26 +201,26 @@
                         @if (Contact.LivesWithStudent)
                         {
                             <div class="form-row">
-                                <div class="offset-sm-3">
+                                <div class="offset-sm-4">
                                     <InputCheckbox id="" @bind-Value="@Contact.SamePrimaryAddressAsStudent"></InputCheckbox>
                                     <label class="font-weight-normal">Same primary address as student</label>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="offset-sm-3">
+                                <div class="offset-sm-4">
                                     <InputCheckbox id="" @bind-Value="@Contact.SameMailingAddressAsStudent"></InputCheckbox>
                                     <label class="font-weight-normal">Same mailing address as student</label>
                                 </div>
                             </div>
                         }
 
-                    </div>
                     <div class="form-row">
                         <div class="offset-sm-3">
                             <InputCheckbox id="" @bind-Value="@Contact.ShouldRecieveMailAboutStudent"></InputCheckbox>
                             <label class="font-weight-normal">This contact can access the student's data (grades, attendance, report card)</label>
                             <ValidationMessage For="@(() => Contact.ShouldRecieveMailAboutStudent)" />
                         </div>
+                    </div>
                     </div>
 
                     <div class="form-row">
@@ -328,18 +341,20 @@
                         <InputTextArea id="" class="form-control col-sm-6 form-control-sm" @bind-Value="@Contact.Note"></InputTextArea>
                         <ValidationMessage class="offset-sm-4 col-sm-6" For="@(() => Contact.Note)" />
                     </div>
-
-                    <div class="form-row">
-                        <button type="button" class="btn-sm btn-link col-sm-1" @onclick="@(() => RemoveContact(Contact))">Remove</button>
+                    <br/>
+                    <div class="form-row" style="text-align: center;">
+                        <div class="col-sm-10"></div>
+                        <button type="button" class="btn btn-sm btn-outline-danger col-sm-2" @onclick="@(() => RemoveContact(Contact))">Remove this contact</button>
                     </div>
                 </div>
+                <br/><br/>
             }
 
             <button type="button" class="btn-sm btn-primary" @onclick="AddContact">Add another contact</button>
         }
         else
         {
-            <p><i>No contacts.</i></p>
+            <p><i>No contacts added yet.</i></p>
         }
 
         <ValidationSummary />
