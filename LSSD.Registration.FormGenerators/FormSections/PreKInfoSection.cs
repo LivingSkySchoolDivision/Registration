@@ -83,7 +83,7 @@ namespace LSSD.Registration.FormGenerators.FormSections
                         TableHelper.LabelCell("Can use bathroom by self?").WithWidth(40),
                         TableHelper.ValueCell(PreKInfo.CanUseBathroomAlone).WithWidth(5), 
                         TableHelper.LabelCell("Bathroom training in progress?").WithWidth(40),
-                        TableHelper.ValueCell(PreKInfo.CanUseBathroomAlone).WithWidth(5)                       
+                        TableHelper.ValueCell(PreKInfo.PottyTrainingInProgress).WithWidth(5)                       
                     ),
                     TableHelper.StickyTableRow(
                         TableHelper.ValueCell(PreKInfo.BathroomTrainingDetails).WithColspan(4)
